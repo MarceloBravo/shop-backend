@@ -12,8 +12,6 @@ export default {
         eliminar: false,
         listar: false,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 1,
@@ -23,8 +21,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 1,
@@ -34,8 +30,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 1,
@@ -45,8 +39,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 1,
@@ -56,8 +48,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 1,
@@ -67,8 +57,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 1,
@@ -78,8 +66,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 2,
@@ -89,8 +75,6 @@ export default {
         eliminar: false,
         listar: false,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 2,
@@ -100,8 +84,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 2,
@@ -111,8 +93,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 2,
@@ -122,8 +102,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 2,
@@ -133,8 +111,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 2,
@@ -144,8 +120,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rol_id: 2,
@@ -155,8 +129,6 @@ export default {
         eliminar: true,
         listar: true,
         ver: true,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
     ], {});
   },

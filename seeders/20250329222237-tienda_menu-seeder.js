@@ -11,8 +11,6 @@ export default {
         uri: 'home',
         posicion: 10,
         pantalla_id: 1,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         nombre: 'Catálogo',
@@ -21,8 +19,6 @@ export default {
         uri: 'catalogo',
         posicion: 20,
         pantalla_id: 1,
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         nombre: 'Autenticación cliente',
@@ -30,9 +26,7 @@ export default {
         menu_padre_id: null,
         uri: 'login',
         posicion: 30,
-        pantalla_id: 1,
-        created_at: new Date(),
-        updated_at: new Date(),
+        pantalla_id: 1
       },
       {
         nombre: 'Registro cliente',
@@ -40,9 +34,7 @@ export default {
         menu_padre_id: null,
         uri: 'checkin',
         posicion: 40,
-        pantalla_id: 1,
-        created_at: new Date(),
-        updated_at: new Date(),
+        pantalla_id: 1
       },
       {
         nombre: 'Checkout',
@@ -50,9 +42,7 @@ export default {
         menu_padre_id: null,
         uri: 'checkout',
         posicion: 50,
-        pantalla_id: 1,
-        created_at: new Date(),
-        updated_at: new Date(),
+        pantalla_id: 1
       },
       {
         nombre: 'Carrito',
@@ -60,9 +50,7 @@ export default {
         menu_padre_id: null,
         uri: 'cart',
         posicion: 10,
-        pantalla_id: 1,
-        created_at: new Date(),
-        updated_at: new Date(),
+        pantalla_id: 1
       },
       {
         nombre: 'Cerrar sessión',
@@ -70,9 +58,7 @@ export default {
         menu_padre_id: null,
         uri: 'logout',
         posicion: 70,
-        pantalla_id: 1,
-        created_at: new Date(),
-        updated_at: new Date(),
+        pantalla_id: 1
       },
     ], {});
   },

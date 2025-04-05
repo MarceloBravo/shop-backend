@@ -21,7 +21,7 @@ export const MarcaModel = sequelize.define('marcas', {
     }
 
 },{
-    tymestamps: true,
+    timestamps: true,
     tableName: 'marcas',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {

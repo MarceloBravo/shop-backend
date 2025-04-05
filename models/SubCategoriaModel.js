@@ -25,7 +25,7 @@ export const SubCategoriaModel = sequelize.define('subcategorias', {
     }
 
 },{
-    tymestamps: true,
+    timestamps: true,
     tableName: 'subcategorias',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {

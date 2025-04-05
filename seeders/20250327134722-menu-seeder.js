@@ -12,8 +12,6 @@ export default {
        uri: '/admin/home',
        posicion: 10,
        pantalla_id: 1,
-       created_at: new Date(),
-       updated_at: new Date(),
      },
      {
       nombre: 'Configuración',
@@ -22,8 +20,6 @@ export default {
       uri: '/admin/config',
       posicion: 100,
       pantalla_id: 1,
-      created_at: new Date(),
-      updated_at: new Date(),
     },
      {
       nombre: 'Roles',
@@ -32,8 +28,6 @@ export default {
       uri: '/admin/roles',
       posicion: 10,
       pantalla_id: 2,
-      created_at: new Date(),
-      updated_at: new Date(),
     },
      {
       nombre: 'Usuarios',
@@ -42,8 +36,6 @@ export default {
       uri: '/admin/usuarios',
       posicion: 20,
       pantalla_id: 3,
-      created_at: new Date(),
-      updated_at: new Date(),
     },
      {
       nombre: 'Pantallas',
@@ -52,8 +44,6 @@ export default {
       uri: '/admin/pantallas',
       posicion: 30,
       pantalla_id: 4,
-      created_at: new Date(),
-      updated_at: new Date(),
     },
      {
       nombre: 'Permisos',
@@ -62,8 +52,6 @@ export default {
       uri: '/admin/permisos',
       posicion: 40,
       pantalla_id: 5,
-      created_at: new Date(),
-      updated_at: new Date(),
     },
     
     ], {});

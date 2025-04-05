@@ -24,7 +24,7 @@ export const PantallaModel = sequelize.define('pantallas', {
     }
     
 },{
-    tymestamps: true,
+    timestamps: true,
     tableName: 'pantallas',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {

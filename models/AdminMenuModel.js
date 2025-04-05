@@ -41,7 +41,7 @@ export const AdminMenuModel = sequelize.define('admin_menus', {
         allowNull: true
     }
 },{ 
-    tymestamps: true,
+    timestamps: true,
     tableName: 'menus',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {

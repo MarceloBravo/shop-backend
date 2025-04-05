@@ -45,7 +45,7 @@ export const AccionesPantallaModel = sequelize.define('acciones_pantallas', {
         allowNull: true
     }
 },{ 
-    tymestamps: true,
+    timestamps: true,
     tableName: 'acciones_pantallas',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {

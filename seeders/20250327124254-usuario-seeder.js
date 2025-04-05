@@ -18,8 +18,6 @@ export default {
         user_name: 'mbravo',
         password: await encriptarPassword('123123'),
         rol_id: '1',
-        created_at: new Date(),
-        updated_at: new Date(),
       },
       {
         rut: '22.222.222-2',
@@ -33,8 +31,6 @@ export default {
         user_name: 'jperez',
         password: await encriptarPassword('123321'),
         rol_id: '2',
-        created_at: new Date(),
-        updated_at: new Date(),
       },
     ], {})
   },

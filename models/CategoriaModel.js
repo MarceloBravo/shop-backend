@@ -21,7 +21,7 @@ export const CategoriaModel = sequelize.define('categorias', {
     }
 
 },{
-    tymestamps: true,
+    timestamps: true,
     tableName: 'categorias',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {

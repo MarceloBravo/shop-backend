@@ -6,39 +6,27 @@ export default {
     await queryInterface.bulkInsert('categorias', [
       {
         nombre: 'Vestuario',
-        descripcion: 'Departamento de vestuario',
-        created_at: new Date(),
-        updated_at: new Date()
+        descripcion: 'Departamento de vestuario'
       },
       {
         nombre: 'Electronica',
-        descripcion: 'Departamento de electrónica',
-        created_at: new Date(),
-        updated_at: new Date()
+        descripcion: 'Departamento de electrónica'
       },
       {
         nombre: 'Linea Blanca',
-        descripcion: 'Departamento de línea blanca',
-        created_at: new Date(),
-        updated_at: new Date()
+        descripcion: 'Departamento de línea blanca'
       },
       {
         nombre: 'Computación',
-        descripcion: 'Departamento de computación',
-        created_at: new Date(),
-        updated_at: new Date()
+        descripcion: 'Departamento de computación'
       },
       {
         nombre: 'Deportes',
-        descripcion: 'Departamento de deportes',
-        created_at: new Date(),
-        updated_at: new Date()
+        descripcion: 'Departamento de deportes'
       },
       {
         nombre: 'Zapatería',
-        descripcion: 'Departamento de vestuario',
-        created_at: new Date(),
-        updated_at: new Date()
+        descripcion: 'Departamento de vestuario'
       },
   ], {});
   },

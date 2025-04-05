@@ -23,6 +23,14 @@ export const ProductoModel = sequelize.define('productos', {
             key: 'id'               // Clave primaria
         }        
     },
+    genero_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'generos', // Nombre de la tabla
+            key: 'id'               // Clave primaria
+        }        
+    },
     marca_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -37,7 +45,7 @@ export const ProductoModel = sequelize.define('productos', {
     }
 
 },{
-    tymestamps: true,
+    timestamps: true,
     tableName: 'productos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {

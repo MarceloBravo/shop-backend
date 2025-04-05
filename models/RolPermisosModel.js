@@ -54,7 +54,7 @@ export const RolPermisosModel = sequelize.define('roles_permisos', {
         allowNull: true
     }
 },{
-    tymestamps: true,
+    timestamps: true,
     tableName: 'roles_permisos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {

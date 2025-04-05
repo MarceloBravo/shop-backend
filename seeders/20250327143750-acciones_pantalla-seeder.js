@@ -11,8 +11,6 @@ export default {
           permite_eliminar: false,
           permite_listar: false,
           permite_ver: true,
-          created_at: new Date(),
-          updated_at: new Date(),
         },
         {
           pantalla_id: 2,
@@ -21,8 +19,6 @@ export default {
           permite_eliminar: true,
           permite_listar: true,
           permite_ver: true,
-          created_at: new Date(),
-          updated_at: new Date(),
         },
         {
           pantalla_id: 3,
@@ -31,8 +27,6 @@ export default {
           permite_eliminar: true,
           permite_listar: true,
           permite_ver: true,
-          created_at: new Date(),
-          updated_at: new Date(),
         },
         {
           pantalla_id: 4,
@@ -41,8 +35,6 @@ export default {
           permite_eliminar: true,
           permite_listar: true,
           permite_ver: true,
-          created_at: new Date(),
-          updated_at: new Date(),
         },
         {
           pantalla_id: 5,
@@ -51,8 +43,6 @@ export default {
           permite_eliminar: true,
           permite_listar: true,
           permite_ver: true,
-          created_at: new Date(),
-          updated_at: new Date(),
         },
         {
           pantalla_id: 6,
@@ -61,8 +51,6 @@ export default {
           permite_eliminar: true,
           permite_listar: true,
           permite_ver: true,
-          created_at: new Date(),
-          updated_at: new Date(),
         }
     ], {});
   },

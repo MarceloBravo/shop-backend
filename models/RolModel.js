@@ -17,7 +17,7 @@ export const RolModel = sequelize.define('roles', {
         allowNull: true
     }
 },{
-    tymestamps: true,
+    timestamps: true,
     tableName: 'roles',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {
