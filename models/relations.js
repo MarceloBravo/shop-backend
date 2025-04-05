@@ -1,28 +1,33 @@
-import { UsuarioModel } from "./UsuarioModel.js";
-import { RolModel } from "./RolModel.js";
-import { RolPermisosModel } from "./RolPermisosModel.js";
-import { AccionesPantallaModel } from "./AccionesPantallaModel.js";
-import { PantallaModel } from "./PantallaModel.js";
-import { AdminMenuModel } from "./AdminMenuModel.js";
-import { ProductoModel } from "./ProductoModel.js";
-import { CategoriaModel } from "./CategoriaModel.js";
-import { SubCategoriaModel } from "./SubCategoriaModel.js";
-import { MarcaModel } from "./MarcaModel.js";
-import { ColorModel } from "./ColorModel.js";
-import { ColorProductoModel } from "./ColorProductoModel.js";
-import { MaterialProductoModel } from "./MaterialProductoModel.js";
-import { MaterialModel } from "./MaterialModel.js";
-import { TallaLetraProductoModel } from "./TallaLetraProductoModel.js";
-import { TallaLetraModel } from "./TallaLetraModel.js";
-import { TallaNumericaModel } from "./TallaNumericaModel.js";
-import { TallaNumericaProductoModel } from "./TallaNumericaProductoModel.js";
-import { DimensionesModel } from "./DimensionesModel.js";
-import { DimensionesProductoModel } from "./DimensionesProductoModel.js";
-import { TipoDimensionesModel } from "./TipoDimensionesModel.js";
-import { GeneroModel } from "./GeneroModel.js";
-import { AtributosProductoModel } from "./AtributosProductoModel.js";
-import { AtributosModel } from "./AtributosModel.js";
+import models from '../models/index.js';
 
+const { UsuarioModel , 
+        RolModel, 
+        RolPermisosModel, 
+        AccionesPantallaModel, 
+        PantallaModel, 
+        AdminMenuModel, 
+        ProductoModel, 
+        CategoriaModel, 
+        SubCategoriaModel, 
+        MarcaModel, 
+        ColorModel, 
+        ColorProductoModel, 
+        MaterialProductoModel, 
+        MaterialModel, 
+        TallaLetraProductoModel, 
+        TallaLetraModel, 
+        TallaNumericaModel, 
+        TallaNumericaProductoModel, 
+        DimensionesModel, 
+        DimensionesProductoModel, 
+        TipoDimensionesModel, 
+        GeneroModel, 
+        AtributosProductoModel, 
+        AtributosModel, 
+        ValoracionProductoModel 
+} = models;
+
+export default models;
 // Establecer relaciones
 RolModel.hasMany(UsuarioModel, { foreignKey: "rol_id", sourceKey: "id" });
 UsuarioModel.belongsTo(RolModel, { foreignKey: "rol_id", targetKey: "id" });
@@ -87,3 +92,6 @@ ProductoModel.belongsTo(GeneroModel, { foreignKey: "genero_id", sourceKey: "id" 
 
 AtributosModel.hasMany(AtributosProductoModel, { foreignKey: "atributo_id"});
 AtributosProductoModel.belongsTo(AtributosModel, { foreignKey: "atributo_id"});
+
+ProductoModel.hasMany(ValoracionProductoModel, { foreignKey: "producto_id"});
+ValoracionProductoModel.belongsTo(ProductoModel, { foreignKey: "producto_id"});

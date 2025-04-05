@@ -39,6 +39,10 @@ export const ProductoModel = sequelize.define('productos', {
             key: 'id'
         }
     },
+    precio:{
+        type: DataTypes.DOUBLE(10,2),
+        allowNull: false,
+    },
     deleted_at: {
         type:DataTypes.DATE,
         allowNull: true

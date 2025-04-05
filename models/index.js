@@ -1,29 +1,34 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
+import { readdirSync } from 'fs';
+import Sequelize from 'sequelize';
+
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+const config = require('../config/config.json')[env];
+
 const db = {};
 
-let sequelize;
-//if (config.use_env_variable) {
-  //sequelize = new Sequelize(process.env[config.use_env_variable], config);
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-//} else {
-//  sequelize = new Sequelize(config.database, config.username, config.password, config);
-//}
+let sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-readdirSync(__dirname)
-  .filter(file => {
-    return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-  })
-  .forEach(file => {
-    const model = require(join(__dirname, file))(sequelize, DataTypes);
-    db[model.name] = model;
-  });
+
+const files = readdirSync(new URL('.', import.meta.url))
+.filter(file =>
+  file !== 'index.js' &&
+  file !== 'index copy.js' &&
+  file !== 'relations.js' &&
+  file.substring(file.length - 3) === '.js'
+);
+
+for (const file of files) {
+  const modulePath = new URL(`./${file}`, import.meta.url);
+  const modelName = file.substring(0,file.length - 3);
+  const { [modelName]: model } = await import(modulePath);
+  db[modelName] = model;
+}
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {

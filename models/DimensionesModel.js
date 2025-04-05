@@ -1,4 +1,4 @@
-import { DataTypes, DOUBLE } from 'sequelize'
+import { DataTypes } from 'sequelize'
 import { sequelize } from '../config/database.js'
 
 export const DimensionesModel = sequelize.define('dimensiones', {
@@ -9,22 +9,22 @@ export const DimensionesModel = sequelize.define('dimensiones', {
     },
     alto: {
         type: DataTypes.DOUBLE(10,2),
-        default: 0,
+        default: 0.0,
         nullable: false
     },
     ancho: {
         type: DataTypes.DOUBLE(10,2),
-        default: 0,
+        default: 0.0,
         nullable: false
     },
     profundo: {
         type: DataTypes.DOUBLE(10,2),
-        default: 0,
+        default: 0.0,
         nullable: true
     },
     peso: {
         type: DataTypes.DOUBLE(10,2),
-        default: 0,
+        default: 0.0,
         nullable: true
     },
     tipo_dimension_id:{
