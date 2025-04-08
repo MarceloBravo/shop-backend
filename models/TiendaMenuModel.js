@@ -42,7 +42,7 @@ export const TiendaMenuModel = sequelize.define('tienda_menus', {
     }
 },{ 
     timestamps: true,
-    tableName: 'menus',  // Asegura que el nombre de la tabla sea correcto
+    tableName: 'tienda_menus',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {
         beforeCreate: async (menu, options) => {

@@ -7,9 +7,14 @@ export default {
     return queryInterface.bulkInsert('roles',[
       {
         nombre: 'Admin',
+        created_at: new Date(),
+        updated_at: new Date()
+
       },
       {
         nombre: 'Cliente',
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ], {})
   },
