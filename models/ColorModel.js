@@ -7,6 +7,10 @@ export const ColorModel = sequelize.define('colores', {
         autoIncrement: true,
         primaryKey: true
     },
+    nombre: {
+        type: DataTypes.STRING(30),
+        allowNull: false,
+    },
     valor: {
         type: DataTypes.STRING(30),
         allowNull: false        
