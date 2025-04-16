@@ -1,4 +1,5 @@
 import softDeleteCategoriaService from "../../services/Categoria/SoftDeleteCategoriaService";
+import { handleError } from "../../shared/functions.js";
 
 const softDeleteCategoriaController = async (req, res) => {
     try {
@@ -9,8 +10,10 @@ const softDeleteCategoriaController = async (req, res) => {
         }catch(e){
             res.status(500).json({error: e.message});
         }
-
     } catch (e) {
-        res.status(500).json({ error: e.message });
+        const err = handleError(e);
+        res.status(err.code).json(err);
     }
 }
+
+export default softDeleteCategoriaController;

@@ -31,3 +31,14 @@ export const dateToStringYMD = (fecha, separador = '/') => {
 export const numToString = (num, longitud, relleno = '0') => {
     return num.toString().padStart(longitud, relleno)
 }
+
+export const handleError = (e) => {
+    let message, code;
+    if(e.parent?.code === '23505'){
+        message = "Ya existe un registro con el valor ingresado.";
+    }else{
+        message = "Error al crear el registro: " + e.message;
+    }
+    code = parseInt(e.parent?.code ? 400 : e.code);
+    return {code,error: message, details: e.details ?? []};
+}

@@ -1,12 +1,14 @@
 import softDeleteColorService from "../../services/color/SoftDeleteColorService.js";
+import { handleError } from "../../shared/functions.js";
 
-export const softDeleteColorController = async (req, res) => {
+const softDeleteColorController = async (req, res) => {
     try{
         const { id } = req.params;
         const  result  = await softDeleteColorService(id);
         res.json(result);
     }catch(e){
-        res.status(500).json({error: e.message});
+        const err = handleError(e);
+        res.status(err.code).json(err);
     }
 }
 

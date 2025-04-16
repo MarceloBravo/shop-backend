@@ -1,21 +1,21 @@
 import { Router } from 'express';
-import getColorController from '../controllers/color/GetColorController.js';
-import getAllColorController from '../controllers/color/GetAllColorController.js';
-import getPageColorController from '../controllers/color/GetPageColorController.js';
-import createColorController from '../controllers/color/CreateColorController.js';
-import updateColorController from '../controllers/color/UpdateColorController.js';
-import deleteColorController from '../controllers/color/DeleteColorController.js';
-import softDeleteColorController from '../controllers/color/SoftDeleteColorController.js';
+import getCategoriaController from '../controllers/Categoria/GetCategoriaController.js';
+import getAllCategoriaController from '../controllers/Categoria/GetAllCategoriaController.js';
+import getPageCategoriaController from '../controllers/Categoria/GetPageCategoriaController.js';
+import createCategoriaController from '../controllers/Categoria/CreateCategoriaController.js';
+import updateCategoriaController from '../controllers/Categoria/UpdateCategoriaController.js';
+import deleteCategoriaController from '../controllers/Categoria/DeleteCategoriaController.js';
+import softDeleteCategoriaController from '../controllers/Categoria/SoftDeleteCategoriaController.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-router.get('/color/:id', getColorController);
-router.get('/color', getAllColorController);
-router.get('/color/pag/:pag/:regPorPag?', getPageColorController);
-router.post('/color', createColorController);
-router.put('/color/:id', updateColorController);
-router.delete('/color/:id', deleteColorController);
-router.delete('/color/softdelete/:id', softDeleteColorController);
+router.get('/Categoria/:id', getCategoriaController);
+router.get('/Categoria', getAllCategoriaController);
+router.get('/Categoria/pag/:pag/:regPorPag?', getPageCategoriaController);
+router.post('/Categoria', createCategoriaController);
+router.put('/Categoria/:id', updateCategoriaController);
+router.delete('/Categoria/:id', deleteCategoriaController);
+router.delete('/Categoria/softdelete/:id', softDeleteCategoriaController);
 
 export default router;

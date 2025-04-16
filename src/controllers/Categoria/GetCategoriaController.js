@@ -1,11 +1,15 @@
 import getCategoriaService from "../../services/Categoria/GetCategoriaService";
+import { handleError } from "../../shared/functions.js";
 
-export const getCategoriaController = async (req, res) => {
+const getCategoriaController = async (req, res) => {
     try {
         const { id } = req.params;
         const data = await getCategoriaService(id);
         res.json(data);
     } catch (e) {
-        res.status(500).json({ error: e.message });
+        const err = handleError(e);
+        res.status(err.code).json(err);
     }
 }
+
+export default getCategoriaController;

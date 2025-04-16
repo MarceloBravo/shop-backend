@@ -1,10 +1,14 @@
 import createCategoriaService from '../../services/Categoria/CreateCategoriaService.js';
+import { handleError } from "../../shared/functions.js";
 
-export const createCategoriaController = async (req, res) => {
+const createCategoriaController = async (req, res) => {
     try {
         const data = await createCategoriaService(req.body);
         res.json({ data, mensaje: 'La categoría ha sido creada exitosamente.' });
-    } catch (e) {
-        res.status(500).json({ error: e.message });
+    }catch(e){
+        const err = handleError(e);
+        res.status(err.code).json(err);
     }
 }   
+
+export default createCategoriaController;

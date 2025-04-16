@@ -1,11 +1,15 @@
 import updateCategoriaService from "../../services/Categoria/UpdateCategoriaService.js";
+import { handleError } from "../../shared/functions.js";
 
-export const updateCategoriaController = async (req, res) => {
+const updateCategoriaController = async (req, res) => {
     try {
         const { id } = req.params;
         const data = await updateCategoriaService(id, req.body);
         res.json({color, mensaje: `Registro ${created ? 'creado' : 'actualizado'} exitosamente.`})
     } catch (e) {
-        res.status(500).json({ error: e.message });
+        const err = handleError(e);
+        res.status(err.code).json(err);
     }
 }
+
+export default updateCategoriaController;

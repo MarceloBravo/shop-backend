@@ -1,11 +1,13 @@
 import GetAllColorService from '../../services/color/GetAllColorsService.js';
+import { handleError } from "../../shared/functions.js";
 
 const getAllColorController = async (req, res) => {
     try{
         const data = await GetAllColorService();
         res.json(data);
     }catch(e){
-        res.status(500).json({error: e.message});
+        const err = handleError(e);
+        res.status(err.code).json(err);
     }
 }
 

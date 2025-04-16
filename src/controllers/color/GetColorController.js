@@ -1,4 +1,5 @@
 import getColorService from '../../services/color/GetColorService.js';
+import { handleError } from "../../shared/functions.js";
 
 const getColorController = async (req, res) => {
     try{
@@ -6,7 +7,8 @@ const getColorController = async (req, res) => {
         const data = await getColorService(id)
         res.json(data);
     }catch(e){
-        res.status(500).json({error: e.message});
+        const err = handleError(e);
+        res.status(err.code).json(err);
     }
 }
 

@@ -1,12 +1,14 @@
 import getPageColorService from "../../services/color/GetPageColorService.js";
+import { handleError } from "../../shared/functions.js";
 
-export const getPageColorController = async (req, res) => {
+const getPageColorController = async (req, res) => {
     try{
         const { page, limit } = req.query;
         const { rows , count, registrosPorPagina, pag } = await getPageColorService(page, limit);
         res.json({data: {rows, count, regPag: registrosPorPagina, pag}});
     }catch(e){
-        res.status(500).json({error: e.message});
+        const err = handleError(e);
+        res.status(err.code).json(err);
     }
 }
 

@@ -10,10 +10,20 @@ export const ColorModel = sequelize.define('colores', {
     nombre: {
         type: DataTypes.STRING(30),
         allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true,
+            len: [3, 30]
+        }
     },
     valor: {
         type: DataTypes.STRING(30),
-        allowNull: false        
+        allowNull: false,
+        unique: true,
+        validate: {
+            notEmpty: true,
+            len: [3, 30]
+        }
     },
     deleted_at: {
         type:DataTypes.DATE,
