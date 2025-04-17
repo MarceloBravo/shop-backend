@@ -37,8 +37,8 @@ export const handleError = (e) => {
     if(e.parent?.code === '23505'){
         message = "Ya existe un registro con el valor ingresado.";
     }else{
-        message = "Error al crear el registro: " + e.message;
+        message = "Error: " + e.message;
     }
-    code = parseInt(e.parent?.code ? 400 : e.code);
+    code = parseInt(e.parent?.code ? 400 : e.code ?? 500);
     return {code,error: message, details: e.details ?? []};
 }

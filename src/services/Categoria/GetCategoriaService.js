@@ -1,4 +1,4 @@
-import { getCategoria } from "../../repositories/categoria.repository";
+import { getCategoria } from "../../repositories/categoria.repository.js";
 
 const getCategoriaService = async (id) => {
     try {

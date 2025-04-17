@@ -3,7 +3,6 @@ import express from 'express';
 import path from 'path';
 import morgan from 'morgan';
 import { fileURLToPath } from 'url';
-import { sequelize } from '../config/database.js';
 
 import '../models/index.js';
 
@@ -13,6 +12,7 @@ import '../models/relations.js';
 
 import loginRoutes from './routes/login.routes.js';
 import color from './routes/color.routes.js';
+import categoria from './routes/categoria.routes.js';
 
 const __dirname = path.dirname(__filename);
 const app = express();
@@ -28,10 +28,11 @@ app.set('port', process.env.APP_PORT || 3000);
 
 app.use(loginRoutes); 
 app.use(color); 
+app.use(categoria); 
 
 
 try{
-    await sequelize.sync({alter: true});    //force
+    //await sequelize.sync({alter: true});    //force
     console.log('Conexión establecida con la base de datos...');
     //app.listen(app.get('port'), '0.0.0.0',() => { //heroku
     if (process.env.NODE_ENV !== 'test') {  //En modo de prueba no se necesita estar escuchando a un puerto de red

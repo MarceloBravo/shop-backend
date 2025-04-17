@@ -15,14 +15,14 @@ export const getAllColor = async () => {
 }
 
 
-export const getPageColor = async (desde, regPorPag) => {
+export const getPageColor = async (desde = 1, regPorPag = 10) => {
     const { rows , count } = await ColorModel.findAndCountAll({
         where: {deleted_at: null},
         offset:desde,
         limit: regPorPag,
         order: [['nombre','ASC']]
-    });
-    return {data: {rows, count, regPag: registrosPorPagina, pag}};
+    });    
+    return {rows, count, totPag: Math.ceil(count / regPorPag)};
 }
 
 
@@ -33,10 +33,11 @@ export const createColor = async (nombre, valor) => {
 
 
 export const updateColor = async (id, data) => {
-    const { nombre, valor } = data;
     const [ color, created ] = await ColorModel.findOrCreate({where:{id}, defaults: data});
-    color.nombre = nombre;
-    color.valor = valor;
+    if(created) return {data: color, created};
+    // Si el registro ya existe, actualiza los valores
+    color.nombre = data.nombre;
+    color.valor = data.valor;
     color.deleted_at = null;
 
     await color.save();
@@ -53,11 +54,11 @@ export const deleteColor = async (id) => {
 
 export const softDeleteColor = async (id) => {
     const record = await ColorModel.findByPk(id);
-    if(record && record.deleted_at == null){
-        record.deleted_at = new Date();
-        const result = await record.save();
-        return {id, result};
-    }else{
-        return null;
-    }
+    const eliminado = (record && record.deleted_at !== null);
+    
+    if(eliminado === true)return null;
+
+    record.deleted_at = new Date();
+    await record.save();
+    return record;
 }

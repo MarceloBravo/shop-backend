@@ -4,8 +4,8 @@ import { handleError } from "../../shared/functions.js";
 const updateColorController = async (req, res) => {
     try{
         const { id } = req.params;
-        const [ color, created ] = await updateColorService(id, req.body);
-        res.json({color, mensaje: `Registro ${created ? 'creado' : 'actualizado'} exitosamente.`})
+        const result = await updateColorService(id, req.body);
+        res.json({color: result.color, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`})
     }catch(e){
         const err = handleError(e);
         res.status(err.code).json(err);

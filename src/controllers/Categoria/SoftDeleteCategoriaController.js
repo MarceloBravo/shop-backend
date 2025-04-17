@@ -1,4 +1,4 @@
-import softDeleteCategoriaService from "../../services/Categoria/SoftDeleteCategoriaService";
+import softDeleteCategoriaService from "../../services/Categoria/SoftDeleteCategoriaService.js";
 import { handleError } from "../../shared/functions.js";
 
 const softDeleteCategoriaController = async (req, res) => {

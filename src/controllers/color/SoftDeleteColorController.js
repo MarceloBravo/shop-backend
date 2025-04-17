@@ -4,7 +4,7 @@ import { handleError } from "../../shared/functions.js";
 const softDeleteColorController = async (req, res) => {
     try{
         const { id } = req.params;
-        const  result  = await softDeleteColorService(id);
+        const result = await softDeleteColorService(id);
         res.json(result);
     }catch(e){
         const err = handleError(e);

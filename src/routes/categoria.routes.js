@@ -12,7 +12,7 @@ const router = Router();
 
 router.get('/Categoria/:id', getCategoriaController);
 router.get('/Categoria', getAllCategoriaController);
-router.get('/Categoria/pag/:pag/:regPorPag?', getPageCategoriaController);
+router.get('/Categoria/page/:pag/:limit?', getPageCategoriaController);
 router.post('/Categoria', createCategoriaController);
 router.put('/Categoria/:id', updateCategoriaController);
 router.delete('/Categoria/:id', deleteCategoriaController);

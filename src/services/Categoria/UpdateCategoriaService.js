@@ -1,16 +1,9 @@
-import { updateCategoria } from "../../repositories/categoria.repository";
+import { updateCategoria } from "../../repositories/categoria.repository.js";
 
-const updateCategoriaService = async ({id, nombre}) => {
+const updateCategoriaService = async (id, data) => {
     try {
-            const { nombre, descripcion } = data;
-            const [ categoria, created ] = await updateCategoria({where:{id}, defaults: data});
-            categoria.nombre = nombre;
-            categoria.descripcion = descripcion;
-            categoria.deleted_at = null;
-        
-            await categoria.save();
-        
-            return [categoria, created];
+            const result = await updateCategoria({where:{id}, defaults: data});
+            return result;
     } catch (error) {
         throw new Error("Error al actualizar la categoría: " + error.message);
     }

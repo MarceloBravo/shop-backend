@@ -1,4 +1,4 @@
-import { createCategoria } from "../../repositories/categoria.repository";
+import { createCategoria } from "../../repositories/categoria.repository.js";
 
 const createCategoriaService = async (data) => {
     validaDatos(data);

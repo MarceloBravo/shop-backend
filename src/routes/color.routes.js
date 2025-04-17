@@ -12,7 +12,7 @@ const router = Router();
 
 router.get('/color/:id', getColorController);
 router.get('/color', getAllColorController);
-router.get('/color/pag/:pag/:regPorPag?', getPageColorController);
+router.get('/color/page/:pag/:limit?', getPageColorController);
 router.post('/color', createColorController);
 router.put('/color/:id', updateColorController);
 router.delete('/color/:id', deleteColorController);

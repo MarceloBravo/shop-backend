@@ -1,4 +1,4 @@
-import getCategoriaService from "../../services/Categoria/GetCategoriaService";
+import getCategoriaService from "../../services/Categoria/GetCategoriaService.js";
 import { handleError } from "../../shared/functions.js";
 
 const getCategoriaController = async (req, res) => {

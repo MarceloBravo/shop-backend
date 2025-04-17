@@ -1,4 +1,4 @@
-import { deleteCategoria } from "../../repositories/categoria.repository"; 
+import { deleteCategoria } from "../../repositories/categoria.repository.js"; 
 
 const deleteCategoriaService = async (id) => {
     try {

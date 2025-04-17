@@ -22,7 +22,7 @@ export const getPageCategoria = async (desde, regPorPag) => {
         limit: regPorPag,
         order: [['nombre','ASC']]
     });
-    return {data: {rows, count, regPag: registrosPorPagina, pag}};
+    return {rows, count, totPag: Math.ceil(count / regPorPag)};
 }
 
 
@@ -33,10 +33,11 @@ export const createCategoria = async (nombre, valor) => {
 
 
 export const updateCategoria = async (id, data) => {
-    const { nombre, valor } = data;
     const [ Categoria, created ] = await CategoriaModel.findOrCreate({where:{id}, defaults: data});
-    Categoria.nombre = nombre;
-    Categoria.valor = valor;
+    if(created) return {data: Categoria, created};
+    // Si el registro ya existe, actualiza los valores
+    Categoria.nombre = data.nombre;
+    Categoria.valor = data.valor;
     Categoria.deleted_at = null;
 
     await Categoria.save();
@@ -53,11 +54,11 @@ export const deleteCategoria = async (id) => {
 
 export const softDeleteCategoria = async (id) => {
     const record = await CategoriaModel.findByPk(id);
-    if(record && record.deleted_at == null){
-        record.deleted_at = new Date();
-        const result = await record.save();
-        return {id, result};
-    }else{
-        return null;
-    }
+    const eliminado = (record && record.deleted_at !== null);
+    
+    if(eliminado === true)return null;
+
+    record.deleted_at = new Date();
+    await record.save();
+    return record;
 }
