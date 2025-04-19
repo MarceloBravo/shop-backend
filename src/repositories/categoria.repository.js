@@ -26,8 +26,8 @@ export const getPageCategoria = async (desde, regPorPag) => {
 }
 
 
-export const createCategoria = async (nombre, valor) => {
-    const data = await CategoriaModel.create({nombre, valor});
+export const createCategoria = async (values) => {
+    const data = await CategoriaModel.create(values);
     return data;
 }
 
@@ -37,7 +37,7 @@ export const updateCategoria = async (id, data) => {
     if(created) return {data: Categoria, created};
     // Si el registro ya existe, actualiza los valores
     Categoria.nombre = data.nombre;
-    Categoria.valor = data.valor;
+    Categoria.descripcion = data.descripcion;
     Categoria.deleted_at = null;
 
     await Categoria.save();
@@ -55,9 +55,7 @@ export const deleteCategoria = async (id) => {
 export const softDeleteCategoria = async (id) => {
     const record = await CategoriaModel.findByPk(id);
     const eliminado = (record && record.deleted_at !== null);
-    
-    if(eliminado === true)return null;
-
+    if(eliminado === null || eliminado === true)return null;
     record.deleted_at = new Date();
     await record.save();
     return record;

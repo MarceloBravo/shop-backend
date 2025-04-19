@@ -8,7 +8,7 @@ const createCategoriaService = async (data) => {
 const validaDatos = (data) => {
     let errors = [];
     const { nombre, descripcion } = data;
-    if (!nombre || nombre.trim().length === 0 || nombre.length < 30) {
+    if (!nombre || nombre.trim().length === 0 || nombre.length > 30) {
         errors.push("Ingresa un nombre válido para el nombre de la categoría.");
     }
     if (!descripcion || descripcion.trim().length === 0) {

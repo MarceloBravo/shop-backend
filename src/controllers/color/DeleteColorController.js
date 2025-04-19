@@ -4,7 +4,8 @@ import { handleError } from "../../shared/functions.js";
 const deleteColorController = async (req, res) => {
     try{
         const {id, result } = await deleteColorService(req.params);
-        res.json({id, mensaje: result ? 'Registro eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente'});
+        const mensaje = result === 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente';  
+        res.json({ id, code: result, mensaje });
     }catch(e){
         const err = handleError(e);
         res.status(err.code).json(err);

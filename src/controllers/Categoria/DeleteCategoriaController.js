@@ -3,9 +3,9 @@ import { handleError } from "../../shared/functions.js";
 
 const deleteCategoriaController = async (req, res) => {
     try {
-        const { id } = req.params;
-        const data = await deleteCategoriaService(id);
-        res.json({ data, mensaje: 'El registro ha sido eliminado exitosamente.' });
+        const {id, result } = await deleteCategoriaService(req.params);
+        const mensaje = result === 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente';  
+        res.json({ id, code: result, mensaje});
     } catch (e) {
         const err = handleError(e);
         res.status(err.code).json(err);

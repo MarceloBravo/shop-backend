@@ -1,6 +1,6 @@
 import { deleteCategoria } from "../../repositories/categoria.repository.js"; 
 
-const deleteCategoriaService = async (id) => {
+const deleteCategoriaService = async ({id}) => {
     try {
         return await deleteCategoria(id);
     } catch (error) {

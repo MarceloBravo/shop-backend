@@ -56,7 +56,7 @@ export const softDeleteColor = async (id) => {
     const record = await ColorModel.findByPk(id);
     const eliminado = (record && record.deleted_at !== null);
     
-    if(eliminado === true)return null;
+    if(eliminado === null || eliminado === true)return null;
 
     record.deleted_at = new Date();
     await record.save();
