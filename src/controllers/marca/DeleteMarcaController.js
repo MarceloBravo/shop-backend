@@ -1,9 +1,10 @@
-import deleteColorService from '../../services/color/DeleteColorService.js';
+import deleteMarcaService from '../../services/marca/DeleteMarcaService.js';
 import { handleError } from "../../shared/functions.js";
 
-const deleteColorController = async (req, res) => {
+const deleteMarcaController = async (req, res) => {
     try{
-        const {id, result } = await deleteColorService(req.params);
+        const {id, result } = await deleteMarcaService(req.params);
+        console.log('result',result);
         const mensaje = result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente';  
         res.json({ id, code: result ? 200 : 500, mensaje });
     }catch(e){
@@ -12,4 +13,4 @@ const deleteColorController = async (req, res) => {
     }
 }
 
-export default deleteColorController;
+export default deleteMarcaController;

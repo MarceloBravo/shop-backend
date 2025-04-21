@@ -13,7 +13,7 @@ export const MarcaModel = sequelize.define('marcas', {
     },
     logo: {
         type: DataTypes.STRING(500),
-        allowNull: false        
+        allowNull: true        
     },
     deleted_at: {
         type:DataTypes.DATE,
