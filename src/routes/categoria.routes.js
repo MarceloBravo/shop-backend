@@ -10,12 +10,12 @@ import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-router.get('/categoria/:id', getCategoriaController);
-router.get('/categoria', getAllCategoriaController);
-router.get('/categoria/page/:pag/:limit?', getPageCategoriaController);
-router.post('/categoria', createCategoriaController);
-router.put('/categoria/:id', updateCategoriaController);
-router.delete('/categoria/:id', deleteCategoriaController);
-router.delete('/categoria/softdelete/:id', softDeleteCategoriaController);
+router.get('/:id', getCategoriaController);
+router.get('', getAllCategoriaController);
+router.get('/page/:pag/:limit?', getPageCategoriaController);
+router.post('', createCategoriaController);
+router.put('/:id', updateCategoriaController);
+router.delete('/:id', deleteCategoriaController);
+router.delete('/borrar/:id', softDeleteCategoriaController);
 
 export default router;

@@ -10,12 +10,12 @@ import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-router.get('/atributo/:id', getAtributoController);
-router.get('/atributo', getAllAtributoController);
-router.get('/atributo/page/:pag/:limit?', getPageAtributoController);
-router.post('/atributo', createAtributoController);
-router.put('/atributo/:id', updateAtributoController);
-router.delete('/atributo/:id', deleteAtributoController);
-router.delete('/atributo/softdelete/:id', softDeleteAtributoController);
+router.get('/:id', getAtributoController);
+router.get('/', getAllAtributoController);
+router.get('/page/:pag/:limit?', getPageAtributoController);
+router.post('/', createAtributoController);
+router.put('/:id', updateAtributoController);
+router.delete('/:id', deleteAtributoController);
+router.delete('/borrar/:id', softDeleteAtributoController);
 
 export default router;

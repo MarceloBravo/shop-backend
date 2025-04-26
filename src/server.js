@@ -6,21 +6,13 @@ import { fileURLToPath } from 'url';
 import { sequelize } from '../config/database.js';
 
 import '../models/index.js';
+import '../models/relations.js';
+import rutas from './routes/rutas.js';
+//import listEndpoints from 'express-list-endpoints';
 
 const __filename = fileURLToPath(import.meta.url);
-
-import '../models/relations.js';
-
-import loginRoutes from './routes/login.routes.js';
-import color from './routes/color.routes.js';
-import categoria from './routes/categoria.routes.js';
-import marca from './routes/marca.routes.js';
-import atributo from './routes/atributo.routes.js'
-import material from './routes/material.routes.js'
-
 const __dirname = path.dirname(__filename);
 const app = express();
-
 
 app.use(cors());
 app.use(express.json()); // Para procesar JSON
@@ -30,13 +22,15 @@ app.use(morgan('dev'));
 app.set('host','127.0.0.1');
 app.set('port', process.env.APP_PORT || 3000);
 
-app.use(loginRoutes); 
-app.use(color); 
-app.use(categoria);
-app.use(marca);
-app.use(atributo);
-app.use(material);
+// Prefijo global opcional
+//const ADMIN_PREFIX = '/admin/v1';
+const API_PREFIX = '/api/v1';
 
+rutas.forEach(({ path, router }) => {
+    app.use(`${API_PREFIX}${path}`, router);
+});
+
+//console.log(listEndpoints(app));
 
 try{
     //await sequelize.sync({alter: true});    //force

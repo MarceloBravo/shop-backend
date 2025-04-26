@@ -10,12 +10,12 @@ import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-router.get('/materiales/:id', getMaterialController);
-router.get('/materiales', getAllMaterialController);
-router.get('/materiales/page/:pag/:limit?', getPageMaterialController);
-router.post('/materiales', createMaterialController);
-router.put('/materiales/:id', updateMaterialController);
-router.delete('/materiales/:id', deleteMaterialController);
-router.delete('/materiales/softdelete/:id', softDeleteMaterialController);
+router.get('/:id', getMaterialController);
+router.get('/', getAllMaterialController);
+router.get('/:pag/:limit?', getPageMaterialController);
+router.post('/', checkToken, createMaterialController);
+router.put('/:id', checkToken, updateMaterialController);
+router.delete('/:id', checkToken, deleteMaterialController);
+router.delete('/borrar/:id', checkToken, softDeleteMaterialController);
 
 export default router;
