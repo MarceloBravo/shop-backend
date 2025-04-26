@@ -16,6 +16,7 @@ import color from './routes/color.routes.js';
 import categoria from './routes/categoria.routes.js';
 import marca from './routes/marca.routes.js';
 import atributo from './routes/atributo.routes.js'
+import material from './routes/material.routes.js'
 
 const __dirname = path.dirname(__filename);
 const app = express();
@@ -34,6 +35,7 @@ app.use(color);
 app.use(categoria);
 app.use(marca);
 app.use(atributo);
+app.use(material);
 
 
 try{

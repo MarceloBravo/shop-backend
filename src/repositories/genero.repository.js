@@ -9,7 +9,7 @@ export const getMarca = async (id) => {
 export const getAllMarca = async () => {
     const { rows, count } = await GeneroModel.findAndCountAll({
         where: {deleted_at: null},
-        order: [['nombre','ASC']]
+        order: [['valor','ASC']]
     });
     return {data: rows, count};
 }
@@ -20,14 +20,14 @@ export const getPageMarca = async (desde = 1, regPorPag = 10) => {
         where: {deleted_at: null},
         offset:desde,
         limit: regPorPag,
-        order: [['nombre','ASC']]
+        order: [['valor','ASC']]
     });    
     return {rows, count, totPag: Math.ceil(count / regPorPag)};
 }
 
 
-export const createMarca = async (nombre, logo) => {
-    const data = await GeneroModel.create({nombre, logo});
+export const createMarca = async (valor, logo) => {
+    const data = await GeneroModel.create({valor, logo});
     return data;
 }
 
