@@ -4,6 +4,7 @@ import categoria from './categoria.routes.js'
 import marca from './marca.routes.js'
 import atributo from './atributo.routes.js'
 import material from './material.routes.js'
+import tallaLetra from './tallaLetra.routes.js'
 
 const rutas = [
     {path: '/login', router},
@@ -11,7 +12,9 @@ const rutas = [
     {path: '/categoria', router: categoria},
     {path: '/marca', router: marca},
     {path: '/atributo', router: atributo},
-    {path: '/materiales', router: material}
+    {path: '/materiales', router: material},
+    {path: '/tallaLetra', router: tallaLetra},
+
 ];
 
 export default rutas;
