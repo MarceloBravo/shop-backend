@@ -5,6 +5,7 @@ import marca from './marca.routes.js'
 import atributo from './atributo.routes.js'
 import material from './material.routes.js'
 import tallaLetra from './tallaLetra.routes.js'
+import tallaNumero from './tallaNumero.routes.js'
 
 const rutas = [
     {path: '/login', router},
@@ -14,7 +15,7 @@ const rutas = [
     {path: '/atributo', router: atributo},
     {path: '/materiales', router: material},
     {path: '/tallaLetra', router: tallaLetra},
-
+    {path: '/tallaNumero', router: tallaNumero},
 ];
 
 export default rutas;
