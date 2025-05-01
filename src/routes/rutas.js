@@ -7,6 +7,7 @@ import material from './material.routes.js'
 import tallaLetra from './tallaLetra.routes.js'
 import tallaNumero from './tallaNumero.routes.js'
 import rol from './rol.routes.js'
+import pantalla from './pantalla.routes.js'
 
 const rutas = [
     {path: '/', router},
@@ -18,6 +19,7 @@ const rutas = [
     {path: '/tallaLetra', router: tallaLetra},
     {path: '/tallaNumero', router: tallaNumero},
     {path: '/rol', router: rol},
+    {path: '/pantalla', router: pantalla},
 ];
 
 export default rutas;
