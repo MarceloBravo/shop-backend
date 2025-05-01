@@ -8,6 +8,7 @@ import tallaLetra from './tallaLetra.routes.js'
 import tallaNumero from './tallaNumero.routes.js'
 import rol from './rol.routes.js'
 import pantalla from './pantalla.routes.js'
+import tipoDimensiones from './tipoDimensiones.routes.js'
 
 const rutas = [
     {path: '/', router},
@@ -20,6 +21,7 @@ const rutas = [
     {path: '/tallaNumero', router: tallaNumero},
     {path: '/rol', router: rol},
     {path: '/pantalla', router: pantalla},
+    {path: '/tipo_dimensiones', router: tipoDimensiones},
 ];
 
 export default rutas;

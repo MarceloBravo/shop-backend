@@ -7,8 +7,13 @@ export const TipoDimensionesModel = sequelize.define('tipo_dimensiones', {
         autoIncrement: true,
         primaryKey: true
     },
-    valor: {    //Kg, Litros, Metros, etc.
-        type: DataTypes.DOUBLE(10,2),
+    nombre:{
+        type: DataTypes.STRING(30),
+        default: 0,
+        nullable: false
+    },
+    nombre_corto: {    //Kg, Litros, Metros, etc.
+        type: DataTypes.STRING(10),
         default: 0,
         nullable: false
     },
