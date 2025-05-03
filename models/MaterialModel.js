@@ -9,7 +9,8 @@ export const MaterialModel = sequelize.define('materiales', {
     },
     valor: {
         type: DataTypes.STRING(30),
-        allowNull: false        
+        allowNull: false,
+        unique: true       
     },
     deleted_at: {
         type:DataTypes.DATE,

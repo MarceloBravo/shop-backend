@@ -12,7 +12,8 @@ export const ValoracionProductoModel = sequelize.define('valoraciones_producto',
         allowNull: false,
         references:{
             model: 'productos',
-            key: 'id'
+            key: 'id',
+            unique: true
         }
     },
     estrellas: {

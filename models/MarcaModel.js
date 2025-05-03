@@ -9,7 +9,8 @@ export const MarcaModel = sequelize.define('marcas', {
     },
     nombre: {
         type: DataTypes.STRING(100),
-        allowNull: false        
+        allowNull: false,
+        unique: true     
     },
     logo: {
         type: DataTypes.STRING(500),

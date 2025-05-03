@@ -9,7 +9,8 @@ export const ProductoModel = sequelize.define('productos', {
     },
     nombre: {
         type: DataTypes.STRING(100),
-        allowNull: false        
+        allowNull: false,
+        unique: true       
     },
     descripcion: {
         type: DataTypes.TEXT,

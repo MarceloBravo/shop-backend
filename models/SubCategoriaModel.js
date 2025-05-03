@@ -9,7 +9,8 @@ export const SubCategoriaModel = sequelize.define('subcategorias', {
     },
     nombre: {
         type: DataTypes.STRING(100),
-        allowNull: false        
+        allowNull: false,
+        unique: true      
     },
     categoria_id: {
         type: DataTypes.INTEGER,

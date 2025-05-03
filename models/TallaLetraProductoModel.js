@@ -21,7 +21,8 @@ export const TallaLetraProductoModel = sequelize.define('talla_letra_producto', 
         references:{
             model: 'tallas_letras',
             key: 'id'
-        }
+        },
+        unique: true
     },
     deleted_at: {
         type:DataTypes.DATE,

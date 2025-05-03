@@ -1,7 +1,9 @@
 import { updateGenero } from '../../repositories/genero.repository.js';
+import validaDatos from './validaDatos.js';
 
 const updateGeneroService = async (id, data) => {
     try{
+        validaDatos(data);
         const result = await updateGenero(id, data);
         return result;
     } catch (error) {

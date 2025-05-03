@@ -9,7 +9,8 @@ export const TallaNumericaModel = sequelize.define('tallas_numericas', {
     },
     valor: {
         type: DataTypes.DECIMAL(3,1),
-        allowNull: false        
+        allowNull: false,
+        unique: true        
     },
     deleted_at: {
         type:DataTypes.DATE,

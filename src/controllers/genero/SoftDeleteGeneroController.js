@@ -1,10 +1,10 @@
-import softDeleteMarcaService from "../../services/marca/SoftDeleteMarcaService.js";
+import softDeleteGeneroService from "../../services/genero/SoftDeleteGeneroService.js";
 import { handleError } from "../../shared/functions.js";
 
 const softDeleteGeneroController = async (req, res) => {
     try{
         const { id } = req.params;
-        const result = await softDeleteMarcaService(id);
+        const result = await softDeleteGeneroService(id);
         const resp = {code: result, mensaje : result === 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
         res.json(resp);
     }catch(e){

@@ -9,7 +9,8 @@ export const CategoriaModel = sequelize.define('categorias', {
     },
     nombre: {
         type: DataTypes.STRING(100),
-        allowNull: false        
+        allowNull: false,
+        unique: true        
     },
     descripcion: {
         type: DataTypes.TEXT,

@@ -9,7 +9,8 @@ export const TallaLetraModel = sequelize.define('tallas_letras', {
     },
     valor: {
         type: DataTypes.STRING(5),
-        allowNull: false        
+        allowNull: false,
+        unique: true        
     },
     deleted_at: {
         type:DataTypes.DATE,

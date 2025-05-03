@@ -34,3 +34,17 @@ export const GeneroModel = sequelize.define('generos', {
         }
     }
 });
+
+
+export async function up(queryInterface, Sequelize) {
+    await queryInterface.addConstraint('generos', {
+      fields: ['genero'],
+      type: 'unique',
+      name: 'genero_unique_constraint'
+    });
+  }
+
+
+  export async function down(queryInterface, Sequelize) {
+    await queryInterface.removeConstraint('generos', 'genero_unique_constraint');
+  }

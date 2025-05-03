@@ -10,12 +10,14 @@ export const TipoDimensionesModel = sequelize.define('tipo_dimensiones', {
     nombre:{
         type: DataTypes.STRING(30),
         default: 0,
-        nullable: false
+        nullable: false,
+        unique: true
     },
     nombre_corto: {    //Kg, Litros, Metros, etc.
         type: DataTypes.STRING(10),
         default: 0,
-        nullable: false
+        nullable: false,
+        unique: true
     },
     deleted_at: {
         type:DataTypes.DATE,

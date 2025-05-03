@@ -9,15 +9,18 @@ export const AtributosModel = sequelize.define('atributos', {
     },
     nombre: {
         type: DataTypes.STRING(100),
-        allowNull: false        
+        allowNull: false,
+        unique: true        
     },
     valor_string: {
         type: DataTypes.TEXT,
-        allowNull: true        
+        allowNull: true,
+        unique: true        
     },
     valor_numerico: {
         type: DataTypes.DOUBLE(15,5),
-        allowNull: true        
+        allowNull: true,
+        unique: true        
     },
     deleted_at: {
         type:DataTypes.DATE,

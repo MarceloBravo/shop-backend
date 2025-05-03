@@ -13,7 +13,8 @@ export const TallaNumericaProductoModel = sequelize.define('talla_numerica_produ
         references:{
             model: 'productos',
             key: 'id'
-        }
+        },
+        unique: true
     },
     talla_numerica_id: {
         type: DataTypes.INTEGER,

@@ -1,10 +1,10 @@
-import getMarcaService from '../../services/marca/GetMarcaService.js';
+import getGeneroService from '../../services/genero/GetGeneroService.js';
 import { handleError } from "../../shared/functions.js";
 
 const getGeneroController = async (req, res) => {
     try{
         const { id } = req.params
-        const data = await getMarcaService(id)
+        const data = await getGeneroService(id)
         res.json(data);
     }catch(e){
         const err = handleError(e);
