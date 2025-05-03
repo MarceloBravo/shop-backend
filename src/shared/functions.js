@@ -42,3 +42,23 @@ export const handleError = (e) => {
     code = parseInt(e.parent?.code ? 400 : e.code ?? 500);
     return {code,error: message, details: e.details ?? []};
 }
+
+export function validaRut(rut) {
+    if (!rut) return false;
+    rut = rut.replace(/\./g, '').replace('-', '');
+    const cuerpo = rut.slice(0, -1);
+    const dv = rut.slice(-1).toUpperCase();
+    let suma = 0;
+    let multiplo = 2;
+    for (let i = cuerpo.length - 1; i >= 0; i--) {
+        suma += multiplo * cuerpo.charAt(i);
+        multiplo = (multiplo === 7) ? 2 : multiplo + 1;
+    }
+    const dvEsperado = 11 - (suma % 11);
+    return (dv === (dvEsperado === 10 ? 'K' : dvEsperado.toString()));
+}
+
+export function validaEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
