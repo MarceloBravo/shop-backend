@@ -1,6 +1,7 @@
 import router from './login.routes.js'
 import color from './color.routes.js'
 import categoria from './categoria.routes.js'
+import subCategoria from './subCategoria.routes.js'
 import marca from './marca.routes.js'
 import atributo from './atributo.routes.js'
 import material from './material.routes.js'
@@ -16,6 +17,7 @@ const rutas = [
     {path: '/', router},
     {path: '/color', router: color},
     {path: '/categoria', router: categoria},
+    {path: '/sub_categoria', router: subCategoria},
     {path: '/marca', router: marca},
     {path: '/atributo', router: atributo},
     {path: '/materiales', router: material},
