@@ -12,6 +12,7 @@ import pantalla from './pantalla.routes.js'
 import tipoDimensiones from './tipoDimensiones.routes.js'
 import usuario from './usuario.routes.js'
 import genero from './genero.routes.js'
+import producto from './producto.routes.js'
 
 const rutas = [
     {path: '/', router},
@@ -28,6 +29,7 @@ const rutas = [
     {path: '/tipo_dimensiones', router: tipoDimensiones},
     {path: '/usuario', router: usuario},
     {path: '/genero', router: genero},
+    {path: '/producto', router: producto},
 ];
 
 export default rutas;

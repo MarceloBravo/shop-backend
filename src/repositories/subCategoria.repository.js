@@ -33,16 +33,16 @@ export const createSubCategoria = async (valor) => {
 
 
 export const updateSubCategoria = async (id, data) => {
-    const [ marca, created ] = await SubCategoriaModel.findOrCreate({where:{id}, defaults: data});
-    if(created) return {data: marca, created};
+    const [ subcategoria, created ] = await SubCategoriaModel.findOrCreate({where:{id}, defaults: data});
+    if(created) return {data: subcategoria, created};
     // Si el registro ya existe, actualiza los valores
-    marca.nombre = data.nombre;
-    marca.categoria_id = data.categoria_id;
-    marca.deleted_at = null;
+    subcategoria.nombre = data.nombre;
+    subcategoria.categoria_id = data.categoria_id;
+    subcategoria.deleted_at = null;
 
-    await marca.save();
+    await subcategoria.save();
 
-    return {data: marca, created};
+    return {data: subcategoria, created};
 }
 
 

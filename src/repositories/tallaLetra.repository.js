@@ -33,15 +33,15 @@ export const createTallaLetra = async (valor) => {
 
 
 export const updateTallaLetra = async (id, data) => {
-    const [ marca, created ] = await TallaLetraModel.findOrCreate({where:{id}, defaults: data});
-    if(created) return {data: marca, created};
+    const [ record, created ] = await TallaLetraModel.findOrCreate({where:{id}, defaults: data});
+    if(created) return {data: record, created};
     // Si el registro ya existe, actualiza los valores
-    marca.valor = data.valor;
-    marca.deleted_at = null;
+    record.valor = data.valor;
+    record.deleted_at = null;
 
-    await marca.save();
+    await record.save();
 
-    return {data: marca, created};
+    return {data: record, created};
 }
 
 
