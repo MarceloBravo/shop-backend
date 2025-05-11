@@ -15,11 +15,26 @@ export const DimensionesProductoModel = sequelize.define('dimensiones_producto',
             key: 'id'
         }
     },
-    dimensiones_id: {
+    alto: {
+        type: DataTypes.DOUBLE(10,2),
+        default: 0.0,
+        nullable: false
+    },
+    ancho: {
+        type: DataTypes.DOUBLE(10,2),
+        default: 0.0,
+        nullable: false
+    },
+    profundo: {
+        type: DataTypes.DOUBLE(10,2),
+        default: 0.0,
+        nullable: true
+    },
+    tipo_dimension_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-            model: 'dimensiones',
+            model: 'tipo_dimensiones',
             key: 'id'
         }
     },

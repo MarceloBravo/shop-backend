@@ -1,8 +1,9 @@
 import { getProducto } from '../../repositories/producto.repository.js';
+import { getProductoQuery } from '../../repositories/producto.repository.js';
 
-const getProductoService = async (id) => {
+const getProductoService = async (id, obtenerPorQuery = false) => {
     try{
-        return await getProducto(id);
+        return obtenerPorQuery ? await getProductoQuery(id) : await getProducto(id);
     }catch (error) {
         throw new Error("Error al obtener el registro: " + error.message);
     }

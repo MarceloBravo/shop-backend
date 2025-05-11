@@ -1,9 +1,9 @@
-import createProductoService from '../../services/producto/CreateProductoService.js';
+import createProductoOrchestrator from '../../orchestrators/producto/CreateProductoOrchestrator.js';
 import { handleError } from "../../shared/functions.js";
 
 const createProductoController = async (req, res) => {
     try {
-        const result = await createProductoService(req.body);
+        const result = await createProductoOrchestrator(req.body);
         res.json({ result, mensaje: 'El producto ha sido registrado exitosamente.' });
     }catch(e){
         const err = handleError(e);

@@ -1,26 +1,19 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../config/database.js'
 
-export const DimensionesModel = sequelize.define('dimensiones', {
+export const PesoProductoModel = sequelize.define('peso', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    alto: {
-        type: DataTypes.DOUBLE(10,2),
-        default: 0.0,
-        nullable: false
-    },
-    ancho: {
-        type: DataTypes.DOUBLE(10,2),
-        default: 0.0,
-        nullable: false
-    },
-    profundo: {
-        type: DataTypes.DOUBLE(10,2),
-        default: 0.0,
-        nullable: true
+    producto_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references:{
+            model: 'productos',
+            key: 'id'
+        }
     },
     peso: {
         type: DataTypes.DOUBLE(10,2),
@@ -41,7 +34,7 @@ export const DimensionesModel = sequelize.define('dimensiones', {
     }
 },{
     timestamps: true,
-    tableName: 'dimensiones',  // Asegura que el nombre de la tabla sea correcto
+    tableName: 'peso',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {
         beforeCreate: async (color, options) => {

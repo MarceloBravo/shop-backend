@@ -7,6 +7,11 @@ export const ProductoModel = sequelize.define('productos', {
         autoIncrement: true,
         primaryKey: true
     },
+    sku:{
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        unique: true,
+    },
     nombre: {
         type: DataTypes.STRING(100),
         allowNull: false,

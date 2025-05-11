@@ -4,6 +4,7 @@ import path from 'path';
 import morgan from 'morgan';
 import { fileURLToPath } from 'url';
 import { sequelize } from '../config/database.js';
+import { removeDuplicateConstraints } from '../scripts/remove-duplicate-indexes.js';
 
 import '../models/index.js';
 import '../models/relations.js';
@@ -33,6 +34,7 @@ rutas.forEach(({ path, router }) => {
 //console.log(listEndpoints(app));
 
 try{
+    //await removeDuplicateConstraints()
     //await sequelize.sync({alter: true});    //force
     console.log('Conexión establecida con la base de datos...');
     //app.listen(app.get('port'), '0.0.0.0',() => { //heroku

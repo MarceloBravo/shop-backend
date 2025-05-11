@@ -4,8 +4,11 @@ import { getMarca } from '../../repositories/marca.repository.js';
 
 export const validaDatos = async (data) => {
     const errors = [];
-    const { nombre, descripcion, sub_categoria_id, genero_id, marca_id, precio } = data;
+    const { sku, nombre, descripcion, sub_categoria_id, genero_id, marca_id, precio } = data;
 
+    if(!sku || sku.trim().length === 0 || sku.length > 100){
+        errors.push("El SKU ingresado no es válido, ingresa un SKU de hasta 100 carácteres.");
+    }
     if(!nombre || nombre.trim().length === 0 || nombre.length > 100){
         errors.push("El nombre ingresado no es válido, ingresa un nombre de hasta 100 carácteres.");
     }

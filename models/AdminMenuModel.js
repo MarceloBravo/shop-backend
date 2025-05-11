@@ -18,7 +18,7 @@ export const AdminMenuModel = sequelize.define('admin_menus', {
     },
     menu_padre_id: {
         type: DataTypes.INTEGER,
-        allowNull: true        
+        allowNull: true,
     },
     uri: {
         type: DataTypes.TEXT,
@@ -38,7 +38,7 @@ export const AdminMenuModel = sequelize.define('admin_menus', {
     },
     deleted_at: {
         type:DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
     }
 },{ 
     timestamps: true,

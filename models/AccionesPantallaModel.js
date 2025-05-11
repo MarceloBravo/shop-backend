@@ -13,19 +13,24 @@ export const AccionesPantallaModel = sequelize.define('acciones_pantallas', {
         references:{
             model: 'pantallas', // Nombre de la tabla de pantallas
             key: 'id'           // Clave primaria de pantallas
-        }
+        },
     },
     permite_crear:{
         type: DataTypes.BOOLEAN,
         default: false,
-        allowNull: false
+        allowNull: false,
     },
     permite_actualizar:{
         type: DataTypes.BOOLEAN,
         default: false,
-        allowNull: false
+        allowNull: false,
     },
     permite_eliminar:{
+        type: DataTypes.BOOLEAN,
+        default: false,
+        allowNull: false,
+    },
+    permite_listar:{
         type: DataTypes.BOOLEAN,
         default: false,
         allowNull: false
@@ -33,16 +38,11 @@ export const AccionesPantallaModel = sequelize.define('acciones_pantallas', {
     permite_listar:{
         type: DataTypes.BOOLEAN,
         default: false,
-        allowNull: false
-    },
-    permite_ver:{
-        type: DataTypes.BOOLEAN,
-        default: false,
-        allowNull: false
+        allowNull: false,
     },
     deleted_at: {
         type:DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
     }
 },{ 
     timestamps: true,

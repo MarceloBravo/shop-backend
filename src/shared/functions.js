@@ -62,3 +62,65 @@ export function validaEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
 }
+
+export function getDifferences(obj1, obj2) {
+    const diferencias = {
+      nuevos: [],
+      eliminados: [],
+      modificados: []
+    };
+  
+    compararRecursivo(obj1, obj2, diferencias, []);
+  
+    return diferencias;
+  }
+  
+  
+  function compareJSON(a, b) {
+    return JSON.stringify(a).localeCompare(JSON.stringify(b));
+  }
+
+  export const comparaProductos = (obj1, obj2) => {
+    let eliminados = comparaObjetos(obj1, obj2);
+    let distintos = comparaObjetos(obj1, obj2, [], 2);
+    let nuevos = comparaObjetos(obj2, obj1, []);
+
+    return {eliminados, distintos, nuevos};
+    
+  }
+
+  const comparaObjetos = (obj1, obj2, diferencias = [], tipoComparacion = 1) => {
+    const prevKeys = Object.keys(obj1);
+
+    prevKeys.forEach(key => {
+        if(Array.isArray(obj1[key])){
+            comparaArrays(obj1[key], obj2[key], diferencias, tipoComparacion, key);
+        }else if(typeof obj1[key] === 'object'){
+            comparaObjetos(obj1[key], obj2[key], diferencias, tipoComparacion);
+        }else{
+            if(
+                //(tipoComparacion === 1 && obj1[key] && !obj2[key]) || 
+                (tipoComparacion === 2 && obj2[key] && compareJSON(obj1[key],obj2[key]))
+            ){
+                diferencias.push({[key]: obj1[key]});
+            }
+        }
+    });
+    return diferencias;
+  }
+
+  const comparaArrays = (prevArr, newArr, diferencias, tipoComparacion, key) => {
+    let dif = []
+    prevArr.forEach((element, id) => {
+        const item = newArr.find(e => e.id = element.id);
+        if(
+            (tipoComparacion === 1 && !item) || 
+            (tipoComparacion === 2 && item && compareJSON(item, element))
+        ){
+            dif.push(element);
+        }
+    });
+    if(dif.length > 0){
+        diferencias.push({[key]: dif});
+    }
+  }

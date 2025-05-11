@@ -26,15 +26,14 @@ export const getPageAtributo = async (desde = 1, regPorPag = 10) => {
 }
 
 
-export const createAtributo = async (data) => {
-    console.log("creando registro", data);
-    const newRecord = await AtributosModel.create(data);
+export const createAtributo = async (data, transaction) => {
+    const newRecord = await AtributosModel.create(data, {transaction});
     return newRecord;
 }
 
 
-export const updateAtributo = async (id, data) => {
-    const [ record, created ] = await AtributosModel.findOrCreate({where:{id}, defaults: data});
+export const updateAtributo = async (id, data, transaction) => {
+    const [ record, created ] = await AtributosModel.findOrCreate({where:{id}, defaults: data, transaction});
     if(created) return {data: record, created};
     // Si el registro ya existe, actualiza los valores
     record.nombre = data.nombre;
@@ -48,8 +47,8 @@ export const updateAtributo = async (id, data) => {
 }
 
 
-export const deleteAtributo = async (id) => {
-    const result = await AtributosModel.destroy({where: {id}});
+export const deleteAtributo = async (id, transaction) => {
+    const result = await AtributosModel.destroy({where: {id}}, {transaction});
     return {id, result};
 }
 

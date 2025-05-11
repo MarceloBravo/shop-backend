@@ -25,7 +25,8 @@ export const AtributosProductoModel = sequelize.define('atributos_producto', {
     },
     deleted_at: {
         type:DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
+        field: 'deleted_at'
     }
 
 },{

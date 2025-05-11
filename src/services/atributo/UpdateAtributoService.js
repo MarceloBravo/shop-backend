@@ -1,12 +1,10 @@
 import { updateAtributo } from '../../repositories/atributo.repository.js';
+import validaDatos from './validaDatos.js';
 
-const updateAtributoService = async (id, data) => {
-    try{
-        const result = await updateAtributo(id, data);
-        return result;
-    } catch (error) {
-        throw new Error("Error al actualizar el atributo: " + error.message);
-    }
+const updateAtributoService = async (id, data, transaction = null) => {
+    validaDatos(data);
+    const result = await updateAtributo(id, data, transaction);
+    return result;
 }
 
 export default updateAtributoService;
