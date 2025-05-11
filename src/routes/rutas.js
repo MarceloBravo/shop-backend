@@ -13,6 +13,7 @@ import tipoDimensiones from './tipoDimensiones.routes.js'
 import usuario from './usuario.routes.js'
 import genero from './genero.routes.js'
 import producto from './producto.routes.js'
+import valoracionProducto from './valoracionProducto.routes.js'
 
 const rutas = [
     {path: '/', router},
@@ -30,6 +31,7 @@ const rutas = [
     {path: '/usuario', router: usuario},
     {path: '/genero', router: genero},
     {path: '/producto', router: producto},
+    {path: '/valoracion_producto', router: valoracionProducto},
 ];
 
 export default rutas;

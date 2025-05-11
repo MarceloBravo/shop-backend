@@ -28,7 +28,7 @@ export const ValoracionProductoModel = sequelize.define('valoraciones_producto',
     email:{
         type: DataTypes.STRING(320),
         allowNull: false,
-        unique: true,
+        unique: false,
         validate: {
             isEmail: true // <-- validación automática
         }

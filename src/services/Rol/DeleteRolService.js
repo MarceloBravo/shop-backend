@@ -1,11 +1,7 @@
 import { deleteRol } from "../../repositories/rol.repository.js"; 
 
 const deleteRolService = async ({id}) => {
-    try {
-        return await deleteRol(id);
-    } catch (error) {
-        throw new Error("Error al eliminar el regístro: " + error.message);
-    }
+    return await deleteRol(id);
 }
 
 export default deleteRolService;

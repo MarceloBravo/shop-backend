@@ -13,6 +13,7 @@ import { TallaNumericaModel } from "../../models/TallaNumericaModel.js";
 import { TallaNumericaProductoModel } from "../../models/TallaNumericaProductoModel.js";
 import { TipoDimensionesModel } from "../../models/TipoDimensionesModel.js";
 import { sequelize } from '../../config/database.js';
+import { ValoracionProductoModel } from "../../models/ValoracionProductoModel.js";
 
 const include = [
         {
@@ -88,6 +89,10 @@ const include = [
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deleted_at'] },
                 }
             ]
+        },
+        {
+            model: ValoracionProductoModel,
+            attributes: { exclude:['producto_id','estrellas','nombre','email','foto'] }
         }
         
     ];
@@ -208,11 +213,10 @@ export const softDeleteProducto = async (id) => {
 export const getProductoQuery = async (id) => {
     const [results, metadata] = await sequelize.query(query,
       {
-        replacements: { id }, // evita inyección SQL
+        replacements: { id },
         type: sequelize.QueryTypes.SELECT
       }
     );
-  
-    // Si esperas un solo resultado:
+    
     return results ?? null;
   };

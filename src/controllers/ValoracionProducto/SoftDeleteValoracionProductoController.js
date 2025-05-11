@@ -1,10 +1,10 @@
-import softDeleteRolService from "../../services/Rol/SoftDeleteRolService.js";
+import softDeleteValoracionProductoService from "../../services/ValoracionProducto/SoftDeleteValoracionProductoService.js";
 import { handleError } from "../../shared/functions.js";
 
-const softDeleteRolController = async (req, res) => {
+const softDeleteValoracionProductoControler = async (req, res) => {
     try {
         const { id } = req.params;
-        const  result  = await softDeleteRolService(id);
+        const  result  = await softDeleteValoracionProductoService(id);
         const resp = {code: result, mensaje : result === 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
         res.json(resp);
     } catch (e) {
@@ -13,4 +13,4 @@ const softDeleteRolController = async (req, res) => {
     }
 }
 
-export default softDeleteRolController;
+export default softDeleteValoracionProductoControler;
