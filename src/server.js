@@ -34,7 +34,7 @@ rutas.forEach(({ path, router }) => {
 //console.log(listEndpoints(app));
 
 try{
-    //await removeDuplicateConstraints()
+    //await removeDuplicateConstraints();
     //await sequelize.sync({alter: true});    //force
     console.log('Conexión establecida con la base de datos...');
     //app.listen(app.get('port'), '0.0.0.0',() => { //heroku

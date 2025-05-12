@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../config/database.js'
 
-export const AdminMenuModel = sequelize.define('admin_menus', {
+export const MenuModel = sequelize.define('menus', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,

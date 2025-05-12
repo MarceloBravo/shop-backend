@@ -5,7 +5,7 @@ const { UsuarioModel ,
         RolPermisosModel, 
         AccionesPantallaModel, 
         PantallaModel, 
-        AdminMenuModel, 
+        MenuModel, 
         ProductoModel, 
         CategoriaModel, 
         SubCategoriaModel, 
@@ -41,8 +41,8 @@ RolPermisosModel.belongsTo(AccionesPantallaModel, { foreignKey: "id_acciones_pan
 PantallaModel.hasMany(AccionesPantallaModel, { foreignKey: "pantalla_id", targetKey: "id" });
 AccionesPantallaModel.belongsTo(PantallaModel, { foreignKey: "pantalla_id", sourceKey: "id" });
 
-PantallaModel.hasMany(AdminMenuModel, { foreignKey: "pantalla_id", targetKey: "id" });
-AdminMenuModel.belongsTo(PantallaModel, { foreignKey: "pantalla_id", sourceKey: "id" });
+PantallaModel.hasMany(MenuModel, { foreignKey: "pantalla_id", targetKey: "id" });
+MenuModel.belongsTo(PantallaModel, { foreignKey: "pantalla_id", sourceKey: "id" });
 
 CategoriaModel.hasMany(SubCategoriaModel, { foreignKey: "categoria_id", targetKey: "id" });
 SubCategoriaModel.belongsTo(CategoriaModel, { foreignKey: "categoria_id", sourceKey: "id" });
