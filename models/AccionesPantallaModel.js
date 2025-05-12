@@ -35,10 +35,10 @@ export const AccionesPantallaModel = sequelize.define('acciones_pantallas', {
         default: false,
         allowNull: false
     },
-    permite_listar:{
+    acceso:{
         type: DataTypes.BOOLEAN,
         default: false,
-        allowNull: false,
+        allowNull: true,
     },
     deleted_at: {
         type:DataTypes.DATE,

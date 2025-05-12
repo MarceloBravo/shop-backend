@@ -13,9 +13,9 @@ const router = Router();
 router.get('/:id', getCategoriaController);
 router.get('', getAllCategoriaController);
 router.get('/page/:pag/:limit?', getPageCategoriaController);
-router.post('', createCategoriaController);
-router.put('/:id', updateCategoriaController);
-router.delete('/:id', deleteCategoriaController);
-router.delete('/borrar/:id', softDeleteCategoriaController);
+router.post('', checkToken, createCategoriaController);
+router.put('/:id', checkToken, updateCategoriaController);
+router.delete('/:id', checkToken, deleteCategoriaController);
+router.delete('/borrar/:id', checkToken, softDeleteCategoriaController);
 
 export default router;
