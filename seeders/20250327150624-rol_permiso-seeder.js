@@ -6,7 +6,7 @@ export default {
     await queryInterface.bulkInsert('roles_permisos', [
       {
         rol_id: 1,
-        id_acciones_pantalla: 1,
+        acciones_pantalla_id: 1,
         crear: false,
         actualizar: false,
         eliminar: false,
@@ -17,7 +17,7 @@ export default {
       },
       {
         rol_id: 1,
-        id_acciones_pantalla: 2,
+        acciones_pantalla_id: 2,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -28,7 +28,7 @@ export default {
       },
       {
         rol_id: 1,
-        id_acciones_pantalla: 2,
+        acciones_pantalla_id: 2,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -39,7 +39,7 @@ export default {
       },
       {
         rol_id: 1,
-        id_acciones_pantalla: 3,
+        acciones_pantalla_id: 3,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -50,7 +50,7 @@ export default {
       },
       {
         rol_id: 1,
-        id_acciones_pantalla: 4,
+        acciones_pantalla_id: 4,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -61,7 +61,7 @@ export default {
       },
       {
         rol_id: 1,
-        id_acciones_pantalla: 5,
+        acciones_pantalla_id: 5,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -72,7 +72,7 @@ export default {
       },
       {
         rol_id: 1,
-        id_acciones_pantalla: 6,
+        acciones_pantalla_id: 6,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -83,7 +83,7 @@ export default {
       },
       {
         rol_id: 2,
-        id_acciones_pantalla: 1,
+        acciones_pantalla_id: 1,
         crear: false,
         actualizar: false,
         eliminar: false,
@@ -94,7 +94,7 @@ export default {
       },
       {
         rol_id: 2,
-        id_acciones_pantalla: 2,
+        acciones_pantalla_id: 2,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -105,7 +105,7 @@ export default {
       },
       {
         rol_id: 2,
-        id_acciones_pantalla: 2,
+        acciones_pantalla_id: 2,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -116,7 +116,7 @@ export default {
       },
       {
         rol_id: 2,
-        id_acciones_pantalla: 3,
+        acciones_pantalla_id: 3,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -127,7 +127,7 @@ export default {
       },
       {
         rol_id: 2,
-        id_acciones_pantalla: 4,
+        acciones_pantalla_id: 4,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -138,7 +138,7 @@ export default {
       },
       {
         rol_id: 2,
-        id_acciones_pantalla: 5,
+        acciones_pantalla_id: 5,
         crear: true,
         actualizar: true,
         eliminar: true,
@@ -149,7 +149,7 @@ export default {
       },
       {
         rol_id: 2,
-        id_acciones_pantalla: 6,
+        acciones_pantalla_id: 6,
         crear: true,
         actualizar: true,
         eliminar: true,

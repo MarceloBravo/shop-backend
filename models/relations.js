@@ -35,8 +35,8 @@ UsuarioModel.belongsTo(RolModel, { foreignKey: "rol_id", targetKey: "id" });
 RolModel.hasMany(RolPermisosModel, { foreignKey: "rol_id", sourceKey: "id" });
 RolPermisosModel.belongsTo(RolModel, { foreignKey: "rol_id", targetKey: "id" });
 
-AccionesPantallaModel.hasMany(RolPermisosModel, { foreignKey: "id_acciones_pantalla", targetKey: "id" });
-RolPermisosModel.belongsTo(AccionesPantallaModel, { foreignKey: "id_acciones_pantalla", sourceKey: "id" });
+AccionesPantallaModel.hasMany(RolPermisosModel, { foreignKey: "acciones_pantalla_id", targetKey: "id" });
+RolPermisosModel.belongsTo(AccionesPantallaModel, { foreignKey: "acciones_pantalla_id", sourceKey: "id" });
 
 PantallaModel.hasMany(AccionesPantallaModel, { foreignKey: "pantalla_id", targetKey: "id" });
 AccionesPantallaModel.belongsTo(PantallaModel, { foreignKey: "pantalla_id", sourceKey: "id" });

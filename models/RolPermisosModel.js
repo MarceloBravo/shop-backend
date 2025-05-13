@@ -16,7 +16,7 @@ export const RolPermisosModel = sequelize.define('roles_permisos', {
             key: 'id'        // Clave primaria de roles
         }
     },
-    id_acciones_pantalla:{
+    acciones_pantalla_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
