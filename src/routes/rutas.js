@@ -17,6 +17,8 @@ import valoracionProducto from './valoracionProducto.routes.js'
 import accionesPantalla from './accionesPantalla.routes.js'
 import menu from './menu.routes.js'
 import rolPermisos from './rolPermisos.routes.js'
+import menuTienda from './menuTienda.routes.js'
+
 
 const rutas = [
     {path: '/', router},
@@ -38,6 +40,7 @@ const rutas = [
     {path: '/acciones_pantalla', router: accionesPantalla},
     {path: '/menu', router: menu},
     {path: '/rol_permisos', router: rolPermisos},
+    {path: '/menu_tienda', router: menuTienda},
 ];
 
 export default rutas;

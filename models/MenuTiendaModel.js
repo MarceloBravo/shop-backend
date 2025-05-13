@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../config/database.js'
 
-export const TiendaMenuModel = sequelize.define('tienda_menus', {
+export const MenuTiendaModel = sequelize.define('menu_tienda', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -42,7 +42,7 @@ export const TiendaMenuModel = sequelize.define('tienda_menus', {
     }
 },{ 
     timestamps: true,
-    tableName: 'tienda_menus',  // Asegura que el nombre de la tabla sea correcto
+    tableName: 'menu_tienda',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {
         beforeCreate: async (menu, options) => {

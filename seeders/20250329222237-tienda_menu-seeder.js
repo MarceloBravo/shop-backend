@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 export default {
   async up (queryInterface, Sequelize) {
-     await queryInterface.bulkInsert('tienda_menus', [
+     await queryInterface.bulkInsert('menu_tienda', [
       {
         nombre: 'Home',
         icono: null,
@@ -78,6 +78,6 @@ export default {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('tienda_menus', null, {});
+    await queryInterface.bulkDelete('menu_tienda', null, {});
   }
 };
