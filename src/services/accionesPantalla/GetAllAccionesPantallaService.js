@@ -1,11 +1,14 @@
-import { getAllAccionesPantalla } from '../../repositories/accionesPantalla.repository.js';
+import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 
-const getAllAccionesPantallaService = async () => {
-    try{
-        return await getAllAccionesPantalla();
-    }catch (error) {
-        throw new Error("Error al obtener los registros: " + error.message);
+class GetAllAccionesPantallaService{
+
+    constructor(repository = new AccionesPantallaRepository()){
+        this.repository = repository;
+    }
+
+    getAllAccionesPantallaService = async () => {
+        return await this.repository.getAllAccionesPantalla();
     }
 }
 
-export default getAllAccionesPantallaService;
+export default GetAllAccionesPantallaService;

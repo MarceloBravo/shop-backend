@@ -1,9 +1,18 @@
-import { updateRol } from "../../repositories/rol.repository.js";
+import RolRepository from "../../repositories/RolRepository.js";
 import validaDatos from './ValidaDatos.js.js';
 
-const updateRolService = async (id, data) => {
-    validaDatos(data);
-    return await updateRol(id, data);
+
+class UpdateRolService{
+
+    constructor(repository = new RolRepository()){
+        this.repository = repository;
+    }
+
+
+    updateRol = async (id, data) => {
+        validaDatos(data);
+        return await this.repository.updateRol(id, data);
+    }
 }
 
-export default updateRolService;
+export default UpdateRolService;

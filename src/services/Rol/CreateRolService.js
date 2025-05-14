@@ -1,9 +1,16 @@
-import { createRol } from "../../repositories/rol.repository.js";
+import RolRepository from "../../repositories/RolRepository.js";
 import validaDatos from './ValidaDatos.js.js';
 
-const createRolService = async (data) => {
-    validaDatos(data);
-    return await createRol(data);
+class CreateRolService{
+    
+    constructor(repository = new RolRepository()){
+        this.repository = repository;
+    }
+
+    createRol = async (data) => {
+        validaDatos(data);
+        return await this.repository.createRol(data);
+    }
 }
 
-export default createRolService;
+export default CreateRolService;

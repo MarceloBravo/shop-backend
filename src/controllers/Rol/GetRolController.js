@@ -1,15 +1,22 @@
-import getRolService from "../../services/Rol/GetRolService.js";
+import GetRolService from "../../services/Rol/GetRolService.js";
 import { handleError } from "../../shared/functions.js";
 
-const getRolController = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const data = await getRolService(id);
-        res.json(data);
-    } catch (e) {
-        const err = handleError(e);
-        res.status(err.code).json(err);
+class GetRolController{
+
+    constructor(service = new GetRolService()){
+        this.service = service;
+    }
+
+    getRol = async (req, res) => {
+        try {
+            const { id } = req.params;
+            const data = await this.service.getRol(id);
+            res.json(data);
+        } catch (e) {
+            const err = handleError(e);
+            res.status(err.code).json(err);
+        }
     }
 }
 
-export default getRolController;
+export default GetRolController;

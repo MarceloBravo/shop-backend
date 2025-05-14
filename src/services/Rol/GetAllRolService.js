@@ -1,7 +1,14 @@
-import { getAllRol } from "../../repositories/rol.repository.js";
+import RolRepository from "../../repositories/RolRepository.js";
 
-const getAllRolService = async () => {
-    return await getAllRol();
+class GetAllRolService{
+
+    constructor(repository = new RolRepository()){
+        this.repository = repository;
+    }
+
+    getAllRol = async () => {
+        return await this.repository.getAllRol();
+    }
 }
 
-export default getAllRolService;
+export default GetAllRolService;

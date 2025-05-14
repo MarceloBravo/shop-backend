@@ -1,12 +1,16 @@
-import { softDeleteAccionesPantalla } from '../../repositories/accionesPantalla.repository.js';
+import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 
-const softDeleteAccionesPantallaService = async (id) => {
-    try {
-        const record = await softDeleteAccionesPantalla(id);
+class SoftDeleteAccionesPantallaService{
+    
+    constructor(repository = new AccionesPantallaRepository()){
+        this.repository = repository;
+    }
+
+
+    softDeleteAccionesPantallaService = async (id) => {
+        const record = await this.repository.softDeleteAccionesPantalla(id);
         return (record && record?.deleted_at !== null ? 200 : 404);
-    } catch (error) {
-        throw new Error("Error al eliminar el accionesPantalla: " + error.message);
     }
 }
 
-export default softDeleteAccionesPantallaService;
+export default SoftDeleteAccionesPantallaService;

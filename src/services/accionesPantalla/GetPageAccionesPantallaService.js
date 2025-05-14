@@ -1,13 +1,17 @@
-import { getPageAccionesPantalla } from '../../repositories/accionesPantalla.repository.js';
+import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 
-const getPageAccionesPantallaService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
+class GetPageAccionesPantallaService{
+
+    constructor(repository = new AccionesPantallaRepository()){
+        this.repository = repository;
+    }
+
+
+    getPageAccionesPantallaService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
         const desde = (pag - 1) * limit;
-        const result = await getPageAccionesPantalla(desde, limit);
+        const result = await this.repository.getPageAccionesPantalla(desde, limit);
         return result;
-    } catch (error) {
-        throw new Error("Error al obtener la página con registros: " + error.message);
     }
 }
 
-export default getPageAccionesPantallaService;
+export default GetPageAccionesPantallaService;

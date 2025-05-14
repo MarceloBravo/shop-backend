@@ -1,11 +1,15 @@
-import { deleteAccionesPantalla } from '../../repositories/accionesPantalla.repository.js';
+import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 
-const deleteAccionesPantallaService = async ({id}) => {
-    try{
-        return await deleteAccionesPantalla(id);
-    } catch (error) {
-        throw new Error("Error al eliminar el accionesPantalla: " + error.message);
+
+class DeleteAccionesPantallaService{
+
+    constructor(repository = new AccionesPantallaRepository()){
+        this.repository = repository;
+    }
+
+    deleteAccionesPantallaService = async ({id}) => {
+        return await this.repository.deleteAccionesPantalla(id);
     }
 }
 
-export default deleteAccionesPantallaService;
+export default DeleteAccionesPantallaService;

@@ -1,7 +1,14 @@
-import { deleteRol } from "../../repositories/rol.repository.js"; 
+import RolRepository from "../../repositories/RolRepository.js"; 
 
-const deleteRolService = async ({id}) => {
-    return await deleteRol(id);
+class DeleteRolService{
+
+    constructor(repository = new RolRepository()){
+        this.repository = repository;
+    }
+
+    deleteRol = async ({id}) => {
+        return await this.repository.deleteRol(id);
+    }
 }
 
-export default deleteRolService;
+export default DeleteRolService;

@@ -1,8 +1,15 @@
-import { softDeleteRol } from "../../repositories/rol.repository.js";
+import RolRepository from "../../repositories/RolRepository.js";
 
-const softDeleteRolService = async (id) => {
-    const record = await softDeleteRol(id);
-    return (record && record.deleted_at !== null ? 200: 404);
+class SoftDeleteRolService{
+
+    constructor(repository = new RolRepository()){
+        this.repository = repository;
+    }
+
+    softDeleteRol = async (id) => {
+        const record = await this.repository.softDeleteRol(id);
+        return (record && record.deleted_at !== null ? 200: 404);
+    }
 }
 
-export default softDeleteRolService;
+export default SoftDeleteRolService;
