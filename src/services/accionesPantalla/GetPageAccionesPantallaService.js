@@ -7,9 +7,9 @@ class GetPageAccionesPantallaService{
     }
 
 
-    getPageAccionesPantallaService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
+    getPage = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
         const desde = (pag - 1) * limit;
-        const result = await this.repository.getPageAccionesPantalla(desde, limit);
+        const result = await this.repository.getPage(desde, limit);
         return result;
     }
 }

@@ -6,8 +6,8 @@ class SoftDeleteRolService{
         this.repository = repository;
     }
 
-    softDeleteRol = async (id) => {
-        const record = await this.repository.softDeleteRol(id);
+    softDelete = async (id, transaction = null) => {
+        const record = await this.repository.softDelete(id, transaction);
         return (record && record.deleted_at !== null ? 200: 404);
     }
 }

@@ -1,14 +1,14 @@
 import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 
-class GetAccionesPantallaService{
+class GetOneAccionesPantallaService{
 
     constructor(repository = new AccionesPantallaRepository()){
         this.repository = repository;
     }
 
-    getAccionesPantallaService = async (id) => {
-        return await this.repository.getAccionesPantalla(id);
+    getOne = async (id) => {
+        return await this.repository.getOne(id);
     }
 }
 
-export default GetAccionesPantallaService;
+export default GetOneAccionesPantallaService;

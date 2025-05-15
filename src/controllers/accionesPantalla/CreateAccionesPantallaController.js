@@ -9,7 +9,7 @@ class CreateAccionesPantallaController{
 
     create = async (req, res) => {
         try{        
-            const data = await this.service.createAccionesPantallaService(req.body);
+            const data = await this.service.create(req.body);
             res.json({data, mensaje: 'El registro ha sido creado exitosamente.'});
         }catch(e){
             const err = handleError(e);

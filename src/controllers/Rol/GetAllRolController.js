@@ -7,9 +7,9 @@ class GetAllRolController{
         this.service = service;
     }
 
-    getAllRol = async (req, res) => {
+    getAll = async (req, res) => {
         try {
-            const data = await this.service.getAllRol();
+            const data = await this.service.getAll();
             res.json(data);
         } catch (e) {
             const err = handleError(e);

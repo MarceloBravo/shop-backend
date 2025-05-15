@@ -6,9 +6,9 @@ class GetPageRolService{
         this.repository = repository;
     }
 
-    getPageRol = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {    
+    getPage = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {    
         const desde = (page - 1) * limit;
-        const result = await this.repository.getPageRol(desde, limit);    
+        const result = await this.repository.getPage(desde, limit);    
         return result;
     }
 }   

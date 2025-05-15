@@ -1,16 +1,16 @@
-import GetRolService from "../../services/Rol/GetRolService.js";
+import GetOneRolService from "../../services/Rol/GetOneRolService.js";
 import { handleError } from "../../shared/functions.js";
 
-class GetRolController{
+class GetOneRolController{
 
-    constructor(service = new GetRolService()){
+    constructor(service = new GetOneRolService()){
         this.service = service;
     }
 
-    getRol = async (req, res) => {
+    getOne = async (req, res) => {
         try {
             const { id } = req.params;
-            const data = await this.service.getRol(id);
+            const data = await this.service.getOne(id);
             res.json(data);
         } catch (e) {
             const err = handleError(e);
@@ -19,4 +19,4 @@ class GetRolController{
     }
 }
 
-export default GetRolController;
+export default GetOneRolController;

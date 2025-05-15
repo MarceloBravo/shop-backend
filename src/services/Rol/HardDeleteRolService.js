@@ -1,14 +1,14 @@
 import RolRepository from "../../repositories/RolRepository.js"; 
 
-class DeleteRolService{
+class HardDeleteRolService{
 
     constructor(repository = new RolRepository()){
         this.repository = repository;
     }
 
-    deleteRol = async ({id}) => {
-        return await this.repository.deleteRol(id);
+    hardDelete = async ({id}) => {
+        return await this.repository.hardDelete(id);
     }
 }
 
-export default DeleteRolService;
+export default HardDeleteRolService;

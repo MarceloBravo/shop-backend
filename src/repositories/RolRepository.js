@@ -1,13 +1,13 @@
 import { RolModel } from "../../models/RolModel.js";
 
 class RolRepository{
-    getRol = async (id) => {
+    getOne = async (id) => {
         const data = await RolModel.findByPk(id);
         return (data && data.deleted_at == null) ? data : null;
     }
 
 
-    getAllRol = async () => {
+    getAll = async () => {
         const { rows, count } = await RolModel.findAndCountAll({
             where: {deleted_at: null},
             order: [['nombre','ASC']]
@@ -16,7 +16,7 @@ class RolRepository{
     }
 
 
-    getPageRol = async (desde, regPorPag) => {
+    getPage = async (desde, regPorPag) => {
         const { rows , count } = await RolModel.findAndCountAll({
             where: {deleted_at: null},
             offset:desde,
@@ -27,13 +27,13 @@ class RolRepository{
     }
 
 
-    createRol = async (values) => {
+    create = async (values) => {
         const data = await RolModel.create(values);
         return data;
     }
 
 
-    updateRol = async (id, data) => {
+    update = async (id, data) => {
         const [ Rol, created ] = await RolModel.findOrCreate({where:{id}, defaults: data});
         if(created) return {data: Rol, created};
         // Si el registro ya existe, actualiza los valores
@@ -46,19 +46,15 @@ class RolRepository{
     }
 
 
-    deleteRol = async (id) => {
-        const result = await RolModel.destroy({where: {id}});
+    hardDelete = async (id, transaction) => {
+        const result = await RolModel.destroy({where: {id}, transaction, force: true, paranoid: false});
         return {id, result};
     }
 
 
-    softDeleteRol = async (id) => {
-        const record = await RolModel.findByPk(id);
-        const eliminado = (record && record.deleted_at !== null);
-        if(eliminado === null || eliminado === true)return null;
-        record.deleted_at = new Date();
-        await record.save();
-        return record;
+    softDelete = async (id, transaction) => {
+        const result = await RolModel.destroy({where: {id}, transaction});
+        return {id, result};
     }
 
 }

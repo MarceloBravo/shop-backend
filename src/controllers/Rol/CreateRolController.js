@@ -7,9 +7,9 @@ class CreateRolController{
         this.controller = service;
     }
 
-    createRol = async (req, res) => {
+    create = async (req, res) => {
         try {
-            const data = await this.controller.createRol(req.body);
+            const data = await this.controller.create(req.body);
             res.json({ data, mensaje: 'El regístro ha sido creado exitosamente.' });
         }catch(e){
             const err = handleError(e);

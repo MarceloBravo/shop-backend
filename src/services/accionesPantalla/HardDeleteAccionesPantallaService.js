@@ -1,15 +1,16 @@
 import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 
 
-class DeleteAccionesPantallaService{
+class HardDeleteAccionesPantallaService{
 
     constructor(repository = new AccionesPantallaRepository()){
         this.repository = repository;
     }
 
-    deleteAccionesPantallaService = async ({id}) => {
-        return await this.repository.deleteAccionesPantalla(id);
+    hardDelete = async ({id}) => {
+        return await this.repository.hardDelete(id);
     }
 }
 
-export default DeleteAccionesPantallaService;
+export default HardDeleteAccionesPantallaService;
+;

@@ -2,13 +2,13 @@ import { AccionesPantallaModel } from "../../models/AccionesPantallaModel.js";
 
 class AccionesPantallaRepository{
 
-    getAccionesPantalla = async (id) => {
+    getOne = async (id) => {
         const data = await AccionesPantallaModel.findByPk(id);
         return (data && data.deleted_at == null) ? data : null;
     }
 
 
-    getAllAccionesPantalla = async () => {
+    getAll = async () => {
         const { rows, count } = await AccionesPantallaModel.findAndCountAll({
             where: {deleted_at: null},
             order: [['pantalla_id','ASC']]
@@ -17,7 +17,7 @@ class AccionesPantallaRepository{
     }
 
 
-    getPageAccionesPantalla = async (desde = 1, regPorPag = 10) => {
+    getPage = async (desde = 1, regPorPag = 10) => {
         const { rows , count } = await AccionesPantallaModel.findAndCountAll({
             where: {deleted_at: null},
             offset:desde,
@@ -28,13 +28,13 @@ class AccionesPantallaRepository{
     }
 
 
-    createAccionesPantalla = async (data, transaction) => {
+    create = async (data, transaction) => {
         const newRecord = await AccionesPantallaModel.create(data, {transaction});
         return newRecord;
     }
 
 
-    updateAccionesPantalla = async (id, data, transaction) => {
+    update = async (id, data, transaction) => {
         const [ record, created ] = await AccionesPantallaModel.findOrCreate({where:{id}, defaults: data, transaction});
         if(created) return {data: record, created};
         // Si el registro ya existe, actualiza los valores
@@ -52,21 +52,15 @@ class AccionesPantallaRepository{
     }
 
 
-    deleteAccionesPantalla = async (id, transaction) => {
-        const result = await AccionesPantallaModel.destroy({where: {id}}, {transaction});
+    hardDelete = async (id, transaction) => {
+        const result = await AccionesPantallaModel.destroy({where: {id}, transaction, force: true, paranoid: false});
         return {id, result};
     }
 
 
-    softDeleteAccionesPantalla = async (id) => {
-        const record = await AccionesPantallaModel.findByPk(id);
-        const eliminado = (record && record.deleted_at !== null);
-        
-        if(eliminado === null || eliminado === true)return null;
-
-        record.deleted_at = new Date();
-        await record.save();
-        return record;
+    softDelete = async (id, transaction) => {
+        const result = await AccionesPantallaModel.destroy({where: {id}, transaction});
+        return {id, result};
     }
 }
 

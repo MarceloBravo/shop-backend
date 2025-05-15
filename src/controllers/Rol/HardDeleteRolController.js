@@ -1,15 +1,15 @@
-import DeleteRolService from '../../services/Rol/DeleteRolService.js';
+import HardDeleteRolService from '../../services/Rol/HardDeleteRolService.js';
 import { handleError } from "../../shared/functions.js";
 
-class DeleteRolController{
+class HardDeleteRolController{
 
-    constructor(service = new DeleteRolService()){
+    constructor(service = new HardDeleteRolService()){
         this.service = service;
     }
     
-    deleteRol = async (req, res) => {
+    hardDelete = async (req, res) => {
         try {
-            const {id, result } = await this.service.deleteRol(req.params);
+            const {id, result } = await this.service.hardDelete(req.params);
             const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminar o registro inexistente';  
             res.json({ id, code: result ? 200 : 500, mensaje });
         } catch (e) {
@@ -19,4 +19,4 @@ class DeleteRolController{
     }
 }
 
-export default DeleteRolController;
+export default HardDeleteRolController;

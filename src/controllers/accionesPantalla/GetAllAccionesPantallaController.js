@@ -10,7 +10,7 @@ class GetAllAccionesPantallaController{
 
     getAll = async (req, res) => {
         try{
-            const data = await this.service.getAllAccionesPantallaService();
+            const data = await this.service.getAll();
             res.json(data);
         }catch(e){
             const err = handleError(e);

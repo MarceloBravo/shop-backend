@@ -7,9 +7,9 @@ class CreateAccionesPantallaService{
         this.repository = repository;
     }
 
-    createAccionesPantallaService = async (data, transaccion = null) => {
+    create = async (data, transaccion = null) => {
         validaDatos(data);
-        return await this.repository.createAccionesPantalla(data, transaccion);
+        return await this.repository.create(data, transaccion);
     }
 }
 

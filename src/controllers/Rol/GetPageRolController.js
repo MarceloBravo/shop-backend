@@ -7,10 +7,10 @@ class GetPageRolController{
         this.service = service;
     }
 
-    getPageRol = async (req, res) => { 
+    getPage = async (req, res) => { 
         try {
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag} = await this.service.getPageRol(pag, limit);
+            const { rows , count, totPag} = await this.service.getPage(pag, limit);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
         } catch (e) {
             const err = handleError(e);

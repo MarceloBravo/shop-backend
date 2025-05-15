@@ -7,9 +7,9 @@ class CreateRolService{
         this.repository = repository;
     }
 
-    createRol = async (data) => {
+    create = async (data) => {
         validaDatos(data);
-        return await this.repository.createRol(data);
+        return await this.repository.create(data);
     }
 }
 

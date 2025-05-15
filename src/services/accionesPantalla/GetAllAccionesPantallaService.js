@@ -6,8 +6,8 @@ class GetAllAccionesPantallaService{
         this.repository = repository;
     }
 
-    getAllAccionesPantallaService = async () => {
-        return await this.repository.getAllAccionesPantalla();
+    getAll = async () => {
+        return await this.repository.getAll();
     }
 }
 

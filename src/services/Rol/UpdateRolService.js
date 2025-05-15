@@ -9,9 +9,9 @@ class UpdateRolService{
     }
 
 
-    updateRol = async (id, data) => {
+    update = async (id, data) => {
         validaDatos(data);
-        return await this.repository.updateRol(id, data);
+        return await this.repository.update(id, data);
     }
 }
 

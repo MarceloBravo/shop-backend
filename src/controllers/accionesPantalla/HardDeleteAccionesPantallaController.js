@@ -1,15 +1,15 @@
-import DeleteAccionesPantallaService from '../../services/accionesPantalla/DeleteAccionesPantallaService.js';
+import HardDeleteAccionesPantallaService from '../../services/accionesPantalla/HardDeleteAccionesPantallaService.js';
 import { handleError } from "../../shared/functions.js";
 
-class DeleteAccionesPantallaController{
+class HardDeleteAccionesPantallaController{
 
-    constructor(service = new DeleteAccionesPantallaService()){
+    constructor(service = new HardDeleteAccionesPantallaService()){
         this.service = service;
     }
     
-    delete = async (req, res) => {
+    hardDelete = async (req, res) => {
         try{
-            const {id, result } = await this.service.deleteAccionesPantallaService(req.params);
+            const {id, result } = await this.service.hardDelete(req.params);
             const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';  
             res.json({ id, code: result ? 200 : 500, mensaje });
         }catch(e){
@@ -19,4 +19,4 @@ class DeleteAccionesPantallaController{
     }
 }
 
-export default DeleteAccionesPantallaController;
+export default HardDeleteAccionesPantallaController;

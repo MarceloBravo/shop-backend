@@ -6,8 +6,8 @@ class GetAllRolService{
         this.repository = repository;
     }
 
-    getAllRol = async () => {
-        return await this.repository.getAllRol();
+    getAll = async () => {
+        return await this.repository.getAll();
     }
 }
 

@@ -11,12 +11,9 @@ export const RolModel = sequelize.define('roles', {
         type: DataTypes.STRING(50),
         allowNull: false,
         unique: true
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
 },{
+    paranoid: true,       // Habilita el soft delete
     timestamps: true,
     tableName: 'roles',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase

@@ -39,12 +39,9 @@ export const AccionesPantallaModel = sequelize.define('acciones_pantallas', {
         type: DataTypes.BOOLEAN,
         default: false,
         allowNull: true,
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true,
     }
 },{ 
+    paranoid: true,       // Habilita el soft delete
     timestamps: true,
     tableName: 'acciones_pantallas',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase

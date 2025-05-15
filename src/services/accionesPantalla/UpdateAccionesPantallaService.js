@@ -7,9 +7,9 @@ class UpdateAccionesPantallaService{
         this.repository = repository;
     }
     
-    updateAccionesPantallaService = async (id, data, transaction = null) => {
+    update = async (id, data, transaction = null) => {
         validaDatos(data, true);
-        const result = await this.repository.updateAccionesPantalla(id, data, transaction);
+        const result = await this.repository.update(id, data, transaction);
         return result;
     }
 }

@@ -1,14 +1,14 @@
 import RolRepository from "../../repositories/RolRepository.js";
 
-class GetRolService{
+class GetOneRolService{
 
     constructor(repository = new RolRepository()){
         this.repository= repository;
     }
 
-    getRol = async (id) => {
-        return await this.repository.getRol(id);
+    getOne = async (id) => {
+        return await this.repository.getOne(id);
     }
 }
 
-export default GetRolService;
+export default GetOneRolService;

@@ -7,10 +7,10 @@ class SoftDeleteRolController{
         this.service = service;
     }
 
-    softDeleteRol = async (req, res) => {
+    softDelete = async (req, res) => {
         try {
             const { id } = req.params;
-            const  result  = await this.service.softDeleteRol(id);
+            const  result  = await this.service.softDelete(id);
             const resp = {code: result, mensaje : result === 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
             res.json(resp);
         } catch (e) {
