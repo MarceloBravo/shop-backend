@@ -1,12 +1,14 @@
-import { softDeleteAtributo } from '../../repositories/atributo.repository.js';
+import AtributosRepository from '../../repositories/AtributosRepository.js';
 
-const softDeleteAtributoService = async (id) => {
-    try {
-        const record = await softDeleteAtributo(id);
-        return (record && record?.deleted_at !== null ? 200 : 404);
-    } catch (error) {
-        throw new Error("Error al eliminar el atributo: " + error.message);
+class SoftDeleteAtributoService {
+    
+    constructor(repository = new AtributosRepository) {
+        this.repository = repository;
     }
-}
 
-export default softDeleteAtributoService;
+    softDelete = async (id, transaction = null) => {
+        return await this.repository.softDelete(id, transaction);
+    }
+}   
+
+export default SoftDeleteAtributoService;

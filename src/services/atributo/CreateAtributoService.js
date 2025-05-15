@@ -1,9 +1,17 @@
-import { createAtributo } from '../../repositories/atributo.repository.js';
+import AtributosRepository from '../../repositories/AtributosRepository.js';
 import validaDatos from './validaDatos.js';
 
-const createAtributoService = async (data, transaccion = null) => {
-    validaDatos(data);
-    return await createAtributo(data, transaccion);
+class CreateAtributoService{
+    
+    constructor(repository = new AtributosRepository){
+        this.repository = repository;
+    }
+
+
+    create = async (data, transaccion = null) => {
+        validaDatos(data, this.repository);
+        return await this.repository.create(data, transaccion);
+    }
 }
 
-export default createAtributoService;
+export default CreateAtributoService;

@@ -1,13 +1,16 @@
-import { getPageAtributo } from '../../repositories/atributo.repository.js';
+import AtributosRepository from '../../repositories/AtributosRepository.js';
 
-const getPageAtributoService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
+class GetPageAtributoService {
+        
+    constructor(repository = new AtributosRepository) {
+        this.repository = repository;
+    }
+
+    getPage = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
         const desde = (pag - 1) * limit;
-        const result = await getPageAtributo(desde, limit);
+        const result = await this.repository.getPage(desde, limit, paranoid);
         return result;
-    } catch (error) {
-        throw new Error("Error al obtener la página con registros: " + error.message);
     }
 }
 
-export default getPageAtributoService;
+export default GetPageAtributoService;

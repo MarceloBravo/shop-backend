@@ -1,10 +1,17 @@
-import { updateAtributo } from '../../repositories/atributo.repository.js';
+import AtributosRepository from '../../repositories/AtributosRepository.js';
 import validaDatos from './validaDatos.js';
 
-const updateAtributoService = async (id, data, transaction = null) => {
-    validaDatos(data);
-    const result = await updateAtributo(id, data, transaction);
-    return result;
+class UpdateAtributoService{
+
+    constructor(repository = new AtributosRepository){
+        this.repository = repository;
+    }
+
+    update = async (id, data, transaction = null) => {
+        validaDatos(data, this.repository);
+        const result = await this.repository.update(id, data, transaction);
+        return result;
+    }
 }
 
-export default updateAtributoService;
+export default UpdateAtributoService;

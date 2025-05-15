@@ -18,13 +18,9 @@ export const AtributosModel = sequelize.define('atributos', {
     valor_numerico: {
         type: DataTypes.DOUBLE(15,5),
         allowNull: true,
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true,
     }
-
 },{
+    paranoid: true,         // Habilita el soft delete
     timestamps: true,
     tableName: 'atributos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase

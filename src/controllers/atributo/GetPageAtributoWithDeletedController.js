@@ -1,7 +1,7 @@
 import GetPageAtributoService from "../../services/atributo/GetPageAtributoService.js";
 import { handleError } from "../../shared/functions.js";
 
-class GetPageAtributoController{
+class GetPageAtributoWithDeletedController{
     
     constructor(service = new GetPageAtributoService){
         this.service = service;
@@ -10,7 +10,7 @@ class GetPageAtributoController{
     getPage = async (req, res) => {
         try{
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag } = await this.service.getPage(pag, limit);
+            const { rows , count, totPag } = await this.service.getPage(pag, limit, false);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
         }catch(e){
             const err = handleError(e);
@@ -19,4 +19,4 @@ class GetPageAtributoController{
     }
 }
 
-export default GetPageAtributoController;
+export default GetPageAtributoWithDeletedController;

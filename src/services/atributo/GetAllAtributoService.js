@@ -1,11 +1,13 @@
-import { getAllAtributo } from '../../repositories/atributo.repository.js';
+import AtributosRepository from '../../repositories/AtributosRepository.js';
 
-const getAllAtributoService = async () => {
-    try{
-        return await getAllAtributo();
-    }catch (error) {
-        throw new Error("Error al obtener los registros: " + error.message);
+class GetAllAtributoService{
+    constructor(repository = new AtributosRepository){ 
+        this.repository = repository;
+      }
+    
+    getAll = async (paranoid = true) => {
+        return await this.repository.getAll(paranoid);
     }
 }
 
-export default getAllAtributoService;
+export default GetAllAtributoService;

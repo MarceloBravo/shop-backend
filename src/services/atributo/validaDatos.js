@@ -1,10 +1,9 @@
-import { getAtributo } from '../../repositories/atributo.repository.js';
 
-const validaDatos = (data) => {
+const validaDatos = (data, repository) => {
     let errors = [];
     const { id, nombre, valor_string, valor_numerico } = data;
     
-    if(id && getAtributo(id) === null){
+    if(id && repository.getOne(id) === null){
         errors.push("El atributo no es válido o no existe, especifíca un atributo válido.");
     }
     if(!nombre && !valor_string && !valor_numerico){
