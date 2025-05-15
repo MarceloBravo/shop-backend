@@ -1,4 +1,4 @@
-import { updateProducto } from '../../repositories/producto.repository.js';
+import { updateProducto } from '../../repositories/ProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
 const updateProductoService = async (id, data, transaction = null) => {

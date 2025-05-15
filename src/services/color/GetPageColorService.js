@@ -1,13 +1,14 @@
-import { getPageColor } from '../../repositories/color.repository.js';
+import ColorRepository from '../../repositories/ColorRepository.js';
 
-const getPageColorService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
-        const desde = (pag - 1) * limit;
-        const result = await getPageColor(desde, limit);
-        return result;
-    } catch (error) {
-        throw new Error("Error al obtener la página: " + error.message);
+class GetPageColorService {
+    constructor(repository = new ColorRepository()) {
+        this.repository = repository;
     }
-}
 
-export default getPageColorService;
+    getPage = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
+        const desde = (pag - 1) * limit;
+        return await this.repository.getPage(desde, limit, paranoid);
+    }
+}   
+
+export default GetPageColorService;

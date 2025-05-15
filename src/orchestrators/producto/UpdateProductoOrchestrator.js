@@ -9,8 +9,8 @@ import updateTallaNumeroProductoService from '../../services/tallaNumeroProducto
 import updatePesoProductoService from '../../services/pesoProducto/UpdatePesoProductoService.js';
 import updateAtributoService from '../../services/atributo/UpdateAtributoService.js';
 
-import createAtributoProductoService from '../../services/atributoProducto/CreateAtributoProductoService.js';
-import createAtributoService from '../../services/atributo/CreateAtributoService.js';
+import CreateAtributoProductoService from '../../services/atributoProducto/CreateAtributoProductoService.js';
+import CreateAtributoService from '../../services/atributo/CreateAtributoService.js';
 import createMaterialProductoService from '../../services/materialProducto/CreateMaterialProductoService.js';
 import createTallaLetraProductoService from '../../services/tallaLetraProducto/CreateTallaLetraProductoService.js';
 import createTallaNumeroProductoService from '../../services/tallaNumeroProducto/CreateTallaNumeroProductoService.js';

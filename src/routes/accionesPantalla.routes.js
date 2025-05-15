@@ -13,8 +13,8 @@ import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-const getOneAccionesPantallaController = new GetOneAccionesPantallaController();
-const getOneAccionesPantallaWithDeletedController = new GetOneAccionesPantallaWithDeletedController();
+const getByIdAccionesPantallaController = new GetOneAccionesPantallaController();
+const getByIdAccionesPantallaWithDeletedController = new GetOneAccionesPantallaWithDeletedController();
 const getAllAccionesPantallaController = new GetAllAccionesPantallaController();
 const getAllAccionesPantallaWithDeletedController = new GetAllAccionesPantallaWithDeletedController();
 const getPageAccionesPantallaController = new GetPageAccionesPantallaController();
@@ -26,10 +26,10 @@ const softDeleteAccionesPantallaController = new SoftDeleteAccionesPantallaContr
 
 
 router.get('/deleted', checkToken, getAllAccionesPantallaWithDeletedController.getAll);
-router.get('/deleted/:id', checkToken, getOneAccionesPantallaWithDeletedController.getOne);
+router.get('/deleted/:id', checkToken, getByIdAccionesPantallaWithDeletedController.getById);
 router.get('/deleted/page/:pag/:limit?', checkToken, getPageAccionesPantallaWithDeletedController.getPage);
 router.get('/', checkToken, getAllAccionesPantallaController.getAll);
-router.get('/:id', checkToken, getOneAccionesPantallaController.getOne);
+router.get('/:id', checkToken, getByIdAccionesPantallaController.getById);
 router.get('/page/:pag/:limit?', checkToken, getPageAccionesPantallaController.getPage);
 router.post('/', checkToken, createAccionesPantallaController.create);
 router.put('/:id', checkToken, updateAccionesPantallaController.update);

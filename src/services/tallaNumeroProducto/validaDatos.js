@@ -1,5 +1,5 @@
 import { getTallaNumero } from '../../repositories/tallaNumero.repository.js';
-import { getProducto } from '../../repositories/producto.repository.js';
+import { getProducto } from '../../repositories/ProductoRepository.js';
 
 const validaDatos = (data) => {
     let errors = [];

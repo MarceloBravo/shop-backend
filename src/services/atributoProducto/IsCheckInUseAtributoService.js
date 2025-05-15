@@ -1,7 +1,15 @@
-import { isCheckInUse } from '../../repositories/atributoProducto.repository.js';
+import AtributoProductoRepository from '../../repositories/AtributoProductoRepository.js';
 
-const isCheckInUseAtributoService = async (id, transaccion = null) => {
-    return await isCheckInUse(id);
+class IsCheckInUseAtributoService{
+
+    constructor(repository = new AtributoProductoRepository()){
+        this.repository = repository; 
+
+    }
+    
+    isCheckInUseAtributoService = async (id) => {
+        return await this.repository.isCheckInUse(id);
+    }
 }
 
-export default isCheckInUseAtributoService;
+export default IsCheckInUseAtributoService;

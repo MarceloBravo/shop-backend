@@ -1,11 +1,14 @@
-import { getColor } from '../../repositories/color.repository.js';
+import ColorRepository from '../../repositories/ColorRepository.js';
 
-const getColorService = async (id) => {
-    try{
-        return await getColor(id);
-    }catch (error) {
-        throw new Error("Error al obtener el color: " + error.message);
+class GetColorService {
+    constructor(repository = new ColorRepository()) {
+        this.repository = repository;
     }
-}
 
-export default getColorService;
+    getById = async (id, paranoid = true) => {
+        return await this.repository.getById(id, paranoid);
+    }
+}   
+
+
+export default GetColorService;

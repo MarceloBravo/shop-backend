@@ -6,8 +6,8 @@ class GetOneRolService{
         this.repository= repository;
     }
 
-    getOne = async (id, paranoid = true) => {
-        return await this.repository.getOne(id, paranoid);
+    getById = async (id, paranoid = true) => {
+        return await this.repository.getById(id, paranoid);
     }
 }
 

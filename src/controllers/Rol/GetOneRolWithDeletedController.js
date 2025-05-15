@@ -7,10 +7,10 @@ class GetOneRolWithDeletedController{
         this.service = service;
     }
 
-    getOne = async (req, res) => {
+    getById = async (req, res) => {
         try {
             const { id } = req.params;
-            const data = await this.service.getOne(id, false);
+            const data = await this.service.getById(id, false);
             res.json(data);
         } catch (e) {
             const err = handleError(e);

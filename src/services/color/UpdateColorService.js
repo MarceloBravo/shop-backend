@@ -1,12 +1,15 @@
-import { updateColor } from '../../repositories/color.repository.js';
+import ColorRepository from '../../repositories/ColorRepository.js';
+import validaDatos from './validaDatos.js';
 
-const updateColorService = async (id, data) => {
-    try{
-        const result = await updateColor(id, data);
-        return result;
-    } catch (error) {
-        throw new Error("Error al actualizar el color: " + error.message);
-    }
+class updateColorService{
+    constructor(repository = new ColorRepository()){
+        this.repository = repository; 
+    }       
+    
+    update = async (id, data, transaction = null) => {
+        validaDatos(data);
+        return await this.repository.update(id, data, transaction);
+    }   
 }
 
 export default updateColorService;

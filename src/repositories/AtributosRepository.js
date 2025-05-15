@@ -2,7 +2,7 @@ import { AtributosModel } from "../../models/AtributosModel.js";
 
 class AtributosRepository{
 
-    getOne = async (id, paranoid = true) => {
+    getById = async (id, paranoid = true) => {
         const data = await AtributosModel.findByPk(id, {paranoid});
         return data;
     }

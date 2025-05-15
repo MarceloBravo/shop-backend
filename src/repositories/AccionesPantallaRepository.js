@@ -2,7 +2,7 @@ import { AccionesPantallaModel } from "../../models/AccionesPantallaModel.js";
 
 class AccionesPantallaRepository{
 
-    getOne = async (id, paranoid = true) => {
+    getById = async (id, paranoid = true) => {
         const data = await AccionesPantallaModel.findByPk(id, {paranoid});
         return data;
     }

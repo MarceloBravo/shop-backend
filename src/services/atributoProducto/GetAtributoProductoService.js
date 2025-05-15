@@ -1,11 +1,13 @@
-import { getAtributoProducto } from '../../repositories/atributoProducto.repository.js';
+import AtributoProductoRepository from '../../repositories/AtributoProductoRepository.js';
 
-const getAtributoProductoService = async (id) => {
-    try{
-        return await getAtributoProducto(id);
-    }catch (error) {
-        throw new Error("Error al obtener el atributo del producto: " + error.message);
+class GetAtributoProductoService{
+    constructor(repository = new AtributoProductoRepository()){
+        this.repository = repository;
+    }   
+
+    getById = async (id, paranoid = true) => {
+        return await this.repository.getById(id, paranoid);
     }
 }
 
-export default getAtributoProductoService;
+export default GetAtributoProductoService;

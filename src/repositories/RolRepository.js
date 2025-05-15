@@ -1,7 +1,7 @@
 import { RolModel } from "../../models/RolModel.js";
 
 class RolRepository{
-    getOne = async (id, paranoid = true) => {
+    getById = async (id, paranoid = true) => {
         const data = await RolModel.findByPk(id, {paranoid});
         return data;
     }

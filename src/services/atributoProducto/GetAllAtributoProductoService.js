@@ -1,11 +1,19 @@
-import { getAllAtributoProducto } from '../../repositories/atributoProducto.repository.js';
+import AtributoProductoRepository from '../../repositories/AtributoProductoRepository.js';
 
-const getAllAtributoProductoService = async () => {
-    try{
-        return await getAllAtributoProducto();
-    }catch (error) {
-        throw new Error("Error al obtener los atributos del producto: " + error.message);
+class GetAllAtributoProductoService{
+
+    constructor(repository = new AtributoProductoRepository()){
+        this.repository = repository; 
+    }   
+    
+    /**
+     * Obtiene todos los registros de AtributoProducto
+     * @param {boolean} paranoid - Si es true, incluye los registros eliminados lógicamente.
+     * @returns {Promise<Array>} - Lista de registros de AtributoProducto.
+     */ 
+    getAll = async (paranoid = true) => {
+        return await this.repository.getAll(paranoid);
     }
 }
 
-export default getAllAtributoProductoService;
+export default GetAllAtributoProductoService;

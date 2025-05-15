@@ -1,15 +1,41 @@
 import { sequelize } from '../../../config/database.js';
-import createProductoService from '../../services/producto/CreateProductoService.js';
-import createAtributoProductoService from '../../services/atributoProducto/CreateAtributoProductoService.js';
+import CreateProductoService from '../../services/producto/CreateProductoService.js';
+import CreateAtributoProductoService from '../../services/atributoProducto/CreateAtributoProductoService.js';
 import createColorProductoService from '../../services/colorProducto/CreateColorProductoService.js';
 import createMaterialProductoService from '../../services/materialProducto/CreateMaterialProductoService.js';
 import createTallaLetraProductoService from '../../services/tallaLetraProducto/CreateTallaLetraProductoService.js';
 import createTallaNumeroProductoService from '../../services/tallaNumeroProducto/CreateTallaNumeroProductoService.js';
 import createPesoProductoService from '../../services/pesoProducto/CreatePesoProductoService.js';
-import createAtributoService from '../../services/atributo/CreateAtributoService.js';
+import CreateAtributoService from '../../services/atributo/CreateAtributoService.js';
 import createDimensionesProductoService from '../../services/dimensionesProducto/CreateDimensionesProductoService.js';
 
-const createProductoOrchestrator = async (data) => {
+class CreateProductoOrchestrator{
+
+  constructor(
+    createProductoService = new CreateProductoService(),
+    createAtributoProductoService = new CreateAtributoProductoService(),
+    //createColorProductoService = new createColorProductoService(),
+    //createMaterialProductoService = new createMaterialProductoService(),
+    //createTallaLetraProductoService = new createTallaLetraProductoService(),
+    //createTallaNumeroProductoService = new createTallaNumeroProductoService(),
+    //createPesoProductoService = new createPesoProductoService(),
+    createAtributoService = new CreateAtributoService(),
+    //createDimensionesProductoService = new createDimensionesProductoService()
+  ) {
+    this.createProductoService = createProductoService;
+    this.createAtributoProductoService = createAtributoProductoService;
+    //this.createColorProductoService = createColorProductoService;
+    //this.createMaterialProductoService = createMaterialProductoService;
+    //this.createTallaLetraProductoService = createTallaLetraProductoService;
+    //this.createTallaNumeroProductoService = createTallaNumeroProductoService;
+    //this.createPesoProductoService = createPesoProductoService;
+    this.createAtributoService = createAtributoService;
+    //this.createDimensionesProductoService = createDimensionesProductoService;
+  }
+}
+
+
+createProducto = async (data) => {
   const {
     sku,
     nombre,
@@ -35,7 +61,7 @@ const createProductoOrchestrator = async (data) => {
   const transaction = await sequelize.transaction(); // Inicia la transacción
   try{
     // Grabando el registro principal del producto
-    const record1 = await createProductoService(producto, transaction);
+    const record1 = await this.createProductoService.create(producto, transaction);
     
     if(!record1 || !record1.id){
       throw new Error("Error al intentar registrar el producto.")
@@ -78,13 +104,13 @@ const createProductoOrchestrator = async (data) => {
 
 const grabarAtributos = async (atributos, transaction) => {
   return await Promise.all(atributos.map(async data => {
-    return await createAtributoService(data, transaction);
+    return await this.createAtributoService.create(data, transaction);
   }));
 }
 
 const grabarAtributosProducto = async (producto_id, atributos, transaction) => {
   return await Promise.all(atributos.map(async elem => {
-    return await createAtributoProductoService({producto_id, atributo_id: elem.id}, transaction);
+    return await this.createAtributoProductoService.create({producto_id, atributo_id: elem.id}, transaction);
   }));
 }
 
@@ -109,7 +135,7 @@ const grabarTallasNumericas = async (producto_id, tallas, transaction) => {
   return results;
 }
 
-export default createProductoOrchestrator;
+export default CreateProductoOrchestrator;
 
 
 

@@ -14,8 +14,8 @@ import { checkToken } from '../shared/mw_token.js';
 const router = Router();
 // Instanciar los controladores
 const createRolController = new CreateRolController();
-const getOneRolController = new GetOneRolController();
-const getOneRolWithDeletedController = new GetOneRolWithDeletedController();
+const getByIdRolController = new GetOneRolController();
+const getByIdRolWithDeletedController = new GetOneRolWithDeletedController();
 const getAllRolController = new GetAllRolController();
 const getAllRolWithDeletedController = new GetAllRolWithDeletedController();
 const getPageRolController = new GetPageRolController();
@@ -26,10 +26,10 @@ const softDeleteRolController = new SoftDeleteRolController();
 
 // Definir las rutas
 router.get('/deleted', checkToken, getAllRolWithDeletedController.getAll);
-router.get('/deleted/:id', checkToken, getOneRolWithDeletedController.getOne);
+router.get('/deleted/:id', checkToken, getByIdRolWithDeletedController.getById);
 router.get('/deleted/page/:pag/:limit?', checkToken, getPageRolWithDeletedController.getPage);
 router.post('/', checkToken, createRolController.create);
-router.get('/:id', checkToken, getOneRolController.getOne);
+router.get('/:id', checkToken, getByIdRolController.getById);
 router.get('/', checkToken, getAllRolController.getAll);
 router.get('/page/:pag/:limit?', checkToken, getPageRolController.getPage);
 router.put('/:id', checkToken, updateRolController.update);

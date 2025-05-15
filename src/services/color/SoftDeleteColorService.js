@@ -1,12 +1,14 @@
-import { softDeleteColor } from '../../repositories/color.repository.js';
+import ColorRepository from '../../repositories/ColorRepository.js';
 
-const softDeleteColorService = async (id) => {
-    try {
-        const record = await softDeleteColor(id);
-        return (record && record?.deleted_at !== null ? 200 : 404);
-    } catch (error) {
-        throw new Error("Error al eliminar el color: " + error.message);
+class SoftDeleteColorService{
+    constructor(repository = new ColorRepository()) {
+        this.repository = repository;
     }
+
+    softDelete = async (id, transaction = null) => {
+        const record = await this.repository.softDelete(id, transaction);
+        return (record && record?.deleted_at !== null ? 200 : 404);
+    }       
 }
 
-export default softDeleteColorService;
+export default SoftDeleteColorService;

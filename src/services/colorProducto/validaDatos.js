@@ -1,5 +1,5 @@
-import { getColor } from '../../repositories/color.repository.js';
-import { getProducto } from '../../repositories/producto.repository.js';
+import { getColor } from '../../repositories/ColorRepository.js';
+import { getProducto } from '../../repositories/ProductoRepository.js';
 
 const validaDatos = (data) => {
     let errors = [];

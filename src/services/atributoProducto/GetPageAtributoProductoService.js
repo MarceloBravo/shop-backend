@@ -1,13 +1,21 @@
-import { getPageAtributoProducto } from '../../repositories/atributoProducto.repository.js';
+import AtributoProductoRepository from '../../repositories/AtributoProductoRepository.js';
 
-const getPageAtributoProductoService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
-        const desde = (pag - 1) * limit;
-        const result = await getPageAtributoProducto(desde, limit);
-        return result;
-    } catch (error) {
-        throw new Error("Error al obtener la página con los atributos del producto: " + error.message);
+
+class GetPageAtributoProductoService{
+
+    constructor(repository = new AtributoProductoRepository()){
+        this.repository = repository; 
+    }   
+
+    getPage = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
+        try{
+            const desde = (pag - 1) * limit;
+            const result = await this.repository.getPage(desde, limit);
+            return result;
+        } catch (error) {
+            throw new Error("Error al obtener la página con los atributos del producto: " + error.message);
+        }
     }
 }
 
-export default getPageAtributoProductoService;
+export default GetPageAtributoProductoService;

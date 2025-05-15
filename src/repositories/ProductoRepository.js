@@ -139,84 +139,85 @@ const query = `SELECT
                 WHERE
                     p.ID = :id;`
 
-// ************************ Métodos ************************
-export const getProducto = async (id) => {
-    const data = await ProductoModel.findByPk(id, {include});
-    return (data && data.deleted_at == null) ? data : null;
+class ProductoRepository {
+    constructor(){
+        this.include = include;
+        this.query = query; 
+    }
+
+    getById = async (id, paranoid = true) => {
+        const data = await ProductoModel.findByPk(id, {include, paranoid});
+        return data;
+    }
+
+
+    getAll = async (orderBy = [['nombre', 'ASC']], paranoid = true) => {
+        const { rows, count } = await ProductoModel.findAndCountAll({
+            order: orderBy,
+            include,
+            paranoid
+        },);
+        return {data: rows, count};
+    }
+
+
+    getPage = async (desde = 1, regPorPag = 10, orderBy = [['nombre', 'ASC']], paranoid = true) => {
+        const { rows , count } = await ProductoModel.findAndCountAll({
+            offset:desde,
+            limit: regPorPag,
+            order: orderBy,
+            include,
+            paranoid
+        });    
+        return {rows, count, totPag: Math.ceil(count / regPorPag)};
+    }
+
+
+    create = async (data, transaction) => {
+        const result = await ProductoModel.create(data, {transaction});
+        return result;
+    }
+
+
+    update = async (id, data, transaction) => {
+        const [ record, created ] = await ProductoModel.findOrCreate({where:{id}, defaults: data, transaction});
+        if(created) return {data: producto, created};
+        // Si el registro ya existe, actualiza los valores
+        record.sku        = data.sku;
+        record.nombre        = data.nombre;
+        record.descripcion   = data.descripcion;
+        record.sub_categoria_id = data.sub_categoria_id;
+        record.genero_id     = data.genero_id;
+        record.precio        = data.precio;
+        record.deleted_at    = null;
+
+        await record.save();
+
+        return {data: record, created};
+    }
+
+
+    hardDelete = async (id, transaction) => {
+        const result = await ProductoModel.destroy({where: {id}},{transaction, force: true, paranoid: false});
+        return {id, result};
+    }
+
+
+    softDelete = async (id) => {
+        const result = await ProductoModel.destroy({where: {id}},{transaction});
+        return {id, result};
+    }
+
+
+    selectQuery = async (id) => {
+        const [results, metadata] = await sequelize.query(query,
+        {
+            replacements: { id },
+            type: sequelize.QueryTypes.SELECT
+        });
+        
+        return results ?? null;
+    };
 }
 
-
-export const getAllProducto = async (orderBy = [['nombre', 'ASC']]) => {
-    const { rows, count } = await ProductoModel.findAndCountAll({
-        where: {deleted_at: null},
-        order: orderBy,
-        include
-    },);
-    return {data: rows, count};
-}
-
-
-export const getPageProducto = async (desde = 1, regPorPag = 10, orderBy = [['nombre', 'ASC']]) => {
-    const { rows , count } = await ProductoModel.findAndCountAll({
-        where: {deleted_at: null},
-        offset:desde,
-        limit: regPorPag,
-        order: orderBy,
-        include
-    });    
-    return {rows, count, totPag: Math.ceil(count / regPorPag)};
-}
-
-
-export const createProducto = async (data, transaction) => {
-    const result = await ProductoModel.create(data, {transaction});
-    return result;
-}
-
-
-export const updateProducto = async (id, data, transaction) => {
-    const [ record, created ] = await ProductoModel.findOrCreate({where:{id}, defaults: data, transaction});
-    if(created) return {data: producto, created};
-    // Si el registro ya existe, actualiza los valores
-    record.sku        = data.sku;
-    record.nombre        = data.nombre;
-    record.descripcion   = data.descripcion;
-    record.sub_categoria_id = data.sub_categoria_id;
-    record.genero_id     = data.genero_id;
-    record.precio        = data.precio;
-    record.deleted_at    = null;
-
-    await record.save();
-
-    return {data: record, created};
-}
-
-
-export const deleteProducto = async (id, transaction) => {
-    const result = await ProductoModel.destroy({where: {id}},{transaction});
-    return {id, result};
-}
-
-
-export const softDeleteProducto = async (id) => {
-    const record = await ProductoModel.findByPk(id);
-    const eliminado = (record && record.deleted_at !== null);
-    
-    if(eliminado === null || eliminado === true)return null;
-
-    record.deleted_at = new Date();
-    await record.save();
-    return record;
-}
-
-
-export const getProductoQuery = async (id) => {
-    const [results, metadata] = await sequelize.query(query,
-      {
-        replacements: { id },
-        type: sequelize.QueryTypes.SELECT
-      }
-    );
-    
-    return results ?? null;
-  };
+export default ProductoRepository;  

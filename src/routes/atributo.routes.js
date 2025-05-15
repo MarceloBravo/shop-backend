@@ -13,8 +13,8 @@ import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-const getOneAtributoController = new GetOneAtributoController();
-const getOneAtributoWithDeletedController = new GetOneAtributoWithDeletedController();
+const getByIdAtributoController = new GetOneAtributoController();
+const getByIdAtributoWithDeletedController = new GetOneAtributoWithDeletedController();
 const getAllAtributoController = new GetAllAtributoController();
 const getAllAtributoWithDeletedController = new GetAllAtributoWithDeletedController();
 const getPageAtributoController = new GetPageAtributoController();
@@ -25,10 +25,10 @@ const hardDeleteAtributoController = new HardDeleteAtributoController();
 const softDeleteAtributoController = new SoftDeleteAtributoController();
 
 router.get('/deleted', checkToken, getAllAtributoWithDeletedController.getAll);
-router.get('/deleted/:id', checkToken, getOneAtributoWithDeletedController.getOne);
+router.get('/deleted/:id', checkToken, getByIdAtributoWithDeletedController.getById);
 router.get('/deleted/page/:pag/:limit?', checkToken, getPageAtributoWithDeletedController.getPage);
 
-router.get('/:id', getOneAtributoController.getOne);
+router.get('/:id', getByIdAtributoController.getById);
 router.get('/', getAllAtributoController.getAll);
 router.get('/page/:pag/:limit?', getPageAtributoController.getPage);
 router.post('/', checkToken, createAtributoController.create);

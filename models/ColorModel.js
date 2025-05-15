@@ -24,13 +24,10 @@ export const ColorModel = sequelize.define('colores', {
             notEmpty: true,
             len: [3, 30]
         }
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
 
 },{
+    paranoid: true,         // Habilita el borrado lógico
     timestamps: true,
     tableName: 'colores',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
