@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import CreateRolController from '../controllers/Rol/CreateRolController.js';
 import GetOneRolController from '../controllers/Rol/GetOneRolController.js';
+import GetOneRolWithDeletedController from '../controllers/Rol/GetOneRolWithDeletedController.js';
 import GetAllRolController from '../controllers/Rol/GetAllRolController.js';
+import GetAllRolWithDeletedController from '../controllers/Rol/GetAllRolWithDeletedController.js';
 import GetPageRolController from '../controllers/Rol/GetPageRolController.js';
+import GetPageRolWithDeletedController from '../controllers/Rol/GetPageRolWithDeletedController.js';
 import UpdateRolController from '../controllers/Rol/UpdateRolController.js';
 import HardDeleteRolController from '../controllers/Rol/HardDeleteRolController.js';
 import SoftDeleteRolController from '../controllers/Rol/SoftDeleteRolController.js';
@@ -12,13 +15,19 @@ const router = Router();
 // Instanciar los controladores
 const createRolController = new CreateRolController();
 const getOneRolController = new GetOneRolController();
+const getOneRolWithDeletedController = new GetOneRolWithDeletedController();
 const getAllRolController = new GetAllRolController();
+const getAllRolWithDeletedController = new GetAllRolWithDeletedController();
 const getPageRolController = new GetPageRolController();
+const getPageRolWithDeletedController = new GetPageRolWithDeletedController();
 const updateRolController = new UpdateRolController();
 const hardDeleteRolController = new HardDeleteRolController();
 const softDeleteRolController = new SoftDeleteRolController();
 
 // Definir las rutas
+router.get('/deleted', checkToken, getAllRolWithDeletedController.getAll);
+router.get('/deleted/:id', checkToken, getOneRolWithDeletedController.getOne);
+router.get('/deleted/page/:pag/:limit?', checkToken, getPageRolWithDeletedController.getPage);
 router.post('/', checkToken, createRolController.create);
 router.get('/:id', checkToken, getOneRolController.getOne);
 router.get('/', checkToken, getAllRolController.getAll);

@@ -1,27 +1,27 @@
 import { RolModel } from "../../models/RolModel.js";
 
 class RolRepository{
-    getOne = async (id) => {
-        const data = await RolModel.findByPk(id);
-        return (data && data.deleted_at == null) ? data : null;
+    getOne = async (id, paranoid = true) => {
+        const data = await RolModel.findByPk(id, {paranoid});
+        return data;
     }
 
 
-    getAll = async () => {
+    getAll = async (paranoid = true) => {
         const { rows, count } = await RolModel.findAndCountAll({
-            where: {deleted_at: null},
-            order: [['nombre','ASC']]
+            order: [['nombre','ASC']],
+            paranoid
         });
         return {data: rows, count};
     }
 
 
-    getPage = async (desde, regPorPag) => {
+    getPage = async (desde, regPorPag, paranoid = true) => {
         const { rows , count } = await RolModel.findAndCountAll({
-            where: {deleted_at: null},
             offset:desde,
             limit: regPorPag,
-            order: [['nombre','ASC']]
+            order: [['nombre','ASC']],
+            paranoid
         });
         return {rows, count, totPag: Math.ceil(count / regPorPag)};
     }

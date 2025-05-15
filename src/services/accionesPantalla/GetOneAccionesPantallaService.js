@@ -6,8 +6,8 @@ class GetOneAccionesPantallaService{
         this.repository = repository;
     }
 
-    getOne = async (id) => {
-        return await this.repository.getOne(id);
+    getOne = async (id, paranoid = true) => {
+        return await this.repository.getOne(id, paranoid);
     }
 }
 

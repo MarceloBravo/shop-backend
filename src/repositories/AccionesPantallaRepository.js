@@ -2,27 +2,27 @@ import { AccionesPantallaModel } from "../../models/AccionesPantallaModel.js";
 
 class AccionesPantallaRepository{
 
-    getOne = async (id) => {
-        const data = await AccionesPantallaModel.findByPk(id);
-        return (data && data.deleted_at == null) ? data : null;
+    getOne = async (id, paranoid = true) => {
+        const data = await AccionesPantallaModel.findByPk(id, {paranoid});
+        return data;
     }
 
 
-    getAll = async () => {
+    getAll = async (paranoid = true) => {
         const { rows, count } = await AccionesPantallaModel.findAndCountAll({
-            where: {deleted_at: null},
-            order: [['pantalla_id','ASC']]
+            order: [['pantalla_id','ASC']],
+            paranoid
         });
         return {data: rows, count};
     }
 
 
-    getPage = async (desde = 1, regPorPag = 10) => {
+    getPage = async (desde = 1, regPorPag = 10, paranoid = true) => {
         const { rows , count } = await AccionesPantallaModel.findAndCountAll({
-            where: {deleted_at: null},
             offset:desde,
             limit: regPorPag,
-            order: [['pantalla_id','ASC']]
+            order: [['pantalla_id','ASC']],
+            paranoid
         });    
         return {rows, count, totPag: Math.ceil(count / regPorPag)};
     }
