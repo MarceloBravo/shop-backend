@@ -6,7 +6,7 @@ class SoftDeleteAtributoService {
         this.repository = repository;
     }
 
-    softDelete = async (id, transaction = null) => {
+    delete = async (id, transaction = null) => {
         return await this.repository.softDelete(id, transaction);
     }
 }   

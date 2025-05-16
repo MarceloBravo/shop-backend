@@ -1,11 +1,11 @@
-import GetOneAccionesPantallaService from '../../services/accionesPantalla/GetOneAccionesPantallaService.js';
+import GetByIdAccionesPantallaService from '../../services/accionesPantalla/GetByIdAccionesPantallaService.js';
 import { handleError } from "../../shared/functions.js";
 
 
-class GetOneAccionesPantallaWithDeletedController{
+class GetByIdAccionesPantallaWithDeletedController{
 
 
-    constructor(service = new GetOneAccionesPantallaService()){
+    constructor(service = new GetByIdAccionesPantallaService()){
         this.service = service;
     }
     
@@ -21,4 +21,4 @@ class GetOneAccionesPantallaWithDeletedController{
     }
 }
 
-export default GetOneAccionesPantallaWithDeletedController;
+export default GetByIdAccionesPantallaWithDeletedController;

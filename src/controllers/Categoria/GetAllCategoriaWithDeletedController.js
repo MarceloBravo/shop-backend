@@ -1,14 +1,14 @@
 import GetAllCategoriaService from '../../services/Categoria/GetAllCategoriaService.js';
 import { handleError } from "../../shared/functions.js";
 
-class GetAllCategoriaController {
+class GetAllCategoriaWithDeletedController {
     constructor(service = new GetAllCategoriaService()) {
         this.service = service;
     }
 
     getAll = async (req, res) => {
         try {
-            const data = await this.service.getAll();
+            const data = await this.service.getAll(false);
             res.json(data);
         } catch (e) {
             const err = handleError(e);
@@ -18,4 +18,4 @@ class GetAllCategoriaController {
 
 }   
 
-export default GetAllCategoriaController;
+export default GetAllCategoriaWithDeletedController;

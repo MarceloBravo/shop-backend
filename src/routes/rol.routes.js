@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import CreateRolController from '../controllers/Rol/CreateRolController.js';
-import GetOneRolController from '../controllers/Rol/GetOneRolController.js';
-import GetOneRolWithDeletedController from '../controllers/Rol/GetOneRolWithDeletedController.js';
+import GetByIdRolController from '../controllers/Rol/GetByIdRolController.js';
+import GetByIdRolWithDeletedController from '../controllers/Rol/GetByIdRolWithDeletedController.js';
 import GetAllRolController from '../controllers/Rol/GetAllRolController.js';
 import GetAllRolWithDeletedController from '../controllers/Rol/GetAllRolWithDeletedController.js';
 import GetPageRolController from '../controllers/Rol/GetPageRolController.js';
@@ -14,8 +14,8 @@ import { checkToken } from '../shared/mw_token.js';
 const router = Router();
 // Instanciar los controladores
 const createRolController = new CreateRolController();
-const getByIdRolController = new GetOneRolController();
-const getByIdRolWithDeletedController = new GetOneRolWithDeletedController();
+const getByIdRolController = new GetByIdRolController();
+const getByIdRolWithDeletedController = new GetByIdRolWithDeletedController();
 const getAllRolController = new GetAllRolController();
 const getAllRolWithDeletedController = new GetAllRolWithDeletedController();
 const getPageRolController = new GetPageRolController();

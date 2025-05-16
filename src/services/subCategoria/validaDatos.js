@@ -1,4 +1,4 @@
-import { getCategoria } from '../../repositories/categoria.repository.js';
+import CategoriaRepository from "../../repositories/CategoriaRepository.js";
 
 export const validaDatos = async (data) => {
     const errors = [];
@@ -7,7 +7,7 @@ export const validaDatos = async (data) => {
     if(!nombre || nombre.trim().length === 0 || nombre.length > 100){
         errors.push("El nombre ingresado no es válido, ingresa un nombre de hasta 100 carácteres.");
     }
-    if(!categoria_id || (await getCategoria(categoria_id)) === null){
+    if(!categoria_id || await (new CategoriaRepository()).getById(categoria_id) === null){
         errors.push("La categoria ingresada no es váida o no existe, ingresa una categoría válida.");
     }
 

@@ -1,6 +1,6 @@
 import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 
-class GetOneAccionesPantallaService{
+class GetByIdAccionesPantallaService{
 
     constructor(repository = new AccionesPantallaRepository()){
         this.repository = repository;
@@ -11,4 +11,4 @@ class GetOneAccionesPantallaService{
     }
 }
 
-export default GetOneAccionesPantallaService;
+export default GetByIdAccionesPantallaService;

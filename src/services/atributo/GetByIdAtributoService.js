@@ -1,6 +1,6 @@
 import AtributosRepository from '../../repositories/AtributosRepository.js';
 
-class GetOneAtributoService{
+class GetByIdAtributoService{
     constructor(repository = new AtributosRepository){
         this.repository = repository;
     }
@@ -10,4 +10,4 @@ class GetOneAtributoService{
     }
 }   
 
-export default GetOneAtributoService;
+export default GetByIdAtributoService;

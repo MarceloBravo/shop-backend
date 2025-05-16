@@ -1,13 +1,14 @@
-import { getPageCategoria } from "../../repositories/categoria.repository.js";
+import CategoriaRepository from "../../repositories/CategoriaRepository.js";
 
-const getPageCategoriaService = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {    
-    try {
-        const desde = (page - 1) * limit;
-        const result = await getPageCategoria(desde, limit);    
-        return result;
-    } catch (error) {
-        throw new Error("Error al obtener la página: " + error.message);
+class getPageCategoriaService{
+    constructor(repository = new CategoriaRepository()) {
+        this.repository = repository;
     }
+
+    getPage = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
+        const desde = (page - 1) * limit;
+        return await this.repository.getPage(desde, limit);
+    }   
 }
 
 export default getPageCategoriaService;

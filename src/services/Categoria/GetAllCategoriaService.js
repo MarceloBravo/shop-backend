@@ -1,11 +1,14 @@
-import { getAllCategoria } from "../../repositories/categoria.repository.js";
+import CategoriaRepository from "../../repositories/CategoriaRepository.js";
 
-const getAllCategoriaService = async () => {
-    try {
-        return await getAllCategoria();
-    } catch (error) {
-        throw new Error("Error al obtener las categorías: " + error.message);
+class GetAllCategoriaService{   
+    constructor(repository = new CategoriaRepository()) {
+        this.repository = repository;
+    }
+
+    getAll = async (paranoid = true) => {
+        return await this.repository.getAll(paranoid);
     }
 }
 
-export default getAllCategoriaService;
+
+export default GetAllCategoriaService;

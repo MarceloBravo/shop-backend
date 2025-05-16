@@ -1,9 +1,8 @@
-import GetOneRolService from "../../services/Rol/GetOneRolService.js";
+import GetByIdCategoriaService from "../../services/Categoria/GetByIdCategoriaService.js";
 import { handleError } from "../../shared/functions.js";
 
-class GetOneRolController{
-
-    constructor(service = new GetOneRolService()){
+class GetByIdCategoriaController{
+    constructor(service = new GetByIdCategoriaService()) {
         this.service = service;
     }
 
@@ -16,7 +15,7 @@ class GetOneRolController{
             const err = handleError(e);
             res.status(err.code).json(err);
         }
-    }
+    }       
 }
 
-export default GetOneRolController;
+export default GetByIdCategoriaController;

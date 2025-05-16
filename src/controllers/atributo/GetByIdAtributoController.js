@@ -1,16 +1,16 @@
-import GetOneAtributoService from '../../services/atributo/GetOneAtributoService.js';
+import GetByIdAtributoService from '../../services/atributo/GetByIdAtributoService.js';
 import { handleError } from "../../shared/functions.js";
 
-class GetOneAtributoWithDeletedController{    
+class GetByIdAtributoController{    
 
-    constructor(service = new GetOneAtributoService){
+    constructor(service = new GetByIdAtributoService){
         this.service = service;
     }
 
     getById = async (req, res) => {
         try{
             const { id } = req.params
-            const data = await this.service.getById(id, false)
+            const data = await this.service.getById(id)
             res.json(data);
         }catch(e){
             const err = handleError(e);
@@ -19,4 +19,4 @@ class GetOneAtributoWithDeletedController{
     }
 }
 
-export default GetOneAtributoWithDeletedController;
+export default GetByIdAtributoController;

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import GetOneAtributoController from '../controllers/atributo/GetOneAtributoController.js';
-import GetOneAtributoWithDeletedController from '../controllers/atributo/GetOneAtributoWithDeletedController.js';
+import GetByIdAtributoController from '../controllers/atributo/GetByIdAtributoController.js';
+import GetByIdAtributoWithDeletedController from '../controllers/atributo/GetByIdAtributoWithDeletedController.js';
 import GetAllAtributoController from '../controllers/atributo/GetAllAtributoController.js';
 import GetAllAtributoWithDeletedController from '../controllers/atributo/GetAllAtributoWithDeletedController.js';
 import GetPageAtributoController from '../controllers/atributo/GetPageAtributoController.js';
@@ -13,8 +13,8 @@ import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-const getByIdAtributoController = new GetOneAtributoController();
-const getByIdAtributoWithDeletedController = new GetOneAtributoWithDeletedController();
+const getByIdAtributoController = new GetByIdAtributoController();
+const getByIdAtributoWithDeletedController = new GetByIdAtributoWithDeletedController();
 const getAllAtributoController = new GetAllAtributoController();
 const getAllAtributoWithDeletedController = new GetAllAtributoWithDeletedController();
 const getPageAtributoController = new GetPageAtributoController();

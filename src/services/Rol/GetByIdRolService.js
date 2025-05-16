@@ -1,6 +1,6 @@
 import RolRepository from "../../repositories/RolRepository.js";
 
-class GetOneRolService{
+class GetByIdRolService{
 
     constructor(repository = new RolRepository()){
         this.repository= repository;
@@ -11,4 +11,4 @@ class GetOneRolService{
     }
 }
 
-export default GetOneRolService;
+export default GetByIdRolService;

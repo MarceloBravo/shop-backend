@@ -1,12 +1,14 @@
-import GetOneAtributoService from '../../services/atributo/GetOneAtributoService.js';
+import GetByIdAccionesPantallaService from '../../services/accionesPantalla/GetByIdAccionesPantallaService.js';
 import { handleError } from "../../shared/functions.js";
 
-class GetOneAtributoController{    
 
-    constructor(service = new GetOneAtributoService){
+class GetByIdAccionesPantallaController{
+
+
+    constructor(service = new GetByIdAccionesPantallaService()){
         this.service = service;
     }
-
+    
     getById = async (req, res) => {
         try{
             const { id } = req.params
@@ -19,4 +21,4 @@ class GetOneAtributoController{
     }
 }
 
-export default GetOneAtributoController;
+export default GetByIdAccionesPantallaController;

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import GetOneAccionesPantallaController from '../controllers/accionesPantalla/GetOneAccionesPantallaController.js';
-import GetOneAccionesPantallaWithDeletedController from '../controllers/accionesPantalla/GetOneAccionesPantallaWithDeletedController.js';
+import GetByIdAccionesPantallaController from '../controllers/accionesPantalla/GetByIdAccionesPantallaController.js';
+import GetByIdAccionesPantallaWithDeletedController from '../controllers/accionesPantalla/GetByIdAccionesPantallaWithDeletedController.js';
 import GetAllAccionesPantallaController from '../controllers/accionesPantalla/GetAllAccionesPantallaController.js';
 import GetAllAccionesPantallaWithDeletedController from '../controllers/accionesPantalla/GetAllAccionesPantallaWithDeletedController.js';
 import GetPageAccionesPantallaController from '../controllers/accionesPantalla/GetPageAccionesPantallaController.js';
@@ -13,8 +13,8 @@ import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-const getByIdAccionesPantallaController = new GetOneAccionesPantallaController();
-const getByIdAccionesPantallaWithDeletedController = new GetOneAccionesPantallaWithDeletedController();
+const getByIdAccionesPantallaController = new GetByIdAccionesPantallaController();
+const getByIdAccionesPantallaWithDeletedController = new GetByIdAccionesPantallaWithDeletedController();
 const getAllAccionesPantallaController = new GetAllAccionesPantallaController();
 const getAllAccionesPantallaWithDeletedController = new GetAllAccionesPantallaWithDeletedController();
 const getPageAccionesPantallaController = new GetPageAccionesPantallaController();

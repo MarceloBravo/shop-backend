@@ -1,14 +1,14 @@
 import CategoriaRepository from "../../repositories/CategoriaRepository.js";
 
-
-class SoftDeleteCategoriaService{
+class GetByIdCategoriaService{
     constructor(repository = new CategoriaRepository()) {
         this.repository = repository;
     }
 
-    delete = async (id, transaction = null) => {
-        return await this.repository.softDelete(id, transaction);
+    getById = async (id, paranoid = true) => {
+        return await this.repository.getById(id, paranoid);
     }   
 }
 
-export default SoftDeleteCategoriaService;
+
+export default GetByIdCategoriaService;
