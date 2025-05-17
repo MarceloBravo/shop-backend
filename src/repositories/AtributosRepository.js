@@ -35,11 +35,12 @@ class AtributosRepository{
 
 
     update = async (id, data, transaction) => {
-        const [ record, created ] = await AtributosModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
+        let [ record, created ] = await AtributosModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
         if(created) return {data: record, created};
         // Si el registro ya existe, actualiza los valores
         if(record.deleted_at !== null) {
             await record.restore({transaction});
+            created = true;
         }
         record.nombre = data.nombre;
         record.valor_string = data.valor_string;

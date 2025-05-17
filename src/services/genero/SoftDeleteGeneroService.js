@@ -1,12 +1,19 @@
-import { softDeleteGenero } from '../../repositories/genero.repository.js';
+import GeneroRepository from '../../repositories/GeneroRepository.js';
 
-const softDeleteGeneroService = async (id) => {
-    try {
-        const record = await softDeleteGenero(id);
-        return (record && record?.deleted_at !== null ? 200 : 404);
-    } catch (error) {
-        throw new Error("Error al eliminar el registro: " + error.message);
+class SoftDeleteGeneroService{
+    constructor(repository = new GeneroRepository()) {
+        this.repository = repository;
+    }
+
+    /**
+     * @param {number} id - ID del genero a eliminar
+     * @param {boolean} [transaction=true] - Si se debe realizar la transacción
+     * @returns {Promise<*>} - Promesa que se resuelve con el genero eliminado
+     */
+    execute = async (id, transaction = true) => {
+        const record = await this.repository.softDelete(id, transaction);
+        return record;
     }
 }
 
-export default softDeleteGeneroService;
+export default SoftDeleteGeneroService;

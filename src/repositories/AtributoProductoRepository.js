@@ -50,7 +50,7 @@ class AtributoProductoRepository{
 
 
     update = async (id, data, transaction) => {
-        const [record, created] = await AtributosProductoModel.findOrCreate({
+        let [record, created] = await AtributosProductoModel.findOrCreate({
             where: {id},
             defaults: data, 
             transaction,
@@ -61,6 +61,7 @@ class AtributoProductoRepository{
         if (created) return { data: record, created };
         if(record.deleted_at !== null) {
             await record.restore({transaction});
+            created = true;
         }
 
         record.producto_id = data.producto_id;

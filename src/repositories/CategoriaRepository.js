@@ -35,11 +35,12 @@ class CategoriaRepository {
 
 
     update = async (id, data, transaction = null) => {
-        const [ Categoria, created ] = await CategoriaModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
+        let [ Categoria, created ] = await CategoriaModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
         if(created) return {data: Categoria, created};
         // Si el registro ya existe, actualiza los valores
         if(Categoria.deleted_at !== null) {
             await Categoria.restore({transaction});
+            created = true;
         }
         Categoria.nombre = data.nombre;
         Categoria.descripcion = data.descripcion;

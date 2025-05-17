@@ -1,27 +1,26 @@
-import { ColorModel } from "../../models/ColorModel.js";
+import { GeneroModel } from "../../models/GeneroModel.js";
 
-class ColorRepository{
+class GeneroRepository{
     getById = async (id, paranoid = true) => {
-        const data = await ColorModel.findByPk(id,{paranoid});
+        const data = await GeneroModel.findByPk(id, {paranoid});
         return data;
     }
 
 
     getAll = async (paranoid = true) => {
-        const { rows, count } = await ColorModel.findAndCountAll({
-            order: [['nombre','ASC']],
+        const { rows, count } = await GeneroModel.findAndCountAll({
+            order: [['genero','ASC']],
             paranoid
-
         });
         return {data: rows, count};
     }
 
 
     getPage = async (desde = 1, regPorPag = 10, paranoid = true) => {
-        const { rows , count } = await ColorModel.findAndCountAll({
+        const { rows , count } = await GeneroModel.findAndCountAll({
             offset:desde,
             limit: regPorPag,
-            order: [['nombre','ASC']],
+            order: [['genero','ASC']],
             paranoid
         });    
         return {rows, count, totPag: Math.ceil(count / regPorPag)};
@@ -29,22 +28,20 @@ class ColorRepository{
 
 
     create = async (values, transaction = null) => {
-        const data = await ColorModel.create(values, {transaction});
+        const data = await GeneroModel.create(values, {transaction});
         return data;
     }
 
 
     update = async (id, data, transaction = null) => {
-        let [ record, created ] = await ColorModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
-        if(created) return {data: record, created};
-        
-        // Si el registro ya existe, actualiza los valores
+        let [ record, created ] = await GeneroModel.findOrCreate({where:{id}, transaction, defaults: data, paranoid:false});
+        if(created) return {data: genero, created};
         if(record.deleted_at !== null) {
             await record.restore({transaction});
             created = true;
         }
-        record.nombre = data.nombre;
-        record.valor = data.valor;
+        // Si el registro ya existe, actualiza los valores
+        record.genero = data.genero;
 
         await record.save();
 
@@ -53,15 +50,15 @@ class ColorRepository{
 
 
     hardDelete = async (id, transaction = null) => {
-        const result = await ColorModel.destroy({where: {id}, transaction, paranoid: false, force: true});
+        const result = await GeneroModel.destroy({where: {id}}, {transaction, force: true, paranoid: false});
         return {id, result};
     }
 
 
     softDelete = async (id, transaction = null) => {
-        const result = await ColorModel.destroy({where: {id}, transaction});
+        const result = await GeneroModel.destroy({where: {id}},{transaction});
         return {id, result};
     }
 }
 
-export default ColorRepository;
+export default GeneroRepository;

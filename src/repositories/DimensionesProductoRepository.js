@@ -4,8 +4,7 @@ class DimensionesProductoRepository {
 
      getById = async (id, paranoid = true) => {
         const data = await DimensionesProductoModel.findByPk(id,{paranoid});
-
-        return (data && data.deleted_at == null) ? data : null;
+        return data;
     }
 
 
@@ -36,7 +35,7 @@ class DimensionesProductoRepository {
 
 
      update = async (id, data, transaction ) => {
-        const [record, created] = await DimensionesProductoModel.findOrCreate({
+        let [record, created] = await DimensionesProductoModel.findOrCreate({
             where: {id},
             defaults: data,
             transaction,
@@ -45,13 +44,11 @@ class DimensionesProductoRepository {
         if (created) return { data: record, created };
         if(record.deleted_at !== null) {
             await record.restore({transaction});
+            created = true;
         }
         record.producto_id = data.producto_id;
         record.dimensiones_id = data.dimensiones_id;
         
-        // Si el registro ya existe, actualiza los valores
-        record.deleted_at = null;
-
         await record.save();
 
         return {data: record, created};

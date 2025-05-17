@@ -1,11 +1,19 @@
-import { getAllGenero } from '../../repositories/genero.repository.js';
+import GeneroRepository from '../../repositories/GeneroRepository.js';
 
-const getAllGeneroService = async () => {
-    try{
-        return await getAllGenero();
-    }catch (error) {
-        throw new Error("Error al obtener el listado de registros: " + error.message);
+class GetAllGeneroService {
+    constructor(repository = new GeneroRepository()) {
+        this.repository = repository;
     }
-}
 
-export default getAllGeneroService;
+    /**
+     * @param {boolean} [paranoid=true] - Si se deben incluir los registros eliminados
+     * @returns {Promise<{data: *, count: number}>} - Promesa que se resuelve con los generos encontrados
+     * */
+    execute = async (paranoid = true) => {
+        const {data, count} = await this.repository.getAll(paranoid);
+        return {data, count};
+    }
+}   
+
+
+export default GetAllGeneroService;

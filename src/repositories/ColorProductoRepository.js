@@ -51,7 +51,7 @@ class ColorProductoRepository {
 
 
     update = async (id, data, transaction) => {
-        const [record, created] = await ColorProductoModel.findOrCreate({
+        let [record, created] = await ColorProductoModel.findOrCreate({
             where: {id},
             defaults: data,
             transaction,
@@ -61,6 +61,7 @@ class ColorProductoRepository {
         if (created) return { data: record, created };
         if(record.deleted_at !== null) {
             await record.restore({transaction});
+            created = true;
         }
         record.producto_id = data.producto_id;
         record.color_id = data.color_id;

@@ -2,13 +2,13 @@ import GetAllGeneroService from '../../services/genero/GetAllGeneroService.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener todos los registros de género
+ * Controlador para obtener todos los registros de género incluyendo los registros marcados como eliminados
  * @class
-* @param {GetAllGeneroService} service - Servicio para obtener todos los registros de género
-* @returns {GetAllGeneroController} - Instancia del controlador
-* @description Este controlador se encarga de manejar la lógica para obtener todos los registros de género.
-* */
-class GetAllGeneroController{
+ * @param {GetAllGeneroService} service - Servicio para obtener todos los registros de género
+ * @returns {GetAllGeneroWithDeletedController} - Instancia del controlador
+ * @description Este controlador se encarga de manejar la lógica para obtener todos los registros de género.
+ * */
+class GetAllGeneroWithDeletedController{
     constructor(service = new GetAllGeneroService()) {
         this.service = service;
     }
@@ -20,7 +20,7 @@ class GetAllGeneroController{
      */
     execute = async (req, res) => {
         try{
-            const data = await this.service.execute();
+            const data = await this.service.execute(false);
             res.json(data);
         }catch(e){
             const err = handleError(e);
@@ -30,5 +30,5 @@ class GetAllGeneroController{
 
 }
 
-export default GetAllGeneroController;
+export default GetAllGeneroWithDeletedController;
 

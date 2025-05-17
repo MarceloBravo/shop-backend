@@ -1,13 +1,20 @@
-import { getPageGenero } from '../../repositories/genero.repository.js';
+import GeneroRepository from '../../repositories/GeneroRepository.js';
 
-const getPageGeneroService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
+class GetPageGeneroService{
+    constructor(repository = new GeneroRepository()) {
+        this.repository = repository;
+    }
+
+    /**
+     * @param {number} pag - Número de página
+     * @param {number} limit - Número de registros por página
+     * @returns {Promise<{data: *, count: number}>} - Promesa que se resuelve con los generos encontrados
+     */
+    execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
         const desde = (pag - 1) * limit;
-        const result = await getPageGenero(desde, limit);
+        const result = await this.repository.getPage(desde, limit, paranoid);
         return result;
-    } catch (error) {
-        throw new Error("Error al obtener la página con registros: " + error.message);
     }
 }
 
-export default getPageGeneroService;
+export default GetPageGeneroService;

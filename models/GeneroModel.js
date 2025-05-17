@@ -18,21 +18,11 @@ export const GeneroModel = sequelize.define('generos', {
     }
 
 },{
+    paranoid: true,             // Habilita el soft delete
     timestamps: true,
     tableName: 'generos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,            // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (color, options) => {
-            color.created_at = new Date();
-            color.updated_at = new Date();
-        },
-        beforeUpdate: async (color, options) => {
-            color.updated_at = new Date();
-        },
-        beforeDestroy: async (color, options) => {
-            color.deleted_at = new Date();
-        }
-    }
+    deletedAt: 'deleted_at', // Cambia el nombre de la columna de soft delete
 });
 
 

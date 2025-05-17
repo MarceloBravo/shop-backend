@@ -2,13 +2,13 @@ import GetPageGeneroService from "../../services/genero/GetPageGeneroService.js"
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una página de registros de género
+ * Controlador para obtener una página de registros de género incluyendo los registros marcados como eliminados
  * @class
  * @param {GetPageGeneroService} service - Servicio para obtener una página de registros de género
- * @returns {GetPageGeneroController} - Instancia del controlador
+ * @returns {GetPageGeneroWithDeletedController} - Instancia del controlador
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de género.
  * */
-class GetPageGeneroController{
+class GetPageGeneroWithDeletedController{
     constructor(service = new GetPageGeneroService()) {
         this.service = service;
     }
@@ -21,7 +21,7 @@ class GetPageGeneroController{
     execute = async (req, res) => {
         try{
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag } = await this.service.execute(pag, limit);
+            const { rows , count, totPag } = await this.service.execute(pag, limit, false);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
         }catch(e){
             const err = handleError(e);
@@ -31,4 +31,4 @@ class GetPageGeneroController{
 
 }
 
-export default GetPageGeneroController;
+export default GetPageGeneroWithDeletedController;
