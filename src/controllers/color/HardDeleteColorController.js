@@ -6,10 +6,10 @@ class HardDeleteColorController{
         this.service = service;
     }
 
-    delete = async (req, res) => {
+    execute = async (req, res) => {
         try {
             const {id} = req.params;
-            const resp = await this.service.hardDelete(id);
+            const resp = await this.service.execute(id);
             const mensaje = resp.result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente';  
             res.json({ id, code: resp.result ? 200 : 500, mensaje });
         } catch (error) {

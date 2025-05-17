@@ -24,16 +24,16 @@ const updateAtributoController = new UpdateAtributoController();
 const hardDeleteAtributoController = new HardDeleteAtributoController();
 const softDeleteAtributoController = new SoftDeleteAtributoController();
 
-router.get('/deleted', checkToken, getAllAtributoWithDeletedController.getAll);
-router.get('/deleted/:id', checkToken, getByIdAtributoWithDeletedController.getById);
-router.get('/deleted/page/:pag/:limit?', checkToken, getPageAtributoWithDeletedController.getPage);
+router.get('/deleted', checkToken, getAllAtributoWithDeletedController.execute);
+router.get('/deleted/:id', checkToken, getByIdAtributoWithDeletedController.execute);
+router.get('/deleted/page/:pag/:limit?', checkToken, getPageAtributoWithDeletedController.execute);
 
-router.get('/:id', getByIdAtributoController.getById);
-router.get('/', getAllAtributoController.getAll);
-router.get('/page/:pag/:limit?', getPageAtributoController.getPage);
-router.post('/', checkToken, createAtributoController.create);
-router.put('/:id', checkToken, updateAtributoController.update);
-router.delete('/:id', checkToken, hardDeleteAtributoController.delete);
-router.patch('/:id', checkToken, softDeleteAtributoController.delete);
+router.get('/:id', getByIdAtributoController.execute);
+router.get('/', getAllAtributoController.execute);
+router.get('/page/:pag/:limit?', getPageAtributoController.execute);
+router.post('/', checkToken, createAtributoController.execute);
+router.put('/:id', checkToken, updateAtributoController.execute);
+router.delete('/:id', checkToken, hardDeleteAtributoController.execute);
+router.patch('/:id', checkToken, softDeleteAtributoController.execute);
 
 export default router;

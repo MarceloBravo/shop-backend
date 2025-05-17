@@ -9,7 +9,7 @@ class UpdateRolService{
     }
 
 
-    update = async (id, data) => {
+    execute = async (id, data) => {
         validaDatos(data);
         return await this.repository.update(id, data);
     }

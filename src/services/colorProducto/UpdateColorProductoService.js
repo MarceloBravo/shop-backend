@@ -1,10 +1,16 @@
-import { updateColorProducto } from '../../repositories/colorProducto.repository.js';
+import ColorProductoRepository from '../../repositories/ColorProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
-const updateColorProductoService = async (id, data, transaction = null) => {
-    validaDatos(data);
-    const result = await updateColorProducto(id, data, transaction);
-    return result;
+
+class UpdateColorProductoService{
+    constructor(repository = new ColorProductoRepository()) {
+        this.repository = repository;
+    }
+
+    execute = async (id, data, transaction = null) => {
+        validaDatos(data);
+        return await this.repository.update(id, data, transaction);
+    }       
 }
 
-export default updateColorProductoService;
+export default UpdateColorProductoService;

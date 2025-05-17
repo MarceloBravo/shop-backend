@@ -9,10 +9,10 @@ class GetByIdAccionesPantallaController{
         this.service = service;
     }
     
-    getById = async (req, res) => {
+    execute = async (req, res) => {
         try{
             const { id } = req.params
-            const data = await this.service.getById(id)
+            const data = await this.service.execute(id)
             res.json(data);
         }catch(e){
             const err = handleError(e);

@@ -6,10 +6,10 @@ class UpdateAtributoController{
         this.service = service;
     }
 
-    update = async (req, res) => {
+    execute = async (req, res) => {
         try{
             const { id } = req.params;
-            const result = await this.service.update(id, req.body);
+            const result = await this.service.execute(id, req.body);
             res.json({data: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`})
         }catch(e){
             const err = handleError(e);

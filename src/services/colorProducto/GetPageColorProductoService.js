@@ -1,13 +1,15 @@
-import { getPageColorProducto } from '../../repositories/colorProducto.repository.js';
+import ColorProductoRepository from '../../repositories/ColorProductoRepository.js';
 
-const getPageColorProductoService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
-        const desde = (pag - 1) * limit;
-        const result = await getPageColorProducto(desde, limit);
-        return result;
-    } catch (error) {
-        throw new Error("Error al obtener la página con los colors del producto: " + error.message);
+
+class GetPageColorProductoService{
+    constructor(repository = new ColorProductoRepository()) {
+        this.repository = repository;
     }
+
+    execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
+        const desde = (pag - 1) * limit;
+        return await this.repository.getPage(desde, limit, paranoid);
+    }           
 }
 
-export default getPageColorProductoService;
+export default GetPageColorProductoService;

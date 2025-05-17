@@ -11,7 +11,7 @@ class GetAllAtributoProductoService{
      * @param {boolean} paranoid - Si es true, incluye los registros eliminados lógicamente.
      * @returns {Promise<Array>} - Lista de registros de AtributoProducto.
      */ 
-    getAll = async (paranoid = true) => {
+    execute = async (paranoid = true) => {
         return await this.repository.getAll(paranoid);
     }
 }

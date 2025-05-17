@@ -25,14 +25,14 @@ const hardDeleteRolController = new HardDeleteRolController();
 const softDeleteRolController = new SoftDeleteRolController();
 
 // Definir las rutas
-router.get('/deleted', checkToken, getAllRolWithDeletedController.getAll);
-router.get('/deleted/:id', checkToken, getByIdRolWithDeletedController.getById);
-router.get('/deleted/page/:pag/:limit?', checkToken, getPageRolWithDeletedController.getPage);
-router.post('/', checkToken, createRolController.create);
-router.get('/:id', checkToken, getByIdRolController.getById);
-router.get('/', checkToken, getAllRolController.getAll);
-router.get('/page/:pag/:limit?', checkToken, getPageRolController.getPage);
-router.put('/:id', checkToken, updateRolController.update);
+router.get('/deleted', checkToken, getAllRolWithDeletedController.execute);
+router.get('/deleted/:id', checkToken, getByIdRolWithDeletedController.execute);
+router.get('/deleted/page/:pag/:limit?', checkToken, getPageRolWithDeletedController.execute);
+router.post('/', checkToken, createRolController.execute);
+router.get('/:id', checkToken, getByIdRolController.execute);
+router.get('/', checkToken, getAllRolController.execute);
+router.get('/page/:pag/:limit?', checkToken, getPageRolController.execute);
+router.put('/:id', checkToken, updateRolController.execute);
 router.delete('/:id', checkToken, hardDeleteRolController.hardDelete);
 router.patch('/:id', checkToken, softDeleteRolController.softDelete);
 

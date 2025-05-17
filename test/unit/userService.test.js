@@ -76,7 +76,7 @@ describe('UserService', () => {
 
       // Assert
       expect(result).toEqual(createdUser);
-      expect(mockUserRepository.create).toHaveBeenCalledWith(userData);
+      expect(mockUserRepository.execute).toHaveBeenCalledWith(userData);
     });
 
     test('debería lanzar error con datos incompletos', async () => {
@@ -87,7 +87,7 @@ describe('UserService', () => {
       await expect(userService.createUser(invalidUserData))
         .rejects
         .toThrow('Datos de usuario incompletos');
-      expect(mockUserRepository.create).not.toHaveBeenCalled();
+      expect(mockUserRepository.execute).not.toHaveBeenCalled();
     });
   });
 }); 

@@ -22,13 +22,10 @@ export const ColorProductoModel = sequelize.define('color_producto', {
             model: 'colores',
             key: 'id'
         }
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
 
 },{
+    paranoid: true,            // Habilita el soft delete
     timestamps: true,
     tableName: 'color_producto',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,            // Usa snake_case en vez de camelCase

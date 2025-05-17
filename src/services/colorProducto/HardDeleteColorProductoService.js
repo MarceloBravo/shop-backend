@@ -1,13 +1,13 @@
 import ColorProductoRepository from '../../repositories/ColorProductoRepository.js';
 
-class SoftDeleteColorProductoService {
+class HardDeleteColorProductoService{
     constructor(repository = new ColorProductoRepository()) {
         this.repository = repository;
     }
 
     execute = async (id, transaction = null) => {
-        return await this.repository.softDelete(id, transaction);
-    }
-}   
+        return await this.repository.hardDelete(id, transaction);
+    }       
+}
 
-export default SoftDeleteColorProductoService;
+export default HardDeleteColorProductoService;

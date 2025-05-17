@@ -25,14 +25,14 @@ const deleteAccionesPantallaController = new HardDeleteAccionesPantallaControlle
 const softDeleteAccionesPantallaController = new SoftDeleteAccionesPantallaController();
 
 
-router.get('/deleted', checkToken, getAllAccionesPantallaWithDeletedController.getAll);
-router.get('/deleted/:id', checkToken, getByIdAccionesPantallaWithDeletedController.getById);
-router.get('/deleted/page/:pag/:limit?', checkToken, getPageAccionesPantallaWithDeletedController.getPage);
-router.get('/', checkToken, getAllAccionesPantallaController.getAll);
-router.get('/:id', checkToken, getByIdAccionesPantallaController.getById);
-router.get('/page/:pag/:limit?', checkToken, getPageAccionesPantallaController.getPage);
-router.post('/', checkToken, createAccionesPantallaController.create);
-router.put('/:id', checkToken, updateAccionesPantallaController.update);
+router.get('/deleted', checkToken, getAllAccionesPantallaWithDeletedController.execute);
+router.get('/deleted/:id', checkToken, getByIdAccionesPantallaWithDeletedController.execute);
+router.get('/deleted/page/:pag/:limit?', checkToken, getPageAccionesPantallaWithDeletedController.execute);
+router.get('/', checkToken, getAllAccionesPantallaController.execute);
+router.get('/:id', checkToken, getByIdAccionesPantallaController.execute);
+router.get('/page/:pag/:limit?', checkToken, getPageAccionesPantallaController.execute);
+router.post('/', checkToken, createAccionesPantallaController.execute);
+router.put('/:id', checkToken, updateAccionesPantallaController.execute);
 router.delete('/:id', checkToken, deleteAccionesPantallaController.hardDelete);
 router.patch('/:id', checkToken, softDeleteAccionesPantallaController.softDelete);
 

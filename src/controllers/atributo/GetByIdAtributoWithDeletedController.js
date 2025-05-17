@@ -7,10 +7,10 @@ class GetByIdAtributoWithDeletedController{
         this.service = service;
     }
 
-    getById = async (req, res) => {
+    execute = async (req, res) => {
         try{
             const { id } = req.params
-            const data = await this.service.getById(id, false)
+            const data = await this.service.execute(id, false)
             res.json(data);
         }catch(e){
             const err = handleError(e);

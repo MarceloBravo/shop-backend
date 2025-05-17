@@ -6,7 +6,7 @@ class SoftDeleteAtributoController{
         this.service = service;
     }
 
-    delete = async (req, res) => {
+    execute = async (req, res) => {
         try{
             const { id } = req.params;
             const result = await this.service.softDelete(id);

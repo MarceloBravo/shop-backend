@@ -8,7 +8,7 @@ class CreateAtributoService{
     }
 
 
-    create = async (data, transaccion = null) => {
+    execute = async (data, transaccion = null) => {
         validaDatos(data, this.repository);
         return await this.repository.create(data, transaccion);
     }

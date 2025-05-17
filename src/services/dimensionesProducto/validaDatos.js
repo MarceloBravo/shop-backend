@@ -1,11 +1,11 @@
 import { getTipoDimensiones } from '../../repositories/tipoDimensiones.repository.js';
-import { getProducto } from '../../repositories/ProductoRepository.js';
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 
 const validaDatos = (data) => {
     let errors = [];
     const { producto_id, alto, ancho, profundo, tipo_dimension_id } = data;
 
-    if(!producto_id || getProducto(producto_id) === null){
+    if(!producto_id || await (new ProductoRepository()).getById(producto_id) === null){
         errors.push("El producto no es válido o no existe, especifíca un producto válido.");
     }
     if(!alto && !ancho && !profundo && tipo_dimension_id){

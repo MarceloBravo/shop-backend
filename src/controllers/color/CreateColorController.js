@@ -6,10 +6,10 @@ class CreateColorController{
         this.service = service;
     }
 
-    create = async (req, res) => {
+    execute = async (req, res) => {
         try {
             const {nombre, valor} = req.body;
-            const resp = await this.service.create({nombre, valor});
+            const resp = await this.service.execute({nombre, valor});
             res.json({data: resp, mensaje: 'El registro ha sido creado exitosamente.'});
         } catch (error) {
             const err = handleError(error);

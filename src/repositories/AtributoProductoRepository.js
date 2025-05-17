@@ -53,14 +53,18 @@ class AtributoProductoRepository{
         const [record, created] = await AtributosProductoModel.findOrCreate({
             where: {id},
             defaults: data, 
-            transaction
+            transaction,
+            paranoid: false
+        
         });
+
+        if (created) return { data: record, created };
+        if(record.deleted_at !== null) {
+            await record.restore({transaction});
+        }
+
         record.producto_id = data.producto_id;
         record.atributo_id = data.atributo_id;
-        if (created) return { data: record, created };
-
-        // Si el registro ya existe, actualiza los valores
-        record.deleted_at = null;
 
         await record.save();
 

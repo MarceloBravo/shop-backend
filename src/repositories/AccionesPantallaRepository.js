@@ -35,8 +35,11 @@ class AccionesPantallaRepository{
 
 
     update = async (id, data, transaction) => {
-        const [ record, created ] = await AccionesPantallaModel.findOrCreate({where:{id}, defaults: data, transaction});
+        const [ record, created ] = await AccionesPantallaModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
         if(created) return {data: record, created};
+        if(record.deleted_at !== null) {
+            await record.restore({transaction});
+        }
         // Si el registro ya existe, actualiza los valores
         record.pantalla_id = data.pantalla_id;
         record.permite_crear = data.permite_crear;

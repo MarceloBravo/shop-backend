@@ -5,7 +5,7 @@ class UpdateCategoriaService{
         this.repository = repository;
     }
 
-    update = async (id, data, transaction = null) => {
+    execute = async (id, data, transaction = null) => {
         validaDatos(data);
         return await this.repository.update(id, data, transaction);
     }   

@@ -1,15 +1,15 @@
-import GetColorService from '../../services/color/GetColorService.js';
+import GetByIdColorService from '../../services/color/GetByIdColorService.js';
 import { handleError } from "../../shared/functions.js";
 
-class GetColorController{
-    constructor(service = new GetColorService()){
+class GetByIdColorController{
+    constructor(service = new GetByIdColorService()){
         this.service = service;
     }
 
-    getById = async (req, res) => {
+    execute = async (req, res) => {
         try {
             const { id } = req.params;
-            const data = await this.service.getById(id);
+            const data = await this.service.execute(id);
             res.json(data);
         } catch (error) {
             const err = handleError(error);
@@ -18,4 +18,4 @@ class GetColorController{
     }
 }
 
-export default GetColorController;
+export default GetByIdColorController;

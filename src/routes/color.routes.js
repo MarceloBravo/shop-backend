@@ -25,16 +25,16 @@ const getAllColorWithDeletedController = new GetAllColorWithDeletedController();
 const getPageColorWithDeletedController = new GetPageColorWithDeletedController();
 
 
-router.get('/deleted', checkToken, getAllColorWithDeletedController.getAll);
-router.get('/deleted/:id', checkToken, getColorWithDeletedController.getById);
-router.get('/deleted/page/:pag/:limit?', checkToken, getPageColorWithDeletedController.getPage);
+router.get('/deleted', checkToken, getAllColorWithDeletedController.execute);
+router.get('/deleted/:id', checkToken, getColorWithDeletedController.execute);
+router.get('/deleted/page/:pag/:limit?', checkToken, getPageColorWithDeletedController.execute);
 
-router.get('/', getAllColorController.getAll);
-router.get('/:id', getColorController.getById);
-router.get('/page/:pag/:limit?', getPageColorController.getPage);
-router.post('/', checkToken, createColorController.create);
-router.put('/:id', checkToken, updateColorController.update);
-router.delete('/:id', checkToken, hardDeleteColorController.delete);
-router.patch('/:id', checkToken, softDeleteColorController.delete);
+router.get('/', getAllColorController.execute);
+router.get('/:id', getColorController.execute);
+router.get('/page/:pag/:limit?', getPageColorController.execute);
+router.post('/', checkToken, createColorController.execute);
+router.put('/:id', checkToken, updateColorController.execute);
+router.delete('/:id', checkToken, hardDeleteColorController.execute);
+router.patch('/:id', checkToken, softDeleteColorController.execute);
 
 export default router;

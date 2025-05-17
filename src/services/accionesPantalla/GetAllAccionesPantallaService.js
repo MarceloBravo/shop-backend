@@ -6,7 +6,7 @@ class GetAllAccionesPantallaService{
         this.repository = repository;
     }
 
-    getAll = async (paranoid = true) => {
+    execute = async (paranoid = true) => {
         return await this.repository.getAll(paranoid);
     }
 }

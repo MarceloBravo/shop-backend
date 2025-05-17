@@ -6,9 +6,9 @@ class createAtributoController{
         this.service = service;
     }
 
-    create = async (req, res) => {
+    execute = async (req, res) => {
         try{        
-            const data = await this.service.create(req.body);
+            const data = await this.service.execute(req.body);
             res.json({data, mensaje: 'El registro ha sido creado exitosamente.'});
         }catch(e){
             const err = handleError(e);

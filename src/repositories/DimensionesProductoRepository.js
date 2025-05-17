@@ -1,0 +1,73 @@
+import { DimensionesProductoModel } from "../../models/DimensionesProductoModel.js";
+
+class DimensionesProductoRepository {
+
+     getById = async (id, paranoid = true) => {
+        const data = await DimensionesProductoModel.findByPk(id,{paranoid});
+
+        return (data && data.deleted_at == null) ? data : null;
+    }
+
+
+     getAll = async (paranoid = true) => {
+        const { rows, count } = await DimensionesProductoModel.findAndCountAll({
+            order: [['producto_id','ASC']],
+            paranoid
+        });
+        return {data: rows, count};
+    }
+
+
+     getPage = async (desde = 1, regPorPag = 10, paranoid = true) => {
+        const { rows , count } = await DimensionesProductoModel.findAndCountAll({
+            offset:desde,
+            limit: regPorPag,
+            order: [['producto_id','ASC']],
+            paranoid
+        });    
+        return {rows, count, totPag: Math.ceil(count / regPorPag)};
+    }
+
+
+     create = async (data, transaction) => {
+        const newRecord = await DimensionesProductoModel.create(data, {transaction});
+        return newRecord;
+    }
+
+
+     update = async (id, data, transaction ) => {
+        const [record, created] = await DimensionesProductoModel.findOrCreate({
+            where: {id},
+            defaults: data,
+            transaction,
+            paranoid:false
+        });
+        if (created) return { data: record, created };
+        if(record.deleted_at !== null) {
+            await record.restore({transaction});
+        }
+        record.producto_id = data.producto_id;
+        record.dimensiones_id = data.dimensiones_id;
+        
+        // Si el registro ya existe, actualiza los valores
+        record.deleted_at = null;
+
+        await record.save();
+
+        return {data: record, created};
+    }
+
+
+     hardDelete = async (id, transaction) => {
+        const result = await DimensionesProductoModel.destroy({where: {id}},{transaction, force: true, paranoid: false}); 
+        return {id, result};
+    }
+
+
+     softDelete = async (id) => {
+        const result = await DimensionesProductoModel.destroy({where: {id}},{transaction});
+        return {id, result};
+    }
+}
+
+export default DimensionesProductoRepository;

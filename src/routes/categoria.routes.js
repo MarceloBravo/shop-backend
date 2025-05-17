@@ -24,16 +24,16 @@ const updateCategoriaController = new UpdateCategoriaController();
 const hardDeleteCategoriaController = new HardDeleteCategoriaController();
 const softDeleteCategoriaController = new SoftDeleteCategoriaController();
 
-router.get('/deleted', checkToken, getAllCategoriaWithDeletedController.getAll);
-router.get('/deleted/:id', checkToken, getCategoriaWithDeletedController.getById);
-router.get('/deleted/page/:pag/:limit?', checkToken, getPageCategoriaWithDeletedController.getPage);
+router.get('/deleted', checkToken, getAllCategoriaWithDeletedController.execute);
+router.get('/deleted/:id', checkToken, getCategoriaWithDeletedController.execute);
+router.get('/deleted/page/:pag/:limit?', checkToken, getPageCategoriaWithDeletedController.execute);
 
-router.get('', getAllCategoriaController.getAll);
-router.get('/:id', getCategoriaController.getById);
-router.get('/page/:pag/:limit?', getPageCategoriaController.getPage);
-router.post('', checkToken, createCategoriaController.create);
-router.put('/:id', checkToken, updateCategoriaController.update);
-router.delete('/:id', checkToken, hardDeleteCategoriaController.delete);
-router.patch('/:id', checkToken, softDeleteCategoriaController.delete);
+router.get('', getAllCategoriaController.execute);
+router.get('/:id', getCategoriaController.execute);
+router.get('/page/:pag/:limit?', getPageCategoriaController.execute);
+router.post('', checkToken, createCategoriaController.execute);
+router.put('/:id', checkToken, updateCategoriaController.execute);
+router.delete('/:id', checkToken, hardDeleteCategoriaController.execute);
+router.patch('/:id', checkToken, softDeleteCategoriaController.execute);
 
 export default router;

@@ -7,7 +7,7 @@ class GetPageAtributoProductoService{
         this.repository = repository; 
     }   
 
-    getPage = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
+    execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
         try{
             const desde = (pag - 1) * limit;
             const result = await this.repository.getPage(desde, limit);

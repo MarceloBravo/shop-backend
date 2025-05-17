@@ -1,11 +1,13 @@
-import { getAllColorProducto } from '../../repositories/colorProducto.repository.js';
+import ColorProductoRepository from '../../repositories/ColorProductoRepository.js';
 
-const getAllColorProductoService = async () => {
-    try{
-        return await getAllColorProducto();
-    }catch (error) {
-        throw new Error("Error al obtener los colors del producto: " + error.message);
+class GetAllColorProductoService{
+    constructor(repository = new ColorProductoRepository()) {
+        this.repository = repository;
     }
+
+    execute = async (paranoid = true) => {
+        return await this.repository.getAll(paranoid);
+    }       
 }
 
-export default getAllColorProductoService;
+export default GetAllColorProductoService;

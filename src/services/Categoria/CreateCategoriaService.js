@@ -7,7 +7,7 @@ class CreateCategoriaService{
         this.repository = repository;
     }
 
-    create = async (data, transaction = null) => {
+    execute = async (data, transaction = null) => {
         validaDatos(data);
         return await this.repository.create(data, transaction);
     }

@@ -6,7 +6,7 @@ class GetByIdAccionesPantallaService{
         this.repository = repository;
     }
 
-    getById = async (id, paranoid = true) => {
+    execute = async (id, paranoid = true) => {
         return await this.repository.getById(id, paranoid);
     }
 }

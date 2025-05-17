@@ -5,7 +5,7 @@ class getPageCategoriaService{
         this.repository = repository;
     }
 
-    getPage = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
+    execute = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
         const desde = (page - 1) * limit;
         return await this.repository.getPage(desde, limit);
     }   

@@ -35,16 +35,20 @@ class ColorRepository{
 
 
     update = async (id, data, transaction = null) => {
-        const [ color, created ] = await ColorModel.findOrCreate({where:{id}, defaults: data, transaction});
-        if(created) return {data: color, created};
+        const [ record, created ] = await ColorModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
+        if(created) return {data: record, created};
+        
         // Si el registro ya existe, actualiza los valores
-        color.nombre = data.nombre;
-        color.valor = data.valor;
-        color.deleted_at = null;
+        if(record.deleted_at !== null) {
+            await record.restore({transaction});
+        }
+        record.nombre = data.nombre;
+        record.valor = data.valor;
+        record.deleted_at = null;
 
-        await color.save();
+        await record.save();
 
-        return {data: color, created};
+        return {data: record, created};
     }
 
 

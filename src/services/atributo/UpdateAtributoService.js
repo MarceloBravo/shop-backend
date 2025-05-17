@@ -7,7 +7,7 @@ class UpdateAtributoService{
         this.repository = repository;
     }
 
-    update = async (id, data, transaction = null) => {
+    execute = async (id, data, transaction = null) => {
         validaDatos(data, this.repository);
         const result = await this.repository.update(id, data, transaction);
         return result;

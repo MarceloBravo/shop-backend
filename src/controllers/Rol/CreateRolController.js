@@ -7,7 +7,7 @@ class CreateRolController{
         this.controller = service;
     }
 
-    create = async (req, res) => {
+    execute = async (req, res) => {
         try {
             const data = await this.controller.create(req.body);
             res.json({ data, mensaje: 'El regístro ha sido creado exitosamente.' });
