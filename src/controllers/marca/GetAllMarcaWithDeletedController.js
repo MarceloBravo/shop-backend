@@ -8,20 +8,20 @@ import { handleError } from "../../shared/functions.js";
  * @returns {GetAllMarcaController} - Instancia del controlador
  * @description Este controlador se encarga de manejar la lógica para obtener todas las marcas de la base de datos.
  */
-class GetAllMarcaController{
+class GetAllMarcaWithDeletedController{
     constructor(service = new GetAllMarcaService()){
         this.service = service;
     }  
 
     /**
-     * Obtiene todos los registros de las marcas de la base de datos meno los registros marcados como eliminados.
+     * Obtiene todos los registros de las marcas de la base de datos incluidos los registros marcados como eliminados.
      * @param {Object} req - Objeto de solicitud HTTP.
      * @param {Object} res - Objeto de respuesta HTTP.
      * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
      */
     execute = async (req, res) => {
         try{        
-            const data = await this.service.execute();
+            const data = await this.service.execute(false);
             res.json(data);
         }catch(e){
             const err = handleError(e);
@@ -30,5 +30,5 @@ class GetAllMarcaController{
     }
 }
 
-export default GetAllMarcaController;
+export default GetAllMarcaWithDeletedController;
 

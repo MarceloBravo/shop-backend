@@ -15,13 +15,9 @@ export const MarcaModel = sequelize.define('marcas', {
     logo: {
         type: DataTypes.STRING(500),
         allowNull: true        
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
-
 },{
+    paranoid: true,          // Habilita el soft delete
     timestamps: true,
     tableName: 'marcas',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase

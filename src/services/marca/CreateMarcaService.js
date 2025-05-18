@@ -1,27 +1,27 @@
-import { createMarca } from '../../repositories/marca.repository.js';
+import MarcaRepository from '../../repositories/MarcaRepository.js';
+import validaDatos from './validaDatos.js';
 
-const createMarcaService = async (data) => {
-    validaDatos(data);
-    return await createMarca(data.nombre, data.logo);
+/**
+ * Clase para crear una nueva marca.
+ * @class CreateMarcaService
+ * @constructor
+ * @param {MarcaRepository} repository - Repositorio de marcas.
+ */
+class CreateMarcaService{
+    constructor(repository = new MarcaRepository()){
+        this.repository = repository;
+    }
+
+    /**
+     * Crea una nueva marca en la base de datos.
+     * @param {Object} values - Objeto que contiene los datos de la marca a crear.
+     * @params {Transaction} transaction - Transacción de Sequelize para manejar la creación de la marca.
+     * @returns {Promise<Object>} - Devuelve la marca creada.
+     * */
+    execute = async (values, transaction = null) => {
+        validaDatos(values);
+        return await this.repository.create(values, transaction);
+    }   
 }
 
-const validaDatos = (data) => {
-    let errors = [];
-    const { nombre, logo } = data;
-    console.log(nombre, logo)
-    if(!nombre || nombre.trim().length ===  0 || nombre.length > 30){
-        errors.push("El nombre la marca es obligatorio y debe tener un máximo de hasta 30 carácteres.");
-    }
-    if(logo && logo.trim().length > 500){
-        errors.push("La ruta del logo es demasiado extensa, ubica la imagen en una carpeta mas accesible.");
-    }
-
-    if(errors.length > 0){
-        const error = new Error('Datos no válidos:');
-        error.code = 400;
-        error.details = errors;
-        throw error;
-    }
-}
-
-export default createMarcaService;
+export default CreateMarcaService;

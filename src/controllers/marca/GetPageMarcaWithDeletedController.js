@@ -9,13 +9,13 @@ import { handleError } from "../../shared/functions.js";
  * @returns {GetPageMarcaController} - Instancia del controlador
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de marcas de la base de datos.
  */
-class GetPageMarcaController{
+class GetPageMarcaWithDeletedController{
     constructor(service = new GetPageMarcaService()){
         this.service = service;
     }   
 
     /**
-     * Obtiene una página de registros de marcas de la base de datos.
+     * Obtiene una página de registros de marcas de la base de datos incluidos los registros marcados como eliminados.
      * @param {Object} req - Objeto de solicitud HTTP.
      * @param {Object} res - Objeto de respuesta HTTP.
      * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
@@ -23,7 +23,7 @@ class GetPageMarcaController{
     execute = async (req, res) => {
         try{        
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag } = await this.service.execute(pag, limit);
+            const { rows , count, totPag } = await this.service.execute(pag, limit, false);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
         }catch(e){
             const err = handleError(e);
@@ -32,4 +32,4 @@ class GetPageMarcaController{
     }
 }
 
-export default GetPageMarcaController;
+export default GetPageMarcaWithDeletedController;
