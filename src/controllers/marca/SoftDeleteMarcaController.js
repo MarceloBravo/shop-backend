@@ -2,6 +2,13 @@ import SoftDeleteMarcaService from "../../services/marca/SoftDeleteMarcaService.
 import { handleError } from "../../shared/functions.js";
 
 
+/**
+ * Controlador para eliminar un registro de marca con borrado suave
+ * @class
+ * @param {SoftDeleteMarcaService} service - Servicio para eliminar un registro de marca
+ * @returns {HardDeleteMarcaController} - Instancia del controlador
+ * @description Este controlador se encarga de manejar la lógica para eliminar un registro de marca con borrado suave.
+ */
 class SoftDeleteMarcaController{
     constructor(service = new SoftDeleteMarcaService()){
         this.service = service;
