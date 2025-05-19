@@ -15,7 +15,7 @@ class CreateMaterialService{
 
     /**
      * Crea un nuevo material en la base de datos.
-     * @param {Object} data - Datos del material a eliminiar.
+     * @param {Object} data - Datos del material a crear.
      * @param {transaction} [transaction=null] - Transacción de la base de datos.
      * @returns {Promise<Object>} - El material creado.
      * */

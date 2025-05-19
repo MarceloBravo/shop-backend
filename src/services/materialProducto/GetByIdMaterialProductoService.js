@@ -1,13 +1,13 @@
 import MaterialProductoRepository from '../../repositories/MaterialProductoRepository.js';
 
 /**
- * Servicio para obtener  páginas de regístros desde la base de datos.
- * @class GetPageMaterialProductoService
+ * Servicio para una relación matrerial-producto en base a su ID.
+ * @class GetByIdMaterialProductoService
  * @constructor
  * @param {MaterialProductoRepository} repository - Repositorio de materiales-productos.
- * @description Esta clase se encarga de obtener todas las relaciones material-producto.
+ * @description Esta clase se encarga de obtener una relación material-producto desde la base de datos en base a su ID.
  * */
-class GetPageMaterialProductoService{
+class GetByIdMaterialProductoService{
     constructor(repository = new MaterialProductoRepository()){
         this.repository = repository;
     }
@@ -19,11 +19,10 @@ class GetPageMaterialProductoService{
      * @param {transaction} [transaction=null] - Transacción de la base de datos.
      * @returns {Promise<Object>} - Promesa con el resultado de la operación.
      * */
-    execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
-        const desde = (pag - 1) * limit;
-        const result = await this.repository.getPage(desde, limit, paranoid);
-        return result;
+    execute = async (id, paranoid = true) => {
+        return await getMaterialProducto(id, paranoid);
     }
 }
 
-export default GetPageMaterialProductoService;
+
+export default GetByIdMaterialProductoService;

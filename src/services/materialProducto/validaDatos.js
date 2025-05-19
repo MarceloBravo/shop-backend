@@ -1,14 +1,14 @@
-import { getMaterial } from '../../repositories/material.repository.js';
-import { getProducto } from '../../repositories/ProductoRepository.js';
+import MaterialRepository from '../../repositories/MaterialRepository.js';
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 
 const validaDatos = (data) => {
     let errors = [];
     const { producto_id, material_id } = data;
 
-    if(!producto_id || getProducto(producto_id) === null){
+    if(!producto_id || await (new ProductoRepository()).getById(producto_id) === null){
         errors.push("El material no es válido o no existe, especifíca un material válido.");
     }
-    if(!material_id || getMaterial(material_id) === null){
+    if(!material_id || await (new MaterialRepository()).getById(material_id) === null){
         errors.push("El material no es válido, especifíca un material válido.");
     }
 

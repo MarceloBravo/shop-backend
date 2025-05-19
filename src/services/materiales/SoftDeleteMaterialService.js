@@ -19,8 +19,8 @@ class SoftDeleteMaterialService{
      * @returns {Promise<number>} - Devuelve el código de estado HTTP (200 si se eliminó, 404 si no se encontró).
      * */
     execute = async (id, transaction = null) => {
-            const { result } = await this.repository.softDelete(id, transaction);
-            return result;
+        const { result } = await this.repository.softDelete(id, transaction);
+        return result;
     }
 }
 
