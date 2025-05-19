@@ -1,24 +1,28 @@
-import { createMaterial } from '../../repositories/material.repository.js';
+import MaterialRepository from '../../repositories/MaterialRepository.js';
+import validaDatos from './validaDatos.js';
 
-const createMaterialService = async (data) => {
-    validaDatos(data);
-    return await createMaterial(data.valor);
-}
-
-const validaDatos = (data) => {
-    let errors = [];
-    const { valor } = data;
-
-    if(!valor || valor.trim().length ===  0 || valor.length > 30){
-        errors.push("El campo valor es obligatorio y debe tener un máximo de hasta 30 carácteres.");
+/**
+ * Servicio para crear un nuevo material.
+ * @class CreateMaterialService
+ * @constructor
+ * @param {MaterialRepository} repository - Repositorio de materiales.
+ * @description Esta clase se encarga de crear un nuevo material en la base de datos.
+ * */
+class CreateMaterialService{
+    constructor(repository = new MaterialRepository()){
+        this.repository = repository;
     }
 
-    if(errors.length > 0){
-        const error = new Error('Datos no válidos:');
-        error.code = 400;
-        error.details = errors;
-        throw error;
+    /**
+     * Crea un nuevo material en la base de datos.
+     * @param {Object} data - Datos del material a eliminiar.
+     * @param {transaction} [transaction=null] - Transacción de la base de datos.
+     * @returns {Promise<Object>} - El material creado.
+     * */
+    execute = async (data, transaction = null) => {
+        validaDatos(data);
+        return await this.repository.create(data, transaction);
     }
 }
 
-export default createMaterialService;
+export default CreateMaterialService;

@@ -1,11 +1,11 @@
 import MarcaRepository from '../../repositories/MarcaRepository.js';
 
 /**
- * Clase para eliminar una marca de forma permanente.
+ * Clase para eliminar una marca de forma suave.
  * @class HardDeleteMarcaService
  * @constructor
  * @param {MarcaRepository} repository - Repositorio de marcas.
- * @description Esta clase se encarga de eliminar una marca de forma permanente de la base de datos.
+ * @description Esta clase se encarga de eliminar una marca de forma suave de la base de datos.
  */
 class SoftDeleteMarcaService{
     constructor(repository = new MarcaRepository()){

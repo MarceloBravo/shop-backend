@@ -1,15 +1,16 @@
-import { MarcaModel } from "../../models/MarcaModel.js";
+import { MaterialModel } from "../../models/MaterialModel.js";
 
-class MarcaRepository{
+
+class MaterialRepository{
     getById = async (id, paranoid = true) => {
-        const data = await MarcaModel.findByPk(id, {paranoid});
+        const data = await MaterialModel.findByPk(id, {paranoid});
         return data;
     }
 
 
     getAll = async (paranoid = true) => {
-        const { rows, count } = await MarcaModel.findAndCountAll({
-            order: [['nombre','ASC']],
+        const { rows, count } = await MaterialModel.findAndCountAll({
+            order: [['valor','ASC']],
             paranoid
         });
         return {data: rows, count};
@@ -17,10 +18,10 @@ class MarcaRepository{
 
 
     getPage = async (desde = 1, regPorPag = 10, paranoid = true) => {
-        const { rows , count } = await MarcaModel.findAndCountAll({
+        const { rows , count } = await MaterialModel.findAndCountAll({
             offset:desde,
             limit: regPorPag,
-            order: [['nombre','ASC']],
+            order: [['valor','ASC']],
             paranoid
         });    
         return {rows, count, totPag: Math.ceil(count / regPorPag)};
@@ -28,21 +29,20 @@ class MarcaRepository{
 
 
     create = async (values, transaction = null) => {
-        const data = await MarcaModel.create(values, {transaction});
+        const data = await MaterialModel.create(values,{transaction});
         return data;
     }
 
 
-    update = async (id, data, transaction = null) => {
-        let [ record, created ] = await MarcaModel.findOrCreate({where:{id}, defaults: data,transaction, paranoid:false});
+    update = async (id, values, transaction = null) => {
+        let [ record, created ] = await MaterialModel.findOrCreate({where:{id}, transaction, defaults: values, paranoid:false });
         if(created) return {data: record, created};
+        // Si el registro ya existe, actualiza los valores
         if(record.deleted_at !== null) {
             await record.restore({transaction});
             created = true;
         }
-        // Si el registro ya existe, actualiza los valores
-        record.nombre = data.nombre;
-        record.logo = data.logo;
+        record.valor = values.valor;
 
         await record.save();
 
@@ -51,15 +51,15 @@ class MarcaRepository{
 
 
     hardDelete = async (id, transaction = null) => {
-        const result = await MarcaModel.destroy({where: {id}, transaction, paranoid: false, force: true});
+        const result = await MaterialModel.destroy({where: {id}, transaction, paranoid: false, force: true});
         return {id, result};
     }
 
 
     softDelete = async (id, transaction = null) => {
-        const result = await MarcaModel.destroy({where: {id},transaction});
+        const result = await MaterialModel.destroy({where: {id}, transaction});
         return {id, result};
     }
 }
 
-export default MarcaRepository;
+export default MaterialRepository;

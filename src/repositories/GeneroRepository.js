@@ -50,13 +50,13 @@ class GeneroRepository{
 
 
     hardDelete = async (id, transaction = null) => {
-        const result = await GeneroModel.destroy({where: {id}}, {transaction, force: true, paranoid: false});
+        const result = await GeneroModel.destroy({where: {id}, transaction, paranoid: false, force: true});
         return {id, result};
     }
 
 
     softDelete = async (id, transaction = null) => {
-        const result = await GeneroModel.destroy({where: {id}},{transaction});
+        const result = await GeneroModel.destroy({where: {id},transaction});
         return {id, result};
     }
 }

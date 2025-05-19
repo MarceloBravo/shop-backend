@@ -2,13 +2,13 @@ import GetPageMaterialService from "../../services/materiales/GetPageMaterialSer
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una página de registros de material
+ * Controlador para obtener una página de registros de material incluyendo los regístros marcados como soft-deleted.
  * @class
- * @param {GetPageGeneroService} service - Servicio para obtener una página de registros de material
- * @returns {GetPageGeneroController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de material.
+ * @param {GetPageGeneroService} service - Servicio para obtener una página de registros de material incluyendo los regístros marcados como soft-deleted
+ * @returns {GetPageMaterialWithDeletedController} - Instancia del controlador
+ * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de material incluyendo los regístros marcados como soft-deleted.
  * */
-class GetPageMaterialController{
+class GetPageMaterialWithDeletedController{
     constructor(service = new GetPageMaterialService()){
         this.service = service;
     }
@@ -21,7 +21,7 @@ class GetPageMaterialController{
     execute = async (req, res) => {
         try{
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag } = await this.service.execute(pag, limit);
+            const { rows , count, totPag } = await this.service.execute(pag, limit, false);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
         }catch(e){
             const err = handleError(e);
@@ -31,4 +31,4 @@ class GetPageMaterialController{
     
 }
 
-export default GetPageMaterialController;
+export default GetPageMaterialWithDeletedController;

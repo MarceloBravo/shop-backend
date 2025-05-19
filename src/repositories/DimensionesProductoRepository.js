@@ -62,7 +62,7 @@ class DimensionesProductoRepository {
 
 
      softDelete = async (id) => {
-        const result = await DimensionesProductoModel.destroy({where: {id}},{transaction});
+        const result = await DimensionesProductoModel.destroy({where: {id},transaction});
         return {id, result};
     }
 }

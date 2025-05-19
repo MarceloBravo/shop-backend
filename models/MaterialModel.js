@@ -11,13 +11,9 @@ export const MaterialModel = sequelize.define('materiales', {
         type: DataTypes.STRING(30),
         allowNull: false,
         unique: true       
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
-
 },{
+    paranoid: true,         // Habilita el soft delete
     timestamps: true,
     tableName: 'materiales',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase

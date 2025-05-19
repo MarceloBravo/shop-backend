@@ -67,7 +67,7 @@ export const updateMaterialProducto = async (id, data, transaction) => {
 
 
 export const deleteMaterialProducto = async (id, transaction) => {
-    const result = await MaterialProductoModel.destroy({where: {id}},{transaction});
+    const result = await MaterialProductoModel.destroy({where: {id},transaction});
     return {id, result};
 }
 

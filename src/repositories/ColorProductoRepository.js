@@ -79,7 +79,7 @@ class ColorProductoRepository {
 
 
     softDelete = async (id) => {
-        const result = await ColorProductoModel.destroy({where: {id}},{transaction});
+        const result = await ColorProductoModel.destroy({where: {id},transaction});
         return {id, result};
     }
 

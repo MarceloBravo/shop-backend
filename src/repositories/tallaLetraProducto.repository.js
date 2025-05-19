@@ -67,7 +67,7 @@ export const updateTallaLetraProducto = async (id, data, transaction) => {
 
 
 export const deleteTallaLetraProducto = async (id, transaction) => {
-    const result = await TallaLetraProductoModel.destroy({where: {id}},{transaction});
+    const result = await TallaLetraProductoModel.destroy({where: {id},transaction});
     return {id, result};
 }
 

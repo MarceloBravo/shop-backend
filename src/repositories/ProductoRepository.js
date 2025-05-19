@@ -204,7 +204,7 @@ class ProductoRepository {
 
 
     softDelete = async (id) => {
-        const result = await ProductoModel.destroy({where: {id}},{transaction});
+        const result = await ProductoModel.destroy({where: {id},transaction});
         return {id, result};
     }
 
