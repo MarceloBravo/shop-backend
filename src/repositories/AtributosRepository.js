@@ -38,7 +38,7 @@ class AtributosRepository{
         let [ record, created ] = await AtributosModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
         if(created) return {data: record, created};
         // Si el registro ya existe, actualiza los valores
-        if(record.deleted_at !== null) {
+        if(record.deletedAt !== null) {
             await record.restore({transaction});
             created = true;
         }

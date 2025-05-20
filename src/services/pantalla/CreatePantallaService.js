@@ -1,27 +1,30 @@
-import { createPantalla } from '../../repositories/pantalla.repository.js';
+import PantallaRepository from '../../repositories/PantallaRepository.js';
+import validaDatos from './validaDatos.js';
 
-const createPantallaService = async (data) => {
-    validaDatos(data);
-    return await createPantalla(data.nombre, data.uri);
+
+/**
+ * Servicio para crear una nueva pantalla.
+ * @class CreatePantallaService
+ * @constructor
+ * @param {PantallaRepository} repository - Repositorio de pantallas.
+ * @description Esta clase se encarga de crear un nueva pantalla en la base de datos.
+ * */
+class CreatePantallaService{
+    constructor(repository = new PantallaRepository()){
+        this.repository = repository;
+    }
+
+    /**
+     * Crea un nueva pantalla en la base de datos.
+     * @param {Object} data - Datos de la pantalla a crear.
+     * @param {transaction} [transaction=null] - Transacción de la base de datos.
+     * @returns {Promise<Object>} - La apantalla creado.
+     * */
+    execute = async (data, transaction = null) => {
+        validaDatos(data);
+        return await this.repository.create(data, transaction);
+    }
+    
 }
 
-const validaDatos = (data) => {
-    let errors = [];
-    const { nombre, uri } = data;
-    console.log(nombre, uri)
-    if(!nombre || nombre.trim().length ===  0 || nombre.length > 30){
-        errors.push("El nombre la pantalla es obligatorio y debe tener un máximo de hasta 30 carácteres.");
-    }
-    if(uri && uri.trim().length > 500){
-        errors.push("La ruta del uri es demasiado extensa, ubica la imagen en una carpeta mas accesible.");
-    }
-
-    if(errors.length > 0){
-        const error = new Error('Datos no válidos:');
-        error.code = 400;
-        error.details = errors;
-        throw error;
-    }
-}
-
-export default createPantallaService;
+export default CreatePantallaService;

@@ -3,12 +3,12 @@ import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener una página de registros de pantallas
- * @class
- * @param {GetPageMarcaService} service - Servicio para obtener una página de registros de marcas
- * @returns {GetPageMarcaController} - Instancia del controlador
+ * @class GetPagePantallaWithDeletedController
+ * @param {GetPagePantallaService} service - Servicio para obtener una página de registros de marcas
+ * @returns {GetPagePantallaWithDeletedController} - Instancia del controlador
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de pantallas de la base de datos.
  */
-class GetPagePantallaController{
+class GetPagePantallaWithDeletedController{
     constructor(service = new GetPagePantallaService()){
         this.service = service;
     }
@@ -22,7 +22,7 @@ class GetPagePantallaController{
     execute = async (req, res) => {
         try{
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag } = await this.service.execute(pag, limit);
+            const { rows , count, totPag } = await this.service.execute(pag, limit, false);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
         }catch(e){
             const err = handleError(e);
@@ -31,4 +31,4 @@ class GetPagePantallaController{
     }
 }
 
-export default GetPagePantallaController;
+export default GetPagePantallaWithDeletedController;

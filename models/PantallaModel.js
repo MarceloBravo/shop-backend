@@ -17,13 +17,10 @@ export const PantallaModel = sequelize.define('pantallas', {
         type: DataTypes.STRING(255),
         allowNull: false,
         unique: true
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
     
 },{
+    paranoid: true,         //Habilita paranoid
     timestamps: true,
     tableName: 'pantallas',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase

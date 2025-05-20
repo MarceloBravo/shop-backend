@@ -37,7 +37,7 @@ class AccionesPantallaRepository{
     update = async (id, data, transaction) => {
         let [ record, created ] = await AccionesPantallaModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
         if(created) return {data: record, created};
-        if(record.deleted_at !== null) {
+        if(record.deletedAt !== null) {
             await record.restore({transaction});
             created = true;
         }

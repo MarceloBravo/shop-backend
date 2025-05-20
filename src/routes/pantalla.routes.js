@@ -1,21 +1,39 @@
 import { Router } from 'express';
-import getPantallaController from '../controllers/pantalla/GetPantallaController.js';
-import getAllPantallaController from '../controllers/pantalla/GetAllPantallaController.js';
-import getPagePantallaController from '../controllers/pantalla/GetPagePantallaController.js';
-import createPantallaController from '../controllers/pantalla/CreatePantallaController.js';
-import updatePantallaController from '../controllers/pantalla/UpdatePantallaController.js';
-import deletePantallaController from '../controllers/pantalla/DeletePantallaController.js';
-import softDeletePantallaController from '../controllers/pantalla/SoftDeletePantallaController.js';
+import GetByIdPantallaController from '../controllers/pantalla/GetByIdPantallaController.js';
+import GetAllPantallaController from '../controllers/pantalla/GetAllPantallaController.js';
+import GetPagePantallaController from '../controllers/pantalla/GetPagePantallaController.js';
+import GetByIdPantallaWithDeletedController from '../controllers/pantalla/GetByIdPantallaWithDeletedController.js';
+import GetAllPantallaWithDeletedController from '../controllers/pantalla/GetAllPantallaWithDeletedController.js';
+import GetPagePantallaWithDeletedController from '../controllers/pantalla/GetPagePantallaWithDeletedController.js';
+import CreatePantallaController from '../controllers/pantalla/CreatePantallaController.js';
+import UpdatePantallaController from '../controllers/pantalla/UpdatePantallaController.js';
+import HardDeletePantallaController from '../controllers/pantalla/HardDeletePantallaController.js';
+import SoftDeletePantallaController from '../controllers/pantalla/SoftDeletePantallaController.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-router.get('/:id', getPantallaController);
-router.get('', getAllPantallaController);
-router.get('/page/:pag/:limit?', getPagePantallaController);
-router.post('', createPantallaController);
-router.put('/:id', updatePantallaController);
-router.delete('/:id', deletePantallaController);
-router.delete('/borrar/:id', softDeletePantallaController);
+const getByIdPantallaWithDeletedController = new GetByIdPantallaWithDeletedController();
+const getAllPantallaWithDeletedController = new GetAllPantallaWithDeletedController();
+const getPagePantallaWithDeletedController = new GetPagePantallaWithDeletedController();
+const getByIdPantallaController = new GetByIdPantallaController();
+const getAllPantallaController = new GetAllPantallaController();
+const getPagePantallaController = new GetPagePantallaController();
+const createPantallaController = new CreatePantallaController();
+const updatePantallaController = new UpdatePantallaController();
+const hardDeletePantallaController = new HardDeletePantallaController();
+const softDeletePantallaController = new SoftDeletePantallaController();
+
+router.get('/deleted', checkToken, getAllPantallaWithDeletedController.execute);
+router.get('/deleted/:id', checkToken, getByIdPantallaWithDeletedController.execute);
+router.get('/deleted/page/:pag/:limit?', checkToken, getPagePantallaWithDeletedController.execute);
+
+router.get('/:id', getByIdPantallaController.execute);
+router.get('', getAllPantallaController.execute);
+router.get('/page/:pag/:limit?', getPagePantallaController.execute);
+router.post('', checkToken, createPantallaController.execute);
+router.put('/:id', checkToken, updatePantallaController.execute);
+router.delete('/:id', checkToken, hardDeletePantallaController.execute);
+router.patch('/:id', checkToken, softDeletePantallaController.execute);
 
 export default router;

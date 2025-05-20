@@ -59,7 +59,7 @@ class ColorProductoRepository {
         });
 
         if (created) return { data: record, created };
-        if(record.deleted_at !== null) {
+        if(record.deletedAt !== null) {
             await record.restore({transaction});
             created = true;
         }

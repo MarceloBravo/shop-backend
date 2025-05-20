@@ -1,10 +1,10 @@
-import { getPantalla } from '../../repositories/pantalla.repository.js';
+import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 
-const validaDatos = (data) => {
+const validaDatos = async (data) => {
     let errors = [];
     const { pantalla_id, permite_crear, permite_actualizar, permite_eliminar, permite_listar, acceso  } = data;
     
-    if(pantalla_id && getPantalla(pantalla_id) === null){
+    if(pantalla_id && await (new AccionesPantallaRepository()).getById(pantalla_id) === null){
         errors.push("El la pantalla no es válida o no existe, especifíca una pantalla válida.");
     }
     if(permite_crear && (typeof permite_crear) !== 'boolean'){

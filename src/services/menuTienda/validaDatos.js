@@ -1,5 +1,5 @@
 import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
-import { getPantalla } from '../../repositories/pantalla.repository.js' 
+import PantallaRepository from '../../repositories/PantallaRepository.js';
 
 const validaDatos = async (data, id = null) => {
     let errors = [];
@@ -17,7 +17,7 @@ const validaDatos = async (data, id = null) => {
     if(menuTienda_padre_id && await (new MenuTiendaRepository()).getById(menuTienda_padre_id) == null){
         errors.push("El menú padre no existe o no fue encontrado, selecciona un menú padre válido.");
     }
-    if(pantalla_id && getPantalla(pantalla_id) == null){
+    if(pantalla_id && (await (new PantallaRepository()).getById(pantalla_id)) == null){
         errors.push("La pantalla seleccionada no eiste o no es válida, selecciona una pantalla válida.");
     }
 
