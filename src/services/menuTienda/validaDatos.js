@@ -1,7 +1,7 @@
-import { getMenuTienda } from "../../repositories/menuTienda.repository.js";
+import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 import { getPantalla } from '../../repositories/pantalla.repository.js' 
 
-const validaDatos = (data, id = null) => {
+const validaDatos = async (data, id = null) => {
     let errors = [];
     const { nombre, icono, menuTienda_padre_id, pantalla_id } = data;
     
@@ -14,7 +14,7 @@ const validaDatos = (data, id = null) => {
     if(icono && icono.trim().length > 500){
         errors.push("La ruta del icono es demasiado extensa, ubica la el icono del menu de la tienda en una carpeta mas accesible.");
     }
-    if(menuTienda_padre_id && getMenuTienda(menuTienda_padre_id) == null){
+    if(menuTienda_padre_id && await (new MenuTiendaRepository()).getById(menuTienda_padre_id) == null){
         errors.push("El menú padre no existe o no fue encontrado, selecciona un menú padre válido.");
     }
     if(pantalla_id && getPantalla(pantalla_id) == null){

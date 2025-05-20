@@ -1,11 +1,26 @@
-import { getAllMenuTienda } from '../../repositories/menuTienda.repository.js';
+import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 
-const getAllMenuTiendaService = async () => {
-    try{
-        return await getAllMenuTienda();
-    }catch (error) {
-        throw new Error("Error al obtener las menuTiendas: " + error.message);
+/**
+ * Clase para obtener todos los menús de la tienda.
+ * @class GetAllMenuTiendaService
+ * @constructor
+ * @param {MenuTiendaRepository} repository - Repositorio de menús de la tienda.
+* @description Esta clase se encarga de obtener todos los menús de la tienda de la base de datos.
+ */
+class GetAllMenuTiendaService{
+    constructor(repository = new MenuTiendaRepository()){
+        this.repository = repository;
+    }
+
+    /**
+     * Obtiene todos los menús de la tienda de la base de datos.
+     * @param {boolean} [paranoid=true] - Si es true, se obtienen solo los menús de la tienda no eliminados.
+     * @returns {Promise<Array>} - Lista de menús de la tienda.
+     */
+    execute = async (paranoid = true) => {
+        return await this.repository.getAll(paranoid);
     }
 }
 
-export default getAllMenuTiendaService;
+
+export default GetAllMenuTiendaService;

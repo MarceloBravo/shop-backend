@@ -1,15 +1,34 @@
-import updateMenuTiendaService from "../../services/menuTienda/UpdateMenuTiendaService.js";
+import UpdateMenuTiendaService from "../../services/menuTienda/UpdateMenuTiendaService.js";
 import { handleError } from "../../shared/functions.js";
 
-const updateMenuTiendaController = async (req, res) => {
-    try{
-        const { id } = req.params;
-        const result = await updateMenuTiendaService(id, req.body);
-        res.json({menuTienda: result.menuTienda, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`})
-    }catch(e){
-        const err = handleError(e);
-        res.status(err.code).json(err);
+/**
+ * Controlador para actualizar un registro de menú
+ * @class
+ * @param {UpdateMarcaService} service - Servicio para actualizar un registro de marca
+ * @returns {UpdateMarcaController} - Instancia del controlador
+ * @description Este controlador se encarga de manejar la lógica para actualizar un registro de menú.
+ */
+class UpdateMenuTiendaController{
+    constructor(service = new UpdateMenuTiendaService()){
+        this.service = service;
+    }
+
+    /**
+     * Actualiza un registro de menú de la tienda en la base de datos.
+     * @param {Object} req - Objeto de solicitud HTTP.
+     * @param {Object} res - Objeto de respuesta HTTP.
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     */
+    execute = async (req, res) => {
+        try{
+            const { id } = req.params;
+            const result = await this.service.execute(id, req.body);
+            res.json({menu: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`})
+        }catch(e){
+            const err = handleError(e);
+            res.status(err.code).json(err);
+        }
     }
 }
 
-export default updateMenuTiendaController;
+export default UpdateMenuTiendaController;

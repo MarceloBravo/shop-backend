@@ -35,12 +35,9 @@ export const MenuTiendaModel = sequelize.define('menu_tienda', {
             model: 'pantallas',  // Nombre de la tabla de pantallas
             key: 'id'        // Clave primaria de pantallas
         }
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
 },{ 
+    paranoid: true,             // Habilita el soft delete
     timestamps: true,
     tableName: 'menu_tienda',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
