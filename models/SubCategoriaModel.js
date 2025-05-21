@@ -19,26 +19,11 @@ export const SubCategoriaModel = sequelize.define('subcategorias', {
             model: 'categorias',  // Nombre de la tabla
             key: 'id'        // Clave primaria
         }       
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
-
 },{
     timestamps: true,
     tableName: 'subcategorias',  // Asegura que el nombre de la tabla sea correcto
-    underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (subcategoria, options) => {
-            subcategoria.created_at = new Date();
-            subcategoria.updated_at = new Date();
-        },
-        beforeUpdate: async (subcategoria, options) => {
-            subcategoria.updated_at = new Date();
-        },
-        beforeDestroy: async (subcategoria, options) => {
-            subcategoria.deleted_at = new Date();
-        }
-    }
+    underscored: true,           // Usa snake_case en vez de camelCase
+    paranoid: true,             // Habilita el soft delete
+    deletedAt: 'deleted_at'     // Nombre de la columna para soft delete
 });

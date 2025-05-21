@@ -2,26 +2,26 @@ import GetAllSubCategoriaService from "../../services/subCategoria/GetAllSubCate
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador encargado de obtener todas las subcategorías
+ * Controlador encargado de obtener todas las subcategorías incluyendo eliminadas
  * @class
  * @param {GetAllSubCategoriaService} service - Servicio para obtener subcategorías
- * @returns {GetAllSubCategoriaController} - Instancia del controlador
+ * @returns {GetAllSubCategoriaWithDeletedController} - Instancia del controlador
  */
-class GetAllSubCategoriaController{
+class GetAllSubCategoriaWithDeletedController{
     constructor(service = new GetAllSubCategoriaService()){
         this.service = service;
     }
 
     /**
-     * Obtiene todas las subcategorías activas.
+     * Obtiene todas las subcategorías incluyendo eliminadas.
      * @param {Object} req - Objeto de solicitud.
      * @param {Object} res - Objeto de respuesta.
      * @returns {Promise<void>} - Promesa que se resuelve cuando se completa la operación.
-     * @description Esta función maneja la obtención de todas las subcategorías activas.
+     * @description Esta función maneja la obtención de todas las subcategorías incluyendo eliminadas.
      * */
     execute = async (req, res) => {
         try{
-            const data = await this.service.execute();
+            const data = await this.service.execute(false);
             res.json(data);
         }catch(e){
             const err = handleError(e);
@@ -30,4 +30,4 @@ class GetAllSubCategoriaController{
     }
 }
 
-export default GetAllSubCategoriaController;
+export default GetAllSubCategoriaWithDeletedController;

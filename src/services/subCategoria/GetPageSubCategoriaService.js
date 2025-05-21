@@ -1,13 +1,28 @@
-import { getPageSubCategoria } from '../../repositories/subCategoria.repository.js';
+import SubCategoriaRepository from '../../repositories/SubCategoriaRepository.js';
 
-const getPageSubCategoriaService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
-        const desde = (pag - 1) * limit;
-        const result = await getPageSubCategoria(desde, limit);
-        return result;
-    } catch (error) {
-        throw new Error("Error al obtener los datos de la página: " + error.message);
+/**
+ * Servicio para obtener subcategorías paginadas.
+ * @class
+ * @constructor
+ * @param {SubCategoriaRepository} repository - Repositorio de subcategorías.
+ * @description Esta clase se encarga de obtener subcategorías paginadas de la base de datos.
+ * */
+class GetPageSubCategoriaService{
+    constructor(repository = new SubCategoriaRepository()){
+        this.repository = repository;
+    }
+
+    /**
+     * Obtiene subcategorías paginadas.
+     * @param {number} page - Número de página.
+     * @param {number} [limit=10] - Límite de registros por página.
+     * @param {boolean} [paranoid=true] - Si es true, incluye subcategorías eliminadas.
+     * @returns {Promise<Object>} - Las subcategorías encontradas y metadata de paginación.
+     * */
+    execute = async (page, limit = 10, paranoid = true) => {
+        const offset = (page - 1) * limit;
+        return await this.repository.getPage(offset, limit, [['nombre', 'ASC']], paranoid);
     }
 }
 
-export default getPageSubCategoriaService;
+export default GetPageSubCategoriaService;

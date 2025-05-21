@@ -1,20 +1,38 @@
-import softDeleteSubCategoriaService from "../../services/subCategoria/SoftDeleteSubCategoriaService.js";
+import SoftDeleteSubCategoriaService from "../../services/subCategoria/SoftDeleteSubCategoriaService.js";
 import { handleError } from "../../shared/functions.js";
 
-const softDeleteSubCategoriaController = async (req, res) => {
-    try {
+/**
+ * Controlador encargado de realizar el soft delete de una subcategoría
+ * @class
+ * @param {SoftDeleteSubCategoriaService} service - Servicio para realizar el soft delete de una subcategoría
+ * @returns {SoftDeleteSubCategoriaController} - Instancia del controlador
+ */
+class SoftDeleteSubCategoriaController{
+    constructor(service = new SoftDeleteSubCategoriaService()){
+        this.service = service;
+    }
+
+    /**
+     * Realiza el soft delete de una subcategoría.
+     * @param {Object} req - Objeto de solicitud.
+     * @param {Object} res - Objeto de respuesta.
+     * @returns {Promise<void>} - Promesa que se resuelve cuando se completa la operación.
+     * @description Esta función maneja el soft delete de una subcategoría.
+     * */
+    execute = async (req, res) => {
         try{
             const { id } = req.params;
-            const  result  = await softDeleteSubCategoriaService(id);
-            const resp = {code: result, mensaje : result === 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
+            const result = await this.service.execute(id);
+            const resp = {
+                code: result, 
+                mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no pudo ser borrado o no existe.'
+            };
             res.json(resp);
         }catch(e){
-            res.status(500).json({error: e.message});
+            const err = handleError(e);
+            res.status(err.code).json(err);
         }
-    } catch (e) {
-        const err = handleError(e);
-        res.status(err.code).json(err);
     }
 }
 
-export default softDeleteSubCategoriaController;
+export default SoftDeleteSubCategoriaController;
