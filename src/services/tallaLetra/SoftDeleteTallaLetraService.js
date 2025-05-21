@@ -1,12 +1,29 @@
-import { softDeleteTallaLetra } from '../../repositories/tallaLetra.repository.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 
-const softDeleteTallaLetraService = async (id) => {
-    try {
-        const record = await softDeleteTallaLetra(id);
-        return (record && record?.deleted_at !== null ? 200 : 404);
-    } catch (error) {
-        throw new Error("Error al eliminar el registro: " + error.message);
+/**
+ * Servicio para realizar un borrado lógico de una talla numérica
+ * @class SoftDeleteTallaLetraService
+ * @constructor
+ * @param {TallaLetraRepository} repository - Repositorio de tallas numéricas
+ * @description Esta clase se encarga de realizar el borrado lógico de una talla numérica.
+ * */
+class SoftDeleteTallaLetraService {
+    constructor(repository = new TallaLetraRepository()) {
+        this.repository = repository;
     }
+
+    /**
+     * Realiza el borrado lógico de una talla numérica.
+     * @param {number} id - ID de la talla numérica.
+     * @param {transaction} [transaction=null] - Transacción de la base de datos.
+     * @returns {Promise<number>} - 200 si se eliminó, 404 si no se encontró.
+     * */
+    execute = async (id, transaction = null) => {
+        const record = await this.repository.softDelete(id, transaction);
+        return (record && record?.deleted_at !== null ? 200 : 404);
+    }
+
+
 }
 
-export default softDeleteTallaLetraService;
+export default SoftDeleteTallaLetraService;

@@ -1,12 +1,29 @@
-import { updateTallaLetra } from '../../repositories/tallaLetra.repository.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
+import validaDatos from './validaDatos.js';
 
-const updateTallaLetraService = async (id, data) => {
-    try{
-        const result = await updateTallaLetra(id, data);
-        return result;
-    } catch (error) {
-        throw new Error("Error al actualizar el registro: " + error.message);
+/**
+ * Servicio para actualizar una talla letra
+ * @class
+ * @constructor
+ * @param {TallaLetraRepository} repository - Repositorio de tallas letra
+ * @description Esta clase se encarga de actualizar una talla letra existente en la base de datos.
+ * */
+class UpdateTallaLetraService {
+    constructor(repository = new TallaLetraRepository()) {
+        this.repository = repository;
+    }
+
+    /**
+     * Actualiza una talla letra existente.
+     * @param {number} id - ID de la talla letra.
+     * @param {Object} data - Datos a actualizar.
+     * @param {transaction} [transaction=null] - Transacción de la base de datos.
+     * @returns {Promise<Object>} - Resultado de la actualización.
+     * */
+    execute = async (id, data, transaction = null) => {
+        validaDatos(data);
+        return await this.repository.update(id, data, transaction);
     }
 }
 
-export default updateTallaLetraService;
+export default UpdateTallaLetraService;

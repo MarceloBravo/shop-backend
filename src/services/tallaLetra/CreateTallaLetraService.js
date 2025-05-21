@@ -1,24 +1,28 @@
-import { createTallaLetra } from '../../repositories/tallaLetra.repository.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
+import validaDatos from './validaDatos.js';
 
-const createTallaLetraService = async (data) => {
-    validaDatos(data);
-    return await createTallaLetra(data.valor);
-}
-
-const validaDatos = (data) => {
-    let errors = [];
-    const { valor } = data;
-
-    if(!valor || valor.trim().length ===  0 || valor.length > 30){
-        errors.push("El campo valor es obligatorio y debe tener un máximo de hasta 30 carácteres.");
+/**
+ * Servicio para crear una nueva talla letra
+ * @class
+ * @constructor
+ * @param {TallaLetraRepository} repository - Repositorio de tallas letra
+ * @description Esta clase se encarga de crear una nueva talla letra en la base de datos.
+ * */
+class CreateTallaLetraService {
+    constructor(repository = new TallaLetraRepository()) {
+        this.repository = repository;
     }
 
-    if(errors.length > 0){
-        const error = new Error('Datos no válidos:');
-        error.code = 400;
-        error.details = errors;
-        throw error;
+    /**
+     * Crea una nueva talla letra en la base de datos.
+     * @param {Object} data - Datos de la talla letra a crear.
+     * @param {transaction} [transaction=null] - Transacción de la base de datos.
+     * @returns {Promise<Object>} - La talla letra creada.
+     * */
+    execute = async (data, transaction = null) => {
+        validaDatos(data);
+        return await this.repository.create(data, transaction);
     }
 }
 
-export default createTallaLetraService;
+export default CreateTallaLetraService;

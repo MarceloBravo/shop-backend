@@ -11,26 +11,11 @@ export const TallaLetraModel = sequelize.define('tallas_letras', {
         type: DataTypes.STRING(5),
         allowNull: false,
         unique: true        
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
-
-},{
+}, {
     timestamps: true,
-    tableName: 'tallas_letras',  // Asegura que el nombre de la tabla sea correcto
-    underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (talla, options) => {
-            talla.created_at = new Date();
-            talla.updated_at = new Date();
-        },
-        beforeUpdate: async (talla, options) => {
-            talla.updated_at = new Date();
-        },
-        beforeDestroy: async (talla, options) => {
-            talla.deleted_at = new Date();
-        }
-    }
+    tableName: 'tallas_letras',
+    underscored: true,
+    paranoid: true,
+    deletedAt: 'deleted_at'
 });
