@@ -1,63 +1,68 @@
 import { TallaNumericaModel } from "../../models/TallaNumericaModel.js";
 
-export const getTallaNumero = async (id) => {
-    const data = await TallaNumericaModel.findByPk(id);
-    return (data && data.deleted_at == null) ? data : null;
+class TallaNumeroRepository {
+    getById = async (id, paranoid = true) => {
+        const data = await TallaNumericaModel.findByPk(id, { paranoid });
+        return data;
+    }
+
+    getAll = async (orderBy = [['valor', 'ASC']], paranoid = true) => {
+        const { rows, count } = await TallaNumericaModel.findAndCountAll({
+            order: orderBy,
+            paranoid
+        });
+        return { data: rows, count };
+    }
+
+    getPage = async (desde = 1, regPorPag = 10, orderBy = [['valor', 'ASC']], paranoid = true) => {
+        const { rows, count } = await TallaNumericaModel.findAndCountAll({
+            offset: desde,
+            limit: regPorPag,
+            order: orderBy,
+            paranoid
+        });
+        return { rows, count, totPag: Math.ceil(count / regPorPag) };
+    }
+
+    create = async (valor, transaction = null) => {
+        const data = await TallaNumericaModel.create(valor, { transaction });
+        return data;
+    }
+
+    update = async (id, data, transaction = null) => {
+        let [record, created] = await TallaNumericaModel.findOrCreate({
+            where: { id },
+            defaults: data,
+            paranoid: false,
+            transaction
+        });
+        if (created) return { data: record, created };
+        if (record.deletedAt !== null) {
+            await record.restore({ transaction });
+            created = true;
+        }
+
+        record.valor = data.valor;
+        await record.save({ transaction });
+        return { data: record, created };
+    }
+
+    hardDelete = async (id, transaction = null) => {
+        const result = await TallaNumericaModel.destroy({
+            where: { id },
+            force: true,
+            transaction
+        });
+        return { id, result };
+    }
+
+    softDelete = async (id, transaction = null) => {
+        const result = await TallaNumericaModel.destroy({
+            where: { id },
+            transaction
+        });
+        return { id, result };
+    }
 }
 
-
-export const getAllTallaNumero = async () => {
-    const { rows, count } = await TallaNumericaModel.findAndCountAll({
-        where: {deleted_at: null},
-        order: [['valor','ASC']]
-    });
-    return {data: rows, count};
-}
-
-
-export const getPageTallaNumero = async (desde = 1, regPorPag = 10) => {
-    const { rows , count } = await TallaNumericaModel.findAndCountAll({
-        where: {deleted_at: null},
-        offset:desde,
-        limit: regPorPag,
-        order: [['valor','ASC']]
-    });    
-    return {rows, count, totPag: Math.ceil(count / regPorPag)};
-}
-
-
-export const createTallaNumero = async (valor) => {
-    const data = await TallaNumericaModel.create({valor});
-    return data;
-}
-
-
-export const updateTallaNumero = async (id, data) => {
-    const [ marca, created ] = await TallaNumericaModel.findOrCreate({where:{id}, defaults: data});
-    if(created) return {data: marca, created};
-    // Si el registro ya existe, actualiza los valores
-    marca.valor = data.valor;
-    marca.deleted_at = null;
-
-    await marca.save();
-
-    return {data: marca, created};
-}
-
-
-export const deleteTallaNumero = async (id) => {
-    const result = await TallaNumericaModel.destroy({where: {id}});
-    return {id, result};
-}
-
-
-export const softDeleteTallaNumero = async (id) => {
-    const record = await TallaNumericaModel.findByPk(id);
-    const eliminado = (record && record.deleted_at !== null);
-    
-    if(eliminado === null || eliminado === true)return null;
-
-    record.deleted_at = new Date();
-    await record.save();
-    return record;
-}
+export default TallaNumeroRepository;

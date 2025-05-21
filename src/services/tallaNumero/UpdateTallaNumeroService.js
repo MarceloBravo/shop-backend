@@ -1,12 +1,29 @@
-import { updateTallaNumero } from '../../repositories/tallaNumero.repository.js';
+import TallaNumeroRepository from '../../repositories/tallaNumero.repository.js';
+import validaDatos from './validaDatos.js';
 
-const updateTallaNumeroService = async (id, data) => {
-    try{
-        const result = await updateTallaNumero(id, data);
-        return result;
-    } catch (error) {
-        throw new Error("Error al actualizar el registro: " + error.message);
+/**
+ * Servicio para actualizar una talla numérica
+ * @class
+ * @constructor
+ * @param {TallaNumeroRepository} repository - Repositorio de tallas numéricas
+ * @description Esta clase se encarga de actualizar una talla numérica existente en la base de datos.
+ * */
+class UpdateTallaNumeroService {
+    constructor(repository = new TallaNumeroRepository()) {
+        this.repository = repository;
+    }
+
+    /**
+     * Actualiza una talla numérica existente.
+     * @param {number} id - ID de la talla numérica.
+     * @param {Object} data - Datos a actualizar.
+     * @param {transaction} [transaction=null] - Transacción de la base de datos.
+     * @returns {Promise<Object>} - Resultado de la actualización.
+     * */
+    execute = async (id, data, transaction = null) => {
+        validaDatos(data);
+        return await this.repository.update(id, data, transaction);
     }
 }
 
-export default updateTallaNumeroService;
+export default UpdateTallaNumeroService;
