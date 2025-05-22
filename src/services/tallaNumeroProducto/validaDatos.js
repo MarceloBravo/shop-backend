@@ -1,4 +1,4 @@
-import { getTallaNumero } from '../../repositories/tallaNumero.repository.js';
+import { getTallaNumero } from '../../repositories/TallaNumeroRepository.js';
 import { getProducto } from '../../repositories/ProductoRepository.js';
 
 const validaDatos = (data) => {

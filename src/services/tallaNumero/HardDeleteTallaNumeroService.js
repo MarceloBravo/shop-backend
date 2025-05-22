@@ -1,4 +1,4 @@
-import TallaNumeroRepository from '../../repositories/tallaNumero.repository.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 
 /**
  * Servicio para eliminar permanentemente una talla numérica

@@ -1,4 +1,4 @@
-import TallaNumeroRepository from '../../repositories/tallaNumero.repository.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 
 /**
  * Servicio para obtener una página de tallas numéricas

@@ -1,4 +1,4 @@
-import { getTallaLetra } from '../../repositories/tallaLetra.repository.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 import { getProducto } from '../../repositories/ProductoRepository.js';
 
 const validaDatos = (data) => {
@@ -8,7 +8,7 @@ const validaDatos = (data) => {
     if(!producto_id || getProducto(producto_id) === null){
         errors.push("La letra de la talla no es válida o no existe, especifíca una Letra de talla válida.");
     }
-    if(!talla_letra_id || getTallaLetra(talla_letra_id) === null){
+    if(!talla_letra_id || await (new TallaLetraRepository()).getById(talla_letra_id) === null){
         errors.push("La letra de la talla no es válida, especifíca una Letra de talla válida.");
     }
 
