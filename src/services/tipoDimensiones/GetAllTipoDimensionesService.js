@@ -1,11 +1,26 @@
-import { getAllTipoDimensiones } from '../../repositories/tipoDimensiones.repository.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 
-const getAllTipoDimensionesService = async () => {
-    try{
-        return await getAllTipoDimensiones();
-    }catch (error) {
-        throw new Error("Error al obtener los registros: " + error.message);
+/**
+ * Servicio para obtener todos los  tipo de dimensión (tipo de medida)
+ * @class
+ * @constructor
+ * @param {TallaNumeroRepository} repository - Repositorio de tipo de dimensión (tipo de medida)
+ * @description Esta clase se encarga de obtener todos los tipo de dimensión (tipo de medida) de la base de datos.
+ * */
+class GetAllTipoDimensionesService {
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.repository = repository;
+    }
+
+    /**
+     * Obtiene todos los tipos de dimensiones
+     * @param {boolean} [paranoid=true] - Si se incluyen los registros eliminados
+     * @returns {Promise<Array>} Lista de tipos de dimensiones
+     * @returns {Promise<Array>} - Lista de tipos de medidas (dimensiones).
+     */
+    async execute(paranoid = true) {
+        return await this.repository.getAll([['nombre', 'ASC']], paranoid);
     }
 }
 
-export default getAllTipoDimensionesService;
+export default GetAllTipoDimensionesService;

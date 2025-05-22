@@ -2,13 +2,12 @@ import GetAllTipoDimensionesService from '../../services/tipoDimensiones/GetAllT
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener todos los tipo de dimensiones activos
- * @class GetAllTipoDimensionesController
- * @param {GetAllTipoDimensionesService} service - Servicio para obtener todos los tipo de dimensiones activos
- * @returns {GetAllTipoDimensionesController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener todos los tipo de dimensiones activos.
+ * Controlador encargado de obtener todos los registros activos (no eliminados con soft-delete)
+ * @class GetAllTipoDimensionesWithDeletedController
+ * @param {GetAllTipoDimensionesService} service - Servicio para obtener una subcategoría
+ * @returns {GetAllTipoDimensionesWithDeletedController} - Instancia del controlador
  */
-class GetAllTipoDimensionesController {
+class GetAllTipoDimensionesWithDeletedController {
     constructor(service = new GetAllTipoDimensionesService()) {
         this.service = service;
     }
@@ -22,7 +21,7 @@ class GetAllTipoDimensionesController {
      * */
     execute = async (req, res) => {
         try{
-            const data = await this.service.execute();
+            const data = await this.service.execute(false);
             res.json(data);
         }catch(e){
             const err = handleError(e);
@@ -31,4 +30,4 @@ class GetAllTipoDimensionesController {
     }
 }
 
-export default GetAllTipoDimensionesController;
+export default GetAllTipoDimensionesWithDeletedController;

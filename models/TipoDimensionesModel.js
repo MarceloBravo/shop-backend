@@ -24,19 +24,9 @@ export const TipoDimensionesModel = sequelize.define('tipo_dimensiones', {
         allowNull: true
     }
 },{
+    paranoid: true,             // Habilita el soft delete
     timestamps: true,
     tableName: 'tipo_dimensiones',  // Asegura que el nombre de la tabla sea correcto
-    underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (color, options) => {
-            color.created_at = new Date();
-            color.updated_at = new Date();
-        },
-        beforeUpdate: async (color, options) => {
-            color.updated_at = new Date();
-        },
-        beforeDestroy: async (color, options) => {
-            color.deleted_at = new Date();
-        }
-    }
+    underscored: true,           // Usa snake_case en vez de camelCase
+    deletedAt: 'deleted_at'     // Nombre de la columna para soft delete
 });

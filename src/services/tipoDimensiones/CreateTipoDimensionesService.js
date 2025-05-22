@@ -1,27 +1,29 @@
-import { createTipoDimensiones } from '../../repositories/tipoDimensiones.repository.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
+import validaDatos from './validaDatos.js';
 
-const createTipoDimensionesService = async (data) => {
-    validaDatos(data);
-    return await createTipoDimensiones(data);
+/**
+ * Servicio para crear un nuevo tipo de dimensión (tipo de medida)
+ * @class
+ * @constructor
+ * @param {TallaNumeroRepository} repository - Repositorio de tipo de dimensión (tipo de medida)
+ * @description Esta clase se encarga de crear un nuev tipo de dimensión (tipo de medida) en la base de datos.
+ * */
+class CreateTipoDimensionesService {
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.repository = repository;
+    }
+
+    /**
+     * Crea un nuevo tipo de dimensiones
+     * @param {Object} data - Datos del tipo de dimensiones
+     * @param {string} data.nombre_corto - Nombre corto del tipo de dimensiones
+     * @param {Object} [transaction] - Transacción de Sequelize
+     * @returns {Promise<Object>} El tipo de dimensiones creado
+     */
+    async execute(data, transaction = null) {
+        validaDatos(data);
+        return await this.repository.create(data, transaction);
+    }
 }
 
-const validaDatos = (data) => {
-    let errors = [];
-    const { nombre, nombre_corto } = data;
-
-    if(!nombre || nombre.trim().length ===  0 || nombre.length > 30){
-        errors.push("El campo nombre es obligatorio y debe tener un máximo de hasta 30 carácteres.");
-    }
-    if(!nombre_corto || nombre_corto.trim().length ===  0 || nombre_corto.length > 30){
-        errors.push("El campo nombre_corto es obligatorio y debe tener un máximo de hasta 10 carácteres.");
-    }
-
-    if(errors.length > 0){
-        const error = new Error('Datos no válidos:');
-        error.code = 400;
-        error.details = errors;
-        throw error;
-    }
-}
-
-export default createTipoDimensionesService;
+export default CreateTipoDimensionesService;

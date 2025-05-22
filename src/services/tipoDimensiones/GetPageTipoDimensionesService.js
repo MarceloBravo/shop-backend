@@ -1,13 +1,28 @@
-import { getPageTipoDimensiones } from '../../repositories/tipoDimensiones.repository.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 
-const getPageTipoDimensionesService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
-        const desde = (pag - 1) * limit;
-        const result = await getPageTipoDimensiones(desde, limit);
-        return result;
-    } catch (error) {
-        throw new Error("Error al obtener los datos de la página: " + error.message);
+/**
+ * Servicio para obtener una página se tipo de dimensión.
+ * @class GetPageTipoDimensionesService
+ * @constructor
+ * @param {TipoDimensionesRepository} repository - Repositorio de tipos de dimensiones.
+ * @description Esta clase se encarga de obtener una página de tipo de dimensiones de la base de datos.
+ * */
+class GetPageTipoDimensionesService {
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.repository = repository;
+    }
+
+    /**
+     * Obtiene una página de tipos de dimensiones
+     * @param {number} [page] - Número de página
+     * @param {number} [pageSize] - Tamaño de página
+     * @param {boolean} [paranoid=true] - Si se incluyen los registros eliminados
+     * @returns {Promise<Object>} Objeto con los datos paginados
+     */
+    async execute(page = 1, limit = Number(process.env.DEFAULT_REG_POR_PAGINA), paranoid = true) {
+        const desde = (page - 1) * limit;
+        return await this.repository.getPage(desde, limit, [['nombre', 'ASC']], paranoid);
     }
 }
 
-export default getPageTipoDimensionesService;
+export default GetPageTipoDimensionesService;

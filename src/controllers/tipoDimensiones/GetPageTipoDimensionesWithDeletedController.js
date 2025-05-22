@@ -4,11 +4,11 @@ import { handleError } from "../../shared/functions.js";
 /**
  * Controlador para obtener una página de tipo de dimensiones (tipo de medidas)
  * @class
- * @param {GetPageTipoDimensionesService} service - Servicio para obtener una página de tipo de dimensiones (tipo de medidas).
+ * @param {GetPageTipoDimensionesWithDeletedController} service - Servicio para obtener una página de tipo de dimensiones (tipo de medidas).
  * @returns {GetPageTipoDimensionesController} - Instancia del controlador
  * @description Este controlador se encarga de manejar la lógica para obtener una página de tipo de dimensiones (tipo de medidas).
  */
-class GetPageTipoDimensionesController {
+class GetPageTipoDimensionesWithDeletedController {
     constructor(service = new GetPageTipoDimensionesService()) {
         this.service = service;
     }
@@ -22,7 +22,7 @@ class GetPageTipoDimensionesController {
     execute = async (req, res) => {
         try {
             const { page = 1, limit = 10 } = req.params;
-            const { rows, count, totPag } = await this.service.execute(page, limit);
+            const { rows, count, totPag } = await this.service.execute(page, limit, false);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(page), totPag}});
         } catch(e) {
             const err = handleError(e);
@@ -31,4 +31,4 @@ class GetPageTipoDimensionesController {
     }
 }
 
-export default GetPageTipoDimensionesController;
+export default GetPageTipoDimensionesWithDeletedController;
