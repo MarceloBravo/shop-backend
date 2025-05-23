@@ -1,12 +1,28 @@
-import { softDeleteTallaLetraProducto } from '../../repositories/tallaLetraProducto.repository.js';
+import TallaLetraProductoRepository from '../../repositories/TallaLetraProductoRepository.js';
 
-const softDeleteTallaLetraProductoService = async (id) => {
-    try {
-        const record = await softDeleteTallaLetraProducto(id);
-        return (record && record?.deleted_at !== null ? 200 : 404);
-    } catch (error) {
-        throw new Error("Error al eliminar la talla del producto: " + error.message);
+/**
+ * Servicio para marcar como borrado una relación tallaLetra-producto en la base de datos.
+ * @class GetAllMenuService
+ * @constructor
+ * @param {MenuRepository} repository - Repositorio de menús.
+ * @description Esta clase se encarga de marcar como borrado una relación tallaLetra-producto de la base de datos.
+ */
+class SoftDeleteTallaLetraProductoService{
+    constructor(repository = new TallaLetraProductoRepository()){
+        this.repository = repository;
+    }
+
+    /**
+     * Elimina una relación tallaLetra-producto de forma suave (soft delete).
+     * @param {number} id - ID del menú a eliminar.
+     * @param {transaction} [transaction=null] - Transacción de la base de datos.
+     * @returns {Promise<Object>} - Resultado de la operación.
+     * @description Esta función elimina una relación tallaLetra-producto de la base de datos de forma suave (soft delete).
+     */
+    execute = async (id, transaction = null) => {
+        const {result} = await this.repository.softDelete(id, transaction);
+        return result;
     }
 }
 
-export default softDeleteTallaLetraProductoService;
+export default SoftDeleteTallaLetraProductoService;
