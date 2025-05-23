@@ -27,25 +27,11 @@ export const PesoProductoModel = sequelize.define('peso', {
             model: 'tipo_dimensiones',
             key: 'id'
         }
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
 },{
+    paranoid: true,     //Habilita soft-delete
     timestamps: true,
     tableName: 'peso',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (color, options) => {
-            color.created_at = new Date();
-            color.updated_at = new Date();
-        },
-        beforeUpdate: async (color, options) => {
-            color.updated_at = new Date();
-        },
-        beforeDestroy: async (color, options) => {
-            color.deleted_at = new Date();
-        }
-    }
+    createdAt: 'created_at',
 });
