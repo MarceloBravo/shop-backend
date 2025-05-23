@@ -3,9 +3,9 @@ import validaDatos from './validaDatos.js';
 
 /**
  * Servicio para asociar una talla letra con un producto.
- * @class
+ * @class CreateTallaLetraProductoService
  * @constructor
- * @param {MenuRepository} repository - Repositorio de tallaLetraProducto.
+ * @param {TallaLetraProductoRepository} repository - Repositorio de tallaLetraProducto.
  * @description Esta clase se encarga de asociar una talla letra con un producto en la base de datos.
  * */
 class CreateTallaLetraProductoService{

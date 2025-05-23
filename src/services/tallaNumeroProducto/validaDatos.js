@@ -1,4 +1,4 @@
-import { getTallaNumero } from '../../repositories/TallaNumeroRepository.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 import { getProducto } from '../../repositories/ProductoRepository.js';
 
 const validaDatos = (data) => {
@@ -8,7 +8,7 @@ const validaDatos = (data) => {
     if(!producto_id || getProducto(producto_id) === null){
         errors.push("El número de la talla no es válido o no existe, especifíca un número de talla válido.");
     }
-    if(!talla_numerica_id || getTallaNumero(talla_numerica_id) === null){
+    if(!talla_numerica_id || await (new TallaNumeroRepository()).getById(talla_numerica_id) === null){
         errors.push("El número de la talla no es válido, especifíca un número de talla válido.");
     }
 

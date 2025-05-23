@@ -1,13 +1,29 @@
-import { getPageTallaNumeroProducto } from '../../repositories/tallaNumeroProducto.repository.js';
+import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
 
-const getPageTallaNumeroProductoService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
-        const desde = (pag - 1) * limit;
-        const result = await getPageTallaNumeroProducto(desde, limit);
-        return result;
-    } catch (error) {
-        throw new Error("Error al obtener la página con las tallas del producto: " + error.message);
+/**
+ * Servicio para obtener una página de las relaciones talla numericas - productos.
+ * @class GetPageTallaNumeroProductoService
+ * @constructor
+ * @param {TallaNumeroProductoRepository} repository - Repositorio de tallanumericaProducto.
+ * @description Esta clase se encarga de obtener una página de las relaciones talla numericas -. productos de la base de datos.
+ * */
+class GetPageTallaNumeroProductoService{
+    constructor(repository = new TallaNumeroProductoRepository()){
+        this.repository = repository;
     }
+
+    /**
+     * Obtiene una página de las asociaciones entre productos y tallas de numerica
+     * @param {boolean} [paranoid=true] - Si es true, solo retorna registros no eliminados (soft delete)
+     * @returns {Promise<Array<Object>>} Lista de una página de las asociaciones encontradas
+     */
+    execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
+        const desde = (pag - 1) * limit;
+        const result = await this.repository.getPage(desde, limit, paranoid);
+        return result;
+    }
+
 }
 
-export default getPageTallaNumeroProductoService;
+
+export default GetPageTallaNumeroProductoService;
