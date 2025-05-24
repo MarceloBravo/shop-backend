@@ -4,7 +4,7 @@ import { handleError } from "../../shared/functions.js";
 /**
  * Controlador para obtener una página de registros de menús
  * @class
- * @param {GetPageMarcaService} service - Servicio para obtener una página de registros de marcas
+ * @param {GetPageMarcaService} service - Servicio para obtener una página de registros
  * @returns {GetPageMarcaController} - Instancia del controlador
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de menús de la base de datos.
  */

@@ -19,47 +19,37 @@ export const ValoracionProductoModel = sequelize.define('valoraciones_producto',
     estrellas: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        default: 0
+        defaultValue: 0
     },
     comentario: {
         type: DataTypes.TEXT,
         allowNull: true        
     },
-    email:{
+    email: {
         type: DataTypes.STRING(320),
         allowNull: false,
         unique: false,
         validate: {
-            isEmail: true // <-- validación automática
+            isEmail: true
         }
     },
-    nombre:{
+    nombre: {
         type: DataTypes.STRING(50),
         allowNull: true
     },
-    foto:{
+    foto: {
         type: DataTypes.STRING(500),
         allowNull: true
-    },
+    },    
     deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
+        type: DataTypes.DATE,
+        allowNull: true,
+        defaultValue: null
     }
-
-},{
+}, {
+    paranoid: true,         // Habilita soft-delete
     timestamps: true,
     tableName: 'valoraciones_producto',  // Asegura que el nombre de la tabla sea correcto
-    underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (marca, options) => {
-            marca.created_at = new Date();
-            marca.updated_at = new Date();
-        },
-        beforeUpdate: async (marca, options) => {
-            marca.updated_at = new Date();
-        },
-        beforeDestroy: async (marca, options) => {
-            marca.deleted_at = new Date();
-        }
-    }
+    underscored: true,      // Usa snake_case en vez de camelCase
+    deletedAt: 'deleted_at'
 });
