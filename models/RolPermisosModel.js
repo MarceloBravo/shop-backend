@@ -48,26 +48,12 @@ export const RolPermisosModel = sequelize.define('roles_permisos', {
         type: DataTypes.BOOLEAN,
         default: false,
         allowNull: false
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
 },{
     timestamps: true,
     tableName: 'roles_permisos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (rolPermiso, options) => {
-            rolPermiso.created_at = new Date();
-            rolPermiso.updated_at = new Date();
-        },
-        beforeUpdate: async (rolPermiso, options) => {
-            rolPermiso.updated_at = new Date();
-        },
-        beforeDestroy: async (rolPermiso, options) => {
-            rolPermiso.deleted_at = new Date();
-        }
-    }
+    paranoid: true,     //Habilita paranoid,
+    deletedAt: 'deleted_at'
 });
 
