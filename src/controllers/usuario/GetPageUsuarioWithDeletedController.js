@@ -4,7 +4,7 @@ import { handleError } from "../../shared/functions.js";
 /**
  * Controlador para obtener una lista paginada de usuarios.
  */
-class GetPageUsuarioController {
+class GetPageUsuarioWithDeletedController {
     /**
      * @param {GetPageUsuarioService} service - Servicio para obtener una lista paginada de usuarios.
      */
@@ -21,7 +21,7 @@ class GetPageUsuarioController {
     execute = async (req, res) => {
         try {
             const { pag = 1, limit = 10 } = req.params;
-            const result = await this.service.execute(pag, limit);
+            const result = await this.service.execute(pag, limit, false);
             res.json({ data: result });
         } catch (e) {
             const err = handleError(e);
@@ -30,4 +30,4 @@ class GetPageUsuarioController {
     }
 }
 
-export default GetPageUsuarioController;
+export default GetPageUsuarioWithDeletedController;

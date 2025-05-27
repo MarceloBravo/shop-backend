@@ -62,29 +62,14 @@ export const UsuarioModel = sequelize.define('usuarios', {
             model: 'roles',  // Nombre de la tabla de roles
             key: 'id'        // Clave primaria de roles
         }
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
 },{
     timestamps: true,
     tableName: 'usuarios',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (user, options) => {
-            user.password = await encriptarPassword(user.password);
-            user.created_at = new Date();
-            user.updated_at = new Date();
-        },
-        beforeUpdate: async (user, options) => {
-            if(user.dataValues.password !== user._previousDataValues.password){
-                user.password = await encriptarPassword(user.password);
-            }
-            user.updated_at = new Date();
-        },
-        beforeDestroy: async (user, options) => {
-            user.deleted_at = new Date();
-        }
-    }
+    paranoid: true,         //Habilita soft-delete
+    deletedAt: 'deleted_at',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
 });
+

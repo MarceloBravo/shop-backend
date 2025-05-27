@@ -1,26 +1,27 @@
-import GetAllUsuarioService from '../../services/usuario/GetAllUsuarioService.js';
+import GetByIdUsuarioService from "../../services/usuario/GetByIdUsuarioService.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener todos los usuarios.
+ * Controlador para obtener un usuario por ID.
  */
-class GetAllUsuarioController {
+class GetByIdUsuarioWithDeletedController {
     /**
-     * @param {GetAllUsuarioService} service - Servicio para obtener todos los usuarios.
+     * @param {GetByIdUsuarioService} service - Servicio para obtener un usuario por ID.
      */
-    constructor(service = new GetAllUsuarioService()) {
+    constructor(service = new GetByIdUsuarioService()) {
         this.service = service;
     }
 
     /**
-     * Obtiene todos los usuarios.
+     * Obtiene un usuario por ID.
      * @param {Object} req - El objeto de solicitud.
      * @param {Object} res - El objeto de respuesta.
      * @returns {Promise<void>} - Se resuelve cuando la operación se completa.
      */
     execute = async (req, res) => {
         try {
-            const data = await this.service.execute();
+            const { id } = req.params;
+            const data = await this.service.execute(id, false);
             res.json(data);
         } catch (e) {
             const err = handleError(e);
@@ -29,4 +30,4 @@ class GetAllUsuarioController {
     }
 }
 
-export default GetAllUsuarioController;
+export default GetByIdUsuarioWithDeletedController;

@@ -2,12 +2,11 @@ import TipoDimensionesRepository from '../../repositories/TipoDimensionesReposit
 import validaDatos from './validaDatos.js';
 
 /**
- * Servicio para actualizar un tipo de dimensión
- * @class UpdateTipoDimensionesService
- * @constructor
- * @param {TallaNumeroRepository} repository - Repositorio de tallas numéricas
- * @description Esta clase se encarga de eliminar permanentemente una talla numérica de la base de datos.
- * */
+     * Se encarga de marcar un regístro como eliminado.
+     * @param {number} [id] - ID del regístro a eliminar con borrado suave 
+     * @param {object} transaction - Objeto que puede contiene la transacción en la cual se borrará el regístro
+     * @returns {Promise<Object>} - Resultado de la operación.
+     */
 class UpdateTipoDimensionesService {
     constructor(repository = new TipoDimensionesRepository()) {
         this.repository = repository;

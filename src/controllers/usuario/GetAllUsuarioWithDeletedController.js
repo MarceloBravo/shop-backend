@@ -4,7 +4,7 @@ import { handleError } from "../../shared/functions.js";
 /**
  * Controlador para obtener todos los usuarios.
  */
-class GetAllUsuarioController {
+class GetAllUsuarioWithDeletedController {
     /**
      * @param {GetAllUsuarioService} service - Servicio para obtener todos los usuarios.
      */
@@ -20,7 +20,7 @@ class GetAllUsuarioController {
      */
     execute = async (req, res) => {
         try {
-            const data = await this.service.execute();
+            const data = await this.service.execute(false);
             res.json(data);
         } catch (e) {
             const err = handleError(e);
@@ -29,4 +29,4 @@ class GetAllUsuarioController {
     }
 }
 
-export default GetAllUsuarioController;
+export default GetAllUsuarioWithDeletedController;
