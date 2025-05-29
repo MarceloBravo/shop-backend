@@ -34,4 +34,6 @@ export const PesoProductoModel = sequelize.define('peso', {
     tableName: 'peso',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    deletedAt: 'deleted_at',
 });

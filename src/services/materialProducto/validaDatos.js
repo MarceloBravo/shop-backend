@@ -1,7 +1,7 @@
 import MaterialRepository from '../../repositories/MaterialRepository.js';
 import ProductoRepository from '../../repositories/ProductoRepository.js';
 
-const validaDatos = (data) => {
+const validaDatos = async (data) => {
     let errors = [];
     const { producto_id, material_id } = data;
 

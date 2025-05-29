@@ -15,7 +15,7 @@ class UpdateDimensionesProductoService {
      * @returns {Promise<Object>} - El registro actualizado
      */
     execute = async (id, data, transaction = null) => {
-        validaDatos(data);
+        await validaDatos(data);
         return await this.repository.update(id, data, transaction); 
     }
 }

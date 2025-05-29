@@ -7,7 +7,7 @@ class CreateColorProductoService{
     }
 
     execute = async (data, transaction = null) => {
-        validaDatos(data);
+        await validaDatos(data, true, transaction);
         return await this.repository.create(data, transaction);
     }   
 }

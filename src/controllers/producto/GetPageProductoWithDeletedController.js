@@ -2,10 +2,10 @@ import GetPageProductoService from "../../services/producto/GetPageProductoServi
 import { handleError } from "../../shared/functions.js";
 
 /**
- * @class GetPageProductoController
+ * @class GetPageProductoWithDeletedController
  * @description Controlador para la obtención de páginas de productos
  */
-class GetPageProductoController {
+class GetPageProductoWithDeletedController {
     /**
      * @constructor
      * @description Inicializa el servicio de obtención de página de productos
@@ -24,7 +24,7 @@ class GetPageProductoController {
     execute = async (req, res) => { 
         try {
             const { pag = 1, limit = 10, filter = {} } = req.params;
-            const { rows, count, totPag } = await this.service.execute(pag, limit, true, filter);
+            const { rows, count, totPag } = await this.service.execute(pag, limit, false, filter);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
         } catch (e) {
             const err = handleError(e);
@@ -33,4 +33,4 @@ class GetPageProductoController {
     }
 }
 
-export default GetPageProductoController;
+export default GetPageProductoWithDeletedController;

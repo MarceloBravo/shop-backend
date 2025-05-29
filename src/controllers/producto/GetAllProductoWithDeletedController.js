@@ -2,10 +2,10 @@ import GetAllProductoService from '../../services/producto/GetAllProductoService
 import { handleError } from "../../shared/functions.js";
 
 /**
- * @class GetAllProductoController
+ * @class GetAllProductoWithDeletedController
  * @description Controlador para la obtención de todos los productos
  */
-class GetAllProductoController {
+class GetAllProductoWithDeletedController {
     /**
      * @constructor
      * @description Inicializa el servicio de obtención de todos los productos
@@ -24,7 +24,7 @@ class GetAllProductoController {
     execute = async (req, res) => {
         try {
             const { filter = {} } = req.params;
-            const data = await this.service.execute(true, filter);
+            const data = await this.service.execute(false, filter);
             res.json(data);
         } catch (e) {
             const err = handleError(e);
@@ -33,4 +33,4 @@ class GetAllProductoController {
     }
 }
 
-export default GetAllProductoController;
+export default GetAllProductoWithDeletedController;

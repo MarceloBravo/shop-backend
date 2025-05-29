@@ -1,13 +1,30 @@
-import { getPageProducto } from '../../repositories/producto.repository.js';
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 
-const getPageProductoService = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-    try{
-        const desde = (pag - 1) * limit;
-        const result = await getPageProducto(desde, limit);
-        return result;
-    } catch (error) {
-        throw new Error("Error al obtener los datos de la página: " + error.message);
+/**
+ * @description: Servicio para obtener una página de productos
+ */     
+class GetPageProductoService{
+
+    /**
+     * @description: Constructor de la clase
+     * @param {ProductoRepository} repository - El repositorio de productos
+     */
+    constructor(repository = new ProductoRepository()){
+        this.repository = repository;
     }
+
+    /**
+     * @description: Obtiene una página de productos
+     * @param {number} pag - La página a obtener    
+     * @param {number} limit - El número de registros por página
+     * @returns {Promise<Producto[]>} - Los productos de la página
+     */
+    execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true, filter ={}) => {
+        const desde = (pag - 1) * limit;
+        const result = await this.repository.getPage(desde, limit, paranoid, filter);
+        return result;
+    }
+
 }
 
-export default getPageProductoService;
+export default GetPageProductoService;

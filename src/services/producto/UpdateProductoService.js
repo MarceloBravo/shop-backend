@@ -1,14 +1,31 @@
-import { updateProducto } from '../../repositories/ProductoRepository.js';
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
-const updateProductoService = async (id, data, transaction = null) => {
-    try{
+/**
+ * @description: Servicio para actualizar un producto
+ */
+class UpdateProductoService{
+
+    /**
+     * @description: Constructor de la clase
+     * @param {ProductoRepository} repository - El repositorio de productos
+     */
+    constructor(repository = new ProductoRepository()){
+        this.repository = repository;
+    }
+
+    /**
+     * @description: Actualiza un producto
+     * @param {number} id - El id del producto a actualizar
+     * @param {Object} data - Los datos del producto a actualizar
+     * @param {Transaction} transaction - La transacción a utilizar
+     * @returns {Promise<Producto>} - El producto actualizado
+     */
+    execute = async (id, data, transaction = null) => {
         await validaDatos(data);
-        const result = await updateProducto(id, data, transaction);
+            const result = await this.repository.update(id, data, transaction);
         return result;
-    } catch (error) {
-        throw new Error("Error al actualizar el registro: " + error.message);
     }
 }
 
-export default updateProductoService;
+export default UpdateProductoService;

@@ -1,8 +1,8 @@
 import { ColorModel } from "../../models/ColorModel.js";
 
 class ColorRepository{
-    getById = async (id, paranoid = true) => {
-        const data = await ColorModel.findByPk(id,{paranoid});
+    getById = async (id, paranoid = true, transaction = null) => {
+        const data = await ColorModel.findByPk(id,{paranoid, transaction});
         return data;
     }
 

@@ -1,7 +1,7 @@
-import { getTipoDimensiones } from '../../repositories/tipoDimensiones.repository.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import ProductoRepository from '../../repositories/ProductoRepository.js';
 
-const validaDatos = (data) => {
+const validaDatos = async (data) => {
     let errors = [];
     const { producto_id, alto, ancho, profundo, tipo_dimension_id } = data;
 
@@ -20,7 +20,7 @@ const validaDatos = (data) => {
     if(profundo && (parseInt(profundo) === NaN || profundo <=0)){
         errors.push("La profundidad ingresada no es válida, ingresa sólo números positivos.");
     }
-    if(getTipoDimensiones(tipo_dimension_id) === null){
+    if(await(new TipoDimensionesRepository()).getById(tipo_dimension_id) === null){
         errors.push("La undidad de medida ingresada no es válida, ingresa una unidad válida y existente.");
     }
 

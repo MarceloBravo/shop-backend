@@ -12,7 +12,7 @@ import pantalla from './pantalla.routes.js'
 import tipoDimensiones from './tipoDimensiones.routes.js'
 import usuario from './usuario.routes.js'
 import genero from './genero.routes.js'
-//import producto from './producto.routes.js'
+import producto from './producto.routes.js'
 import valoracionProducto from './valoracionProducto.routes.js'
 import accionesPantalla from './accionesPantalla.routes.js'
 import menu from './menu.routes.js'
@@ -35,7 +35,7 @@ const rutas = [
     {path: '/tipo_dimensiones', router: tipoDimensiones},
     {path: '/usuario', router: usuario},
     {path: '/genero', router: genero},
-    //{path: '/producto', router: producto},
+    {path: '/producto', router: producto},
     {path: '/valoracion_producto', router: valoracionProducto},
     {path: '/acciones_pantalla', router: accionesPantalla},
     {path: '/menu', router: menu},

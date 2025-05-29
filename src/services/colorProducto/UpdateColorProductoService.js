@@ -8,7 +8,7 @@ class UpdateColorProductoService{
     }
 
     execute = async (id, data, transaction = null) => {
-        validaDatos(data);
+        await validaDatos(data, true, transaction);
         return await this.repository.update(id, data, transaction);
     }       
 }

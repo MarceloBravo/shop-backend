@@ -1,5 +1,5 @@
-import { getTipoDimensiones } from '../../repositories/tipoDimensiones.repository.js';
-import { getProducto } from '../../repositories/ProductoRepository.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 
 /**
  * Valida los datos de un registro de peso de producto
@@ -10,17 +10,17 @@ import { getProducto } from '../../repositories/ProductoRepository.js';
  * @returns {Object} Los datos validados
  * @throws {Error} Error con código 400 y detalles si la validación falla
  */
-const validaDatos = (data) => {
+const validaDatos = async (data, paranoid = true, transaccion = null) => {
     let errors = [];
     const { producto_id, peso, tipo_dimension_id } = data;
 
-    if(!producto_id || getProducto(producto_id) === null){
+    if(!producto_id || (await (new ProductoRepository()).getById(producto_id, paranoid, transaccion) === null)){
         errors.push("El producto no es válido o no existe, especifíca un producto válido.");
     }
     if(!peso || parseInt(peso) === NaN || peso <= 0){
         errors.push("El peso no es válido, indica un peso mayor a cero.");
     }
-    if(!tipo_dimension_id || getTipoDimensiones(tipo_dimension_id) === null){
+    if(!tipo_dimension_id || await (new TipoDimensionesRepository()).getById(tipo_dimension_id) === null){
         errors.push("La unidad de medidas no es válidas, especifíca alguna unidad de medida válida.");
     }
 

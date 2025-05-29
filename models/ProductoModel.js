@@ -48,26 +48,11 @@ export const ProductoModel = sequelize.define('productos', {
     precio:{
         type: DataTypes.DOUBLE(10,2),
         allowNull: false,
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
-
 },{
     timestamps: true,
     tableName: 'productos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (producto, options) => {
-            producto.created_at = new Date();
-            producto.updated_at = new Date();
-        },
-        beforeUpdate: async (producto, options) => {
-            producto.updated_at = new Date();
-        },
-        beforeDestroy: async (producto, options) => {
-            producto.deleted_at = new Date();
-        }
-    }
+    paranoid: true,
+    deletedAt: 'deleted_at'
 });

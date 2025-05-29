@@ -6,7 +6,7 @@ class CreateAtributoProductoService {
         this.repository = repository;
     }
 
-    async create(data, transaction = null) {
+    execute = async (data, transaction = null) => {
         validaDatos(data);
         const newRecord = await this.repository.create(data, transaction);
         return newRecord;

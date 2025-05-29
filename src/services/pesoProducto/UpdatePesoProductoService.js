@@ -28,7 +28,7 @@ class UpdatePesoProductoService {
      * @throws {Error} Si la validación falla o hay un error en la actualización
      */
     execute = async (id, data, transaction = null) => {
-        validaDatos(data);
+        await validaDatos(data, true, transaction);
         const result = await this.repository.update(id, data, transaction);
         return result;
     }

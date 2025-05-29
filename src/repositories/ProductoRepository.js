@@ -14,6 +14,7 @@ import { TallaNumericaProductoModel } from "../../models/TallaNumericaProductoMo
 import { TipoDimensionesModel } from "../../models/TipoDimensionesModel.js";
 import { sequelize } from '../../config/database.js';
 import { ValoracionProductoModel } from "../../models/ValoracionProductoModel.js";
+import { Op } from 'sequelize';
 
 const include = [
         {
@@ -145,29 +146,31 @@ class ProductoRepository {
         this.query = query; 
     }
 
-    getById = async (id, paranoid = true) => {
-        const data = await ProductoModel.findByPk(id, {include, paranoid});
+    getById = async (id, paranoid = true, transaction = null) => {
+        const data = await ProductoModel.findByPk(id, {include, paranoid, transaction});
         return data;
     }
 
 
-    getAll = async (orderBy = [['nombre', 'ASC']], paranoid = true) => {
+    getAll = async (paranoid = true, filter = {}, orderBy = [['nombre', 'ASC']]) => {
         const { rows, count } = await ProductoModel.findAndCountAll({
             order: orderBy,
             include,
-            paranoid
+            paranoid,
+            where: filter
         },);
         return {data: rows, count};
     }
 
 
-    getPage = async (desde = 1, regPorPag = 10, orderBy = [['nombre', 'ASC']], paranoid = true) => {
+    getPage = async (desde = 1, regPorPag = 10, paranoid = true, filter = {}, orderBy = [['nombre', 'ASC']]) => {
         const { rows , count } = await ProductoModel.findAndCountAll({
             offset:desde,
             limit: regPorPag,
             order: orderBy,
             include,
-            paranoid
+            paranoid,
+            where: filter
         });    
         return {rows, count, totPag: Math.ceil(count / regPorPag)};
     }
@@ -182,6 +185,10 @@ class ProductoRepository {
     update = async (id, data, transaction) => {
         const [ record, created ] = await ProductoModel.findOrCreate({where:{id}, defaults: data, transaction});
         if(created) return {data: producto, created};
+        if(record.deleted_at !== null) {
+            await record.restore({transaction});
+            created = true;
+        }
         // Si el registro ya existe, actualiza los valores
         record.sku        = data.sku;
         record.nombre        = data.nombre;
@@ -189,7 +196,6 @@ class ProductoRepository {
         record.sub_categoria_id = data.sub_categoria_id;
         record.genero_id     = data.genero_id;
         record.precio        = data.precio;
-        record.deleted_at    = null;
 
         await record.save();
 
@@ -203,7 +209,7 @@ class ProductoRepository {
     }
 
 
-    softDelete = async (id) => {
+    softDelete = async (id, transaction = null) => {
         const result = await ProductoModel.destroy({where: {id},transaction});
         return {id, result};
     }

@@ -2,10 +2,10 @@ import GetByProductoService from "../../services/producto/GetByProductoService.j
 import { handleError } from "../../shared/functions.js";
 
 /**
- * @class GetProductoController
+ * @class GetProductoWithDeletedController
  * @description Controlador para la obtención de un producto por ID
  */
-class GetProductoController {
+class GetProductoWithDeletedController {
     /**
      * @constructor
      * @description Inicializa el servicio de obtención de producto por ID
@@ -24,7 +24,7 @@ class GetProductoController {
     execute = async (req, res) => {
         try {
             const { id, getByQuery = false } = req.params;
-            const data = await this.service.execute(id, getByQuery, true);
+            const data = await this.service.execute(id, getByQuery, false);
             res.json(data);
         } catch (e) {
             const err = handleError(e);
@@ -33,4 +33,4 @@ class GetProductoController {
     }
 }
 
-export default GetProductoController;
+export default GetProductoWithDeletedController;

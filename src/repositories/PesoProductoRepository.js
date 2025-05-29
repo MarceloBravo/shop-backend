@@ -53,13 +53,17 @@ class PesoProductoRepository{
         const [record, created] = await PesoProductoModel.findOrCreate({
             where: {id},
             defaults: data,
-            transaction
+            transaction,
+            paranoid: false
         });
-
+        if (created) return { data: record, created };
+        if(record.deleted_at !== null) {
+            await record.restore({transaction});
+            created = true;
+        }
         record.producto_id = data.producto_id;
         record.peso = data.peso;
         record.tipo_dimension_id = data.tipo_dimension_id;
-        if (created) return { data: record, created };
 
         await record.save();
 

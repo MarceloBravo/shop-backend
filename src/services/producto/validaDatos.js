@@ -1,6 +1,6 @@
-import { getSubCategoria } from '../../repositories/subCategoria.repository.js';
-import { getGenero } from '../../repositories/genero.repository.js';
-import { getMarca } from '../../repositories/marca.repository.js';
+import SubCategoriaRepository from '../../repositories/SubCategoriaRepository.js';
+import GeneroRepository from '../../repositories/GeneroRepository.js';
+import MarcaRepository from '../../repositories/MarcaRepository.js';
 
 export const validaDatos = async (data) => {
     const errors = [];
@@ -15,13 +15,13 @@ export const validaDatos = async (data) => {
     if(!descripcion || descripcion.trim().length === 0){
         errors.push("La descripción es obligatoria, ingresa una descripción.");
     }
-    if(!sub_categoria_id || parseInt(sub_categoria_id) === NaN || (await getSubCategoria(sub_categoria_id)) === null){
+    if(!sub_categoria_id || parseInt(sub_categoria_id) === NaN || await ((new SubCategoriaRepository()).getById(sub_categoria_id)) === null){
         errors.push("La subcategoria ingresada no es váida o no existe, ingresa una subcategoría válida.");
     }
-    if(!genero_id || parseInt(genero_id) === NaN || (await getGenero(genero_id)) === null){
+    if(!genero_id || parseInt(genero_id) === NaN ||  await ((new GeneroRepository()).getById(genero_id)) === null){
         errors.push("El genero ingresado no es válido o no existe, ingresa un genero válido.");
     }
-    if(!marca_id || parseInt(marca_id) === NaN || (await getMarca(marca_id)) === null){
+    if(!marca_id || parseInt(marca_id) === NaN || await ((new MarcaRepository()).getById(marca_id)) === null){
         errors.push("La marca ingresada no es válida o no existe, ingresa una marca válida.");
     }
     if(!precio || parseInt(precio) === NaN || precio <0){

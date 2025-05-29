@@ -1,21 +1,43 @@
 import { Router } from 'express';
-import getProductoController from '../controllers/producto/GetProductoController.js';
-import getAllProductoController from '../controllers/producto/GetAllProductoController.js';
-import getPageProductoController from '../controllers/producto/GetPageProductoController.js';
-import createProductoController from '../controllers/producto/CreateProductoController.js';
-import updateProductoController from '../controllers/producto/UpdateProductoController.js';
-import deleteProductoController from '../controllers/producto/DeleteProductoController.js';
-import softDeleteProductoController from '../controllers/producto/SoftDeleteProductoController.js';
+import GetProductoWithDeletedController from '../controllers/producto/GetProductoWithDeletedController.js';
+import GetAllProductoWithDeletedController from '../controllers/producto/GetAllProductoWithDeletedController.js';
+import GetPageProductoWithDeletedController from '../controllers/producto/GetPageProductoWithDeletedController.js';
+
+import GetProductoController from '../controllers/producto/GetProductoController.js';
+import GetAllProductoController from '../controllers/producto/GetAllProductoController.js';
+import GetPageProductoController from '../controllers/producto/GetPageProductoController.js';
+import CreateProductoController from '../controllers/producto/CreateProductoController.js';
+import UpdateProductoController from '../controllers/producto/UpdateProductoController.js';
+import HardDeleteProductoController from '../controllers/producto/HardDeleteProductoController.js';
+import SoftDeleteProductoController from '../controllers/producto/SoftDeleteProductoController.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
 
-router.get('/:id', getProductoController);
-router.get('', getAllProductoController);
-router.get('/page/:pag/:limit?', getPageProductoController);
-router.post('', checkToken, createProductoController);
-router.put('/:id', checkToken, updateProductoController);
-router.delete('/:id', checkToken, deleteProductoController);
-router.delete('/borrar/:id', checkToken, softDeleteProductoController);
+// Instanciar los controladores
+const getProductoWithDeletedController = new GetProductoWithDeletedController();
+const getAllProductoWithDeletedController = new GetAllProductoWithDeletedController();
+const getPageProductoWithDeletedController = new GetPageProductoWithDeletedController();
+
+const getProductoController = new GetProductoController();
+const getAllProductoController = new GetAllProductoController();
+const getPageProductoController = new GetPageProductoController();
+const createProductoController = new CreateProductoController();
+const updateProductoController = new UpdateProductoController();
+const hardDeleteProductoController = new HardDeleteProductoController();
+const softDeleteProductoController = new SoftDeleteProductoController();
+
+// Definir las rutas
+router.get('/deleted', checkToken, getAllProductoWithDeletedController.execute);
+router.get('/deleted/:id', checkToken, getProductoWithDeletedController.execute);
+router.get('/deleted/page/:pag/:limit?/:filter?', checkToken, getPageProductoWithDeletedController.execute);
+
+router.get('', getAllProductoController.execute);
+router.get('/:id', getProductoController.execute);
+router.get('/page/:pag/:limit?/:filter?', getPageProductoController.execute);
+router.post('', checkToken, createProductoController.execute);
+router.put('/:id', checkToken, updateProductoController.execute);
+router.delete('/:id', checkToken, hardDeleteProductoController.execute);
+router.patch('/:id', checkToken, softDeleteProductoController.execute);
 
 export default router;
