@@ -1,4 +1,4 @@
-import GetAllRolService from '../../../src/services/Rol/GetAllRolService.js';
+import GetAllRolService from '../../../../src/services/Rol/GetAllRolService.js';
 
 describe('GetAllRolService', () => {
     // Crear el mock del repositorio

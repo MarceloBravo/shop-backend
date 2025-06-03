@@ -1,7 +1,8 @@
-import ColorRepository from '../../repositories/ColorRepository.js';
-
 class HardDeleteColorService {
-    constructor(repository = new ColorRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('Repository is required');
+        }
         this.repository = repository;
     }
 

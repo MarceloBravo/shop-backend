@@ -1,9 +1,10 @@
 import GetAllColorService from '../../services/color/GetAllColorsService.js';
+import ColorRepository from '../../repositories/ColorRepository.js';
 import { handleError } from "../../shared/functions.js";
 
-class GetAllColorWithDeletedController{
-    constructor(service = new GetAllColorService()){
-        this.service = service;
+class GetAllColorWithDeletedController {
+    constructor(repository = new ColorRepository()) {
+        this.service = new GetAllColorService(repository);
     }
 
     execute = async (req, res) => {
@@ -16,7 +17,6 @@ class GetAllColorWithDeletedController{
         }
     }   
 }
-
 
 export default GetAllColorWithDeletedController;
 

@@ -1,7 +1,8 @@
-import ColorRepository from '../../repositories/ColorRepository.js';
-
 class GetAllColorService {  
-    constructor(repository = new ColorRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('Repository is required');
+        }
         this.repository = repository;
     }
 

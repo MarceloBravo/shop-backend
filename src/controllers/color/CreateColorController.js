@@ -1,9 +1,10 @@
 import CreateColorService from "../../services/color/CreateColorService.js";
+import ColorRepository from "../../repositories/ColorRepository.js";
 import { handleError } from "../../shared/functions.js";
 
-class CreateColorController{
-    constructor(service = new CreateColorService()){
-        this.service = service;
+class CreateColorController {
+    constructor(repository = new ColorRepository()) {
+        this.service = new CreateColorService(repository);
     }
 
     execute = async (req, res) => {

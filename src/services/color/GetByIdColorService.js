@@ -1,7 +1,8 @@
-import ColorRepository from '../../repositories/ColorRepository.js';
-
 class GetByIdColorService {
-    constructor(repository = new ColorRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('Repository is required');
+        }
         this.repository = repository;
     }
 
@@ -9,6 +10,5 @@ class GetByIdColorService {
         return await this.repository.getById(id, paranoid);
     }
 }   
-
 
 export default GetByIdColorService;

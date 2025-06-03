@@ -1,9 +1,11 @@
-import ColorRepository from '../../repositories/ColorRepository.js';
 import validaDatos from './validaDatos.js';
 
-class updateColorService{
-    constructor(repository = new ColorRepository()){
-        this.repository = repository; 
+class UpdateColorService {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('Repository is required');
+        }
+        this.repository = repository;
     }       
     
     execute = async (id, data, transaction = null) => {
@@ -12,4 +14,4 @@ class updateColorService{
     }   
 }
 
-export default updateColorService;
+export default UpdateColorService;

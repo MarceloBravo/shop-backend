@@ -1,7 +1,8 @@
-import ColorRepository from '../../repositories/ColorRepository.js';
-
-class SoftDeleteColorService{
-    constructor(repository = new ColorRepository()) {
+class SoftDeleteColorService {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('Repository is required');
+        }
         this.repository = repository;
     }
 

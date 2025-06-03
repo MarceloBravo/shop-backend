@@ -1,9 +1,10 @@
 import GetByIdColorService from '../../services/color/GetByIdColorService.js';
+import ColorRepository from '../../repositories/ColorRepository.js';
 import { handleError } from "../../shared/functions.js";
 
-class GetByIdColorController{
-    constructor(service = new GetByIdColorService()){
-        this.service = service;
+class GetByIdColorController {
+    constructor(repository = new ColorRepository()) {
+        this.service = new GetByIdColorService(repository);
     }
 
     execute = async (req, res) => {

@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize'
 
+//console.log(process.env.DB_TEST, 'process.env =>',process.env);
 /*
 const HOST = 'localhost'
 const HOST_TEST = 'localhost'
