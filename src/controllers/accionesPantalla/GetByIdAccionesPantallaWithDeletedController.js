@@ -1,3 +1,4 @@
+import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 import GetByIdAccionesPantallaService from '../../services/accionesPantalla/GetByIdAccionesPantallaService.js';
 import { handleError } from "../../shared/functions.js";
 
@@ -5,8 +6,8 @@ import { handleError } from "../../shared/functions.js";
 class GetByIdAccionesPantallaWithDeletedController{
 
 
-    constructor(service = new GetByIdAccionesPantallaService()){
-        this.service = service;
+    constructor(repository = new AccionesPantallaRepository()){
+        this.service = new GetByIdAccionesPantallaService(repository);
     }
     
     execute = async (req, res) => {

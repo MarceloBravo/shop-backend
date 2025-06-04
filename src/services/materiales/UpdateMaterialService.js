@@ -1,23 +1,26 @@
-import MaterialRepository from '../../repositories/MaterialRepository.js';
-import validaDatos from './validaDatos.js';
-
 /**
- * Clase para actualizar un material de la base de datos.
+ * Servicio para actualizar un material
  * @class UpdateMaterialService
- * @constructor
- * @param {MaterialRepository} repository - Repositorio de materiales.
- * @description Esta clase se encarga de material un material de la base de datos.
  */
-class UpdateMaterialService{
-    constructor(repository = new MaterialRepository()){
+class UpdateMaterialService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * @param {number} id - ID del material a actualizar.
-     * @param {Object} data - Datos del material a actualizar.
-     * @param {Object} [transaction=null] - Si se debe realizar la transacción.
-     * @returns {Promise<*>} - Promesa que se resuelve con el material actualizado.
+     * Ejecuta la actualización de un material
+     * @param {number} id - ID del material a actualizar
+     * @param {Object} data - Datos del material a actualizar
+     * @param {Transaction} [transaction] - Transacción de Sequelize para manejar la actualización
+     * @returns {Promise<Object>} Material actualizado
      */
     execute = async (id, data, transaction = null) => {
         validaDatos(data);

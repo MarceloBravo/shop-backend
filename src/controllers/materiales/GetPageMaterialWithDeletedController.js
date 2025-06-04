@@ -1,3 +1,4 @@
+import MaterialRepository from "../../repositories/MaterialRepository.js";
 import GetPageMaterialService from "../../services/materiales/GetPageMaterialService.js";
 import { handleError } from "../../shared/functions.js";
 
@@ -9,8 +10,8 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de material incluyendo los regístros marcados como soft-deleted.
  * */
 class GetPageMaterialWithDeletedController{
-    constructor(service = new GetPageMaterialService()){
-        this.service = service;
+    constructor(repository = new MaterialRepository()){
+        this.service = new GetPageMaterialService(repository);
     }
     
     /**

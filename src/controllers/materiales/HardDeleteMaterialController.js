@@ -1,34 +1,37 @@
 import HardDeleteMaterialService from '../../services/materiales/HardDeleteMaterialService.js';
+import MaterialRepository from "../../repositories/MaterialRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para eliminar un registro de materiales.
- * @class
- * @param {HardDeleteMaterialService} service - Servicio para eliminar un registro de material
- * @returns {HardDeleteMaterialController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para eliminar un registro de material.
- * */
-class HardDeleteMaterialController{
-    constructor(service = new HardDeleteMaterialService()){
-        this.service = service;
+ * Controlador para eliminar permanentemente un material
+ * @class HardDeleteMaterialController
+ */
+class HardDeleteMaterialController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de materiales
+     */
+    constructor(repository = new MaterialRepository()) {
+        this.service = new HardDeleteMaterialService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la eliminación permanente de un material
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
-        try{
+        try {
             const { id } = req.params;
             const { result } = await this.service.execute(id);
-            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';  
+            const mensaje = result ? 'El material ha sido eliminado exitosamente.' : 'El material no pudo ser eliminado o no existe';
             res.json({ id, code: result ? 200 : 500, mensaje });
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
-    } 
+    }
 }
 
 export default HardDeleteMaterialController;

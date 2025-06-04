@@ -1,16 +1,29 @@
-import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
-
-
-class HardDeleteAccionesPantallaService{
-
-    constructor(repository = new AccionesPantallaRepository()){
+/**
+ * Servicio para eliminar una acción de pantalla de forma permanente
+ * @class HardDeleteAccionesPantallaService
+ */
+class HardDeleteAccionesPantallaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de acciones de pantalla
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
-    hardDelete = async ({id}) => {
-        return await this.repository.hardDelete(id);
+    /**
+     * Ejecuta la eliminación permanente de una acción de pantalla
+     * @param {number} id - ID de la acción de pantalla a eliminar
+     * @param {Transaction} [transaction] - Transacción de Sequelize para manejar la eliminación
+     * @returns {Promise<Object>} Resultado de la operación
+     */
+    execute = async (id, transaction = null) => {
+        return await this.repository.hardDelete(id, transaction);
     }
 }
 
 export default HardDeleteAccionesPantallaService;
-;

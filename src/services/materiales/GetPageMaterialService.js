@@ -1,24 +1,27 @@
-import MaterialRepository from '../../repositories/MaterialRepository.js';
-
 /**
- * Servicio para obtener una página de registros de materiales de la base de datos.
+ * Servicio para obtener una página de materiales
  * @class GetPageMaterialService
- * @constructor
- * @param {MaterialRepository} repository - Repositorio de materiales.
- * @description Esta clase se encarga de retornar una página de regístros de materiales de la base de datos.
- * */
-class GetPageMaterialService{
-    constructor(repository = new MaterialRepository()){
-        this.repository = repository; 
+ */
+class GetPageMaterialService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
+        this.repository = repository;
     }
     
     /**
-     * Retorna una página de materiales de la base de datos.
-     * @param {number} pag - Número de página a obtener.
-     * @param {number} limit - Número máximo de marcas por página.
-     * @param {boolean} [paranoid=true] - Si es true, se obtienen solo las marcas no eliminadas.
-     * @returns {Promise<Object>} - Devuelve un array con todas los materiales correspondientes a la página solicitada.
-     * */
+     * Ejecuta la obtención de una página de materiales
+     * @param {number} [pag=1] - Número de página a obtener
+     * @param {number} [limit=process.env.DEFAULT_REG_POR_PAGINA] - Cantidad de registros por página
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir los registros eliminados lógicamente
+     * @returns {Promise<Object>} Página de materiales
+     */
     execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
         const desde = (pag - 1) * limit;
         const result = await this.repository.getPage(desde, limit, paranoid);

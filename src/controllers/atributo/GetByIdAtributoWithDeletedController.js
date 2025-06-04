@@ -1,10 +1,11 @@
+import AtributosRepository from '../../repositories/AtributosRepository.js';
 import GetByIdAtributoService from '../../services/atributo/GetByIdAtributoService.js';
 import { handleError } from "../../shared/functions.js";
 
 class GetByIdAtributoWithDeletedController{    
 
-    constructor(service = new GetByIdAtributoService){
-        this.service = service;
+    constructor(repository = new AtributosRepository()){
+        this.service = new GetByIdAtributoService(repository);
     }
 
     execute = async (req, res) => {

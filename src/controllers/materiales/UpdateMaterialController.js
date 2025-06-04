@@ -1,31 +1,36 @@
 import UpdateMaterialService from "../../services/materiales/UpdateMaterialService.js";
+import MaterialRepository from "../../repositories/MaterialRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para actualizar un registro de material
- * @class
- * @param {UpdateMaterialService} service - Servicio para actualizar un registro de material
- * @returns {UpdateMaterialController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para actualizar un registro de material.
+ * Controlador para actualizar un material
+ * @class UpdateMaterialController
  */
-class UpdateMaterialController{
-    constructor(service = new UpdateMaterialService()){
-        this.service = service;
+class UpdateMaterialController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de materiales
+     */
+    constructor(repository = new MaterialRepository()) {
+        this.service = new UpdateMaterialService(repository);
     }
 
-
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la actualización de un material
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
-        try{
+        try {
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
-            res.json({marca: result.marca, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`})
-        }catch(e){
-            const err = handleError(e);
+            res.json({
+                material: result.material,
+                mensaje: `Material ${result.created ? 'creado' : 'actualizado'} exitosamente.`
+            });
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

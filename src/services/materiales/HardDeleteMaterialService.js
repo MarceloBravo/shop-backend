@@ -1,25 +1,32 @@
-import MaterialRepository from '../../repositories/MaterialRepository.js';
-
 /**
- * Servicio para eliminar un material.
+ * Servicio para eliminar permanentemente un material
  * @class HardDeleteMaterialService
- * @constructor
- * @param {MaterialRepository} repository - Repositorio de materiales.
- * @description Esta clase se encarga de eliminar un material en la base de datos.
- * */
-class HardDeleteMaterialService{
-    constructor(repository = new MaterialRepository()){
+ */
+class HardDeleteMaterialService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina un material de la base de datos.
-     * @param {number} id - ID del material a eliminar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Devuelve un objeto con el ID del material eliminado y el resultado de la operación.
-     * */
+     * Ejecuta la eliminación permanente de un material
+     * @param {number} id - ID del material a eliminar
+     * @param {Transaction} [transaction] - Transacción de Sequelize para manejar la eliminación
+     * @returns {Promise<Object>} Resultado de la eliminación
+     */
     execute = async (id, transaction = null) => {
-        return this.repository.hardDelete(id, transaction);
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Material no encontrado');
+        }
+        return await this.repository.hardDelete(id, transaction);
     }
 }
 

@@ -1,3 +1,4 @@
+import MaterialRepository from '../../repositories/MaterialRepository.js';
 import GetAllMaterialService from '../../services/materiales/GetAllMaterialService.js';
 import { handleError } from "../../shared/functions.js";
 
@@ -10,8 +11,8 @@ import { handleError } from "../../shared/functions.js";
 * @description Este controlador se encarga de manejar la lógica para obtener todos los registros de material incluidos aquellos marcados como eliminados con soft-delete.
 * */
 class GetAllMaterialWithDeletedController{
-    constructor(service = new GetAllMaterialService()){
-        this.service = service;
+    constructor(repository = new MaterialRepository()){
+        this.service = new GetAllMaterialService(repository);
     }
 
     /**

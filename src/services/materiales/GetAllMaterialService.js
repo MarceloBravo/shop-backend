@@ -1,24 +1,27 @@
-import MaterialRepository from '../../repositories/MaterialRepository.js';
-
 /**
- * Servicio para obtener todos los materiales de la base de datos.
+ * Servicio para obtener todos los materiales
  * @class GetAllMaterialService
- * @constructor
- * @param {MaterialRepository} repository - Repositorio de materiales.
- * @description Esta clase se encarga de retornar todos los materiales de la base de datos.
- * */
-class GetAllMaterialService{
-    constructor(repository = new MaterialRepository()){
+ */
+class GetAllMaterialService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Retorna todos los materiales de la base de datos.
-     * @param {boolean} [paranoid=true] - Si es true, se obtienen solo las marcas no eliminadas.
-     * @returns {Promise<Object>} - Devuelve un array con todas los materiales.
-     * */
+     * Ejecuta la obtención de todos los materiales
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir los registros eliminados lógicamente
+     * @returns {Promise<Array>} Lista de materiales
+     */
     execute = async (paranoid = true) => {
-        return this.repository.getAll(paranoid);
+        return await this.repository.getAll(paranoid);
     }
 }
 

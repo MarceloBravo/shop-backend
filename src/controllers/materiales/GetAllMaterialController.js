@@ -1,33 +1,35 @@
 import GetAllMaterialService from '../../services/materiales/GetAllMaterialService.js';
+import MaterialRepository from "../../repositories/MaterialRepository.js";
 import { handleError } from "../../shared/functions.js";
 
-
 /**
- * Controlador para obtener todos los registros de material.
- * @class
-* @param {GetAllMaterialService} service - Servicio para obtener todos los registros de material.
-* @returns {GetAllMaterialController} - Instancia del controlador
-* @description Este controlador se encarga de manejar la lógica para obtener todos los registros de material.
-* */
-class GetAllMaterialController{
-    constructor(service = new GetAllMaterialService()){
-        this.service = service;
+ * Controlador para obtener todos los materiales
+ * @class GetAllMaterialController
+ */
+class GetAllMaterialController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de materiales
+     */
+    constructor(repository = new MaterialRepository()) {
+        this.service = new GetAllMaterialService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de todos los materiales
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
-        try{
+        try {
             const data = await this.service.execute();
             res.json(data);
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
-    } 
+    }
 }
 
 export default GetAllMaterialController;

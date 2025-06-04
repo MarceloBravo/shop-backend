@@ -1,32 +1,37 @@
 import SoftDeleteMaterialService from "../../services/materiales/SoftDeleteMaterialService.js";
+import MaterialRepository from "../../repositories/MaterialRepository.js";
 import { handleError } from "../../shared/functions.js";
 
-
 /**
- * Controlador para eliminar un registro de material de forma lógica
- * @class
- * @param {SoftDeleteMaterialService} service - Servicio para eliminar un registro de material
- * @returns {SoftDeleteMaterialController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para eliminar un registro de material de forma lógica.
- * */
-class SoftDeleteMaterialController{
-    constructor(service = new SoftDeleteMaterialService()){
-        this.service = service;
+ * Controlador para eliminar lógicamente un material
+ * @class SoftDeleteMaterialController
+ */
+class SoftDeleteMaterialController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de materiales
+     */
+    constructor(repository = new MaterialRepository()) {
+        this.service = new SoftDeleteMaterialService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     s* @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
-     * */
+     * Ejecuta la eliminación lógica de un material
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
-        try{
+        try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const resp = {code: result, mensaje : result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
+            const resp = {
+                code: result,
+                mensaje: result ? 'El material ha sido eliminado exitosamente.' : 'El material no pudo ser eliminado o no existe'
+            };
             res.json(resp);
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

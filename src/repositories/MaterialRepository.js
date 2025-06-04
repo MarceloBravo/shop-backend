@@ -8,6 +8,14 @@ class MaterialRepository{
     }
 
 
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = {};
+        where[campo] = valor;
+        const data = await MaterialModel.findOne({where, paranoid});
+        return data;
+    }
+
+
     getAll = async (paranoid = true) => {
         const { rows, count } = await MaterialModel.findAndCountAll({
             order: [['valor','ASC']],

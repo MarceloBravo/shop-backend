@@ -33,7 +33,7 @@ router.get('/:id', checkToken, getByIdAccionesPantallaController.execute);
 router.get('/page/:pag/:limit?', checkToken, getPageAccionesPantallaController.execute);
 router.post('/', checkToken, createAccionesPantallaController.execute);
 router.put('/:id', checkToken, updateAccionesPantallaController.execute);
-router.delete('/:id', checkToken, deleteAccionesPantallaController.hardDelete);
-router.patch('/:id', checkToken, softDeleteAccionesPantallaController.softDelete);
+router.delete('/:id', checkToken, deleteAccionesPantallaController.execute);
+router.patch('/:id', checkToken, softDeleteAccionesPantallaController.execute);
 
 export default router;

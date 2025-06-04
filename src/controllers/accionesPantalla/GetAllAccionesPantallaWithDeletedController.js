@@ -1,10 +1,11 @@
+import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 import GetAllAccionesPantallaService from '../../services/accionesPantalla/GetAllAccionesPantallaService.js';
 import { handleError } from "../../shared/functions.js";
 
 class GetAllAccionesPantallaWithDeletedController{
     
-    constructor(service = new GetAllAccionesPantallaService()){
-        this.service = service;
+    constructor(reppository = new AccionesPantallaRepository()){
+        this.service = new GetAllAccionesPantallaService(reppository);
     }
 
 

@@ -1,26 +1,34 @@
-import MaterialRepository from '../../repositories/MaterialRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**
- * Servicio para crear un nuevo material.
+ * Servicio para crear un nuevo material
  * @class CreateMaterialService
- * @constructor
- * @param {MaterialRepository} repository - Repositorio de materiales.
- * @description Esta clase se encarga de crear un nuevo material en la base de datos.
- * */
-class CreateMaterialService{
-    constructor(repository = new MaterialRepository()){
+ */
+class CreateMaterialService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Crea un nuevo material en la base de datos.
-     * @param {Object} data - Datos del material a crear.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - El material creado.
-     * */
+     * Ejecuta la creación de un nuevo material
+     * @param {Object} data - Datos del material a crear
+     * @param {Transaction} [transaction] - Transacción de Sequelize para manejar la creación
+     * @returns {Promise<Object>} Material creado
+     */
     execute = async (data, transaction = null) => {
         validaDatos(data);
+        const existe = await this.repository.getBy('valor', data.valor);
+        if (existe) {
+            throw new Error('Ya existe un material con ese valor');
+        }
         return await this.repository.create(data, transaction);
     }
 }

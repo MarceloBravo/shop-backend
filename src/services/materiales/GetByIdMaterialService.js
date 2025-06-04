@@ -1,25 +1,28 @@
-import MaterialRepository from '../../repositories/MaterialRepository.js';
-
 /**
- * Servicio para obtener un material de la base de datos.
+ * Servicio para obtener un material por su ID
  * @class GetByIdMaterialService
- * @constructor
- * @param {MaterialRepository} repository - Repositorio de materiales.
- * @description Esta clase se encarga de retornar un material de la base de datos a partir de su ID.
- * */
-class GetByIdMaterialService{
-    constructor(repository = new MaterialRepository()){
+ */
+class GetByIdMaterialService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Retorna un material de la base de datos a partir de su ID.
-     * @param {number} id - ID del material a obtener.* 
-     * @param {boolean} [paranoid=true] - Si es true, se obtienen solo las marcas no eliminadas.
-     * @returns {Promise<Object>} - Promesa que se resuelve con el material encontrado.
-     * */
+     * Ejecuta la obtención de un material por su ID
+     * @param {number} id - ID del material a obtener
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir los registros eliminados lógicamente
+     * @returns {Promise<Object>} Material encontrado
+     */
     execute = async (id, paranoid = true) => {
-        return this.repository.getById(id, paranoid);
+        return await this.repository.getById(id, paranoid);
     }
 }
 

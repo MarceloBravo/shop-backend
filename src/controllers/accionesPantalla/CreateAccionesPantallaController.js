@@ -1,18 +1,32 @@
 import CreateAccionesPantallaService from "../../services/accionesPantalla/CreateAccionesPantallaService.js";
+import AccionesPantallaRepository from "../../repositories/AccionesPantallaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
-class CreateAccionesPantallaController{
-
-    constructor(service = new CreateAccionesPantallaService()){
-        this.service = service;
+/**
+ * Controlador para crear una nueva acción de pantalla
+ * @class CreateAccionesPantallaController
+ */
+class CreateAccionesPantallaController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de acciones de pantalla
+     */
+    constructor(repository = new AccionesPantallaRepository()) {
+        this.service = new CreateAccionesPantallaService(repository);
     }
 
+    /**
+     * Ejecuta la creación de una nueva acción de pantalla
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
-        try{        
+        try {
             const data = await this.service.execute(req.body);
             res.json({data, mensaje: 'El registro ha sido creado exitosamente.'});
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }
