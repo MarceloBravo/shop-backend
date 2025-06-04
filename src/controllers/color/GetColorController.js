@@ -2,11 +2,25 @@ import GetByIdColorService from '../../services/color/GetByIdColorService.js';
 import ColorRepository from '../../repositories/ColorRepository.js';
 import { handleError } from "../../shared/functions.js";
 
-class GetByIdColorController {
+/**
+ * Controlador para obtener un color por su ID
+ * @class GetColorController
+ */
+class GetColorController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de colores
+     */
     constructor(repository = new ColorRepository()) {
         this.service = new GetByIdColorService(repository);
     }
 
+    /**
+     * Ejecuta la obtención de un color por su ID
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
         try {
             const { id } = req.params;
@@ -19,4 +33,4 @@ class GetByIdColorController {
     }
 }
 
-export default GetByIdColorController;
+export default GetColorController;

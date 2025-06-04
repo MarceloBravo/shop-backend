@@ -2,11 +2,25 @@ import SoftDeleteColorService from "../../services/color/SoftDeleteColorService.
 import ColorRepository from '../../repositories/ColorRepository.js';
 import { handleError } from "../../shared/functions.js";
 
+/**
+ * Controlador para realizar borrado lógico de un color
+ * @class SoftDeleteColorController
+ */
 class SoftDeleteColorController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de colores
+     */
     constructor(repository = new ColorRepository()) {
         this.service = new SoftDeleteColorService(repository);
     }
 
+    /**
+     * Ejecuta el borrado lógico de un color
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
         try {
             const { id } = req.params;

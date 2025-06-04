@@ -2,11 +2,25 @@ import UpdateColorService from "../../services/color/UpdateColorService.js";
 import ColorRepository from '../../repositories/ColorRepository.js';
 import { handleError } from "../../shared/functions.js";
 
+/**
+ * Controlador para actualizar o crear un color
+ * @class UpdateColorController
+ */
 class UpdateColorController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de colores
+     */
     constructor(repository = new ColorRepository()) {
         this.service = new UpdateColorService(repository);
     }
 
+    /**
+     * Ejecuta la actualización o creación de un color
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
         try {
             const { id } = req.params;

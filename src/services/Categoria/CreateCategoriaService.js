@@ -1,16 +1,31 @@
-import CategoriaRepository from "../../repositories/CategoriaRepository.js";
 import validaDatos from "./validaDatos.js";
 
-class CreateCategoriaService{
-    
-    constructor(repository = new CategoriaRepository()) {
+/**
+ * Servicio para crear una nueva categoría
+ * @class CreateCategoriaService
+ */
+class CreateCategoriaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de categorías
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
-    execute = async (data, transaction = null) => {
+    /**
+     * Ejecuta la creación de una nueva categoría
+     * @param {Object} data - Datos de la categoría a crear
+     * @returns {Promise<Object>} Categoría creada
+     */
+    execute = async (data) => {
         validaDatos(data);
-        return await this.repository.create(data, transaction);
+        return await this.repository.create(data);
     }
-}       
+}
 
 export default CreateCategoriaService;

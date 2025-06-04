@@ -1,12 +1,28 @@
-import CategoriaRepository from "../../repositories/CategoriaRepository.js";
-
+/**
+ * Servicio para realizar borrado físico de una categoría
+ * @class HardDeleteCategoriaService
+ */
 class HardDeleteCategoriaService {
-    constructor(repository = new CategoriaRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de categorías
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
-    execute = async (id, transaction = null) => {
-        return await this.repository.hardDelete(id, transaction);
+    /**
+     * Ejecuta el borrado físico de una categoría
+     * @param {string|number} id - ID de la categoría a borrar
+     * @returns {Promise<Object>} Resultado de la operación
+     */
+    execute = async (id) => {
+        const result = await this.repository.hardDelete(id);
+        return { result };
     }
 }
 

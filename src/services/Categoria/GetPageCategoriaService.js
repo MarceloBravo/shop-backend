@@ -1,14 +1,33 @@
-import CategoriaRepository from "../../repositories/CategoriaRepository.js";
-
-class getPageCategoriaService{
-    constructor(repository = new CategoriaRepository()) {
+/**
+ * Servicio para obtener una página de categorías
+ * @class GetPageCategoriaService
+ */
+class GetPageCategoriaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de categorías
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
-    execute = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA) => {
-        const desde = (page - 1) * limit;
-        return await this.repository.getPage(desde, limit);
-    }   
+    /**
+     * Ejecuta la obtención de una página de categorías
+     * @param {number} page - Número de página
+     * @param {number} limit - Límite de registros por página
+     * @param {boolean} [includeDeleted=false] - Indica si se deben incluir las categorías eliminadas
+     * @returns {Promise<Object>} Objeto con los registros, total de registros y total de páginas
+     */
+    execute = async (page, limit, includeDeleted = false) => {
+        const offset = (page - 1) * limit;
+        const { rows, count } = await this.repository.getPage(offset, limit, includeDeleted);
+        const totPag = Math.ceil(count / limit);
+        return { rows, count, totPag };
+    }
 }
 
-export default getPageCategoriaService;
+export default GetPageCategoriaService;
