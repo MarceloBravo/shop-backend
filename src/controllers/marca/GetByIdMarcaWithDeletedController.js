@@ -1,3 +1,4 @@
+import MarcaRepository from '../../repositories/MarcaRepository.js';
 import GetByIdMarcaService from '../../services/marca/GetByIdMarcaService.js';
 import { handleError } from "../../shared/functions.js";
 
@@ -9,8 +10,8 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener un registro de marca por su ID.
  */
 class GetByIdMarcaWithDeletedController{
-    constructor(service = new GetByIdMarcaService()){
-        this.service = service;
+    constructor(repository = new MarcaRepository()){
+        this.service = new GetByIdMarcaService(repository);
     }  
 
     /**

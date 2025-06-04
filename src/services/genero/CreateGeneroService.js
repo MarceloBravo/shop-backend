@@ -1,19 +1,37 @@
-import GeneroRepository from '../../repositories/GeneroRepository.js';
 import validaDatos from './validaDatos.js';
 
+/**
+ * Servicio para crear un nuevo registro de género
+ * @class CreateGeneroService
+ */
 class CreateGeneroService {
-    constructor(repository = new GeneroRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de géneros
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * @param {Object} data - Datos del genero a crear
-     * @param {boolean} [transaction=true] - Si se debe realizar la transacción
-     * @returns {Promise<*>} - Promesa que se resuelve con el genero creado
+     * Ejecuta la creación de un nuevo registro de género
+     * @param {Object} data - Datos del género a crear
+     * @param {string} data.nombre - Nombre del género
+     * @param {string} data.descripcion - Descripción del género
+     * @returns {Promise<Object>} Género creado
+     * @throws {Error} Si los datos no son válidos o si ya existe un género con el mismo nombre
      */
-    execute = async (data, transaction = true) => {
-        validaDatos(data);    
-        return await this.repository.create(genero, transaction);
+    execute = async (data) => {
+        validaDatos(data);
+        const existe = await this.repository.getBy('nombre', data.nombre);
+        if (existe) {
+            throw new Error('Ya existe un género con ese nombre');
+        }
+        return await this.repository.create(data);
     }
 }
 

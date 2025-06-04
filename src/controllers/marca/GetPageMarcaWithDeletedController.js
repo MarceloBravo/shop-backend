@@ -1,3 +1,4 @@
+import MarcaRepository from "../../repositories/MarcaRepository.js";
 import GetPageMarcaService from "../../services/marca/GetPageMarcaService.js";
 import { handleError } from "../../shared/functions.js";
 
@@ -10,8 +11,8 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de marcas de la base de datos.
  */
 class GetPageMarcaWithDeletedController{
-    constructor(service = new GetPageMarcaService()){
-        this.service = service;
+    constructor(repository = new MarcaRepository()){
+        this.service = new GetPageMarcaService(repository);
     }   
 
     /**

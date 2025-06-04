@@ -1,28 +1,32 @@
 import CreateGeneroService from "../../services/genero/CreateGeneroService.js";
+import GeneroRepository from '../../repositories/GeneroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para crear un nuevo registro de género
- * @class
- * @param {CreateGeneroService} service - Servicio para crear un nuevo registro de género
- * @returns {CreateGeneroController} - Instancia del controlador
+ * @class CreateGeneroController
  */
-class CreateGeneroController{
-    constructor(service = new CreateGeneroService()) {
-        this.service = service;
+class CreateGeneroController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de géneros
+     */
+    constructor(repository = new GeneroRepository()) {
+        this.service = new CreateGeneroService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la creación de un nuevo registro de género
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
-        try{        
+        try {
             const data = await this.service.execute(req.body);
             res.json({data, mensaje: 'El registro ha sido creado exitosamente.'});
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

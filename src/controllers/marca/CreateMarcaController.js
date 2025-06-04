@@ -1,29 +1,32 @@
 import CreateMarcaService from "../../services/marca/CreateMarcaService.js";
+import MarcaRepository from "../../repositories/MarcaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para crear un nuevo registro de marca
- * @class
- * @param {CreateMarcaService} service - Servicio para crear un nuevo registro de marca
- * @returns {CreateMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la creación de nuevas marcas en la base de datos.
+ * Controlador para crear una nueva marca
+ * @class CreateMarcaController
  */
-class CreateMarcaController{
-    constructor(service = new CreateMarcaService()){
-        this.service = service;
-    }   
+class CreateMarcaController {
     /**
-     * Crea una nueva marca en la base de datos.
-     * @param {Object} req - Objeto de solicitud HTTP.
-     * @param {Object} res - Objeto de respuesta HTTP.
-     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de marcas
+     */
+    constructor(repository = new MarcaRepository()) {
+        this.service = new CreateMarcaService(repository);
+    }
+
+    /**
+     * Ejecuta la creación de una nueva marca
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
-        try{        
+        try {
             const data = await this.service.execute(req.body);
             res.json({data, mensaje: 'El registro ha sido creado exitosamente.'});
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

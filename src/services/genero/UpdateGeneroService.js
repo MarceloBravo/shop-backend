@@ -1,22 +1,36 @@
-import GeneroRepository from '../../repositories/GeneroRepository.js';
 import validaDatos from './validaDatos.js';
 
-class UpdateGeneroService{
-    constructor(repository = new GeneroRepository()) {
+/**
+ * Servicio para actualizar un registro de género existente
+ * @class UpdateGeneroService
+ */
+class UpdateGeneroService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de géneros
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
-    }  
+    }
 
     /**
-     * @param {number} id - ID del genero a actualizar
-     * @param {Object} data - Datos del genero a actualizar
-     * @param {boolean} [transaction=null] - Si se debe realizar la transacción
-     * @returns {Promise<*>} - Promesa que se resuelve con el genero actualizado
+     * Ejecuta la actualización de un registro de género
+     * @param {string|number} id - ID del género a actualizar
+     * @param {Object} values - Datos del género a actualizar
+     * @param {string} values.nombre - Nombre del género
+     * @param {string} values.descripcion - Descripción del género
+     * @returns {Promise<Object>} Género actualizado
+     * @throws {Error} Si los datos no son válidos, si el género no existe o si ya existe otro género con el mismo nombre
      */
-    execute = async (id, data, transaction = null) => {
-        validaDatos(data);
-        const record = await this.repository.update(id, data, transaction);
-        return record;
-    } 
+    execute = async (id, values) => {
+        validaDatos(values);
+        const { data, created } = await this.repository.update(id, values);
+        return { data, created };
+    }
 }
 
 export default UpdateGeneroService;

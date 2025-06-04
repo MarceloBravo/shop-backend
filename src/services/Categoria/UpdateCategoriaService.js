@@ -20,18 +20,13 @@ class UpdateCategoriaService {
     /**
      * Ejecuta la actualización o creación de una categoría
      * @param {string|number} id - ID de la categoría a actualizar
-     * @param {Object} data - Datos de la categoría a actualizar
+     * @param {Object} values - Datos de la categoría a actualizar
      * @returns {Promise<Object>} Objeto con la categoría actualizada y un indicador de si fue creada
      */
-    execute = async (id, data) => {
+    execute = async (id, values) => {
         validaDatos(data);
-        const exists = await this.repository.getById(id);
-        if (!exists) {
-            const color = await this.repository.create(data);
-            return { color, created: true };
-        }
-        const color = await this.repository.update(id, data);
-        return { color, created: false };
+        const {data, created } = await this.repository.update(id, values);
+        return { data, created };
     }
 }
 

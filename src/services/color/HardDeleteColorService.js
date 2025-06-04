@@ -21,8 +21,11 @@ class HardDeleteColorService {
      * @returns {Promise<Object>} Resultado de la operación
      */
     execute = async (id) => {
-        const result = await this.repository.hardDelete(id);
-        return { result };
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Color no encontrado');
+        }
+        return await this.repository.hardDelete(id);
     }
 }
 

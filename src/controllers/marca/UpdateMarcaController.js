@@ -1,35 +1,39 @@
 import UpdateMarcaService from "../../services/marca/UpdateMarcaService.js";
+import MarcaRepository from "../../repositories/MarcaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
-
 /**
- * Controlador para actualizar un registro de marca
- * @class
- * @param {UpdateMarcaService} service - Servicio para actualizar un registro de marca
- * @returns {UpdateMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para actualizar un registro de marca.
+ * Controlador para actualizar una marca
+ * @class UpdateMarcaController
  */
-class UpdateMarcaController{
-    constructor(service = new UpdateMarcaService()){
-        this.service = service;
+class UpdateMarcaController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de marcas
+     */
+    constructor(repository = new MarcaRepository()) {
+        this.service = new UpdateMarcaService(repository);
     }
 
     /**
-     * Actualiza un registro de marca en la base de datos.
-     * @param {Object} req - Objeto de solicitud HTTP.
-     * @param {Object} res - Objeto de respuesta HTTP.
-     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     * Ejecuta la actualización de una marca
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
-        try{        
+        try {
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
-            res.json({marca: result.marca, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`})
-        }catch(e){
-            const err = handleError(e);
+            res.json({
+                marca: result.marca,
+                mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`
+            });
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
-    }   
+    }
 }
 
 export default UpdateMarcaController;

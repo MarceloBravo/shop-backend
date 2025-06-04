@@ -1,15 +1,34 @@
-import GeneroRepository from '../../repositories/GeneroRepository.js';
 
+/**
+ * Servicio para realizar un borrado permanente de un registro de género
+ * @class HardDeleteGeneroService
+ */
 class HardDeleteGeneroService {
-    constructor(repository = new GeneroRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de géneros
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
-    execute = async (id, transaction = null) => {
-        const result = await this.repository.hardDelete(id, transaction);
-        return result;
+    /**
+     * Ejecuta el borrado permanente de un registro de género
+     * @param {string|number} id - ID del género a eliminar
+     * @returns {Promise<Object>} Género eliminado
+     * @throws {Error} Si el género no existe
+     */
+    execute = async (id) => {
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Género no encontrado');
+        }
+        return await this.repository.hardDelete(id);
     }
-}   
-
+}
 
 export default HardDeleteGeneroService;

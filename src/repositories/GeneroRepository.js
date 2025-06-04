@@ -7,6 +7,14 @@ class GeneroRepository{
     }
 
 
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = {};
+        where[campo] = valor;
+        const data = await GeneroModel.findOne({where, paranoid});
+        return data;
+    }
+
+
     getAll = async (paranoid = true) => {
         const { rows, count } = await GeneroModel.findAndCountAll({
             order: [['genero','ASC']],

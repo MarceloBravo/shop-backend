@@ -8,6 +8,14 @@ class CategoriaRepository {
     }
 
 
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = {};
+        where[campo] = valor;
+        const data = await CategoriaModel.findOne({where, paranoid});
+        return data;
+    }
+    
+
     getAll = async (paranoid = true) => {
         const { rows, count } = await CategoriaModel.findAndCountAll({
             order: [['nombre','ASC']],

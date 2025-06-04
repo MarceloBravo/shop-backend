@@ -1,30 +1,32 @@
 import GetAllMarcaService from '../../services/marca/GetAllMarcaService.js';
+import MarcaRepository from "../../repositories/MarcaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener todas las marcas
- * @class
- * @param {GetAllMarcaService} service - Servicio para obtener todas las marcas
- * @returns {GetAllMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener todas las marcas de la base de datos.
+ * @class GetAllMarcaController
  */
-class GetAllMarcaController{
-    constructor(service = new GetAllMarcaService()){
-        this.service = service;
-    }  
+class GetAllMarcaController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de marcas
+     */
+    constructor(repository = new MarcaRepository()) {
+        this.service = new GetAllMarcaService(repository);
+    }
 
     /**
-     * Obtiene todos los registros de las marcas de la base de datos meno los registros marcados como eliminados.
-     * @param {Object} req - Objeto de solicitud HTTP.
-     * @param {Object} res - Objeto de respuesta HTTP.
-     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     * Ejecuta la obtención de todas las marcas
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
-        try{        
+        try {
             const data = await this.service.execute();
             res.json(data);
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

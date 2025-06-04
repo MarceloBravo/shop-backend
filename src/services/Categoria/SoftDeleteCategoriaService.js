@@ -21,6 +21,10 @@ class SoftDeleteCategoriaService {
      * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
      */
     execute = async (id) => {
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Categoría no encontrado');
+        }
         return await this.repository.softDelete(id);
     }
 }

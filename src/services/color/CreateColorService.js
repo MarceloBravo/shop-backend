@@ -24,6 +24,10 @@ class CreateColorService {
      */
     execute = async (data) => {
         validaDatos(data);
+        const existe = await this.repository.getBy('nombre', data.nombre);
+        if (existe) {
+            throw new Error('Ya existe un color con ese nombre');
+        }
         return await this.repository.create(data);
     }   
 }

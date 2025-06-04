@@ -1,3 +1,4 @@
+import MarcaRepository from '../../repositories/MarcaRepository.js';
 import GetAllMarcaService from '../../services/marca/GetAllMarcaService.js';
 import { handleError } from "../../shared/functions.js";
 
@@ -9,8 +10,8 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener todas las marcas de la base de datos.
  */
 class GetAllMarcaWithDeletedController{
-    constructor(service = new GetAllMarcaService()){
-        this.service = service;
+    constructor(respository = new MarcaRepository()){
+        this.service = new GetAllMarcaService(respository);
     }  
 
     /**
@@ -23,8 +24,8 @@ class GetAllMarcaWithDeletedController{
         try{        
             const data = await this.service.execute(false);
             res.json(data);
-        }catch(e){
-            const err = handleError(e);
+        }catch(error){
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

@@ -1,25 +1,29 @@
-import MarcaRepository from '../../repositories/MarcaRepository.js';
-
 /**
- * Clase para eliminar una marca de forma suave.
- * @class HardDeleteMarcaService
- * @constructor
- * @param {MarcaRepository} repository - Repositorio de marcas.
- * @description Esta clase se encarga de eliminar una marca de forma suave de la base de datos.
+ * Servicio para eliminar una marca de forma suave
+ * @class SoftDeleteMarcaService
  */
-class SoftDeleteMarcaService{
-    constructor(repository = new MarcaRepository()){
+class SoftDeleteMarcaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de marcas
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina una marca de forma suave (soft delete) de la base de datos.
-     * @param {number} id - ID de la marca a eliminar.
-     * @returns {Promise<number>} - Devuelve el código de estado HTTP (200 si se eliminó, 404 si no se encontró).
-     * */
+     * Ejecuta la eliminación suave de una marca
+     * @param {number} id - ID de la marca a eliminar
+     * @param {Transaction} [transaction] - Transacción de Sequelize para manejar la eliminación
+     * @returns {Promise<Object>} Marca eliminada
+     */
     execute = async (id, transaction = null) => {
         const record = await this.repository.softDelete(id, transaction);
-        return record
+        return record;
     }
 }
 

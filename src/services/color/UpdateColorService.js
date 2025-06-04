@@ -20,18 +20,13 @@ class UpdateColorService {
     /**
      * Ejecuta la actualización o creación de un color
      * @param {string|number} id - ID del color a actualizar
-     * @param {Object} data - Datos del color a actualizar
+     * @param {Object} values - Datos del color a actualizar
      * @returns {Promise<Object>} Objeto con el color actualizado y un indicador de si fue creado
      */
-    execute = async (id, data) => {
+    execute = async (id, values) => {
         validaDatos(data);
-        const exists = await this.repository.getById(id);
-        if (!exists) {
-            const color = await this.repository.create(data);
-            return { color, created: true };
-        }
-        const color = await this.repository.update(id, data);
-        return { color, created: false };
+        const {data, created } = await this.repository.update(id, values);
+        return { data, created };
     }   
 }
 

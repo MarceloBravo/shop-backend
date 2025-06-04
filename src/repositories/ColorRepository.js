@@ -7,6 +7,15 @@ class ColorRepository{
     }
 
 
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = {};
+        where[campo] = valor;
+        const data = await ColorModel.findOne({where, paranoid});
+        return data;
+    }
+
+
+
     getAll = async (paranoid = true) => {
         const { rows, count } = await ColorModel.findAndCountAll({
             order: [['nombre','ASC']],

@@ -1,33 +1,35 @@
 import GetAllGeneroService from '../../services/genero/GetAllGeneroService.js';
+import GeneroRepository from '../../repositories/GeneroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener todos los registros de género incluyendo los registros marcados como eliminados
- * @class
- * @param {GetAllGeneroService} service - Servicio para obtener todos los registros de género
- * @returns {GetAllGeneroWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener todos los registros de género.
- * */
-class GetAllGeneroWithDeletedController{
-    constructor(service = new GetAllGeneroService()) {
-        this.service = service;
+ * Controlador para obtener todos los registros de género incluyendo los eliminados
+ * @class GetAllGeneroWithDeletedController
+ */
+class GetAllGeneroWithDeletedController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de géneros
+     */
+    constructor(repository = new GeneroRepository()) {
+        this.service = new GetAllGeneroService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de todos los registros de género incluyendo los eliminados
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
-        try{
+        try {
             const data = await this.service.execute(false);
             res.json(data);
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }
-
 }
 
 export default GetAllGeneroWithDeletedController;
