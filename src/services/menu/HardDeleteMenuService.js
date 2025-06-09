@@ -1,27 +1,32 @@
-import MenuRepository from '../../repositories/MenuRepository.js';
-
 /**
- * Servicio encargado de eliminar un menú de la base d datos .
- * @class GetAllMenuService
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús
- * @description Esta clase se encarga de eliminar un menú de la base de datos.
+ * Servicio para realizar borrado físico de un menú
+ * @class HardDeleteMenuService
  */
-class HardDeleteMenuService{
-    constructor(repository = new MenuRepository()){
+class HardDeleteMenuService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de menús
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina un menú de forma permanente.
-     * @param {number} id - ID del menú a eliminar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Resultado de la operación.
-     * @description Esta función elimina un menú de la base de datos de forma permanente.
+     * Ejecuta el borrado físico de un menú
+     * @param {string|number} id - ID del menú a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Resultado de la operación
      */
-    execute = async (id, transaction = null) => {
-        const {result} = await this.repository.hardDelete(id, transaction);
-        return result;
+    execute = async (id, transaction = null, paranoid = false) => {
+        const existe = await this.repository.getById(id, false, paranoid);
+        if (!existe) {
+            throw new Error('Menú no encontrado');
+        }
+        return await this.repository.hardDelete(id, transaction);
     }
 }
 

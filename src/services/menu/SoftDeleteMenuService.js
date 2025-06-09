@@ -1,27 +1,32 @@
-import MenuRepository from '../../repositories/MenuRepository.js';
-
 /**
- * Servicio para marcar como borrado  un menú en la base de datos.
- * @class GetAllMenuService
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús.
- * @description Esta clase se encarga de marcar como borrado un menú de la base de datos.
+ * Servicio para realizar borrado lógico de un menú
+ * @class SoftDeleteMenuService
  */
-class SoftDeleteMenuService{
-    constructor(repository = new MenuRepository()){
+class SoftDeleteMenuService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de menús
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
-    }   
+    }
 
     /**
-     * Elimina un menú de forma suave (soft delete).
-     * @param {number} id - ID del menú a eliminar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Resultado de la operación.
-     * @description Esta función elimina un menú de la base de datos de forma suave (soft delete).
+     * Ejecuta el borrado lógico de un menú
+     * @param {string|number} id - ID del menú a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
      */
     execute = async (id, transaction = null) => {
-        const {result} = await this.repository.softDelete(id, transaction);
-        return result;
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Menú no encontrado');
+        }
+        return await this.repository.softDelete(id, transaction);
     }
 }
 

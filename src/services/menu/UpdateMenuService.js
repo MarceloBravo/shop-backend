@@ -1,27 +1,31 @@
-import MenuRepository from '../../repositories/MenuRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**
- * Servicio para actualizar un menú existente.
- * @class
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús.
- * @description Esta clase se encarga de actualizar un menú existente en la base de datos.
+ * Servicio para actualizar un menú
+ * @class UpdateMenuService
  */
-class UpdateMenuService{
-    constructor(repository = new MenuRepository()){
+class UpdateMenuService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de menús
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Actualiza un menú en la base de datos.
-     * @param {number} id - ID del menú a actualizar.
-     * @param {Object} data - Datos del menú a actualizar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - El menú actualizado.
-     * */
+     * Ejecuta la actualización de un menú
+     * @param {string|number} id - ID del menú a actualizar
+     * @param {Object} data - Datos del menú a actualizar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Menú actualizado
+     */
     execute = async (id, data, transaction = null) => {
-        validaDatos(data, id);
+        await validaDatos(data);
         return await this.repository.update(id, data, transaction);
     }
 }

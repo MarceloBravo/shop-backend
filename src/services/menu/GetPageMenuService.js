@@ -1,31 +1,33 @@
-import MenuRepository from '../../repositories/MenuRepository.js';
-
 /**
- * Clase para obtener una página de registros de la base de datos
+ * Servicio para obtener una página de menús
  * @class GetPageMenuService
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús.
- * @description Esta clase se encarga de obtener una página de menús de la base de datos.
  */
-class GetPageMenuService{
-    constructor(repository = new MenuRepository()){
+class GetPageMenuService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de menús
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene una página de menús.
-     * @param {number} desde - El índice de inicio de la página.
-     * @param {number} limit - El número máximo de menús por página.
-     * @param {boolean} [paranoid=true] - Si es true, se obtienen solo los menús no eliminados.
-     * @returns {Promise<Object>} - Un objeto que contiene la lista de menús y el total de menús.
-     * @description Esta función obtiene una página de menús de la base de datos.
-     * */
-    execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
-        const desde = (pag - 1) * limit;
-        const result = await this.repository.getPage(desde, limit, paranoid);
-        return result;
-    }   
-
+     * Ejecuta la obtención de una página de menús
+     * @param {number} page - Número de página
+     * @param {number} limit - Límite de registros por página
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir los menús eliminados
+     * @returns {Promise<Object>} Objeto con los registros, total de registros y total de páginas
+     */
+    execute = async (page, limit, paranoid = true) => {
+        const offset = (page - 1) * limit;
+        const { rows, count } = await this.repository.getPage(offset, limit, paranoid);
+        const totPag = Math.ceil(count / limit);
+        return { rows, count, totPag };
+    }
 }
 
 export default GetPageMenuService;
