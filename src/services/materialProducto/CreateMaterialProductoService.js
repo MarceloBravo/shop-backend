@@ -1,27 +1,30 @@
-import MaterialProductoRepository from '../../repositories/MaterialProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
-
 /**
- * Servicio para asignar un material a un producto.
+ * Servicio para crear una nueva relación material-producto
  * @class CreateMaterialProductoService
- * @constructor
- * @param {MaterialProductoRepository} repository - Repositorio de materiales productos.
- * @description Esta clase se encarga de asignar un material a un producto.
- * */
-class CreateMaterialProductoService{
-    constructor(repository = new MaterialProductoRepository()){
+ */
+class CreateMaterialProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Asigna un material a un producto en la base de datos.
-     * @param {Object} data - Datos con el ID del material y del producto asociar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Objeto con la relación MaterialProducto creada.
-     * */
+     * Ejecuta la creación de una nueva relación material-producto
+     * @param {Object} data - Datos de la relación material-producto a crear
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Relación material-producto creada
+     */
     execute = async (data, transaction = null) => {
-        validaDatos(data);
+        await validaDatos(data);
         return await this.repository.create(data, transaction);
     }
 }

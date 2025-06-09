@@ -1,27 +1,28 @@
-import MaterialProductoRepository from '../../repositories/MaterialProductoRepository.js';
-
 /**
- * Servicio para obtener todas las relaciones matrerial-producto desde la base de datos.
+ * Servicio para obtener todas las relaciones material-producto
  * @class GetAllMaterialProductoService
- * @constructor
- * @param {MaterialProductoRepository} repository - Repositorio de materiales-productos.
- * @description Esta clase se encarga de obtener todas las relaciones material-producto.
- * */
-class GetAllMaterialProductoService{
-    constructor(repository = new MaterialProductoRepository()){
+ */
+class GetAllMaterialProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene todas las relaciones material-producto desde la base de datos.
-     * @param {boolean} paranoid - Determina si se deben considarera los regístros marcados con soft-delete.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Promesa con las relaciones Materiales-productos.
-     * */
+     * Ejecuta la obtención de todas las relaciones material-producto
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las relaciones eliminadas
+     * @returns {Promise<Array>} Lista de relaciones material-producto
+     */
     execute = async (paranoid = true) => {
         return await this.repository.getAll(paranoid);
     }
 }
-
 
 export default GetAllMaterialProductoService;

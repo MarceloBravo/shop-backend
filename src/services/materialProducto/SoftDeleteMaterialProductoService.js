@@ -1,27 +1,33 @@
-import MaterialProductoRepository from '../../repositories/MaterialProductoRepository.js';
-
 /**
- * Servicio para eliminar la relación entre un material y un producto de forma suave.
+ * Servicio para realizar borrado lógico de una relación material-producto
  * @class SoftDeleteMaterialProductoService
- * @constructor
- * @param {MaterialProductoRepository} repository - Repositorio de materiales productos.
- * @description Esta clase se encarga desasignar un material de un producto con soft-delete.
- * */
-class SoftDeleteMaterialProductoService{
-    constructor(repository = new MaterialProductoRepository()){
+ */
+class SoftDeleteMaterialProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina una marca de forma suave (soft delete) de la base de datos.
-     * @param {number} id - ID de la marca a eliminar.
-     * @returns {Promise<number>} - Devuelve el estado: 1 si se eliminó, 0 si no se encontró.
-     * */
+     * Ejecuta el borrado lógico de una relación material-producto
+     * @param {string|number} id - ID de la relación material-producto a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
+     */
     execute = async (id, transaction = null) => {
-        const { result } = await this.repository.softDelete(id, transaction);
-        return result;
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Relación material-producto no encontrada');
+        }
+        return await this.repository.softDelete(id, transaction);
     }
 }
-
 
 export default SoftDeleteMaterialProductoService;

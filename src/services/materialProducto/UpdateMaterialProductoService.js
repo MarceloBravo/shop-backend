@@ -1,29 +1,32 @@
-import MaterialProductoRepository from '../../repositories/MaterialProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
-
 /**
- * Servicio para actualizar una relación entre material-producto.
+ * Servicio para actualizar una relación material-producto
  * @class UpdateMaterialProductoService
- * @constructor
- * @param {MaterialProductoRepository} repository - Repositorio de materiales productos.
- * @description Esta clase se encarga de actializar una relación material-producto.
- * */
-class UpdateMaterialProductoService{
-    constructor(repository = new MaterialProductoRepository()){
+ */
+class UpdateMaterialProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * @param {number} id - ID de la relación material-producto a actualizar.
-     * @param {Object} data - ID del material y del producto a asociar.
-     * @param {Object} [transaction=null] - Si se debe realizar la transacción.
-     * @returns {Promise<*>} - Promesa que se resuelve con la relación material-producto actualizado.
+     * Ejecuta la actualización de una relación material-producto
+     * @param {string|number} id - ID de la relación material-producto a actualizar
+     * @param {Object} data - Datos de la relación material-producto a actualizar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Relación material-producto actualizada
      */
     execute = async (id, data, transaction = null) => {
-        validaDatos(id);
-        const result = await updateMaterialProducto(id, data, transaction);
-        return result;
+        await validaDatos(data);
+        return await this.repository.update(id, data, transaction);
     }
 }
 

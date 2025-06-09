@@ -1,27 +1,33 @@
-import MaterialProductoRepository from '../../repositories/MaterialProductoRepository.js';
-
 /**
- * Servicio para eliminar la relación entre un material y un producto.
+ * Servicio para realizar borrado físico de una relación material-producto
  * @class HardDeleteMaterialProductoService
- * @constructor
- * @param {MaterialProductoRepository} repository - Repositorio de materiales productos.
- * @description Esta clase se encarga desasignar un material de un producto.
- * */
-class HardDeleteMaterialProductoService{
-    constructor(repository = new MaterialProductoRepository()){
+ */
+class HardDeleteMaterialProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de materiales-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina la relación entre un material y un producto, en la base de datos.
-     * @param {Object} data - ID del regístro que almacena la relación material-producto.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Promesa con el resultado de la operación.
-     * */
+     * Ejecuta el borrado físico de una relación material-producto
+     * @param {string|number} id - ID de la relación material-producto a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Resultado de la operación
+     */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Relación material-producto no encontrada');
+        }
         return await this.repository.hardDelete(id, transaction);
     }
-    
-} 
+}
 
 export default HardDeleteMaterialProductoService;
