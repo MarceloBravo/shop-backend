@@ -1,31 +1,33 @@
 import GetPageMenuService from "../../services/menu/GetPageMenuService.js";
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una página de registros de menús
- * @class
- * @param {GetPageMarcaService} service - Servicio para obtener una página de registros
- * @returns {GetPageMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de menús de la base de datos.
+ * Controlador para obtener una página de menús
+ * @class GetPageMenuController
  */
-class GetPageMenuController{
-    constructor(service = new GetPageMenuService()){
-        this.service = service;
+class GetPageMenuController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús
+     */
+    constructor(repository = new MenuRepository()) {
+        this.service = new GetPageMenuService(repository);
     }
 
     /**
-     * Obtiene una página de registros de menús de la base de datos.
-     * @param {Object} req - Objeto de solicitud HTTP.
-     * @param {Object} res - Objeto de respuesta HTTP.
-     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     * Ejecuta la obtención de una página de menús
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try{
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag } = await this.service.execute(pag, limit);
+            const { rows, count, totPag } = await this.service.execute(pag, limit);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

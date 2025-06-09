@@ -1,17 +1,18 @@
 import SoftDeleteMenuService from "../../services/menu/SoftDeleteMenuService.js";
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
-
 /**
- * Controlador para eliminar un registro de menú con borrado suave
- * @class
- * @param {SoftDeleteMarcaService} service - Servicio para eliminar un registro de marca
- * @returns {HardDeleteMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para eliminar un registro de menú con borrado suave.
+ * Controlador para realizar borrado lógico de un menú
+ * @class SoftDeleteMenuController
  */
-class SoftDeleteMenuController{
-    constructor(service = new SoftDeleteMenuService()){
-        this.service = service;
+class SoftDeleteMenuController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús
+     */
+    constructor(repository = new MenuRepository()) {
+        this.service = new SoftDeleteMenuService(repository);
     }
 
     /**
@@ -24,10 +25,10 @@ class SoftDeleteMenuController{
         try{
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const resp = {code: result, mensaje : result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
+            const resp = {code: result, mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'};
             res.json(resp);
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

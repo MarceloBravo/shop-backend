@@ -1,32 +1,33 @@
 import GetByIdMenuService from '../../services/menu/GetByIdMenuService.js';
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
-
 /**
- * Controlador para obtener un registro de menú por su ID
- * @class
- * @param {GetByIdGeneroService} service - Servicio para obtener un registro de género por su ID
- * @returns {GetByIdMenuController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener un registro de menú por su ID.
- * */
-class GetByIdMenuController{
-
-    constructor(service = new GetByIdMenuService()){
-        this.service = service;
+ * Controlador para obtener un menú por su ID
+ * @class GetByIdMenuController
+ */
+class GetByIdMenuController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús
+     */
+    constructor(repository = new MenuRepository()) {
+        this.service = new GetByIdMenuService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de un menú por su ID
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try{
             const { id } = req.params
             const data = await this.service.execute(id)
             res.json(data);
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

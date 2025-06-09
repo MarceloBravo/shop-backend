@@ -1,32 +1,34 @@
 import CreateMenuService from "../../services/menu/CreateMenuService.js";
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- *  Controlador encargado de la creación de un menú en la base de datos
- * @class
- * @param {CreateMenuService} service - Servicio para crear un nuevo registro de género
- * @returns {CreateMenuController} - Instancia del controlador 
+ * Controlador para crear un nuevo menú
+ * @class CreateMenuController
  */
-class CreateMenuController{
-    constructor(service = new CreateMenuService()){
-        this.service = service;
+class CreateMenuController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús
+     */
+    constructor(repository = new MenuRepository()) {
+        this.service = new CreateMenuService(repository);
     }
 
     /**
-     * Crea un nuevo menú en la base de datos.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se completa la operación.
-     * @description Esta función maneja la creación de un nuevo menú en la base de datos.
-     * */
+     * Ejecuta la creación de un nuevo menú
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
-        try{
+        try {
             const data = await this.service.execute(req.body);
             res.json({data, mensaje: 'El registro ha sido creado exitosamente.'});
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
-        }   
+        }
     }
 }
 

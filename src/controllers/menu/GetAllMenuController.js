@@ -1,32 +1,32 @@
 import GetAllMenuService from '../../services/menu/GetAllMenuService.js';
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- *  Controlador encargado de retornar  todos los menús de la base de datos
- * @class
- * @param {GetAllMenuService} service - Servicio para obtener todos los registros de la base de datos
- * @returns {GetAllMenuController} - Instancia del controlador 
- * @description - Controlador encargado de retornar todo los menús registrados en la base de datos
+ * Controlador para obtener todos los menús
+ * @class GetAllMenuController
  */
-class GetAllMenuController{
-
-    constructor(service = new GetAllMenuService()){
-        this.service = service;
+class GetAllMenuController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús
+     */
+    constructor(repository = new MenuRepository()) {
+        this.service = new GetAllMenuService(repository);
     }
 
     /**
-     * Retorn todos los menus de la base de datos.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se completa la operación.
-     * @description Esta función es el endpoint que maneja la obtención de todos los menús de la base de datos.
-     * */
+     * Ejecuta la obtención de todos los menús
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
-        try{
+        try {
             const data = await this.service.execute();
             res.json(data);
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

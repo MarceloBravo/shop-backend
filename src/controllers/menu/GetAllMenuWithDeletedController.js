@@ -1,4 +1,5 @@
 import GetAllMenuService from '../../services/menu/GetAllMenuService.js';
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -10,8 +11,8 @@ import { handleError } from "../../shared/functions.js";
  */
 class GetAllMenuWithDeletedController{
 
-    constructor(service = new GetAllMenuService()){
-        this.service = service;
+    constructor(repository = new MenuRepository()){
+        this.service = new GetAllMenuService(repository);
     }
 
     /**

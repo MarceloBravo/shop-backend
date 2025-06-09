@@ -1,4 +1,5 @@
 import GetPageMenuService from "../../services/menu/GetPageMenuService.js";
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -9,8 +10,8 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de menús de la base de datos.
  */
 class GetPageMenuWithDeletedController{
-    constructor(service = new GetPageMenuService()){
-        this.service = service;
+    constructor(menuRepository = new MenuRepository()){
+        this.service = new GetPageMenuService(menuRepository);
     }
 
     /**

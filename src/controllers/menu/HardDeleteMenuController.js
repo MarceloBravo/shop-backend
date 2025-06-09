@@ -1,16 +1,18 @@
 import HardDeleteMenuService from '../../services/menu/HardDeleteMenuService.js';
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- *  Controlador encargado de la eliminación de un menú en la base de datos
- * @class
- * @param {CreateMenuService} service - Servicio para crear un nuevo registro de género
- * @returns {CreateMenuController} - Instancia del controlador 
- * @description - Elimina un  menú de la base de datos.
+ * Controlador para realizar borrado físico de un menú
+ * @class HardDeleteMenuController
  */
-class HardDeleteMenuController{
-    constructor(service = new HardDeleteMenuService()){
-        this.service = service;
+class HardDeleteMenuController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús
+     */
+    constructor(repository = new MenuRepository()) {
+        this.service = new HardDeleteMenuService(repository);
     }
 
     /**
@@ -23,11 +25,11 @@ class HardDeleteMenuController{
     execute = async (req, res) => {
         try{
             const { id } = req.params;
-            const result = await this.service.execute(id)
-            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';  
+            const result = await this.service.execute(id);
+            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';
             res.json({ id, code: result ? 200 : 500, mensaje });
-        }catch(e){
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

@@ -1,16 +1,18 @@
 import UpdateMenuService from "../../services/menu/UpdateMenuService.js";
+import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para actualizar un registro de menú
- * @class
- * @param {UpdateMarcaService} service - Servicio para actualizar un registro de marca
- * @returns {UpdateMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para actualizar un registro de menú.
+ * Controlador para actualizar un menú
+ * @class UpdateMenuController
  */
-class UpdateMenuController{
-    constructor(service = new UpdateMenuService()){
-        this.service = service;
+class UpdateMenuController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús
+     */
+    constructor(repository = new MenuRepository()) {
+        this.service = new UpdateMenuService(repository);
     }
 
     /**
@@ -23,9 +25,9 @@ class UpdateMenuController{
         try{
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
-            res.json({menu: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`})
-        }catch(e){
-            const err = handleError(e);
+            res.json({menu: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`});
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }
