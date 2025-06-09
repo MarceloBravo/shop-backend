@@ -1,20 +1,30 @@
-import DimensionesProductoRepository from '../../repositories/DimensionesProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
-class CreateDimensionesProductoService{
-
-    constructor(repository = new DimensionesProductoRepository()) {
-        this.repository = repository
-    }
-    
+/**
+ * Servicio para crear una nueva dimensión de producto
+ * @class CreateDimensionesProductoService
+ */
+class CreateDimensionesProductoService {
     /**
-     * Crea un nuevo registro de dimensiones de producto
-     * @param {Object} data - Datos del nuevo registro
-     * @param {Transaction} transaction - Transacción opcional
-     * @returns {Promise<Object>} - El nuevo registro creado
-     */ 
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de dimensiones de producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
+        this.repository = repository;
+    }
+
+    /**
+     * Ejecuta la creación de una nueva dimensión de producto
+     * @param {Object} data - Datos de la dimensión de producto a crear
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Dimensión de producto creada
+     */
     execute = async (data, transaction = null) => {
-        validaDatos(data);
+        await validaDatos(data);
         return await this.repository.create(data, transaction);
     }
 }
