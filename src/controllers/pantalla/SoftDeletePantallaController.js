@@ -1,31 +1,33 @@
 import SoftDeletePantallaService from "../../services/pantalla/SoftDeletePantallaService.js";
+import PantallaRepository from '../../repositories/PantallaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para marcar un regístro como eliminado con borrado suave
+ * Controlador para realizar borrado lógico de una pantalla
  * @class SoftDeletePantallaController
- * @param {SoftDeleteMarcaService} service - Servicio para eliminar para acceder al repositorio
- * @returns {SoftDeletePantallaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para eliminar un registro con borrado suave.
  */
-class SoftDeletePantallaController{
-    constructor(service = new SoftDeletePantallaService()){
-        this.service = service;
+class SoftDeletePantallaController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de pantallas
+     */
+    constructor(repository = new PantallaRepository()) {
+        this.service = new SoftDeletePantallaService(repository);
     }
 
     /**
-     * Marca un registro como eliminado en la base de datos (soft-delete).
-     * @param {Object} req - Objeto de solicitud HTTP.
-     * @param {Object} res - Objeto de respuesta HTTP.
-     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     * Marca una pantalla como eliminada en la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación
      */
     execute = async (req, res) => {
-        try{
+        try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const resp = {code: result, mensaje : result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
+            const resp = {code: result, mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'};
             res.json(resp);
-        }catch(e){
+        } catch(e) {
             const err = handleError(e);
             res.status(err.code).json(err);
         }

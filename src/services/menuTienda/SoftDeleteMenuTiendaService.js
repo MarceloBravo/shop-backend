@@ -25,6 +25,10 @@ class SoftDeleteMenuTiendaService{
      * @description Esta función elimina un menú de la tienda de la base de datos de forma suave (soft delete).
      */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Regístro Menú-Pantalla no encontrado');
+        }
         const {result} = await this.repository.softDelete(id, transaction);
         return result;
     }

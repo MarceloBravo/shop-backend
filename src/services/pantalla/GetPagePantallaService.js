@@ -1,31 +1,33 @@
-import PantallaRepository from '../../repositories/PantallaRepository.js';
-
 /**
- * Clase para obtener una página de registros de la base de datos
+ * Servicio para obtener una página de pantallas
  * @class GetPagePantallaService
- * @constructor
- * @param {PantallaRepository} repository - Repositorio de pantallas.
- * @description Esta clase se encarga de obtener una página de pantallas de la base de datos.
  */
-class GetPagePantallaService{
-    constructor(repository= new PantallaRepository()){
+class GetPagePantallaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de pantallas
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene una página de pantallas.
-     * @param {number} desde - El índice de inicio de la página.
-     * @param {number} limit - El número máximo de pantallas por página.
-     * @param {boolean} [paranoid=true] - Si es true, se obtienen solo los pantallas no eliminados.
-     * @returns {Promise<Object>} - Un objeto que contiene la lista de pantallas y el total de menús.
-     * @description Esta función obtiene una página de pantallas de la base de datos.
-     * */
-    execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
-        const desde = (pag - 1) * limit;
-        const result = await this.repository.getPage(desde, limit, paranoid);
-        return result;
+     * Ejecuta la obtención de una página de pantallas
+     * @param {number} page - Número de página
+     * @param {number} limit - Límite de registros por página
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las pantallas eliminadas
+     * @returns {Promise<Object>} Objeto con los registros, total de registros y total de páginas
+     */
+    execute = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
+        const offset = (page - 1) * limit;
+        const { rows, count } = await this.repository.getPage(offset, limit, paranoid);
+        const totPag = Math.ceil(count / limit);
+        return { rows, count, totPag };
     }
-    
 }
 
 export default GetPagePantallaService;

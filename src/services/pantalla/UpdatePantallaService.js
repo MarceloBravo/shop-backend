@@ -1,31 +1,37 @@
-import PantallaRepository from '../../repositories/PantallaRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**
- * Servicio para actualizar una pantalla existente.
+ * Servicio para actualizar una pantalla
  * @class UpdatePantallaService
- * @constructor
- * @param {PantallaRepository} repository - Repositorio de pantallas de la tienda.
- * @description Esta clase se encarga de actualizar una pantalla existente en la base de datos.
  */
-class UpdatePantallaService{
-    constructor(repository = new PantallaRepository()){
+class UpdatePantallaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de pantallas
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Actualiza una pantalla en la base de datos.
-     * @param {number} id - ID de la pantalla a actualizar.
-     * @param {Object} data - Datos de la pantalla a actualizar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - La pantalla actualizado.
-     * */
+     * Ejecuta la actualización de una pantalla
+     * @param {string|number} id - ID de la pantalla a actualizar
+     * @param {Object} data - Datos de la pantalla a actualizar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Pantalla actualizada
+     */
     execute = async (id, data, transaction = null) => {
         validaDatos(data);
-        const result = await this.repository.update(id, data, transaction);
-        return result;
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Pantalla no encontrada');
+        }
+        return await this.repository.update(id, data, transaction);
     }
-
 }
 
 export default UpdatePantallaService;

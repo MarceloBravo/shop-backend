@@ -1,16 +1,18 @@
 import GetPagePantallaService from "../../services/pantalla/GetPagePantallaService.js";
+import PantallaRepository from '../../repositories/PantallaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener una página de registros de pantallas
  * @class GetPagePantallaWithDeletedController
- * @param {GetPagePantallaService} service - Servicio para obtener una página de registros de marcas
- * @returns {GetPagePantallaWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de pantallas de la base de datos.
  */
 class GetPagePantallaWithDeletedController{
-    constructor(service = new GetPagePantallaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de pantallas
+     */
+    constructor(repository = new PantallaRepository()) {
+        this.service = new GetPagePantallaService(repository);
     }
 
     /**

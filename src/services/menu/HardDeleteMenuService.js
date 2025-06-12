@@ -21,8 +21,8 @@ class HardDeleteMenuService {
      * @param {Object} [transaction=null] - Transacción de base de datos
      * @returns {Promise<Object>} Resultado de la operación
      */
-    execute = async (id, transaction = null, paranoid = false) => {
-        const existe = await this.repository.getById(id, false, paranoid);
+    execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id, false);
         if (!existe) {
             throw new Error('Menú no encontrado');
         }

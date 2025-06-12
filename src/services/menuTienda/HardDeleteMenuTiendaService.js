@@ -25,6 +25,10 @@ class HardDeleteMenuTiendaService{
      * @description Esta función elimina un menú de la tienda de la base de datos de forma permanente.
      */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Regístro Menú-Pantall no encontrado');
+        }
         return await this.repository.hardDelete(id, transaction);
     }
 }

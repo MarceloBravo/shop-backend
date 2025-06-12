@@ -1,16 +1,18 @@
 import GetByIdPantallaService from '../../services/pantalla/GetByIdPantallaService.js';
+import PantallaRepository from '../../repositories/PantallaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener un registro por su ID
  * @class GetByIdPantallaWithDeletedController
- * @param {GetByIdPantallaService} service - Servicio para acceder al repositorio de pantallas
- * @returns {GetByIdPantallaWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener un registro por su ID.
  * */
 class GetByIdPantallaWithDeletedController{
-    constructor(service = new GetByIdPantallaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de pantallas
+     */
+    constructor(repository = new PantallaRepository()) {
+        this.service = new GetByIdPantallaService(repository);
     }
 
      /**

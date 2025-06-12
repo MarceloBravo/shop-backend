@@ -1,16 +1,18 @@
 import GetAllPantallaService from '../../services/pantalla/GetAllPantallaService.js';
+import PantallaRepository from '../../repositories/PantallaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  *  Controlador encargado de retornar  todas las pantallas de la base de datos incluidos los registros eliminados con soft-delete
  * @class GetAllPantallaWithDeletedController
- * @param {GetAllPantallaService} service - Servicio para obtener todos los registros de la base de datos
- * @returns {GetAllPantallaWithDeletedController} - Instancia del controlador 
- * @description - Controlador encargado de retornar todas las pantallas registradas en la base de datos incluidos los registros eliminados con soft-delete
  */
 class GetAllPantallaWithDeletedController{
-    constructor(service = new GetAllPantallaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de pantallas
+     */
+    constructor(repository = new PantallaRepository()) {
+        this.service = new GetAllPantallaService(repository);
     }
 
     /**

@@ -1,26 +1,32 @@
-import PantallaRepository from '../../repositories/PantallaRepository.js';
-
 /**
- * Servicio para marcar como borrado una pantalla en la base de datos.
+ * Servicio para realizar borrado lógico de una pantalla
  * @class SoftDeletePantallaService
- * @constructor
- * @param {PantallaRepository} repository - Repositorio de pantallas.
- * @description Esta clase se encarga de marcar como borrado una pantalla de la base de datos.
  */
-class SoftDeletePantallaService{
-    constructor(repository = new PantallaRepository()){
+class SoftDeletePantallaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de pantallas
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina una pantalla de forma suave (soft delete).
-     * @param {number} id - ID de la pantalla a eliminar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Resultado de la operación.
-     * @description Esta función elimina una pantalla de la base de datos de forma suave (soft delete).
+     * Ejecuta el borrado lógico de una pantalla
+     * @param {string|number} id - ID de la pantalla a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
      */
     execute = async (id, transaction = null) => {
-        const {result} = await this.repository.softDelete(id, transaction);
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Pantalla no encontrada');
+        }
+        const { result } = await this.repository.softDelete(id, transaction);
         return result;
     }
 }

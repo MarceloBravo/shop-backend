@@ -1,30 +1,32 @@
 import GetPagePantallaService from "../../services/pantalla/GetPagePantallaService.js";
+import PantallaRepository from '../../repositories/PantallaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una página de registros de pantallas
- * @class
- * @param {GetPageMarcaService} service - Servicio para obtener una página de registros de marcas
- * @returns {GetPageMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de pantallas de la base de datos.
+ * Controlador para obtener una página de pantallas
+ * @class GetPagePantallaController
  */
-class GetPagePantallaController{
-    constructor(service = new GetPagePantallaService()){
-        this.service = service;
+class GetPagePantallaController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de pantallas
+     */
+    constructor(repository = new PantallaRepository()) {
+        this.service = new GetPagePantallaService(repository);
     }
 
     /**
-     * Obtiene una página de registros de pantallas de la base de datos.
-     * @param {Object} req - Objeto de solicitud HTTP.
-     * @param {Object} res - Objeto de respuesta HTTP.
-     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     * Obtiene una página de pantallas de la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación
      */
     execute = async (req, res) => {
-        try{
+        try {
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag } = await this.service.execute(pag, limit);
+            const { rows, count, totPag } = await this.service.execute(pag, limit);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
-        }catch(e){
+        } catch(e) {
             const err = handleError(e);
             res.status(err.code).json(err);
         }

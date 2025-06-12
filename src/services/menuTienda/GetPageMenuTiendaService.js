@@ -25,8 +25,9 @@ class GetPageMenuTiendaService{
      * */
     execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
         const desde = (pag - 1) * limit;
-        const result = await this.repository.getPage(desde, limit, paranoid);
-        return result;
+        const { rows, count } = await this.repository.getPage(desde, limit, paranoid);
+        const totPag = Math.ceil(count / limit);
+        return { rows, count, totPag };
     }
 
 }

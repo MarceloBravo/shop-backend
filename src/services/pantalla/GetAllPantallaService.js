@@ -1,21 +1,24 @@
-import PantallaRepository from '../../repositories/PantallaRepository.js';
-
 /**
- * Clase para obtener todas las pantallas.
+ * Servicio para obtener todas las pantallas
  * @class GetAllPantallaService
- * @constructor
- * @param {PantallaRepository} repository - Repositorio de menús de la tienda.
-* @description Esta clase se encarga de obtener todas las pantallas de la base de datos.
  */
-class GetAllPantallaService{
-    constructor(repository = new PantallaRepository()){
+class GetAllPantallaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de pantallas
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene todas las pantallas de la base de datos.
-     * @param {boolean} [paranoid=true] - Si es true, se obtienen solo las pantallas no eliminadas.
-     * @returns {Promise<Array>} - Lista de pantallas de la tienda.
+     * Ejecuta la obtención de todas las pantallas
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las pantallas eliminadas
+     * @returns {Promise<Array>} Lista de pantallas
      */
     execute = async (paranoid = true) => {
         return await this.repository.getAll(paranoid);
