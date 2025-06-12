@@ -1,17 +1,18 @@
 import GetAllMenuTiendaService from '../../services/menuTienda/GetAllMenuTiendaService.js';
+import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  *  Controlador encargado de retornar  todos los menús de la tienda en la base de datos incluyendo los registros eliminados.
- * @class
- * @param {GetAllMenuTiendaService} service - Servicio para obtener todos los registros de la base de datos
- * @returns {GetAllMenuWithDeletedController} - Instancia del controlador 
- * @description - Controlador encargado de retornar todo los menús de la tienda registrados en la base de datos inlcuidos los marcados con soft-deleted
+ * @class GetAllMenuWithDeletedController
  */
 class GetAllMenuWithDeletedController{
-
-    constructor(service = new GetAllMenuTiendaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     */
+    constructor(repository = new MenuTiendaRepository()){
+        this.service = new GetAllMenuTiendaService(repository);
     }
 
     /**

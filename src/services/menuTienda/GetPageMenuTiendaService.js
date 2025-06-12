@@ -1,14 +1,17 @@
-import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
-
 /**
  * Clase para obtener una página de registros de la base de datos
  * @class GetPageMenuService
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús de la tienda.
- * @description Esta clase se encarga de obtener una página de menús de la tienda de la base de datos.
  */
 class GetPageMenuTiendaService{
-    constructor(repository = new MenuTiendaRepository()){
+     /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+     constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 

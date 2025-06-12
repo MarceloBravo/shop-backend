@@ -4,12 +4,17 @@ import validaDatos from './validaDatos.js';
 /**
  * Servicio para actualizar un menú de la tienda existente.
  * @class UpdateMenuTiendaService
- * @constructor
- * @param {MenuTiendaRepository} repository - Repositorio de menús de la tienda.
- * @description Esta clase se encarga de actualizar un menú de la tienda existente en la base de datos.
  */
 class UpdateMenuTiendaService{
-    constructor(repository = new MenuTiendaRepository()){
+     /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+     constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 

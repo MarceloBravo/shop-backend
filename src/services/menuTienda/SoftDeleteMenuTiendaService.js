@@ -3,12 +3,17 @@ import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 /**
  * Servicio para marcar como borrado  un menú de la tienda en la base de datos.
  * @class GetAllMenuService
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús de la tienda.
- * @description Esta clase se encarga de marcar como borrado un menú de la tienda de la base de datos.
  */
 class SoftDeleteMenuTiendaService{
-    constructor(repository = new MenuTiendaRepository()){
+     /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+     constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 

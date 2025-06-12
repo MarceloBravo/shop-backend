@@ -1,16 +1,18 @@
 import UpdateMenuTiendaService from "../../services/menuTienda/UpdateMenuTiendaService.js";
+import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para actualizar un registro de menú
- * @class
- * @param {UpdateMarcaService} service - Servicio para actualizar un registro de marca
- * @returns {UpdateMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para actualizar un registro de menú.
+ * @class UpdateMenuTiendaController
  */
 class UpdateMenuTiendaController{
-    constructor(service = new UpdateMenuTiendaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     */
+    constructor(repository = new MenuTiendaRepository()){
+        this.service = new UpdateMenuTiendaService(repository);
     }
 
     /**

@@ -3,12 +3,17 @@ import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 /**
  * Clase para obtener un menú de la tienda a partir de su ID.
  * @class GetByIdMenuTiendaService
- * @constructor
- * @param {MenuTiendaRepository} repository - Repositorio de menús de la tienda.
- * @description Esta clase se encarga de obtener un menú de la tienda a partir de su ID.
  */
 class GetByIdMenuTiendaService{
-    constructor(repository = new MenuTiendaRepository()){
+     /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+     constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 

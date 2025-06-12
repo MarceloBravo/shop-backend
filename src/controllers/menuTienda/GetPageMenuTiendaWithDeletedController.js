@@ -1,16 +1,18 @@
 import GetPageMenuTiendaService from "../../services/menuTienda/GetPageMenuTiendaService.js";
+import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener una página de registros de menús inlcuidos los registros marcados como eliminados.
- * @class
- * @param {GetPageMarcaService} service - Servicio para obtener una página de registros de marcas
- * @returns {GetPageMenuWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de menús de la tienda en la base de datos.
+ * @class GetPageMenuWithDeletedController
  */
 class GetPageMenuWithDeletedController{
-    constructor(service = new GetPageMenuTiendaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     */
+    constructor(repository = new MenuTiendaRepository()){
+        this.service = new GetPageMenuTiendaService(repository);
     }
 
     /**

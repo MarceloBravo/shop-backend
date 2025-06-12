@@ -1,17 +1,18 @@
 import SoftDeleteMenuTiendaService from "../../services/menuTienda/SoftDeleteMenuTiendaService.js";
+import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 import { handleError } from "../../shared/functions.js";
-
 
 /**
  * Controlador para eliminar un registro de menú con borrado suave
- * @class
- * @param {SoftDeleteMarcaService} service - Servicio para eliminar un registro de marca
- * @returns {HardDeleteMarcaController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para eliminar un registro de menú con borrado suave.
+ * @class SoftDeleteMenuTiendaController
  */
 class SoftDeleteMenuTiendaController{
-    constructor(service = new SoftDeleteMenuTiendaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     */
+    constructor(repository = new MenuTiendaRepository()){
+        this.service = new SoftDeleteMenuTiendaService(repository);
     }
 
     /**

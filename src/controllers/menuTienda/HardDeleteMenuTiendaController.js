@@ -1,16 +1,18 @@
 import HardDeleteMenuTiendaService from '../../services/menuTienda/HardDeleteMenuTiendaService.js';
+import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  *  Controlador encargado de la eliminación de un menú de la tienda en la base de datos
- * @class
- * @param {CreateMenuTiendaService} service - Servicio para crear un nuevo registro de género
- * @returns {CreateMenuTiendaController} - Instancia del controlador 
- * @description - Elimina un  menú de la base de datos.
+ * @class HardDeleteMenuTiendaController
  */
 class HardDeleteMenuTiendaController{
-    constructor(service = new HardDeleteMenuTiendaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     */
+    constructor(repository = new MenuTiendaRepository()){
+        this.service = new HardDeleteMenuTiendaService(repository);
     }
 
     /**

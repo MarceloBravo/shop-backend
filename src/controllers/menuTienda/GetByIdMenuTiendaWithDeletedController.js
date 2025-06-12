@@ -1,18 +1,18 @@
 import GetByIdMenuTiendaService from '../../services/menuTienda/GetByIdMenuTiendaService.js';
+import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 import { handleError } from "../../shared/functions.js";
-
 
 /**
  * Controlador para obtener un registro de menú por su ID
- * @class
- * @param {GetByIdGeneroService} service - Servicio para obtener un registro de género por su ID
- * @returns {GetByIdMenuWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener un registro de menú por su ID.
+ * @class GetByIdMenuWithDeletedController
  * */
 class GetByIdMenuWithDeletedController{
-
-    constructor(service = new GetByIdMenuTiendaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
+     */
+    constructor(repository = new MenuTiendaRepository()){
+        this.service = new GetByIdMenuTiendaService(repository);
     }
 
     /**
