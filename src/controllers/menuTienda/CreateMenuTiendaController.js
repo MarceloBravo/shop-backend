@@ -9,7 +9,7 @@ import { handleError } from "../../shared/functions.js";
 class CreateMenuTiendaController{
     /**
      * Crea una instancia del controlador
-     * @param {Object} repository - Repositorio de menús
+     * @param {Object} repository - Repositorio de menús asociados a la tienda
      */
     constructor(repository = new MenuTiendaRepository()){
         this.service = new CreateMenuTiendaService(repository);
