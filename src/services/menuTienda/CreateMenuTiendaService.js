@@ -7,7 +7,7 @@ import validaDatos from './validaDatos.js';
 class CreateMenuTiendaService{
     /**
      * Crea una instancia del servicio
-     * @param {Object} repository - Repositorio de menús
+     * @param {Object} repository - Repositorio de menús asociados a la  Tienda
      * @throws {Error} Si el repositorio no es proporcionado
      */
     constructor(repository) {
