@@ -1,30 +1,34 @@
-import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
-
 /**
- * Servicio para marcar como borrado una relación talla numerica-producto en la base de datos.
- * @class GetAllMenuService
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús.
- * @description Esta clase se encarga de marcar como borrado una relación talla numerica-producto de la base de datos.
+ * Servicio para realizar borrado lógico de una asociación entre talla numérica y producto
+ * @class SoftDeleteTallaNumeroProductoService
  */
-class SoftDeleteTallaNumeroProductoService{
-    constructor(repository = new TallaNumeroProductoRepository()){
+class SoftDeleteTallaNumeroProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina una relación talla numerica-producto de forma suave (soft delete).
-     * @param {number} id - ID del menú a eliminar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Resultado de la operación.
-     * @description Esta función elimina una relación talla numerica-producto de la base de datos de forma suave (soft delete).
+     * Ejecuta el borrado lógico de una asociación
+     * @param {string|number} id - ID de la asociación a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
      */
     execute = async (id, transaction = null) => {
-        const { record } = await this.repository.softDelete(id, transaction);
-        return record;
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Asociación no encontrada');
+        }
+        const record = await this.repository.softDelete(id, transaction);
+        return record && record.deleted_at !== null;
     }
-
 }
-
 
 export default SoftDeleteTallaNumeroProductoService;

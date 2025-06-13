@@ -1,29 +1,36 @@
-import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**
- * Servicio para actualizar una relación talla numerica-producto existente.
- * @class
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús.
- * @description Esta clase se encarga de actualizar una relación talla numerica-producto existente en la base de datos.
+ * Servicio para actualizar una asociación entre talla numérica y producto
+ * @class UpdateTallaNumeroProductoService
  */
-class UpdateTallaNumeroProductoService{
-    constructor(repository = new TallaNumeroProductoRepository()){
+class UpdateTallaNumeroProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Actualiza una relación talla numerica-producto en la base de datos.
-     * @param {number} id - ID del menú a actualizar.
-     * @param {Object} data - Datos del menú a actualizar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - La ´relación talla numerica-producto actualizada.
-     * */
-    execute = async (id, data,  transaction = null) => {
-        validaDatos(id);
-        const result = await this.repository.update(id, data, transaction);
-        return result;
+     * Ejecuta la actualización de una asociación
+     * @param {string|number} id - ID de la asociación a actualizar
+     * @param {Object} data - Datos de la asociación a actualizar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Asociación actualizada
+     */
+    execute = async (id, data, transaction = null) => {
+        await validaDatos(data);
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Asociación no encontrada');
+        }
+        return await this.repository.update(id, data, transaction);
     }
 }
 

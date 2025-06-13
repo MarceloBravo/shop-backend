@@ -1,28 +1,33 @@
-import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
-
 /**
- * Servicio encargado de eliminar una relación talla numerica-producto de la base d datos .
+ * Servicio para realizar borrado físico de una asociación entre talla numérica y producto
  * @class HardDeleteTallaNumeroProductoService
- * @constructor
- * @param {TallaNumeroProductoRepository} repository - Repositorio de menús
- * @description Esta clase se encarga de eliminar una relación talla numerica-producto de la base de datos.
  */
-class HardDeleteTallaNumeroProductoService{
-    constructor(repository = new TallaNumeroProductoRepository()){
+class HardDeleteTallaNumeroProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina una relación talla numerica-producto de forma permanente.
-     * @param {number} id - ID de la relación a eliminar a eliminar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Resultado de la operación.
-     * @description Esta función elimina una relación talla numerica-producto de la base de datos de forma permanente.
+     * Ejecuta el borrado físico de una asociación
+     * @param {string|number} id - ID de la asociación a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Resultado de la operación
      */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Asociación no encontrada');
+        }
         return await this.repository.hardDelete(id, transaction);
     }
 }
-
 
 export default HardDeleteTallaNumeroProductoService;

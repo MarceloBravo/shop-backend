@@ -1,21 +1,24 @@
-import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
-
 /**
- * Servicio para obtener todas las talla numericas.
+ * Servicio para obtener todas las asociaciones entre tallas numéricas y productos
  * @class GetAllTallaNumeroProductoService
- * @constructor
- * @param {TallaNumeroProductoRepository} repository - Repositorio de tallanumericaProducto.
- * @description Esta clase se encarga de obtener todas las talla numericas de la base de datos.
- * */
-class GetAllTallaNumeroProductoService{
-    constructor(repository = new TallaNumeroProductoRepository()){
+ */
+class GetAllTallaNumeroProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene todas las asociaciones entre productos y tallas de numerica
-     * @param {boolean} [paranoid=true] - Si es true, solo retorna registros no eliminados (soft delete)
-     * @returns {Promise<Array<Object>>} Lista de todas las asociaciones encontradas
+     * Ejecuta la obtención de todas las asociaciones
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las asociaciones eliminadas
+     * @returns {Promise<Array>} Lista de asociaciones
      */
     execute = async (paranoid = true) => {
         return await this.repository.getAll(paranoid);

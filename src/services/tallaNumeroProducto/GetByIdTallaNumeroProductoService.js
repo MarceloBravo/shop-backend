@@ -1,28 +1,33 @@
-import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
-
 /**
- * Servicio para obtener una relación talla numerica por su ID
+ * Servicio para obtener una asociación entre talla numérica y producto por su ID
  * @class GetByIdTallaNumeroProductoService
- * @constructor
- * @param {TallaNumeroProductoRepository} repository - Repositorio de tallas letra
- * @description Esta clase se encarga de obtener una relación talla numerica por su ID.
- * */
-class GetByIdTallaNumeroProductoService{
-    constructor(repository = new TallaNumeroProductoRepository()){
+ */
+class GetByIdTallaNumeroProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene una relación talla numerica por su ID.
-     * @param {number} id - ID de la relación talla numerica.
-     * @param {boolean} [paranoid=true] - Si es true, incluye registros eliminados.
-     * @returns {Promise<Object>} - La relación talla numerica encontrada.
-     * */
+     * Ejecuta la obtención de una asociación por su ID
+     * @param {string|number} id - ID de la asociación a obtener
+     * @param {boolean} [paranoid=true] - Indica si se debe incluir la asociación si está eliminada
+     * @returns {Promise<Object>} Asociación encontrada
+     */
     execute = async (id, paranoid = true) => {
-        return await this.repository.getById(id, paranoid);
+        const result = await this.repository.getById(id, paranoid);
+        if (!result) {
+            throw new Error('Asociación no encontrada');
+        }
+        return result;
     }
-
 }
-
 
 export default GetByIdTallaNumeroProductoService;

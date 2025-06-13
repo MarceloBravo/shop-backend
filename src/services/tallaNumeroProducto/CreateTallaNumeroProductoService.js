@@ -1,29 +1,32 @@
-import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**
- * Servicio para asociar una talla numerica con un producto.
+ * Servicio para crear una asociación entre talla numérica y producto
  * @class CreateTallaNumeroProductoService
- * @constructor
- * @param {TallaNumeroProductoRepository} repository - Repositorio de tallaLetraProducto.
- * @description Esta clase se encarga de asociar una talla numerica con un producto en la base de datos.
- * */
-class CreateTallaNumeroProductoService{
-    constructor(repository = new TallaNumeroProductoRepository()){
+ */
+class CreateTallaNumeroProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas-producto
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Asocia una tallaLetra con un producto.
-     * @param {Object} data - Datos de la tallaLetra y el producto a asociar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - El regístro con la asociación talla numerica - producto recién creada.
-     * */
+     * Ejecuta la creación de una asociación entre talla numérica y producto
+     * @param {Object} data - Datos de la asociación a crear
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Asociación creada
+     */
     execute = async (data, transaction = null) => {
-        validaDatos(data);
+        await validaDatos(data);
         return await this.repository.create(data, transaction);
     }
 }
-
 
 export default CreateTallaNumeroProductoService;
