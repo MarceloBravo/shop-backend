@@ -1,15 +1,18 @@
 import GetAllSubCategoriaService from "../../services/subCategoria/GetAllSubCategoriaService.js";
+import SubCategoriaRepository from "../../repositories/SubCategoriaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador encargado de obtener todas las subcategorías incluyendo eliminadas
- * @class
- * @param {GetAllSubCategoriaService} service - Servicio para obtener subcategorías
- * @returns {GetAllSubCategoriaWithDeletedController} - Instancia del controlador
+ * @class GetAllSubCategoriaWithDeletedController
  */
 class GetAllSubCategoriaWithDeletedController{
-    constructor(service = new GetAllSubCategoriaService()){
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de subcategorías
+     */
+    constructor(repository = new SubCategoriaRepository()) {
+        this.service = new GetAllSubCategoriaService(repository);
     }
 
     /**

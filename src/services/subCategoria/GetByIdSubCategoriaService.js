@@ -1,25 +1,32 @@
-import SubCategoriaRepository from '../../repositories/SubCategoriaRepository.js';
-
 /**
- * Servicio para obtener una subcategoría por su ID.
- * @class
- * @constructor
- * @param {SubCategoriaRepository} repository - Repositorio de subcategorías.
- * @description Esta clase se encarga de obtener una subcategoría específica de la base de datos.
- * */
-class GetByIdSubCategoriaService{
-    constructor(repository = new SubCategoriaRepository()){
+ * Servicio para obtener una subcategoría por su ID
+ * @class GetByIdSubCategoriaService
+ */
+class GetByIdSubCategoriaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de subcategorías
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene una subcategoría por su ID.
-     * @param {number} id - ID de la subcategoría a buscar.
-     * @param {boolean} [paranoid=true] - Si es true, incluye subcategorías eliminadas.
-     * @returns {Promise<Object>} - La subcategoría encontrada.
-     * */
+     * Ejecuta la obtención de una subcategoría por su ID
+     * @param {string|number} id - ID de la subcategoría a obtener
+     * @param {boolean} [paranoid=true] - Indica si se debe incluir la subcategoría si está eliminada
+     * @returns {Promise<Object>} Subcategoría encontrada
+     */
     execute = async (id, paranoid = true) => {
-        return await this.repository.getById(id, paranoid);
+        const result = await this.repository.getById(id, paranoid);
+        if (!result) {
+            throw new Error('Subcategoría no encontrada');
+        }
+        return result;
     }
 }
 

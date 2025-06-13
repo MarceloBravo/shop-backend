@@ -1,23 +1,25 @@
 import HardDeleteTallaLetraService from '../../services/tallaLetra/HardDeleteTallaLetraService.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para eliminar permanentemente una talla letra
- * @class
- * @param {HardDeleteTallaLetraService} service - Servicio para eliminar permanentemente una talla letra
- * @returns {HardDeleteTallaLetraController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para eliminar permanentemente una talla letra.
+ * Controlador para realizar borrado físico de una talla letra
+ * @class HardDeleteTallaLetraController
  */
 class HardDeleteTallaLetraController {
-    constructor(service = new HardDeleteTallaLetraService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas letra
+     */
+    constructor(repository = new TallaLetraRepository()) {
+        this.service = new HardDeleteTallaLetraService(repository);
     }
 
     /**
-     * Elimina permanentemente una talla letra.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta el borrado físico de una talla letra
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

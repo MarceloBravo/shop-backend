@@ -1,23 +1,25 @@
 import GetByIdTallaLetraService from '../../services/tallaLetra/GetByIdTallaLetraService.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una talla letra por ID incluyendo registros eliminados
+ * Controlador para obtener una talla letra por su ID incluyendo los eliminados
  * @class GetByIdTallaLetraWithDeletedController
- * @param {GetByIdTallaLetraService} service - Servicio para obtener una talla letra
- * @returns {GetByIdTallaLetraWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una talla letra por ID incluyendo registros eliminados.
  */
 class GetByIdTallaLetraWithDeletedController {
-    constructor(service = new GetByIdTallaLetraService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas letra
+     */
+    constructor(repository = new TallaLetraRepository()) {
+        this.service = new GetByIdTallaLetraService(repository);
     }
 
     /**
-     * Obtiene una talla letra por ID incluyendo registros eliminados.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de una talla letra por su ID incluyendo los eliminados
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

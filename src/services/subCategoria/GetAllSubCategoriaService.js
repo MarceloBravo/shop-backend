@@ -1,22 +1,25 @@
-import SubCategoriaRepository from '../../repositories/SubCategoriaRepository.js';
-
 /**
- * Servicio para obtener todas las subcategorías.
- * @class
- * @constructor
- * @param {SubCategoriaRepository} repository - Repositorio de subcategorías.
- * @description Esta clase se encarga de obtener todas las subcategorías de la base de datos.
- * */
-class GetAllSubCategoriaService{
-    constructor(repository = new SubCategoriaRepository()){
+ * Servicio para obtener todas las subcategorías
+ * @class GetAllSubCategoriaService
+ */
+class GetAllSubCategoriaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de subcategorías
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene todas las subcategorías de la base de datos.
-     * @param {boolean} [includeDeleted=false] - Si es true, incluye las subcategorías eliminadas.
-     * @returns {Promise<Object>} - Las subcategorías encontradas.
-     * */
+     * Ejecuta la obtención de todas las subcategorías
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las subcategorías eliminadas
+     * @returns {Promise<Array>} Lista de subcategorías
+     */
     execute = async (paranoid = true) => {
         return await this.repository.getAll([['nombre', 'ASC']], paranoid);
     }

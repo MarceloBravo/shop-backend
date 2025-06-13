@@ -1,23 +1,25 @@
 import GetPageTallaLetraService from '../../services/tallaLetra/GetPageTallaLetraService.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener una página de tallas letra
- * @class
- * @param {GetPageTallaLetraService} service - Servicio para obtener una página de tallas letra
- * @returns {GetPageTallaLetraController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de tallas letra.
+ * @class GetPageTallaLetraController
  */
 class GetPageTallaLetraController {
-    constructor(service = new GetPageTallaLetraService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas letra
+     */
+    constructor(repository = new TallaLetraRepository()) {
+        this.service = new GetPageTallaLetraService(repository);
     }
 
     /**
-     * Obtiene una página de tallas letra.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de una página de tallas letra
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

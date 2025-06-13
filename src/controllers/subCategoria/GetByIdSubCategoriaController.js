@@ -1,30 +1,33 @@
 import GetByIdSubCategoriaService from "../../services/subCategoria/GetByIdSubCategoriaService.js";
+import SubCategoriaRepository from "../../repositories/SubCategoriaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador encargado de obtener una subcategoría por su ID
- * @class
- * @param {GetByIdSubCategoriaService} service - Servicio para obtener una subcategoría
- * @returns {GetByIdSubCategoriaController} - Instancia del controlador
+ * Controlador para obtener una subcategoría por su ID
+ * @class GetByIdSubCategoriaController
  */
-class GetByIdSubCategoriaController{
-    constructor(service = new GetByIdSubCategoriaService()){
-        this.service = service;
+class GetByIdSubCategoriaController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de subcategorías
+     */
+    constructor(repository = new SubCategoriaRepository()) {
+        this.service = new GetByIdSubCategoriaService(repository);
     }
 
     /**
-     * Obtiene una subcategoría por su ID.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se completa la operación.
-     * @description Esta función maneja la obtención de una subcategoría por su ID.
-     * */
+     * Ejecuta la obtención de una subcategoría por su ID
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
-        try{
-            const data = await this.service.execute(req.params.id);
-            if(!data) return res.status(404).json({mensaje: 'Registro no encontrado'});
+        try {
+            const { id } = req.params;
+            const data = await this.service.execute(id);
+            if (!data) return res.status(404).json({ mensaje: 'Registro no encontrado' });
             res.json(data);
-        }catch(e){
+        } catch (e) {
             const err = handleError(e);
             res.status(err.code).json(err);
         }

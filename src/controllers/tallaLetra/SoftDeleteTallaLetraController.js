@@ -1,23 +1,25 @@
 import SoftDeleteTallaLetraService from '../../services/tallaLetra/SoftDeleteTallaLetraService.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para realizar un borrado lógico de una talla letra
- * @class
- * @param {SoftDeleteTallaLetraService} service - Servicio para realizar un borrado lógico
- * @returns {SoftDeleteTallaLetraController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para realizar un borrado lógico de una talla letra.
+ * Controlador para realizar borrado lógico de una talla letra
+ * @class SoftDeleteTallaLetraController
  */
 class SoftDeleteTallaLetraController {
-    constructor(service = new SoftDeleteTallaLetraService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas letra
+     */
+    constructor(repository = new TallaLetraRepository()) {
+        this.service = new SoftDeleteTallaLetraService(repository);
     }
 
     /**
-     * Realiza un borrado lógico de una talla letra.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta el borrado lógico de una talla letra
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

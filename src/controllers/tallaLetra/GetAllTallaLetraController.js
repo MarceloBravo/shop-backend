@@ -1,23 +1,25 @@
 import GetAllTallaLetraService from '../../services/tallaLetra/GetAllTallaLetraService.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener todas las tallas letra
  * @class GetAllTallaLetraController
- * @param {GetAllTallaLetraService} service - Servicio para obtener todas las tallas letra
- * @returns {GetAllTallaLetraController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener todas las tallas letra.
  */
 class GetAllTallaLetraController {
-    constructor(service = new GetAllTallaLetraService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas letra
+     */
+    constructor(repository = new TallaLetraRepository()) {
+        this.service = new GetAllTallaLetraService(repository);
     }
 
     /**
-     * Obtiene todas las tallas letra.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de todas las tallas letra
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

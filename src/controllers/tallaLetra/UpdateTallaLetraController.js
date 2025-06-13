@@ -1,23 +1,25 @@
 import UpdateTallaLetraService from '../../services/tallaLetra/UpdateTallaLetraService.js';
+import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para actualizar una talla letra
- * @class
- * @param {UpdateTallaLetraService} service - Servicio para actualizar una talla letra
- * @returns {UpdateTallaLetraController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para actualizar una talla letra existente.
+ * @class UpdateTallaLetraController
  */
 class UpdateTallaLetraController {
-    constructor(service = new UpdateTallaLetraService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas letra
+     */
+    constructor(repository = new TallaLetraRepository()) {
+        this.service = new UpdateTallaLetraService(repository);
     }
 
     /**
-     * Actualiza una talla letra existente.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la actualización de una talla letra
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

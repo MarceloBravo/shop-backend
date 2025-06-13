@@ -1,25 +1,33 @@
-import SubCategoriaRepository from '../../repositories/SubCategoriaRepository.js';
-
 /**
- * Servicio para eliminar lógicamente una subcategoría.
- * @class
- * @constructor
- * @param {SubCategoriaRepository} repository - Repositorio de subcategorías.
- * @description Esta clase se encarga de realizar el soft delete de una subcategoría.
- * */
-class SoftDeleteSubCategoriaService{
-    constructor(repository = new SubCategoriaRepository()){
+ * Servicio para realizar borrado lógico de una subcategoría
+ * @class SoftDeleteSubCategoriaService
+ */
+class SoftDeleteSubCategoriaService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de subcategorías
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Realiza el soft delete de una subcategoría.
-     * @param {number} id - ID de la subcategoría a eliminar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Resultado de la operación.
-     * */
+     * Ejecuta el borrado lógico de una subcategoría
+     * @param {string|number} id - ID de la subcategoría a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
+     */
     execute = async (id, transaction = null) => {
-        return await this.repository.softDelete(id, transaction);
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Subcategoría no encontrada');
+        }
+        const record = await this.repository.softDelete(id, transaction);
+        return record && record.deleted_at !== null;
     }
 }
 

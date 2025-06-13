@@ -1,34 +1,33 @@
 import HardDeleteSubCategoriaService from "../../services/subCategoria/HardDeleteSubCategoriaService.js";
+import SubCategoriaRepository from "../../repositories/SubCategoriaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador encargado de eliminar físicamente una subcategoría
- * @class
- * @param {HardDeleteSubCategoriaService} service - Servicio para eliminar físicamente una subcategoría
- * @returns {HardDeleteSubCategoriaController} - Instancia del controlador
+ * Controlador para realizar borrado físico de una subcategoría
+ * @class HardDeleteSubCategoriaController
  */
-class HardDeleteSubCategoriaController{
-    constructor(service = new HardDeleteSubCategoriaService()){
-        this.service = service;
+class HardDeleteSubCategoriaController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de subcategorías
+     */
+    constructor(repository = new SubCategoriaRepository()) {
+        this.service = new HardDeleteSubCategoriaService(repository);
     }
 
     /**
-     * Elimina físicamente una subcategoría.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se completa la operación.
-     * @description Esta función maneja la eliminación física de una subcategoría.
-     * */
+     * Ejecuta el borrado físico de una subcategoría
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
-        try{
+        try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const resp = {
-                code: result, 
-                mensaje: result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no pudo ser eliminado o no existe.'
-            };
-            res.json(resp);
-        }catch(e){
+            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no pudo ser eliminado o registro inexistente';
+            res.json({ id, code: result ? 200 : 500, mensaje });
+        } catch (e) {
             const err = handleError(e);
             res.status(err.code).json(err);
         }
