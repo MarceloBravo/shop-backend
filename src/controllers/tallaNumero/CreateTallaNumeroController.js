@@ -1,23 +1,25 @@
 import CreateTallaNumeroService from "../../services/tallaNumero/CreateTallaNumeroService.js";
+import TallaNumeroRepository from "../../repositories/TallaNumeroRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para crear una nueva talla numérica
- * @class
- * @param {CreateTallaNumeroService} service - Servicio para crear una nueva talla numérica
- * @returns {CreateTallaNumeroController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para crear una nueva talla numérica.
+ * @class CreateTallaNumeroController
  */
 class CreateTallaNumeroController {
-    constructor(service = new CreateTallaNumeroService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas numéricas
+     */
+    constructor(repository = new TallaNumeroRepository()) {
+        this.service = new CreateTallaNumeroService(repository);
     }
 
     /**
-     * Crea una nueva talla numérica.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la creación de una nueva talla numérica
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {        

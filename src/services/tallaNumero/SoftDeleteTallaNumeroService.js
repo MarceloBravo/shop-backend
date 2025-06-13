@@ -1,26 +1,34 @@
-import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
-
 /**
- * Servicio para realizar un borrado lógico de una talla numérica
- * @class
- * @constructor
- * @param {TallaNumeroRepository} repository - Repositorio de tallas numéricas
- * @description Esta clase se encarga de realizar el borrado lógico de una talla numérica.
- * */
+ * Servicio para realizar borrado lógico de una talla numérica
+ * @class SoftDeleteTallaNumeroService
+ */
 class SoftDeleteTallaNumeroService {
-    constructor(repository = new TallaNumeroRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Realiza el borrado lógico de una talla numérica.
-     * @param {number} id - ID de la talla numérica.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<number>} - 200 si se eliminó, 404 si no se encontró.
-     * */
+     * Ejecuta el borrado lógico de una talla numérica
+     * @param {string|number} id - ID de la talla numérica a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
+     * @throws {Error} Si la talla numérica no es encontrada
+     */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Talla numérica no encontrada');
+        }
         const record = await this.repository.softDelete(id, transaction);
-        return (record && record?.deleted_at !== null ? 200 : 404);
+        return record && record.deleted_at !== null;
     }
 }
 

@@ -1,28 +1,28 @@
-import TallaLetraProductoRepository from '../../repositories/TallaLetraProductoRepository.js';
-
 /**
- * Servicio para obtener todas las asociaciones de tallas de letra y productos
- * @class
- * @description Gestiona la recuperación de todas las asociaciones entre productos y tallas de letra
+ * Servicio para obtener todas las asociaciones entre tallas letra y productos
+ * @class GetAllTallaLetraProductoService
  */
 class GetAllTallaLetraProductoService {
     /**
-     * Crea una instancia del servicio de listado
-     * @param {TallaLetraProductoRepository} repository - Repositorio de tallas de letra de productos
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas letra producto
+     * @throws {Error} Si el repositorio no es proporcionado
      */
-    constructor(repository = new TallaLetraProductoRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene todas las asociaciones entre productos y tallas de letra
-     * @param {boolean} [paranoid=true] - Si es true, solo retorna registros no eliminados (soft delete)
-     * @returns {Promise<Array<Object>>} Lista de todas las asociaciones encontradas
+     * Ejecuta la obtención de todas las asociaciones
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las asociaciones eliminadas
+     * @returns {Promise<Array>} Lista de asociaciones
      */
     execute = async (paranoid = true) => {
         return await this.repository.getAll(paranoid);
     }
 }
-
 
 export default GetAllTallaLetraProductoService;

@@ -1,22 +1,25 @@
-import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
-
 /**
  * Servicio para obtener todas las tallas numéricas
- * @class
- * @constructor
- * @param {TallaNumeroRepository} repository - Repositorio de tallas numéricas
- * @description Esta clase se encarga de obtener todas las tallas numéricas de la base de datos.
- * */
+ * @class GetAllTallaNumeroService
+ */
 class GetAllTallaNumeroService {
-    constructor(repository = new TallaNumeroRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene todas las tallas numéricas.
-     * @param {boolean} [paranoid=true] - Si es true, excluye registros eliminados.
-     * @returns {Promise<{data: Array, count: number}>} - Lista de tallas numéricas y total.
-     * */
+     * Ejecuta la obtención de todas las tallas numéricas
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las tallas eliminadas
+     * @returns {Promise<Array>} Lista de tallas numéricas
+     */
     execute = async (paranoid = true) => {
         return await this.repository.getAll([['valor', 'ASC']], paranoid);
     }

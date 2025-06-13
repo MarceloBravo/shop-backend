@@ -1,27 +1,30 @@
 import GetAllTallaNumeroService from '../../services/tallaNumero/GetAllTallaNumeroService.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener todas las tallas numéricas incluyendo registros eliminados
- * @class
- * @param {GetAllTallaNumeroService} service - Servicio para obtener todas las tallas numéricas
- * @returns {GetAllTallaNumeroWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener todas las tallas numéricas incluyendo registros eliminados.
+ * Controlador para obtener todas las tallas numéricas incluyendo los eliminados
+ * @class GetAllTallaNumeroWithDeletedController
  */
 class GetAllTallaNumeroWithDeletedController {
-    constructor(service = new GetAllTallaNumeroService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas numéricas
+     */
+    constructor(repository = new TallaNumeroRepository()) {
+        this.service = new GetAllTallaNumeroService(repository);
     }
 
     /**
-     * Obtiene todas las tallas numéricas incluyendo registros eliminados.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de todas las tallas numéricas incluyendo los eliminados
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {
-            const data = await this.service.execute(false);
+            const { id } = req.params;
+            const data = await this.service.execute(id, false);
             res.json(data);
         } catch(e) {
             const err = handleError(e);

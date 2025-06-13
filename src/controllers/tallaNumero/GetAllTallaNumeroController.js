@@ -1,23 +1,25 @@
 import GetAllTallaNumeroService from '../../services/tallaNumero/GetAllTallaNumeroService.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener todas las tallas numéricas
- * @class
- * @param {GetAllTallaNumeroService} service - Servicio para obtener todas las tallas numéricas
- * @returns {GetAllTallaNumeroController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener todas las tallas numéricas.
+ * @class GetAllTallaNumeroController
  */
 class GetAllTallaNumeroController {
-    constructor(service = new GetAllTallaNumeroService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas numéricas
+     */
+    constructor(repository = new TallaNumeroRepository()) {
+        this.service = new GetAllTallaNumeroService(repository);
     }
 
     /**
-     * Obtiene todas las tallas numéricas.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de todas las tallas numéricas
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

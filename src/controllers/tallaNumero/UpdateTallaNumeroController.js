@@ -1,23 +1,25 @@
 import UpdateTallaNumeroService from "../../services/tallaNumero/UpdateTallaNumeroService.js";
+import TallaNumeroRepository from "../../repositories/TallaNumeroRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para actualizar una talla numérica
- * @class
- * @param {UpdateTallaNumeroService} service - Servicio para actualizar una talla numérica
- * @returns {UpdateTallaNumeroController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para actualizar una talla numérica existente.
+ * @class UpdateTallaNumeroController
  */
 class UpdateTallaNumeroController {
-    constructor(service = new UpdateTallaNumeroService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas numéricas
+     */
+    constructor(repository = new TallaNumeroRepository()) {
+        this.service = new UpdateTallaNumeroService(repository);
     }
 
     /**
-     * Actualiza una talla numérica existente.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la actualización de una talla numérica
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

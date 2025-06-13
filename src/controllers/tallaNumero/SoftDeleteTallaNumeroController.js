@@ -1,16 +1,18 @@
 import SoftDeleteTallaNumeroService from '../../services/tallaNumero/SoftDeleteTallaNumeroService.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para realizar un borrado lógico de una talla numérica
- * @class
- * @param {SoftDeleteTallaNumeroService} service - Servicio para realizar un borrado lógico
- * @returns {SoftDeleteTallaNumeroController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para realizar un borrado lógico de una talla numérica.
+ * Controlador para realizar borrado lógico de una talla numérica
+ * @class SoftDeleteTallaNumeroController
  */
 class SoftDeleteTallaNumeroController {
-    constructor(service = new SoftDeleteTallaNumeroService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas numéricas
+     */
+    constructor(repository = new TallaNumeroRepository()) {
+        this.service = new SoftDeleteTallaNumeroService(repository);
     }
 
     /**

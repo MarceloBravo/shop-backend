@@ -1,30 +1,32 @@
 import HardDeleteTallaNumeroService from '../../services/tallaNumero/HardDeleteTallaNumeroService.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para eliminar permanentemente una talla numérica
- * @class
- * @param {HardDeleteTallaNumeroService} service - Servicio para eliminar permanentemente una talla numérica
- * @returns {HardDeleteTallaNumeroController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para eliminar permanentemente una talla numérica.
+ * Controlador para realizar borrado físico de una talla numérica
+ * @class HardDeleteTallaNumeroController
  */
 class HardDeleteTallaNumeroController {
-    constructor(service = new HardDeleteTallaNumeroService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas numéricas
+     */
+    constructor(repository = new TallaNumeroRepository()) {
+        this.service = new HardDeleteTallaNumeroService(repository);
     }
 
     /**
-     * Elimina permanentemente una talla numérica.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta el borrado físico de una talla numérica
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const mensaje = result.result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';  
-            res.json({ id: result.id, code: result.result ? 200 : 500, mensaje });
+            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no pudo ser eliminado o registro inexistente';
+            res.json({ id, code: result ? 200 : 500, mensaje });
         } catch(e) {
             const err = handleError(e);
             res.status(err.code).json(err);

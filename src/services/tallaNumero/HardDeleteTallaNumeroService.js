@@ -1,26 +1,33 @@
-import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
-
 /**
- * Servicio para eliminar permanentemente una talla numérica
- * @class
- * @constructor
- * @param {TallaNumeroRepository} repository - Repositorio de tallas numéricas
- * @description Esta clase se encarga de eliminar permanentemente una talla numérica de la base de datos.
- * */
+ * Servicio para realizar borrado físico de una talla numérica
+ * @class HardDeleteTallaNumeroService
+ */
 class HardDeleteTallaNumeroService {
-    constructor(repository = new TallaNumeroRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas numéricas
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina permanentemente una talla numérica.
-     * @param {number} id - ID de la talla numérica.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Resultado de la eliminación.
-     * */
+     * Ejecuta el borrado físico de una talla numérica
+     * @param {string|number} id - ID de la talla numérica a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Resultado de la operación
+     * @throws {Error} Si la talla numérica no es encontrada
+     */
     execute = async (id, transaction = null) => {
-        const result = await this.repository.hardDelete(id, transaction);
-        return { id, result };
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Talla numérica no encontrada');
+        }
+        return await this.repository.hardDelete(id, transaction);
     }
 }
 

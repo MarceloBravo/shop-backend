@@ -1,16 +1,18 @@
 import GetByIdTallaNumeroService from '../../services/tallaNumero/GetByIdTallaNumeroService.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una talla numérica por ID incluyendo registros eliminados
- * @class
- * @param {GetByIdTallaNumeroService} service - Servicio para obtener una talla numérica
- * @returns {GetByIdTallaNumeroWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una talla numérica por ID incluyendo registros eliminados.
+ * Controlador para obtener una talla numérica por su ID
+ * @class GetByIdTallaNumeroWithDeletedController 
  */
-class GetByIdTallaNumeroWithDeletedController {
-    constructor(service = new GetByIdTallaNumeroService()) {
-        this.service = service;
+class GetByIdTallaNumeroWithDeletedController  {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas numéricas
+     */
+    constructor(repository = new TallaNumeroRepository()) {
+        this.service = new GetByIdTallaNumeroService(repository);
     }
 
     /**

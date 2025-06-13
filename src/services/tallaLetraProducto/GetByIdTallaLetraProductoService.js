@@ -1,28 +1,32 @@
-import TallaLetraProductoRepository from '../../repositories/TallaLetraProductoRepository.js';
-
 /**
- * Servicio para obtener una asociación de talla de letra y producto por su ID
- * @class
- * @description Gestiona la recuperación de asociaciones específicas entre productos y tallas de letra
+ * Servicio para obtener una asociación entre talla letra y producto por su ID
+ * @class GetByIdTallaLetraProductoService
  */
 class GetByIdTallaLetraProductoService {
     /**
-     * Crea una instancia del servicio de búsqueda por ID
-     * @param {TallaLetraProductoRepository} repository - Repositorio de tallas de letra de productos
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tallas letra producto
+     * @throws {Error} Si el repositorio no es proporcionado
      */
-    constructor(repository = new TallaLetraProductoRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene una asociación específica entre producto y talla de letra
-     * @param {number} id - ID de la asociación a buscar
-     * @param {boolean} [paranoid=true] - Si es true, solo busca registros no eliminados (soft delete)
-     * @returns {Promise<Object>} La asociación encontrada
-     * @throws {Error} Si no se encuentra el registro o hay un error en la búsqueda
+     * Ejecuta la obtención de una asociación por su ID
+     * @param {string|number} id - ID de la asociación a obtener
+     * @param {boolean} [paranoid=true] - Indica si se debe incluir la asociación si está eliminada
+     * @returns {Promise<Object>} Asociación encontrada
+     * @throws {Error} Si la asociación no es encontrada
      */
     async execute(id, paranoid = true) {
         const result = await this.repository.getById(id, paranoid);
+        if (!result) {
+            throw new Error('Asociación no encontrada');
+        }
         return result;
     }
 }

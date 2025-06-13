@@ -1,23 +1,25 @@
 import GetByIdTallaNumeroService from '../../services/tallaNumero/GetByIdTallaNumeroService.js';
+import TallaNumeroRepository from '../../repositories/TallaNumeroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una talla numérica por ID incluyendo registros eliminados
- * @class
- * @param {GetByIdTallaNumeroService} service - Servicio para obtener una talla numérica
- * @returns {GetByIdTallaNumeroWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una talla numérica por ID incluyendo registros eliminados.
+ * Controlador para obtener una talla numérica por su ID incluyendo los eliminados
+ * @class GetByIdTallaNumeroWithDeletedController
  */
 class GetByIdTallaNumeroWithDeletedController {
-    constructor(service = new GetByIdTallaNumeroService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tallas numéricas
+     */
+    constructor(repository = new TallaNumeroRepository()) {
+        this.service = new GetByIdTallaNumeroService(repository);
     }
 
     /**
-     * Obtiene una talla numérica por ID incluyendo registros eliminados.
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de una talla numérica por su ID incluyendo los eliminados
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {
