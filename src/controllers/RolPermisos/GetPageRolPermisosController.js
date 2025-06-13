@@ -1,22 +1,25 @@
 import GetPageRolPermisosService from "../../services/RolPermisos/GetPageRolPermisosService.js";
+import RolPermisosRepository from '../../repositories/RolPermisosRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener una página de permisos de rol
- * @class
- * @param {GetPageRolPermisosService} service - Servicio para obtener permisos de rol paginados
- * @returns {GetPageRolPermisosController} - Instancia del controlador
+ * @class GetPageRolPermisosController
  */
 class GetPageRolPermisosController {
-
-    constructor(service = new GetPageRolPermisosService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de permisos de rol
+     */
+    constructor(repository = new RolPermisosRepository()) {
+        this.service = new GetPageRolPermisosService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la obtención de una página de permisos de rol
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => { 
         try {

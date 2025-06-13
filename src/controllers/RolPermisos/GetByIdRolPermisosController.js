@@ -1,16 +1,18 @@
 import GetByIdRolPermisosService from "../../services/RolPermisos/GetByIdRolPermisosService.js";
+import RolPermisosRepository from '../../repositories/RolPermisosRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener un permiso de rol por su ID
- * @class
- * @param {GetByIdRolPermisosService} service - Servicio para obtener un permiso de rol por su ID
- * @returns {GetByIdRolPermisosController} - Instancia del controlador
+ * @class GetByIdRolPermisosController
  */
 class GetByIdRolPermisosController {
-
-    constructor(service = new GetByIdRolPermisosService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de permisos de rol
+     */
+    constructor(repository = new RolPermisosRepository()) {
+        this.service = new GetByIdRolPermisosService(repository);
     }
 
     /**

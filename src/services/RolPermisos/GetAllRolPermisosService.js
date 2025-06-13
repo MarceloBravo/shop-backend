@@ -1,21 +1,24 @@
-import RolPermisosRepository from "../../repositories/RolPermisosRepository.js";
-
 /**
- * Servicio para obtener todos los permisos de roles.
- * @class
- * @constructor
- * @param {RolPermisosRepository} repository - Repositorio de permisos de roles.
- * @description Esta clase se encarga de obtener todos los permisos de roles del sistema.
+ * Servicio para obtener todos los permisos de roles
+ * @class GetAllRolPermisosService
  */
 class GetAllRolPermisosService {
-    constructor(repository = new RolPermisosRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de permisos de roles
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene todos los permisos de roles.
-     * @param {boolean} [paranoid=true] - Si es true, solo retorna registros no eliminados.
-     * @returns {Promise<Object>} Objeto con la lista de permisos y el total.
+     * Ejecuta la obtención de todos los permisos de roles
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir los permisos eliminados
+     * @returns {Promise<Array>} Lista de permisos de roles
      */
     execute = async (paranoid = true) => {
         return await this.repository.getAll(paranoid);

@@ -1,22 +1,25 @@
 import CreateRolPermisosService from '../../services/RolPermisos/CreateRolPermisosService.js';
+import RolPermisosRepository from '../../repositories/RolPermisosRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para crear un nuevo registro de permisos de rol
- * @class
- * @param {CreateRolPermisosService} service - Servicio para crear un nuevo registro de permisos de rol
- * @returns {CreateRolPermisosController} - Instancia del controlador
+ * Controlador para crear un nuevo permiso de rol
+ * @class CreateRolPermisosController
  */
 class CreateRolPermisosController {
-
-    constructor(service = new CreateRolPermisosService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de permisos de rol
+     */
+    constructor(repository = new RolPermisosRepository()) {
+        this.service = new CreateRolPermisosService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la creación de un nuevo permiso de rol
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

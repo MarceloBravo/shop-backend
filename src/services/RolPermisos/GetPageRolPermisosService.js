@@ -1,27 +1,32 @@
-import RolPermisosRepository from "../../repositories/RolPermisosRepository.js";
-
 /**
  * Servicio para obtener una página de permisos de roles
- * @class
- * @constructor
- * @param {RolPermisosRepository} repository - Repositorio de permisos de roles
- * @description Esta clase se encarga de obtener una página de permisos de roles del sistema
+ * @class GetPageRolPermisosService
  */
 class GetPageRolPermisosService {
-    constructor(repository = new RolPermisosRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de permisos de roles
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene una página de permisos de roles
-     * @param {number} [page=1] - Número de página
-     * @param {number} [pageSize=process.env.DEFAULT_REG_POR_PAGINA] - Cantidad de registros por página
-     * @param {boolean} [paranoid=true] - Si es true, solo retorna registros no eliminados
-     * @returns {Promise<Object>} Objeto con la lista de permisos paginada y metadata
+     * Ejecuta la obtención de una página de permisos de roles
+     * @param {number} page - Número de página
+     * @param {number} limit - Límite de registros por página
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir los permisos eliminados
+     * @returns {Promise<Object>} Objeto con los registros, total de registros y total de páginas
      */
-    execute = async (page = 1, pageSize = Number(process.env.DEFAULT_REG_POR_PAGINA), paranoid = true) => {
-        const desde = (page - 1) * pageSize;
-        return await this.repository.getPage(desde, pageSize, paranoid);
+    execute = async (page = 1, limit = Number(process.env.DEFAULT_REG_POR_PAGINA), paranoid = true) => {
+        const offset = (page - 1) * limit;
+        const { rows, count } = await this.repository.getPage(offset, limit, paranoid);
+        const totPag = Math.ceil(count / limit);
+        return { rows, count, totPag };
     }
 }
 

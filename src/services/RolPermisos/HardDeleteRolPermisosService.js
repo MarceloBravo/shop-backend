@@ -1,24 +1,31 @@
-import RolPermisosRepository from "../../repositories/RolPermisosRepository.js"; 
-
 /**
- * Servicio para realizar el borrado físico de permisos de roles
- * @class
- * @constructor
- * @param {RolPermisosRepository} repository - Repositorio de permisos de roles
- * @description Esta clase se encarga de realizar el borrado físico (permanente) de permisos de roles en el sistema
+ * Servicio para realizar borrado físico de un permiso de rol
+ * @class HardDeleteRolPermisosService
  */
 class HardDeleteRolPermisosService {
-    constructor(repository = new RolPermisosRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de permisos de roles
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Realiza el borrado físico de un permiso de rol
-     * @param {number} id - ID del permiso de rol a eliminar permanentemente
-     * @param {Object} [transaction] - Transacción de Sequelize
-     * @returns {Promise<Object>} Objeto con el id y el resultado de la operación
+     * Ejecuta el borrado físico de un permiso de rol
+     * @param {string|number} id - ID del permiso de rol a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Resultado de la operación
      */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Permiso de rol no encontrado');
+        }
         return await this.repository.hardDelete(id, transaction);
     }
 }

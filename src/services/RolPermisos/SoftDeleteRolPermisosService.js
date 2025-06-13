@@ -1,25 +1,32 @@
-import RolPermisosRepository from "../../repositories/RolPermisosRepository.js";
-
 /**
- * Servicio para realizar el borrado lógico de permisos de roles
- * @class
- * @constructor
- * @param {RolPermisosRepository} repository - Repositorio de permisos de roles
- * @description Esta clase se encarga de realizar el borrado lógico de permisos de roles en el sistema
+ * Servicio para realizar borrado lógico de un permiso de rol
+ * @class SoftDeleteRolPermisosService
  */
 class SoftDeleteRolPermisosService {
-    constructor(repository = new RolPermisosRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de permisos de roles
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Realiza el borrado lógico de un permiso de rol
-     * @param {number} id - ID del permiso de rol a eliminar
-     * @param {Object} [transaction] - Transacción de Sequelize
-     * @returns {Promise<Object>} Resultado de la operación: true si fue exitoso, false si falló
+     * Ejecuta el borrado lógico de un permiso de rol
+     * @param {string|number} id - ID del permiso de rol a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
      */
     execute = async (id, transaction = null) => {
-        const {result} = await this.repository.softDelete(id, transaction);
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Permiso de rol no encontrado');
+        }
+        const { result } = await this.repository.softDelete(id, transaction);
         return result;
     }
 }

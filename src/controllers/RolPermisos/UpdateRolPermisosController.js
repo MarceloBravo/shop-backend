@@ -1,22 +1,25 @@
 import UpdateRolPermisosService from "../../services/RolPermisos/UpdateRolPermisosService.js";
+import RolPermisosRepository from '../../repositories/RolPermisosRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para actualizar un permiso de rol
- * @class
- * @param {UpdateRolPermisosService} service - Servicio para actualizar permisos de rol
- * @returns {UpdateRolPermisosController} - Instancia del controlador
+ * @class UpdateRolPermisosController
  */
 class UpdateRolPermisosController {
-
-    constructor(service = new UpdateRolPermisosService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de permisos de rol
+     */
+    constructor(repository = new RolPermisosRepository()) {
+        this.service = new UpdateRolPermisosService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta la actualización de un permiso de rol
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

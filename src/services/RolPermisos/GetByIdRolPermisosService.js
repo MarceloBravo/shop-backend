@@ -1,26 +1,32 @@
-// filepath: c:\Proyectos\mi-cv\backend-cv\src\services\RolPermisos\GetByIdRolPermisosService.js
-import RolPermisosRepository from "../../repositories/RolPermisosRepository.js";
-
 /**
  * Servicio para obtener un permiso de rol por su ID
- * @class
- * @constructor
- * @param {RolPermisosRepository} repository - Repositorio de permisos de roles
- * @description Esta clase se encarga de obtener un permiso de rol específico por su ID
+ * @class GetByIdRolPermisosService
  */
 class GetByIdRolPermisosService {
-    constructor(repository = new RolPermisosRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de permisos de roles
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene un permiso de rol por su ID
-     * @param {number} id - ID del permiso de rol a buscar
-     * @param {boolean} [paranoid=true] - Si es true, solo busca registros no eliminados
-     * @returns {Promise<Object>} El permiso de rol encontrado
+     * Ejecuta la obtención de un permiso de rol por su ID
+     * @param {string|number} id - ID del permiso de rol a obtener
+     * @param {boolean} [paranoid=true] - Indica si se debe incluir el permiso si está eliminado
+     * @returns {Promise<Object>} Permiso de rol encontrado
      */
     execute = async (id, paranoid = true) => {
-        return await this.repository.getById(id, paranoid);
+        const result = await this.repository.getById(id, paranoid);
+        if (!result) {
+            throw new Error('Permiso de rol no encontrado');
+        }
+        return result;
     }
 }
 

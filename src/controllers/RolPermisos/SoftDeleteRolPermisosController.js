@@ -1,23 +1,25 @@
 import SoftDeleteRolPermisosService from "../../services/RolPermisos/SoftDeleteRolPermisosService.js";
+import RolPermisosRepository from '../../repositories/RolPermisosRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para realizar el borrado lógico de permisos de roles
- * @class
- * @param {SoftDeleteRolPermisosService} service - Servicio para realizar el borrado lógico de permisos de roles
- * @returns {SoftDeleteRolPermisosController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para realizar el borrado lógico de permisos de roles.
+ * Controlador para realizar borrado lógico de un permiso de rol
+ * @class SoftDeleteRolPermisosController
  */
 class SoftDeleteRolPermisosController {
-    
-    constructor(service = new SoftDeleteRolPermisosService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de permisos de rol
+     */
+    constructor(repository = new RolPermisosRepository()) {
+        this.service = new SoftDeleteRolPermisosService(repository);
     }
 
     /**
-     * @param {Object} req - Request object
-     * @param {Object} res - Response object
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
+     * Ejecuta el borrado lógico de un permiso de rol
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {

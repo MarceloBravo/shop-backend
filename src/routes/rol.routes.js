@@ -33,7 +33,7 @@ router.get('/:id', checkToken, getByIdRolController.execute);
 router.get('/', checkToken, getAllRolController.execute);
 router.get('/page/:pag/:limit?', checkToken, getPageRolController.execute);
 router.put('/:id', checkToken, updateRolController.execute);
-router.delete('/:id', checkToken, hardDeleteRolController.hardDelete);
-router.patch('/:id', checkToken, softDeleteRolController.softDelete);
+router.delete('/:id', checkToken, hardDeleteRolController.execute);
+router.patch('/:id', checkToken, softDeleteRolController.execute);
 
 export default router;

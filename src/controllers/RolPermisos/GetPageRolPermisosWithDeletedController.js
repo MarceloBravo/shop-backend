@@ -1,19 +1,22 @@
 import GetPageRolPermisosService from "../../services/RolPermisos/GetPageRolPermisosService.js";
+import RolPermisosRepository from '../../repositories/RolPermisosRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una página de permisos de rol incluyendo eliminados
- * @class
- * @param {GetPageRolPermisosService} service - Servicio para obtener permisos de rol paginados
- * @returns {GetPageRolPermisosWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de permisos de rol incluyendo eliminados.
+ * Controlador para obtener una página de permisos de rol incluyendo los eliminados
+ * @class GetPageRolPermisosWithDeletedController
  */
-class GetPageRolPermisosWithDeletedController {    constructor(service = new GetPageRolPermisosService()) {
-        this.service = service;
+class GetPageRolPermisosWithDeletedController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de permisos de rol
+     */
+    constructor(repository = new RolPermisosRepository()) {
+        this.service = new GetPageRolPermisosService(repository);
     }
 
     /**
-     * Obtiene una página de permisos de rol incluyendo eliminados
+     * Ejecuta la obtención de una página de permisos de rol incluyendo los eliminados
      * @param {Object} req - Objeto de solicitud HTTP
      * @param {Object} res - Objeto de respuesta HTTP
      * @param {string} req.params.pag - Número de página (por defecto: 1)
