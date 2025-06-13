@@ -1,5 +1,3 @@
-import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
-
 /**
  * Clase para obtener un menú de la tienda a partir de su ID.
  * @class GetByIdMenuTiendaService

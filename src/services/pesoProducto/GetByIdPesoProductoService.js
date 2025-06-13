@@ -1,28 +1,33 @@
-import PesoProductoRepository from '../../repositories/PesoProductoRepository.js';
-
 /**
  * Servicio para obtener un registro de peso de producto por su ID
- * @class
- * @description Gestiona la recuperación de registros individuales de peso de productos
+ * @class GetByIdPesoProductoService
  */
 class GetByIdPesoProductoService {
     /**
-     * Crea una instancia del servicio de búsqueda por ID de peso de producto
-     * @param {PesoProductoRepository} repository - Repositorio para operaciones con pesos de productos
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de pesos de productos
+     * @throws {Error} Si el repositorio no es proporcionado
      */
-    constructor(repository = new PesoProductoRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Obtiene un registro de peso de producto por su ID
-     * @param {number} id - Identificador único del registro de peso
-     * @param {boolean} [paranoid=true] - Si es true, solo busca registros no eliminados (soft delete)
+     * Ejecuta la obtención de un registro de peso por su ID
+     * @param {string|number} id - ID del registro de peso a obtener
+     * @param {boolean} [paranoid=true] - Indica si se debe incluir el registro si está eliminado
      * @returns {Promise<Object>} Registro de peso encontrado
-     * @throws {Error} Si no se encuentra el registro o hay un error en la búsqueda
+     * @throws {Error} Si no se encuentra el registro
      */
     execute = async (id, paranoid = true) => {
-        return await this.repository.getById(id, paranoid);
+        const result = await this.repository.getById(id, paranoid);
+        if (!result) {
+            throw new Error('Registro de peso no encontrado');
+        }
+        return result;
     }
 }
 

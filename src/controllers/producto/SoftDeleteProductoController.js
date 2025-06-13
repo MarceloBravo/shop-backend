@@ -2,30 +2,29 @@ import SoftDeleteProductoService from "../../services/producto/SoftDeleteProduct
 import { handleError } from "../../shared/functions.js";
 
 /**
+ * Controlador para realizar borrado lógico de un producto
  * @class SoftDeleteProductoController
- * @description Controlador para el borrado lógico de productos
  */
 class SoftDeleteProductoController {
     /**
-     * @constructor
-     * @description Inicializa el servicio de borrado lógico de productos
+     * Crea una instancia del controlador
+     * @param {Object} service - Servicio de productos
      */
-    constructor() {
-        this.service = new SoftDeleteProductoService();
+    constructor(service = new SoftDeleteProductoService()) {
+        this.service = service;
     }
 
     /**
-     * @method execute
-     * @description Maneja la petición de borrado lógico de un producto
-     * @param {Object} req - Objeto de petición
-     * @param {Object} res - Objeto de respuesta
-     * @returns {Promise<void>}
+     * Marca un producto como eliminado en la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación
      */
     execute = async (req, res) => {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const resp = {code: result, mensaje : result === 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
+            const resp = {code: result, mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'};
             res.json(resp);
         } catch (e) {
             const err = handleError(e);

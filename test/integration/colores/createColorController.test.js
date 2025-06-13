@@ -5,6 +5,8 @@ import app from '../../../index.js';
 import { sequelize } from '../../../config/database.js';
 
 describe('Integration Test: CreateColorController', () => {
+    let token;
+    
     beforeAll(async () => {
         await sequelize.sync({ force: true }); // Sincroniza la base de datos para pruebas
         // Realiza login para obtener el token

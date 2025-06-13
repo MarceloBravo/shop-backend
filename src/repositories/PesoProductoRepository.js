@@ -50,7 +50,7 @@ class PesoProductoRepository{
 
 
     update = async (id, data, transaction = null ) => {
-        const [record, created] = await PesoProductoModel.findOrCreate({
+        let [record, created] = await PesoProductoModel.findOrCreate({
             where: {id},
             defaults: data,
             transaction,

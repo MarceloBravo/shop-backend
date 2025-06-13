@@ -2,24 +2,23 @@ import UpdateProductoOrchestrator from "../../orchestrators/producto/UpdateProdu
 import { handleError } from "../../shared/functions.js";
 
 /**
+ * Controlador para actualizar un producto
  * @class UpdateProductoController
- * @description Controlador para la actualización de productos
  */
 class UpdateProductoController {
     /**
-     * @constructor
-     * @description Inicializa el orquestador de actualización de productos
+     * Crea una instancia del controlador
+     * @param {Object} orchestrator - Orquestador de productos
      */
-    constructor() {
-        this.orchestrator = new UpdateProductoOrchestrator();
+    constructor(orchestrator = new UpdateProductoOrchestrator()) {
+        this.orchestrator = orchestrator;
     }
 
     /**
-     * @method execute
-     * @description Maneja la petición de actualización de un producto
-     * @param {Object} req - Objeto de petición
-     * @param {Object} res - Objeto de respuesta
-     * @returns {Promise<void>}
+     * Actualiza un producto en la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación
      */
     execute = async (req, res) => {
         try {

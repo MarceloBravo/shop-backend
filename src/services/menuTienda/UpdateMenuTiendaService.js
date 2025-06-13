@@ -1,4 +1,3 @@
-import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**

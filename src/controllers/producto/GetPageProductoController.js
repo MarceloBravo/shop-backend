@@ -2,24 +2,23 @@ import GetPageProductoService from "../../services/producto/GetPageProductoServi
 import { handleError } from "../../shared/functions.js";
 
 /**
+ * Controlador para obtener una página de productos
  * @class GetPageProductoController
- * @description Controlador para la obtención de páginas de productos
  */
 class GetPageProductoController {
     /**
-     * @constructor
-     * @description Inicializa el servicio de obtención de página de productos
+     * Crea una instancia del controlador
+     * @param {Object} service - Servicio de productos
      */
-    constructor() {
-        this.service = new GetPageProductoService();
+    constructor(service = new GetPageProductoService()) {
+        this.service = service;
     }
 
     /**
-     * @method execute
-     * @description Maneja la petición de obtención de una página de productos
-     * @param {Object} req - Objeto de petición
-     * @param {Object} res - Objeto de respuesta
-     * @returns {Promise<void>}
+     * Obtiene una página de productos de la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación
      */
     execute = async (req, res) => { 
         try {

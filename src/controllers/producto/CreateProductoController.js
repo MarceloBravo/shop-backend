@@ -2,24 +2,23 @@ import CreateProductoOrchestrator from '../../orchestrators/producto/CreateProdu
 import { handleError } from "../../shared/functions.js";
 
 /**
+ * Controlador para crear un nuevo producto
  * @class CreateProductoController
- * @description Controlador para la creación de productos
  */
 class CreateProductoController {
     /**
-     * @constructor
-     * @description Inicializa el orquestador de creación de productos
+     * Crea una instancia del controlador
+     * @param {Object} orchestrator - Orquestador de productos
      */
-    constructor() {
-        this.orchestrator = new CreateProductoOrchestrator();
+    constructor(orchestrator = new CreateProductoOrchestrator()) {
+        this.orchestrator = orchestrator;
     }
 
     /**
-     * @method execute
-     * @description Maneja la petición de creación de un producto
-     * @param {Object} req - Objeto de petición
-     * @param {Object} res - Objeto de respuesta
-     * @returns {Promise<void>}
+     * Crea un nuevo producto en la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación
      */
     execute = async (req, res) => {
         try {

@@ -1,5 +1,3 @@
-import MarcaRepository from '../../repositories/MarcaRepository.js';
-
 /**
  * Servicio para obtener todas las marcas
  * @class GetAllMarcaService

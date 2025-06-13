@@ -1,6 +1,5 @@
-import { DataTypes, useInflection } from 'sequelize'
+import { DataTypes } from 'sequelize'
 import { sequelize } from '../config/database.js'
-import { encriptarPassword } from '../src/shared/functions.js'
 
 export const UsuarioModel = sequelize.define('usuarios', {
     id: {

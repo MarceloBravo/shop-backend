@@ -1,5 +1,3 @@
-import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
-
 /**
  * Servicio para marcar como borrado  un menú de la tienda en la base de datos.
  * @class GetAllMenuService

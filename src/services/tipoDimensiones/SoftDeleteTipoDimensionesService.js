@@ -2,12 +2,12 @@ import TipoDimensionesRepository from '../../repositories/TipoDimensionesReposit
 
 /**
  * Servicio encargado de marcar con soft-delete un regístro de tipo de dimensiones
- * @class softDeleteTipoDimensionesService
+ * @class SoftDeleteTipoDimensionesService
  * @constructor
  * @param {TipoDimensionesRepository} repository - Repositorio de tipo de dimensiones
  * @description - Clase encargada de marcar un regístro de tipo de dimensiones como eliminado, con soft-delete.
  */
-class softDeleteTipoDimensionesService {
+class SoftDeleteTipoDimensionesService {
     constructor(repository = new TipoDimensionesRepository()){
         this.repository = repository;
     }
@@ -24,4 +24,4 @@ class softDeleteTipoDimensionesService {
     }
 }
 
-export default softDeleteTipoDimensionesService;
+export default SoftDeleteTipoDimensionesService;

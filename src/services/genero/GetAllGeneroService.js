@@ -1,5 +1,3 @@
-import GeneroRepository from '../../repositories/GeneroRepository.js';
-
 /**
  * Servicio para obtener todos los registros de género
  * @class GetAllGeneroService

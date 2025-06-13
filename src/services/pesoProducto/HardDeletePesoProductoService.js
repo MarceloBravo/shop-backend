@@ -1,28 +1,33 @@
-import PesoProductoRepository from '../../repositories/PesoProductoRepository.js';
-
 /**
  * Servicio para realizar eliminación permanente de registros de peso de productos
- * @class
- * @description Gestiona la eliminación permanente (hard delete) de registros de peso de productos
+ * @class HardDeletePesoProductoService
  */
 class HardDeletePesoProductoService {
     /**
-     * Crea una instancia del servicio de eliminación permanente de pesos de productos
-     * @param {PesoProductoRepository} repository - Repositorio para operaciones con pesos de productos
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de pesos de productos
+     * @throws {Error} Si el repositorio no es proporcionado
      */
-    constructor(repository = new PesoProductoRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Realiza la eliminación permanente de un registro de peso de producto
-     * @param {number} id - Identificador único del registro a eliminar
-     * @param {Object} [transaction] - Transacción de Sequelize para operaciones atómicas
-     * @returns {Promise<boolean>} true si el registro fue eliminado, false si no se encontró
-     * @throws {Error} Si hay un error durante la eliminación
+     * Ejecuta la eliminación permanente de un registro de peso
+     * @param {string|number} id - ID del registro de peso a eliminar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Resultado de la operación
      */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Registro de peso no encontrado');
+        }
         return await this.repository.hardDelete(id, transaction);
     }
 }
+
 export default HardDeletePesoProductoService;

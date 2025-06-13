@@ -2,24 +2,23 @@ import GetAllProductoService from '../../services/producto/GetAllProductoService
 import { handleError } from "../../shared/functions.js";
 
 /**
+ * Controlador para obtener todos los productos
  * @class GetAllProductoController
- * @description Controlador para la obtención de todos los productos
  */
 class GetAllProductoController {
     /**
-     * @constructor
-     * @description Inicializa el servicio de obtención de todos los productos
+     * Crea una instancia del controlador
+     * @param {Object} service - Servicio de productos
      */
-    constructor() {
-        this.service = new GetAllProductoService();
+    constructor(service = new GetAllProductoService()) {
+        this.service = service;
     }
 
     /**
-     * @method execute
-     * @description Maneja la petición de obtención de todos los productos
-     * @param {Object} req - Objeto de petición
-     * @param {Object} res - Objeto de respuesta
-     * @returns {Promise<void>}
+     * Obtiene todos los productos de la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación
      */
     execute = async (req, res) => {
         try {

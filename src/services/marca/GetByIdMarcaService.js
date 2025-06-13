@@ -1,5 +1,3 @@
-import MarcaRepository from '../../repositories/MarcaRepository.js';
-
 /**
  * Servicio para obtener una marca por su ID
  * @class GetByIdMarcaService

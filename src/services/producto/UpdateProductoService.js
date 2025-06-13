@@ -1,30 +1,37 @@
-import ProductoRepository from '../../repositories/ProductoRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**
- * @description: Servicio para actualizar un producto
+ * Servicio para actualizar un producto
+ * @class UpdateProductoService
  */
-class UpdateProductoService{
-
+class UpdateProductoService {
     /**
-     * @description: Constructor de la clase
-     * @param {ProductoRepository} repository - El repositorio de productos
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de productos
+     * @throws {Error} Si el repositorio no es proporcionado
      */
-    constructor(repository = new ProductoRepository()){
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * @description: Actualiza un producto
-     * @param {number} id - El id del producto a actualizar
-     * @param {Object} data - Los datos del producto a actualizar
-     * @param {Transaction} transaction - La transacción a utilizar
-     * @returns {Promise<Producto>} - El producto actualizado
+     * Ejecuta la actualización de un producto
+     * @param {string|number} id - ID del producto a actualizar
+     * @param {Object} data - Datos del producto a actualizar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Producto actualizado
+     * @throws {Error} Si la validación falla o hay un error en la actualización
      */
     execute = async (id, data, transaction = null) => {
         await validaDatos(data);
-            const result = await this.repository.update(id, data, transaction);
-        return result;
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Producto no encontrado');
+        }
+        return await this.repository.update(id, data, transaction);
     }
 }
 

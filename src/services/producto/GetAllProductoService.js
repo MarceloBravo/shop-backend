@@ -1,27 +1,29 @@
-import ProductoRepository from '../../repositories/ProductoRepository.js';
-
 /**
- * @description: Servicio para obtener todos los productos
+ * Servicio para obtener todos los productos
+ * @class GetAllProductoService
  */
-class GetAllProductoService{
-
+class GetAllProductoService {
     /**
-     * @description: Constructor de la clase    
-     * @param {ProductoRepository} repository - El repositorio de productos
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de productos
+     * @throws {Error} Si el repositorio no es proporcionado
      */
-    constructor(repository = new ProductoRepository()){
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * @description: Obtiene todos los productos        
-     * @param {boolean} paranoid - Si se desea obtener los productos eliminados
-     * @returns {Promise<Producto[]>} - Todos los productos
+     * Ejecuta la obtención de todos los productos
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir los productos eliminados
+     * @param {Object} [filter={}] - Filtros adicionales para la búsqueda
+     * @returns {Promise<Array>} Lista de productos
      */
     execute = async (paranoid = true, filter = {}) => {
         return await this.repository.getAll(paranoid, filter);
     }
 }
-
 
 export default GetAllProductoService;

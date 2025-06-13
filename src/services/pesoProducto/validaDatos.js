@@ -17,7 +17,7 @@ const validaDatos = async (data, paranoid = true, transaccion = null) => {
     if(!producto_id || (await (new ProductoRepository()).getById(producto_id, paranoid, transaccion) === null)){
         errors.push("El producto no es válido o no existe, especifíca un producto válido.");
     }
-    if(!peso || parseInt(peso) === NaN || peso <= 0){
+    if(!peso || isNaN(peso) === true || peso <= 0){
         errors.push("El peso no es válido, indica un peso mayor a cero.");
     }
     if(!tipo_dimension_id || await (new TipoDimensionesRepository()).getById(tipo_dimension_id) === null){

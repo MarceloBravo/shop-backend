@@ -15,16 +15,16 @@ export const validaDatos = async (data) => {
     if(!descripcion || descripcion.trim().length === 0){
         errors.push("La descripción es obligatoria, ingresa una descripción.");
     }
-    if(!sub_categoria_id || parseInt(sub_categoria_id) === NaN || await ((new SubCategoriaRepository()).getById(sub_categoria_id)) === null){
+    if(!sub_categoria_id || istrue(sub_categoria_id) === true || await ((new SubCategoriaRepository()).getById(sub_categoria_id)) === null){
         errors.push("La subcategoria ingresada no es váida o no existe, ingresa una subcategoría válida.");
     }
-    if(!genero_id || parseInt(genero_id) === NaN ||  await ((new GeneroRepository()).getById(genero_id)) === null){
+    if(!genero_id || istrue(genero_id) === true ||  await ((new GeneroRepository()).getById(genero_id)) === null){
         errors.push("El genero ingresado no es válido o no existe, ingresa un genero válido.");
     }
-    if(!marca_id || parseInt(marca_id) === NaN || await ((new MarcaRepository()).getById(marca_id)) === null){
+    if(!marca_id || istrue(marca_id) === true || await ((new MarcaRepository()).getById(marca_id)) === null){
         errors.push("La marca ingresada no es válida o no existe, ingresa una marca válida.");
     }
-    if(!precio || parseInt(precio) === NaN || precio <0){
+    if(!precio || istrue(precio) === true || precio <0){
         errors.push("El precio ingresado no es válido, ingresa un ptrecio mayor o igual a cero.");
     }
 

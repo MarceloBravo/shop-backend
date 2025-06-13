@@ -9,13 +9,13 @@ const validaDatos = (data, repository) => {
     if(!nombre && !valor_string && !valor_numerico){
         arrError.push("No se ha especificado un valor para el atributo.");
     }
-    if(nombre && (parseInt(nombre) === NaN || nombre <= 0)){
+    if(nombre && (isNaN(nombre) === true || nombre <= 0)){
         arrError.push("El alto ingresado no es válido. Ingresa sólo números positivos.")
     }
-    if(valor_string && (parseInt(valor_string) === NaN || valor_string <= 0)){
+    if(valor_string && (isNaN(valor_string) === true || valor_string <= 0)){
         arrError.push("El ancho ingresado no es válido. Ingresa sólo números positivos.")
     }
-    if(valor_numerico && (parseInt(valor_numerico) === NaN || valor_numerico <= 0)){
+    if(valor_numerico && (isNaN(valor_numerico) === true || valor_numerico <= 0)){
         arrError.push("La profundodad ingresada no es válida. Ingresa sólo números positivos.")
     }
 

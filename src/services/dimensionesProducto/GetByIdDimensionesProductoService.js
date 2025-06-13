@@ -1,5 +1,3 @@
-import DimensionesProductoRepository from '../../repositories/DimensionesProductoRepository.js';
-
 /**
  * Servicio para obtener una dimensión de producto por su ID
  * @class GetByIdDimensionesProductoService

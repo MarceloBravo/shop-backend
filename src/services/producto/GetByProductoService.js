@@ -1,27 +1,37 @@
-import ProductoRepository from '../../repositories/ProductoRepository.js';
-
-
 /**
- * @description: Servicio para obtener un producto por su id
+ * Servicio para obtener un producto por su ID
+ * @class GetByProductoService
  */
-class GetByProductoService{ 
-
+class GetByProductoService {
     /**
-     * @description: Constructor de la clase
-     * @param {ProductoRepository} repository - El repositorio de productos
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de productos
+     * @throws {Error} Si el repositorio no es proporcionado
      */
-    constructor(repository = new ProductoRepository()){
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * @description: Obtiene un producto por su id
-     * @param {number} id - El id del producto a obtener
-     * @param {boolean} obtenerPorQuery - Si se desea obtener el producto por query
-     * @returns {Promise<Producto>} - El producto obtenido
+     * Ejecuta la obtención de un producto
+     * @param {string|number} id - ID del producto a obtener
+     * @param {boolean} [obtenerPorQuery=false] - Indica si se debe obtener el producto por query
+     * @param {boolean} [paranoid=true] - Indica si se debe incluir el producto si está eliminado
+     * @returns {Promise<Object>} Producto encontrado
+     * @throws {Error} Si no se encuentra el producto
      */
     execute = async (id, obtenerPorQuery = false, paranoid = true) => {
-        return obtenerPorQuery ? await this.repository.query(id, paranoid) : await this.repository.getById(id, paranoid);
+        const result = obtenerPorQuery ? 
+            await this.repository.query(id, paranoid) : 
+            await this.repository.getById(id, paranoid);
+        
+        if (!result) {
+            throw new Error('Producto no encontrado');
+        }
+        return result;
     }
 }
 

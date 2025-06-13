@@ -1,6 +1,3 @@
-import MarcaRepository from '../../repositories/MarcaRepository.js';
-
-
 /**
  * Servicio para obtener una página de marcas
  * @class GetPageMarcaService

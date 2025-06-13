@@ -1,5 +1,3 @@
-import MenuTiendaRepository from '../../repositories/MenuTiendaRepository.js';
-
 /**
  * Servicio encargado de eliminar un menú de la tienda en la base d datos .
  * @class HardDeleteMenuTiendaService

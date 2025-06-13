@@ -1,5 +1,3 @@
-import MarcaRepository from '../../repositories/MarcaRepository.js';
-
 /**
  * Servicio para eliminar una marca de forma permanente
  * @class HardDeleteMarcaService

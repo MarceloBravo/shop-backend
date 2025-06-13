@@ -183,7 +183,7 @@ class ProductoRepository {
 
 
     update = async (id, data, transaction) => {
-        const [ record, created ] = await ProductoModel.findOrCreate({where:{id}, defaults: data, transaction});
+        let [ record, created ] = await ProductoModel.findOrCreate({where:{id}, defaults: data, transaction});
         if(created) return {data: producto, created};
         if(record.deleted_at !== null) {
             await record.restore({transaction});
@@ -216,7 +216,7 @@ class ProductoRepository {
 
 
     selectQuery = async (id) => {
-        const [results, metadata] = await sequelize.query(query,
+        const [results] = await sequelize.query(query,
         {
             replacements: { id },
             type: sequelize.QueryTypes.SELECT

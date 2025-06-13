@@ -2,24 +2,23 @@ import GetByProductoService from "../../services/producto/GetByProductoService.j
 import { handleError } from "../../shared/functions.js";
 
 /**
+ * Controlador para obtener un producto por su ID
  * @class GetProductoController
- * @description Controlador para la obtención de un producto por ID
  */
 class GetProductoController {
     /**
-     * @constructor
-     * @description Inicializa el servicio de obtención de producto por ID
+     * Crea una instancia del controlador
+     * @param {Object} service - Servicio de productos
      */
-    constructor() {
-        this.service = new GetByProductoService();
+    constructor(service = new GetByProductoService()) {
+        this.service = service;
     }
 
     /**
-     * @method execute
-     * @description Maneja la petición de obtención de un producto por ID
-     * @param {Object} req - Objeto de petición
-     * @param {Object} res - Objeto de respuesta
-     * @returns {Promise<void>}
+     * Obtiene un producto por su ID
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación
      */
     execute = async (req, res) => {
         try {
