@@ -1,29 +1,33 @@
-import ValoracionProductoRepository from "../../repositories/ValoracionProductoRepository.js";
-
-
 /**
- * Servicio para eliminar físicamente una valoración de un producto.
- * @class
- * @constructor
- * @param {ValoracionProductoRepository} repository - Repositorio de subcategorías.
- * @description Esta clase se encarga de realizar el hard delete de una valoración de un producto
- * */
-class HardDeleteValoracionProductoService{
-    constructor(repository = new ValoracionProductoRepository()){
+ * Servicio para realizar borrado físico de una valoración de producto
+ * @class HardDeleteValoracionProductoService
+ */
+class HardDeleteValoracionProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de valoraciones de productos
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Elimina una valoración de un producto en la base de datos de forma definitiva.
-     * @param {number} id - ID de la valoración a eliminar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - Resultado de la operación
-     * */
+     * Ejecuta el borrado físico de una valoración de producto
+     * @param {string|number} id - ID de la valoración a borrar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Resultado de la operación
+     */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Valoración no encontrada');
+        }
         return await this.repository.hardDelete(id, transaction);
     }
-
 }
-
 
 export default HardDeleteValoracionProductoService;

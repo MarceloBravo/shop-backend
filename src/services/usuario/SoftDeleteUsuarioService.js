@@ -1,26 +1,26 @@
-import UsuarioRepository from "../../repositories/UsuarioRepository.js";
-
 /**
- * Servicio encargado de marcar con soft-delete un regístro
+ * Servicio encargado de marcar un registro de usuario como eliminado (soft-delete).
  * @class SoftDeleteUsuarioService
- * @constructor
- * @description - Clase encargada de marcar un regístro de usuarios como eliminado, con soft-delete.
  */
 class SoftDeleteUsuarioService {
     /**
-     * @param {UsuarioRepository} repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @param repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @throws {Error} Si el repositorio no es proporcionado.
      */
-    constructor(repository = new UsuarioRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error("Se requiere un repositorio para SoftDeleteUsuarioService.");
+        }
         this.repository = repository;
     }
 
     /**
-     * Se encarga de marcar un regístro como eliminado.
-     * @param {number} [id] - ID del regístro a eliminar con borrado suave 
-     * @param {object} transaction - Objeto que puede contiene la transacción en la cual se borrará el regístro
-     * @returns {Promise<Object>} - Resultado de la operación.
+     * Marca un registro como eliminado.
+     * @param {number} id - ID del registro a eliminar con borrado suave.
+     * @param {Object} transaction - Objeto que contiene la transacción en la cual se eliminará el registro.
+     * @returns {Promise<void>} - Indica que la operación se completó.
      */
-    async execute(id, transaction = null) {
+    execute = async (id, transaction) => {
         const { result } = await this.repository.softDelete(id, transaction);
         return result;
     }

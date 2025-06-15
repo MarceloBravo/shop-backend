@@ -1,31 +1,34 @@
 import SoftDeleteUsuarioService from "../../services/usuario/SoftDeleteUsuarioService.js";
+import UsuarioRepository from "../../repositories/UsuarioRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para realizar un borrado lógico de un usuario.
+ * Controlador para realizar borrado lógico de un usuario
+ * @class SoftDeleteUsuarioController
  */
 class SoftDeleteUsuarioController {
     /**
-     * @param {SoftDeleteUsuarioService} service - Servicio para realizar un borrado lógico de un usuario.
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de usuarios
      */
-    constructor(service = new SoftDeleteUsuarioService()) {
-        this.service = service;
+    constructor(repository = new UsuarioRepository()) {
+        this.service = new SoftDeleteUsuarioService(repository);
     }
 
     /**
-     * Realiza un borrado lógico de un usuario.
-     * @param {Object} req - El objeto de solicitud.
-     * @param {Object} res - El objeto de respuesta.
-     * @returns {Promise<void>} - Se resuelve cuando la operación se completa.
+     * Marca un registro de usuario como eliminado en la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const mensaje = result ? 'El registro ha sido borrado exitosamente.' : 'El registro no pudo ser borrado o registro inexistente';
-            res.json({ code: result, mensaje });
-        } catch (e) {
-            const err = handleError(e);
+            const resp = { code: result, mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
+            res.json(resp);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

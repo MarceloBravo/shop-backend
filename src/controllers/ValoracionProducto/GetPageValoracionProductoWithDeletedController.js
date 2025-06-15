@@ -1,35 +1,36 @@
 import GetPageValoracionProductoService from "../../services/ValoracionProducto/GetPageValoracionProductoService.js";
+import ValoracionProductoRepository from "../../repositories/ValoracionProductoRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una página de registros incluyendo los eliminados
- * @class
- * @param {GetPageValoracionProductoService} service - Servicio para obtener una página de registros incluyendo los eliminados
- * @returns {GetPageValoracionProductoWithDeletedController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de la base de datos incluyendo los eliminados.
+ * Controlador para obtener una página de valoraciones de productos, incluyendo las eliminadas
+ * @class GetPageValoracionProductoWithDeletedController
  */
-class GetPageValoracionProductoWithDeletedController{
-    constructor(service = new GetPageValoracionProductoService()){
-        this.service = service;
+class GetPageValoracionProductoWithDeletedController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de valoraciones de productos
+     */
+    constructor(repository = new ValoracionProductoRepository()) {
+        this.service = new GetPageValoracionProductoService(repository);
     }
 
     /**
-     * Obtiene una página de registros de la base de datos incluyendo los eliminados.
-     * @param {Object} req - Objeto de solicitud HTTP.
-     * @param {Object} res - Objeto de respuesta HTTP.
-     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     * Ejecuta la obtención de una página de valoraciones de productos, incluyendo las eliminadas
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
-    execute = async (req, res) => { 
+    execute = async (req, res) => {
         try {
             const { pag = 1, limit = 10 } = req.params;
-            const { rows , count, totPag} = await this.service.execute(pag, limit, false);
+            const { rows, count, totPag } = await this.service.execute(pag, limit, false);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }
 }
-
 
 export default GetPageValoracionProductoWithDeletedController;

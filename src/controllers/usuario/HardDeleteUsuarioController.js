@@ -1,31 +1,34 @@
 import HardDeleteUsuarioService from '../../services/usuario/HardDeleteUsuarioService.js';
+import UsuarioRepository from "../../repositories/UsuarioRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para realizar un borrado físico de un usuario.
+ * Controlador para realizar borrado físico de un usuario
+ * @class HardDeleteUsuarioController
  */
 class HardDeleteUsuarioController {
     /**
-     * @param {HardDeleteUsuarioService} service - Servicio para realizar un borrado físico de un usuario.
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de usuarios
      */
-    constructor(service = new HardDeleteUsuarioService()) {
-        this.service = service;
+    constructor(repository = new UsuarioRepository()) {
+        this.service = new HardDeleteUsuarioService(repository);
     }
 
     /**
-     * Realiza un borrado físico de un usuario.
-     * @param {Object} req - El objeto de solicitud.
-     * @param {Object} res - El objeto de respuesta.
-     * @returns {Promise<void>} - Se resuelve cuando la operación se completa.
+     * Elimina un usuario en la base de datos
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no pudo ser eliminado o registro inexistente';
+            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';
             res.json({ id, code: result ? 200 : 500, mensaje });
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

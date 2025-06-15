@@ -1,29 +1,32 @@
-import ValoracionProductoRepository from "../../repositories/ValoracionProductoRepository.js";
 import validaDatos from './ValidaDatos.js';
 
 /**
- * Servicio para registrar una nueva valoración para un producto.
- * @class
- * @constructor
- * @param {ValoracionProductoRepository} repository - Repositorio de subcategorías.
- * @description Esta clase se encarga de registrar una nueva valoración para un producto, en la base de datos.
- * */
-class CreateValoracionProductoService{
-    constructor(repository = new ValoracionProductoRepository()){
+ * Servicio para crear una nueva valoración de producto
+ * @class CreateValoracionProductoService
+ */
+class CreateValoracionProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de valoraciones de productos
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Registra una nueva valoración de un producto en la base de datos.
-     * @param {Object} data - Datos de la valoración a registrar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - La valoración registrada.
-     * */
+     * Ejecuta la creación de una nueva valoración de producto
+     * @param {Object} data - Datos de la valoración a crear
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Valoración creada
+     */
     execute = async (data, transaction = null) => {
         validaDatos(data);
         return await this.repository.create(data, transaction);
     }
 }
-
 
 export default CreateValoracionProductoService;

@@ -1,35 +1,36 @@
 import GetByIdValoracionProductoService from "../../services/ValoracionProducto/GetByIdValoracionProductoService.js";
+import ValoracionProductoRepository from "../../repositories/ValoracionProductoRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una valoración de un producto por su ID
- * @class
- * @param {GetByIdValoracionProductoService} service - Servicio para obtener una valoración de un producto por su ID
- * @returns {GetByIdValoracionProductoController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una valoración de un producto por su ID.
+ * Controlador para obtener una valoración de producto por su ID
+ * @class GetByIdValoracionProductoController
  */
-class GetByIdValoracionProductoController{
-    constructor(service = new GetByIdValoracionProductoService()){
-        this.service = service;
+class GetByIdValoracionProductoController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de valoraciones de productos
+     */
+    constructor(repository = new ValoracionProductoRepository()) {
+        this.service = new GetByIdValoracionProductoService(repository);
     }
 
     /**
-     * Obtiene una valoración de un producto por su ID
-     * @param {Object} req - Objeto de solicitud HTTP.
-     * @param {Object} res - Objeto de respuesta HTTP.
-     * @returns {Promise<void>} - Devuelve una respuesta JSON con el resultado de la operación.
+     * Ejecuta la obtención de una valoración de producto por su ID
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {
             const { id } = req.params;
             const data = await this.service.execute(id);
             res.json(data);
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }
-
 }
 
 export default GetByIdValoracionProductoController;

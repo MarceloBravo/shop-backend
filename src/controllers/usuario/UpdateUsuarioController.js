@@ -1,15 +1,18 @@
 import UpdateUsuarioService from '../../services/usuario/UpdateUsuarioService.js';
+import UsuarioRepository from "../../repositories/UsuarioRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para actualizar un usuario.
+ * Controlador para actualizar un usuario
+ * @class UpdateUsuarioController
  */
 class UpdateUsuarioController {
     /**
-     * @param {UpdateUsuarioService} service - Servicio para actualizar un usuario.
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de usuarios
      */
-    constructor(service = new UpdateUsuarioService()) {
-        this.service = service;
+    constructor(repository = new UsuarioRepository()) {
+        this.service = new UpdateUsuarioService(repository);
     }
 
     /**
@@ -22,9 +25,9 @@ class UpdateUsuarioController {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
-            res.json({ mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.` });
-        } catch (e) {
-            const err = handleError(e);
+            res.json({ usuario: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.` });
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

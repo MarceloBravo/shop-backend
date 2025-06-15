@@ -2,16 +2,18 @@ import UsuarioRepository from "../../repositories/UsuarioRepository.js";
 import { validaDatos } from "./validaDatos.js";
 
 /**
- * Servicio para actualizar un usuarios
+ * Servicio para actualizar un usuario.
  * @class UpdateUsuarioService
- * @constructor
- * @description Esta clase se encarga de eliminar permanentemente un usuario de la base de datos.
- * */
+ */
 class UpdateUsuarioService {
     /**
-     * @param {UsuarioRepository} repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @param repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @throws {Error} Si el repositorio no es proporcionado.
      */
-    constructor(repository = new UsuarioRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error("Se requiere un repositorio para UpdateUsuarioService.");
+        }
         this.repository = repository;
     }
 
@@ -22,7 +24,7 @@ class UpdateUsuarioService {
      * @param {Object|null} [transaction=null] - El objeto de transacción para operaciones en la base de datos.
      * @returns {Promise<Object>} - El usuario actualizado.
      */
-    async execute(id, data, transaction = null) {
+    execute = async (id, data, transaction = null) => {
         validaDatos(data);
         const result = await this.repository.update(id, data, transaction);
         return result;

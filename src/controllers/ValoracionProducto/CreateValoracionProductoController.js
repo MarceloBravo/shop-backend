@@ -1,35 +1,35 @@
 import CreateValoracionProductoService from '../../services/ValoracionProducto/CreateValoracionProductoService.js';
+import ValoracionProductoRepository from "../../repositories/ValoracionProductoRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- *  Controlador encargado de registrar una valoración de un producto
- * @class
- * @param {CreateValoracionProductoService} service - Servicio para registrar una nueva valoración de un producto
- * @returns {CreateValoracionProductoController} - Instancia del controlador 
+ * Controlador para crear una nueva valoración de producto
+ * @class CreateValoracionProductoController
  */
-class CreateValoracionProductoController{
-    constructor(service = new CreateValoracionProductoService()){
-        this.service = service;
+class CreateValoracionProductoController {
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de valoraciones de productos
+     */
+    constructor(repository = new ValoracionProductoRepository()) {
+        this.service = new CreateValoracionProductoService(repository);
     }
 
     /**
-     * Crea una nueva valoración de un producto en la base de datos.
-     * @param {Object} req - Objeto de solicitud.
-     * @param {Object} res - Objeto de respuesta.
-     * @returns {Promise<void>} - Promesa que se resuelve cuando se completa la operación.
-     * @description Esta función maneja la creación de una nueva valoración de un producto en la base de datos.
-     * */
+     * Ejecuta la creación de una nueva valoración de producto
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
+     */
     execute = async (req, res) => {
         try {
             const data = await this.service.execute(req.body);
-            res.json({ data, mensaje: 'El regístro ha sido creado exitosamente.' });
-        }catch(e){
-            const err = handleError(e);
+            res.json({ data, mensaje: 'El registro ha sido creado exitosamente.' });
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
-    }   
-
+    }
 }
-
 
 export default CreateValoracionProductoController;

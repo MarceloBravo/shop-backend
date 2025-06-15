@@ -1,30 +1,33 @@
-import ValoracionProductoRepository from "../../repositories/ValoracionProductoRepository.js";
 import validaDatos from './ValidaDatos.js';
 
 /**
- * Servicio para actualizar una valoración de un producto existente.
- * @class
- * @constructor
- * @param {MenuRepository} repository - Repositorio de menús.
- * @description Esta clase se encarga de actualizar una valoración de un producto existente en la base de datos.
+ * Servicio para actualizar una valoración de producto
+ * @class UpdateValoracionProductoService
  */
-class UpdateValoracionProductoService{
-    constructor(repository = new ValoracionProductoRepository()){
+class UpdateValoracionProductoService {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de valoraciones de productos
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
     /**
-     * Actualiza una valoración de un producto en la base de datos.
-     * @param {number} id - ID del menú a actualizar.
-     * @param {Object} data - Datos del registro a actualizar.
-     * @param {transaction} [transaction=null] - Transacción de la base de datos.
-     * @returns {Promise<Object>} - La valoración de un producto actualizada.
-     * */
+     * Ejecuta la actualización de una valoración de producto
+     * @param {string|number} id - ID de la valoración a actualizar
+     * @param {Object} data - Datos de la valoración a actualizar
+     * @param {Object} [transaction=null] - Transacción de base de datos
+     * @returns {Promise<Object>} Valoración actualizada
+     */
     execute = async (id, data, transaction = null) => {
         validaDatos(data);
         return await this.repository.update(id, data, transaction);
     }
-
 }
 
 export default UpdateValoracionProductoService;

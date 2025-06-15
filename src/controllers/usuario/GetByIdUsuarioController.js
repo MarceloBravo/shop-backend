@@ -1,30 +1,33 @@
-import GetByIdUsuarioService from "../../services/usuario/GetByIdUsuarioService.js";
+import GetByIdUsuarioService from '../../services/usuario/GetByIdUsuarioService.js';
+import UsuarioRepository from "../../repositories/UsuarioRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener un usuario por ID.
+ * Controlador para obtener un usuario por su ID
+ * @class GetByIdUsuarioController
  */
 class GetByIdUsuarioController {
     /**
-     * @param {GetByIdUsuarioService} service - Servicio para obtener un usuario por ID.
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de usuarios
      */
-    constructor(service = new GetByIdUsuarioService()) {
-        this.service = service;
+    constructor(repository = new UsuarioRepository()) {
+        this.service = new GetByIdUsuarioService(repository);
     }
 
     /**
-     * Obtiene un usuario por ID.
-     * @param {Object} req - El objeto de solicitud.
-     * @param {Object} res - El objeto de respuesta.
-     * @returns {Promise<void>} - Se resuelve cuando la operación se completa.
+     * Ejecuta la obtención de un usuario por su ID
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {
             const { id } = req.params;
             const data = await this.service.execute(id);
             res.json(data);
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

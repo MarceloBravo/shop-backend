@@ -1,29 +1,32 @@
 import CreateUsuarioService from '../../services/usuario/CreateUsuarioService.js';
+import UsuarioRepository from "../../repositories/UsuarioRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para crear un nuevo usuario.
+ * Controlador para crear un nuevo usuario
+ * @class CreateUsuarioController
  */
 class CreateUsuarioController {
     /**
-     * @param {CreateUsuarioService} service - Servicio para crear un nuevo usuario.
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de usuarios
      */
-    constructor(service = new CreateUsuarioService()) {
-        this.service = service;
+    constructor(repository = new UsuarioRepository()) {
+        this.service = new CreateUsuarioService(repository);
     }
 
     /**
-     * Crea un nuevo usuario.
-     * @param {Object} req - El objeto de solicitud.
-     * @param {Object} res - El objeto de respuesta.
-     * @returns {Promise<void>} - Se resuelve cuando la operación se completa.
+     * Ejecuta la creación de un nuevo usuario
+     * @param {Object} req - Objeto de solicitud HTTP
+     * @param {Object} res - Objeto de respuesta HTTP
+     * @returns {Promise<void>}
      */
     execute = async (req, res) => {
         try {
             const data = await this.service.execute(req.body);
             res.json({ data, mensaje: 'El registro ha sido creado exitosamente.' });
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

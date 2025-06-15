@@ -1,29 +1,29 @@
-import UsuarioRepository from "../../repositories/UsuarioRepository.js";
 import { validaDatos } from "./validaDatos.js";
 
 /**
- * Servicio para crear un nuevo tipo de dimensión (tipo de medida)
- * @class
- * @constructor
- * @description Esta clase se encarga de crear un nuev tipo de dimensión (tipo de medida) en la base de datos.
- * */
+ * Servicio para crear un nuevo usuario.
+ * @class CreateUsuarioService
+ */
 class CreateUsuarioService {
     /**
-     * @param {UsuarioRepository} repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @param repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @throws {Error} Si el repositorio no es proporcionado.
      */
-    constructor(repository = new UsuarioRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error("Se requiere un repositorio para CreateUsuarioService.");
+        }
         this.repository = repository;
     }
 
     /**
      * Crea un nuevo usuario.
      * @param {Object} data - Los datos del usuario a crear.
-     * @param {Object|null} [transaction=null] - El objeto de transacción para operaciones en la base de datos.
      * @returns {Promise<Object>} - El usuario creado.
      */
-    execute = async (data, transaction = null) => {
+    execute = async (data) => {
         validaDatos(data);
-        return await this.repository.create(data, transaction);
+        return await this.repository.create(data);
     }
 }
 

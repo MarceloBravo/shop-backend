@@ -1,16 +1,16 @@
-import UsuarioRepository from "../../repositories/UsuarioRepository.js";
-
 /**
- * Servicio para obtener una página se tipo de dimensión.
- * @class GetPageTipoDimensionesService
- * @constructor
- * @description Esta clase se encarga de obtener una página de tipo de dimensiones de la base de datos.
- * */
+ * Servicio para obtener una lista paginada de usuarios.
+ * @class GetPageUsuarioService
+ */
 class GetPageUsuarioService {
     /**
-     * @param {UsuarioRepository} repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @param repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @throws {Error} Si el repositorio no es proporcionado.
      */
-    constructor(repository = new UsuarioRepository()) {
+    constructor(repository) {
+        if (!repository) {
+            throw new Error("Se requiere un repositorio para GetPageUsuarioService.");
+        }
         this.repository = repository;
     }
 
@@ -21,7 +21,7 @@ class GetPageUsuarioService {
      * @param {boolean} [paranoid=true] - Si incluir registros eliminados lógicamente.
      * @returns {Promise<Object>} - El resultado paginado.
      */
-    async execute(page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true, orderBy = [['nombres', 'ASC']]) {
+    execute = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true, orderBy = [['nombres', 'ASC']]) => {
         const desde = (page - 1) * limit;
         const result = await this.repository.getPage(desde, limit, paranoid, orderBy);
         return result;

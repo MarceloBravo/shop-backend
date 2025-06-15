@@ -1,14 +1,16 @@
-import UsuarioRepository from "../../repositories/UsuarioRepository.js";
-
 /**
- *Servicio para obtener todos los usuarios de la base de datos
+ * Servicio para obtener todos los usuarios de la base de datos.
  * @class GetAllUsuarioService
- * @constructor
- * @param {UsuarioRepository} repository - Repositorio de usuarios.
- * @description Esta clase se encarga de obtener todos los usuarios de la base de datos.
  */
 class GetAllUsuarioService {
-    constructor(repository = new UsuarioRepository()) {
+    /**
+     * @param repository - El repositorio para interactuar con la base de datos o un Mock.
+     * @throws {Error} Si el repositorio no es proporcionado.
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error("Se requiere un repositorio para GetAllUsuarioService.");
+        }
         this.repository = repository;
     }
 
