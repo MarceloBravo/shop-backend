@@ -1,14 +1,17 @@
-import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
-
 /**
- * Servicio para eliminar permanentemente una talla numérica
- * @class
- * @constructor
- * @param {TallaNumeroRepository} repository - Repositorio de tallas numéricas
- * @description Esta clase se encarga de eliminar permanentemente una talla numérica de la base de datos.
- * */
+ * Servicio para realizar borrado físico de un tipo de dimensión
+ * @class HardDeleteTipoDimensionesService
+ */
 class HardDeleteTipoDimensionesService {
-    constructor(repository = new TipoDimensionesRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
@@ -19,10 +22,12 @@ class HardDeleteTipoDimensionesService {
      * @returns {Promise<Object>} Resultado de la operación
      */
     execute = async (id, transaction = null) => {
-        const result = await this.repository.hardDelete(id, transaction);
-        return { id, result };
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            throw new Error('Tipo de dimensión no encontrado');
+        }
+        return await this.repository.hardDelete(id, transaction);
     }
-
 }
 
 export default HardDeleteTipoDimensionesService;

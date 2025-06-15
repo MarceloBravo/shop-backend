@@ -1,14 +1,19 @@
-import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**
-     * Se encarga de marcar un regístro como eliminado.
-     * @param {number} [id] - ID del regístro a eliminar con borrado suave 
-     * @param {object} transaction - Objeto que puede contiene la transacción en la cual se borrará el regístro
-     * @returns {Promise<Object>} - Resultado de la operación.
-     */
+ * Servicio para actualizar un tipo de dimensión
+ * @class UpdateTipoDimensionesService
+ */
 class UpdateTipoDimensionesService {
-    constructor(repository = new TipoDimensionesRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
@@ -19,10 +24,10 @@ class UpdateTipoDimensionesService {
      * @param {Object} [transaction] - Transacción de Sequelize
      * @returns {Promise<Object>} El tipo de dimensiones actualizado
      */
-    async execute(id, data, transaction = null) {
-        validaDatos(data);
-        const result = await this.repository.update(id, data, transaction);
-        return result;
+    execute = async (id, value, transaction = null) => {
+        validaDatos(value);
+        const { data, created } = await this.repository.update(id, value, transaction);
+        return { data, created };
     }
 }
 

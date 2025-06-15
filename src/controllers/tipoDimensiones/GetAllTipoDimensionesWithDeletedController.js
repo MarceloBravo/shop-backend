@@ -1,15 +1,18 @@
 import GetAllTipoDimensionesService from '../../services/tipoDimensiones/GetAllTipoDimensionesService.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador encargado de obtener todos los registros activos (no eliminados con soft-delete)
  * @class GetAllTipoDimensionesWithDeletedController
- * @param {GetAllTipoDimensionesService} service - Servicio para obtener una subcategoría
- * @returns {GetAllTipoDimensionesWithDeletedController} - Instancia del controlador
  */
 class GetAllTipoDimensionesWithDeletedController {
-    constructor(service = new GetAllTipoDimensionesService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     */
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.service = new GetAllTipoDimensionesService(repository);
     }
 
     /**

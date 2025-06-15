@@ -1,14 +1,17 @@
-import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
-
 /**
- * Servicio para obtener una página se tipo de dimensión.
+ * Servicio para obtener una página de tipos de dimensión
  * @class GetPageTipoDimensionesService
- * @constructor
- * @param {TipoDimensionesRepository} repository - Repositorio de tipos de dimensiones.
- * @description Esta clase se encarga de obtener una página de tipo de dimensiones de la base de datos.
- * */
+ */
 class GetPageTipoDimensionesService {
-    constructor(repository = new TipoDimensionesRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
@@ -20,8 +23,10 @@ class GetPageTipoDimensionesService {
      * @returns {Promise<Object>} Objeto con los datos paginados
      */
     async execute(page = 1, limit = Number(process.env.DEFAULT_REG_POR_PAGINA), paranoid = true) {
-        const desde = (page - 1) * limit;
-        return await this.repository.getPage(desde, limit, [['nombre', 'ASC']], paranoid);
+        const offset = (page - 1) * limit;
+        const { rows, count } = await this.repository.getPage(offset, limit, [['nombre', 'ASC']], paranoid);
+        const totPag = Math.ceil(count / limit);
+        return { rows, count, totPag };
     }
 }
 

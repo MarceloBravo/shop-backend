@@ -1,15 +1,19 @@
-import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import validaDatos from './validaDatos.js';
 
 /**
- * Servicio para crear un nuevo tipo de dimensión (tipo de medida)
- * @class
- * @constructor
- * @param {TallaNumeroRepository} repository - Repositorio de tipo de dimensión (tipo de medida)
- * @description Esta clase se encarga de crear un nuev tipo de dimensión (tipo de medida) en la base de datos.
- * */
+ * Servicio para crear un nuevo tipo de dimensión
+ * @class CreateTipoDimensionesService
+ */
 class CreateTipoDimensionesService {
-    constructor(repository = new TipoDimensionesRepository()) {
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
@@ -20,8 +24,12 @@ class CreateTipoDimensionesService {
      * @param {Object} [transaction] - Transacción de Sequelize
      * @returns {Promise<Object>} El tipo de dimensiones creado
      */
-    async execute(data, transaction = null) {
+    execute = async (data, transaction = null) => {
         validaDatos(data);
+        const existe = await this.repository.getBy('nombre', data.nombre);
+        if (existe) {
+            throw new Error('Ya existe un tipo de dimensión con ese nombre');
+        }
         return await this.repository.create(data, transaction);
     }
 }

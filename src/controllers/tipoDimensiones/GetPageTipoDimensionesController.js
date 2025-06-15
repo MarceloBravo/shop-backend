@@ -1,16 +1,18 @@
 import GetPageTipoDimensionesService from '../../services/tipoDimensiones/GetPageTipoDimensionesService.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para obtener una página de tipo de dimensiones (tipo de medidas)
- * @class
- * @param {GetPageTipoDimensionesService} service - Servicio para obtener una página de tipo de dimensiones (tipo de medidas).
- * @returns {GetPageTipoDimensionesController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de tipo de dimensiones (tipo de medidas).
+ * Controlador para obtener una página de tipos de dimensión
+ * @class GetPageTipoDimensionesController
  */
 class GetPageTipoDimensionesController {
-    constructor(service = new GetPageTipoDimensionesService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     */
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.service = new GetPageTipoDimensionesService(repository);
     }
 
     /**
@@ -21,11 +23,11 @@ class GetPageTipoDimensionesController {
      */
     execute = async (req, res) => {
         try {
-            const { page = 1, limit = 10 } = req.params;
-            const { rows, count, totPag } = await this.service.execute(page, limit);
-            res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(page), totPag}});
-        } catch(e) {
-            const err = handleError(e);
+            const { pag = 1, limit = 10 } = req.params;
+            const { rows, count, totPag } = await this.service.execute(pag, limit);
+            res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

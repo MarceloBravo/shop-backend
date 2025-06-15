@@ -1,16 +1,18 @@
 import CreateTipoDimensionesService from '../../services/tipoDimensiones/CreateTipoDimensionesService.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para crear un nuevo tipo de dimensión (tipo de medida)
+ * Controlador para crear un nuevo tipo de dimensión
  * @class CreateTipoDimensionesController
- * @param {CreateTipoDimensionesService} service - Servicio para crear una nueva talla numérica
- * @returns {CreateTipoDimensionesController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para crear un nuevo tipo de dimensión (tipo de medida).
  */
 class CreateTipoDimensionesController {
-    constructor(service = new CreateTipoDimensionesService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     */
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.service = new CreateTipoDimensionesService(repository);
     }
 
     /**
@@ -20,11 +22,12 @@ class CreateTipoDimensionesController {
      * @returns {Promise<void>} - Promesa que se resuelve cuando se envía la respuesta
      */
     execute = async (req, res) => {
-        try {        
-            const data = await this.service.execute(req.body);
-            res.json({data, mensaje: 'El registro ha sido creado exitosamente.'});
-        } catch(e) {
-            const err = handleError(e);
+        try {
+            const { nombre, nombre_corto } = req.body;
+            const data = await this.service.execute({ nombre, nombre_corto });
+            res.json({ data, mensaje: 'El registro ha sido creado exitosamente.' });
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

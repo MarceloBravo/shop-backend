@@ -1,14 +1,17 @@
-import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
-
 /**
- * Servicio encargado de marcar con soft-delete un regístro de tipo de dimensiones
+ * Servicio para realizar borrado lógico de un tipo de dimensión
  * @class SoftDeleteTipoDimensionesService
- * @constructor
- * @param {TipoDimensionesRepository} repository - Repositorio de tipo de dimensiones
- * @description - Clase encargada de marcar un regístro de tipo de dimensiones como eliminado, con soft-delete.
  */
 class SoftDeleteTipoDimensionesService {
-    constructor(repository = new TipoDimensionesRepository()){
+    /**
+     * Crea una instancia del servicio
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     * @throws {Error} Si el repositorio no es proporcionado
+     */
+    constructor(repository) {
+        if (!repository) {
+            throw new Error('El repositorio es requerido');
+        }
         this.repository = repository;
     }
 
@@ -19,8 +22,11 @@ class SoftDeleteTipoDimensionesService {
      * @returns {Promise<Object>} - Resultado de la operación.
      */
     execute = async (id, transaction = null) => {
-        const record = await this.repository.softDelete(id, transaction);
-        return (record && record?.deleted_at !== null ? 200 : 404);
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            throw new Error('Tipo de dimensión no encontrado');
+        }
+        return await this.repository.softDelete(id, transaction);
     }
 }
 

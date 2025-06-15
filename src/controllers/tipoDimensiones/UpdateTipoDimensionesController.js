@@ -1,16 +1,18 @@
 import UpdateTipoDimensionesService from '../../services/tipoDimensiones/UpdateTipoDimensionesService.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para actualizar un tipo de dimensión (tipo de medida)
- * @class
- * @param {UpdateTipoDimensionesService} service - Servicio para actualizar un tipo de dimensión (tipo de medida)
- * @returns {UpdateTipoDimensionesController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para actualizar un tipo de dimensión (tipo de medida) existente.
+ * Controlador para actualizar un tipo de dimensión
+ * @class UpdateTipoDimensionesController
  */
 class UpdateTipoDimensionesController {
-    constructor(service = new UpdateTipoDimensionesService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     */
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.service = new UpdateTipoDimensionesService(repository);
     }
 
     /**
@@ -24,15 +26,14 @@ class UpdateTipoDimensionesController {
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
             res.json({
-                data: result.data, 
+                data: result.data,
                 mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`
             });
-        } catch(e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }
 }
-
 
 export default UpdateTipoDimensionesController; 

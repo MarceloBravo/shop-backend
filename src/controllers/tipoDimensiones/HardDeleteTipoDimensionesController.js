@@ -1,16 +1,18 @@
 import HardDeleteTipoDimensionesService from '../../services/tipoDimensiones/HardDeleteTipoDimensionesService.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * Controlador para eliminar permanentemente un tipo de dimensión
- * @class
- * @param {HardDeleteTallaNumeroService} service - Servicio para eliminar permanentemente una talla numérica
- * @returns {HardDeleteTallaNumeroController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para eliminar permanentemente una talla numérica.
+ * Controlador para realizar borrado físico de un tipo de dimensión
+ * @class HardDeleteTipoDimensionesController
  */
 class HardDeleteTipoDimensionesController {
-    constructor(service = new HardDeleteTipoDimensionesService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     */
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.service = new HardDeleteTipoDimensionesService(repository);
     }
 
     /**
@@ -22,11 +24,11 @@ class HardDeleteTipoDimensionesController {
     execute = async (req, res) => {
         try {
             const { id } = req.params;
-            const result = await this.service.execute(id);
-            const mensaje = result.result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';  
-            res.json({ id: result.id, code: result.result ? 200 : 500, mensaje });
-        } catch(e) {
-            const err = handleError(e);
+            const resp = await this.service.execute(id);
+            const mensaje = resp.result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente';
+            res.json({ id, code: resp.result ? 200 : 500, mensaje });
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

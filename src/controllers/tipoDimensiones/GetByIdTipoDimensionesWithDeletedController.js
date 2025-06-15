@@ -1,15 +1,18 @@
 import GetByIdTipoDimensionesService from "../../services/tipoDimensiones/GetByIdTipoDimensionesService.js";
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador encargado de obtener un tipo de dimensión por ID
- * @class
- * @param {GetByIdTipoDimensionesWithDeletedController} service - Servicio para obtener un tipo de dimensión
- * @returns {GetByIdTipoDimensionesController} - Instancia del controlador
+ * @class GetByIdTipoDimensionesWithDeletedController
  */
 class GetByIdTipoDimensionesWithDeletedController {
-    constructor(service = new GetByIdTipoDimensionesService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     */
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.service = new GetByIdTipoDimensionesService(repository);
     }
 
     /**

@@ -1,16 +1,18 @@
 import GetPageTipoDimensionesService from '../../services/tipoDimensiones/GetPageTipoDimensionesService.js';
+import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener una página de tipo de dimensiones (tipo de medidas)
- * @class
- * @param {GetPageTipoDimensionesWithDeletedController} service - Servicio para obtener una página de tipo de dimensiones (tipo de medidas).
- * @returns {GetPageTipoDimensionesController} - Instancia del controlador
- * @description Este controlador se encarga de manejar la lógica para obtener una página de tipo de dimensiones (tipo de medidas).
+ * @class GetPageTipoDimensionesWithDeletedController
  */
 class GetPageTipoDimensionesWithDeletedController {
-    constructor(service = new GetPageTipoDimensionesService()) {
-        this.service = service;
+    /**
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de tipos de dimensión
+     */
+    constructor(repository = new TipoDimensionesRepository()) {
+        this.service = new GetPageTipoDimensionesService(repository);
     }
 
     /**
