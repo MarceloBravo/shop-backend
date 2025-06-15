@@ -1,17 +1,18 @@
 import GetByProductoService from "../../services/producto/GetByProductoService.js";
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
  * Controlador para obtener un producto por su ID
- * @class GetProductoController
+ * @class GetProductoByIdController
  */
-class GetProductoController {
+class GetProductoByIdController {
     /**
      * Crea una instancia del controlador
-     * @param {Object} service - Servicio de productos
+     * @param {Object} repository - Repositorio de productos
      */
-    constructor(service = new GetByProductoService()) {
-        this.service = service;
+    constructor(repository = new ProductoRepository()) {
+        this.service = new GetByProductoService(repository);
     }
 
     /**
@@ -25,11 +26,11 @@ class GetProductoController {
             const { id, getByQuery = false } = req.params;
             const data = await this.service.execute(id, getByQuery, true);
             res.json(data);
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }
 }
 
-export default GetProductoController;
+export default GetProductoByIdController;

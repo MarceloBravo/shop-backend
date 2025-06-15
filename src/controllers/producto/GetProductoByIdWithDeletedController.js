@@ -1,17 +1,18 @@
 import GetByProductoService from "../../services/producto/GetByProductoService.js";
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
- * @class GetProductoWithDeletedController
+ * @class GetProductoByIdWithDeletedController
  * @description Controlador para la obtención de un producto por ID
  */
-class GetProductoWithDeletedController {
+class GetProductoByIdWithDeletedController {
     /**
-     * @constructor
-     * @description Inicializa el servicio de obtención de producto por ID
+     * Crea una instancia del controlador
+     * @param {Object} repository - Repositorio de productos
      */
-    constructor() {
-        this.service = new GetByProductoService();
+    constructor(repository = new ProductoRepository()) {
+        this.service = new GetByProductoService(repository);
     }
 
     /**
@@ -33,4 +34,4 @@ class GetProductoWithDeletedController {
     }
 }
 
-export default GetProductoWithDeletedController;
+export default GetProductoByIdWithDeletedController;

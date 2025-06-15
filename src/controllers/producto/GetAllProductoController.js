@@ -1,4 +1,5 @@
 import GetAllProductoService from '../../services/producto/GetAllProductoService.js';
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -8,10 +9,10 @@ import { handleError } from "../../shared/functions.js";
 class GetAllProductoController {
     /**
      * Crea una instancia del controlador
-     * @param {Object} service - Servicio de productos
+     * @param {Object} repository - Repositorio de productos
      */
-    constructor(service = new GetAllProductoService()) {
-        this.service = service;
+    constructor(repository = new ProductoRepository()) {
+        this.service = new GetAllProductoService(repository);
     }
 
     /**
@@ -25,8 +26,8 @@ class GetAllProductoController {
             const { filter = {} } = req.params;
             const data = await this.service.execute(true, filter);
             res.json(data);
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

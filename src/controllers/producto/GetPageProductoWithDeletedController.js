@@ -1,4 +1,5 @@
 import GetPageProductoService from "../../services/producto/GetPageProductoService.js";
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -10,8 +11,8 @@ class GetPageProductoWithDeletedController {
      * @constructor
      * @description Inicializa el servicio de obtención de página de productos
      */
-    constructor() {
-        this.service = new GetPageProductoService();
+    constructor(repository = new ProductoRepository()) {
+        this.service = new GetPageProductoService(repository);
     }
 
     /**

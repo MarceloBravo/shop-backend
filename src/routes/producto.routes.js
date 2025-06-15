@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import GetProductoWithDeletedController from '../controllers/producto/GetProductoWithDeletedController.js';
+import GetProductoWithDeletedController from '../controllers/producto/GetProductoByIdWithDeletedController.js';
 import GetAllProductoWithDeletedController from '../controllers/producto/GetAllProductoWithDeletedController.js';
 import GetPageProductoWithDeletedController from '../controllers/producto/GetPageProductoWithDeletedController.js';
 
-import GetProductoController from '../controllers/producto/GetProductoController.js';
+import GetProductoController from '../controllers/producto/GetProductoByIdController.js';
 import GetAllProductoController from '../controllers/producto/GetAllProductoController.js';
 import GetPageProductoController from '../controllers/producto/GetPageProductoController.js';
 import CreateProductoController from '../controllers/producto/CreateProductoController.js';

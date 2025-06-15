@@ -1,4 +1,5 @@
 import GetPageProductoService from "../../services/producto/GetPageProductoService.js";
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -8,10 +9,10 @@ import { handleError } from "../../shared/functions.js";
 class GetPageProductoController {
     /**
      * Crea una instancia del controlador
-     * @param {Object} service - Servicio de productos
+     * @param {Object} repository - Repositorio de productos
      */
-    constructor(service = new GetPageProductoService()) {
-        this.service = service;
+    constructor(repository = new ProductoRepository()) {
+        this.service = new GetPageProductoService(repository);
     }
 
     /**
@@ -25,8 +26,8 @@ class GetPageProductoController {
             const { pag = 1, limit = 10, filter = {} } = req.params;
             const { rows, count, totPag } = await this.service.execute(pag, limit, true, filter);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

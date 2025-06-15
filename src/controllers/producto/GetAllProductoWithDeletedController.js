@@ -1,4 +1,5 @@
 import GetAllProductoService from '../../services/producto/GetAllProductoService.js';
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -9,9 +10,10 @@ class GetAllProductoWithDeletedController {
     /**
      * @constructor
      * @description Inicializa el servicio de obtención de todos los productos
+     * @param {Object} repository - Repositorio de productos
      */
-    constructor() {
-        this.service = new GetAllProductoService();
+    constructor(repository = new ProductoRepository()) {
+        this.service = new GetAllProductoService(repository);
     }
 
     /**

@@ -9,6 +9,16 @@ import CreatePesoProductoService from '../../services/pesoProducto/CreatePesoPro
 import CreateAtributoService from '../../services/atributo/CreateAtributoService.js';
 import CreateDimensionesProductoService from '../../services/dimensionesProducto/CreateDimensionesProductoService.js';
 
+import ProductoRepository from '../../repositories/ProductoRepository.js';
+import AtributoProductoRepository from '../../repositories/AtributoProductoRepository.js';
+import ColorProductoRepository from '../../repositories/ProductoRepository.js';
+import MaterialProductoRepository from '../../repositories/MaterialProductoRepository.js';
+import TallaLetraProductoRepository from '../../repositories/TallaLetraProductoRepository.js';
+import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
+import PesoProductoRepository from '../../repositories/PesoProductoRepository.js';
+import AtributosRepository from '../../repositories/AtributosRepository.js';
+import DimensionesProductoRepository from '../../repositories/DimensionesProductoRepository.js';
+
 /**
  * @class CreateProductoOrchestrator
  * @description Orquestador para la creación de productos y sus relaciones
@@ -29,25 +39,25 @@ class CreateProductoOrchestrator {
    * @param {CreateDimensionesProductoService} createDimensionesProductoService - Servicio para crear dimensiones de producto
    */
   constructor(
-    createProductoService = new CreateProductoService(),
-    createAtributoProductoService = new CreateAtributoProductoService(),
-    createColorProductoService = new CreateColorProductoService(),
-    createMaterialProductoService = new CreateMaterialProductoService(),
-    createTallaLetraProductoService = new CreateTallaLetraProductoService(),
-    createTallaNumeroProductoService = new CreateTallaNumeroProductoService(),
-    createPesoProductoService = new CreatePesoProductoService(),
-    createAtributoService = new CreateAtributoService(),
-    createDimensionesProductoService = new CreateDimensionesProductoService()
+    productoRepository = new ProductoRepository(),
+    atributoProductoRepository = new AtributoProductoRepository(),
+    colorProductoRepository = new ColorProductoRepository(),
+    materialProductoRepository = new MaterialProductoRepository(),
+    tallaLetraProductoRepository = new TallaLetraProductoRepository(),
+    tallaNumeroProductoRepository = new TallaNumeroProductoRepository(),
+    pesoProductoRepository = new PesoProductoRepository(),
+    atributosRepository = new AtributosRepository(),
+    dimensionesProductoRepository = new DimensionesProductoRepository()
   ) {
-    this.createProductoService = createProductoService;
-    this.createAtributoProductoService = createAtributoProductoService;
-    this.createColorProductoService = createColorProductoService;
-    this.createMaterialProductoService = createMaterialProductoService;
-    this.createTallaLetraProductoService = createTallaLetraProductoService;
-    this.createTallaNumeroProductoService = createTallaNumeroProductoService;
-    this.createPesoProductoService = createPesoProductoService;
-    this.createAtributoService = createAtributoService;
-    this.createDimensionesProductoService = createDimensionesProductoService;
+    this.createProductoService = new CreateProductoService(productoRepository),
+    this.createAtributoProductoService = new CreateAtributoProductoService(atributoProductoRepository),
+    this.createColorProductoService = new CreateColorProductoService(colorProductoRepository),
+    this.createMaterialProductoService = new CreateMaterialProductoService(materialProductoRepository),
+    this.createTallaLetraProductoService = new CreateTallaLetraProductoService(tallaLetraProductoRepository),
+    this.createTallaNumeroProductoService = new CreateTallaNumeroProductoService(tallaNumeroProductoRepository),
+    this.createPesoProductoService = new CreatePesoProductoService(pesoProductoRepository),
+    this.createAtributoService = new CreateAtributoService(atributosRepository),
+    this.createDimensionesProductoService = new CreateDimensionesProductoService(dimensionesProductoRepository)
   }
 
   /**

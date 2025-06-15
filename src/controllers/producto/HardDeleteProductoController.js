@@ -1,4 +1,5 @@
 import HardDeleteProductoService from '../../services/producto/HardDeleteProductoService.js';
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -8,10 +9,10 @@ import { handleError } from "../../shared/functions.js";
 class HardDeleteProductoController {
     /**
      * Crea una instancia del controlador
-     * @param {Object} service - Servicio de productos
+     * @param {Object} repository - Repositorio de productos
      */
-    constructor(service = new HardDeleteProductoService()) {
-        this.service = service;
+    constructor(repository = new ProductoRepository()) {
+        this.service = new HardDeleteProductoService(repository);
     }
 
     /**
@@ -26,8 +27,8 @@ class HardDeleteProductoController {
             const result = await this.service.execute(id);
             const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';  
             res.json({ id, code: result ? 200 : 500, mensaje });
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }

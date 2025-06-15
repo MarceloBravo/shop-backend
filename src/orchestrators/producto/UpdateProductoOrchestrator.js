@@ -23,6 +23,16 @@ import HardDeleteTallaLetraProductoService from '../../services/tallaLetraProduc
 import HardDeleteTallaNumeroProductoService from '../../services/tallaNumeroProducto/HardDeleteTallaNumeroProductoService.js';
 import HardDeletePesoProductoService from '../../services/pesoProducto/HardDeletePesoProductoService.js';
 
+import ProductoRepository from '../../repositories/ProductoRepository.js';
+import AtributoProductoRepository from '../../repositories/AtributoProductoRepository.js';
+import ColorProductoRepository from '../../repositories/ProductoRepository.js';
+import MaterialProductoRepository from '../../repositories/MaterialProductoRepository.js';
+import TallaLetraProductoRepository from '../../repositories/TallaLetraProductoRepository.js';
+import TallaNumeroProductoRepository from '../../repositories/TallaNumeroProductoRepository.js';
+import PesoProductoRepository from '../../repositories/PesoProductoRepository.js';
+import AtributosRepository from '../../repositories/AtributosRepository.js';
+import DimensionesProductoRepository from '../../repositories/DimensionesProductoRepository.js';
+
 const INFO = 'No Aplica';
 
 /**
@@ -32,30 +42,50 @@ const INFO = 'No Aplica';
 class UpdateProductoOrchestrator {
     /**
      * @constructor
-     * @description Inicializa todas las instancias de servicios necesarias para la actualización
+     * @description Inicializa las instancias de servicios necesarias para la actualización
+     * @param {ProductoRepository} productoRepository - Repositorio de productos
+     * @param {AtributoProductoRepository} atributoProductoRepository - Repositorio de atributos de producto
+     * @param {ColorProductoRepository} colorProductoRepository - Repositorio de colores de producto
+     * @param {MaterialProductoRepository} materialProductoRepository - Repositorio de materiales de producto
+     * @param {TallaLetraProductoRepository} tallaLetraProductoRepository - Repositorio de tallas letra de producto
+     * @param {TallaNumeroProductoRepository} tallaNumeroProductoRepository - Repositorio de tallas numéricas de producto
+     * @param {PesoProductoRepository} pesoProductoRepository - Repositorio de pesos de producto
+     * @param {AtributosRepository} atributosRepository - Repositorio de atributos
+     * @param {DimensionesProductoRepository} dimensionesProductoRepository - Repositorio de dimensiones de producto
      */
-    constructor() {
-        this.updateProductoService = new UpdateProductoService();
-        this.updateAtributoProductoService = new UpdateAtributoProductoService();
-        this.updateColorProductoService = new UpdateColorProductoService();
-        this.updateDimensionesProductoService = new UpdateDimensionesProductoService();
-        this.updateMaterialProductoService = new UpdateMaterialProductoService();
-        this.updateTallaLetraProductoService = new UpdateTallaLetraProductoService();
-        this.updateTallaNumeroProductoService = new UpdateTallaNumeroProductoService();
-        this.updatePesoProductoService = new UpdatePesoProductoService();
-        this.updateAtributoService = new UpdateAtributoService();
-        this.createAtributoProductoService = new CreateAtributoProductoService();
-        this.createAtributoService = new CreateAtributoService();
-        this.createMaterialProductoService = new CreateMaterialProductoService();
-        this.createTallaLetraProductoService = new CreateTallaLetraProductoService();
-        this.createTallaNumeroProductoService = new CreateTallaNumeroProductoService();
-        this.hardDeleteAtributoProductoService = new HardDeleteAtributoProductoService();
-        this.hardDeleteColorProductoService = new HardDeleteColorProductoService();
-        this.hardDeleteDimensionesProductoService = new HardDeleteDimensionesProductoService();
-        this.hardDeleteMaterialProductoService = new HardDeleteMaterialProductoService();
-        this.hardDeleteTallaLetraProductoService = new HardDeleteTallaLetraProductoService();
-        this.hardDeleteTallaNumeroProductoService = new HardDeleteTallaNumeroProductoService();
-        this.hardDeletePesoProductoService = new HardDeletePesoProductoService();
+    constructor(
+        productoRepository = new ProductoRepository(),
+        atributoProductoRepository = new AtributoProductoRepository(),
+        colorProductoRepository = new ColorProductoRepository(),
+        materialProductoRepository = new MaterialProductoRepository(),
+        tallaLetraProductoRepository = new TallaLetraProductoRepository(),
+        tallaNumeroProductoRepository = new TallaNumeroProductoRepository(),
+        pesoProductoRepository = new PesoProductoRepository(),
+        atributosRepository = new AtributosRepository(),
+        dimensionesProductoRepository = new DimensionesProductoRepository()
+    ) {
+        this.updateProductoService = new UpdateProductoService(productoRepository);
+        this.updateAtributoProductoService = new UpdateAtributoProductoService(atributoProductoRepository);
+        this.updateColorProductoService = new UpdateColorProductoService(colorProductoRepository);
+        this.updateDimensionesProductoService = new UpdateDimensionesProductoService(dimensionesProductoRepository);
+        this.updateMaterialProductoService = new UpdateMaterialProductoService(materialProductoRepository);
+        this.updateTallaLetraProductoService = new UpdateTallaLetraProductoService(tallaLetraProductoRepository);
+        this.updateTallaNumeroProductoService = new UpdateTallaNumeroProductoService(tallaNumeroProductoRepository);
+        this.updatePesoProductoService = new UpdatePesoProductoService(pesoProductoRepository);
+        this.updateAtributoService = new UpdateAtributoService(atributosRepository);
+        
+        this.createAtributoProductoService = new CreateAtributoProductoService(atributoProductoRepository);
+        this.createAtributoService = new CreateAtributoService(atributosRepository);
+        this.createMaterialProductoService = new CreateMaterialProductoService(materialProductoRepository);
+        this.createTallaLetraProductoService = new CreateTallaLetraProductoService(tallaLetraProductoRepository);
+        this.createTallaNumeroProductoService = new CreateTallaNumeroProductoService(tallaNumeroProductoRepository);
+        this.hardDeleteAtributoProductoService = new HardDeleteAtributoProductoService(atributoProductoRepository);
+        this.hardDeleteColorProductoService = new HardDeleteColorProductoService(colorProductoRepository);
+        this.hardDeleteDimensionesProductoService = new HardDeleteDimensionesProductoService(dimensionesProductoRepository);
+        this.hardDeleteMaterialProductoService = new HardDeleteMaterialProductoService(materialProductoRepository);
+        this.hardDeleteTallaLetraProductoService = new HardDeleteTallaLetraProductoService(tallaLetraProductoRepository);
+        this.hardDeleteTallaNumeroProductoService = new HardDeleteTallaNumeroProductoService(tallaNumeroProductoRepository);
+        this.hardDeletePesoProductoService = new HardDeletePesoProductoService(pesoProductoRepository);
     }
 
     /**
@@ -175,8 +205,6 @@ class UpdateProductoOrchestrator {
                 return result.toJSON();
             }
         }));
-
-
     }
 
     /**

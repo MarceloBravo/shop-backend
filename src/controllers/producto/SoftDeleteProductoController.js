@@ -1,4 +1,5 @@
 import SoftDeleteProductoService from "../../services/producto/SoftDeleteProductoService.js";
+import ProductoRepository from '../../repositories/ProductoRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -8,10 +9,10 @@ import { handleError } from "../../shared/functions.js";
 class SoftDeleteProductoController {
     /**
      * Crea una instancia del controlador
-     * @param {Object} service - Servicio de productos
+     * @param {Object} repository - Repositorio de productos
      */
-    constructor(service = new SoftDeleteProductoService()) {
-        this.service = service;
+    constructor(repository = new ProductoRepository()) {
+        this.service = new SoftDeleteProductoService(repository);
     }
 
     /**
@@ -26,8 +27,8 @@ class SoftDeleteProductoController {
             const result = await this.service.execute(id);
             const resp = {code: result, mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'};
             res.json(resp);
-        } catch (e) {
-            const err = handleError(e);
+        } catch (error) {
+            const err = handleError(error);
             res.status(err.code).json(err);
         }
     }
