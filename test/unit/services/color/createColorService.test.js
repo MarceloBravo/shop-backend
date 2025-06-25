@@ -1,6 +1,7 @@
 // Mock del repositorio antes de importar el servicio
 const mockRepository = {
-    create: jest.fn()
+    create: jest.fn(),
+    getBy: jest.fn()
 };
 
 jest.mock('../../../../src/repositories/ColorRepository.js', () => {
@@ -24,10 +25,11 @@ describe('Unit Test: CreateColorService', () => {
 
         // Configura el mock del repositorio
         mockRepository.create.mockResolvedValue(mockResponse);
+        mockRepository.getBy.mockResolvedValue(false);
 
         const result = await service.execute(colorData);
 
-        expect(mockRepository.create).toHaveBeenCalledWith(colorData, null);
+        expect(mockRepository.create).toHaveBeenCalledWith(colorData);
         expect(result).toEqual(mockResponse);
     });
 
@@ -38,6 +40,6 @@ describe('Unit Test: CreateColorService', () => {
     });
 
     it('Lanza error si no se proporciona un repositorio', () => {
-        expect(() => new CreateColorService()).toThrow('Repository is required');
+        expect(() => new CreateColorService()).toThrow('El repositorio es requerido');
     });
 });

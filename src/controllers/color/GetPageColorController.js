@@ -11,7 +11,10 @@ class GetPageColorController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de colores
      */
-    constructor(repository = new ColorRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new ColorRepository();
+        }
         this.service = new GetPageColorService(repository);
     }
 

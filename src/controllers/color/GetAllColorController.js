@@ -9,10 +9,14 @@ import { handleError } from "../../shared/functions.js";
 class GetAllColorController {
     /**
      * Crea una instancia del controlador
-     * @param {Object} repository - Repositorio de colores
+     * @param {GetAllColorService} service - Servicio para obtener todos los colores
      */
-    constructor(repository = new ColorRepository()) {
-        this.service = new GetAllColorService(repository);
+    constructor(service = null) {
+        if (!service) {
+            const repository = new ColorRepository();
+            service = new GetAllColorService(repository);
+        }
+        this.service = service;
     }
 
     /**
@@ -29,7 +33,7 @@ class GetAllColorController {
             const err = handleError(error);
             res.status(err.code).json(err);
         }
-    }   
+    }
 }
 
 export default GetAllColorController;

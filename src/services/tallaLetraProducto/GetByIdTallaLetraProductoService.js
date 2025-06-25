@@ -22,7 +22,7 @@ class GetByIdTallaLetraProductoService {
      * @returns {Promise<Object>} Asociación encontrada
      * @throws {Error} Si la asociación no es encontrada
      */
-    async execute(id, paranoid = true) {
+    execute = async (id, paranoid = true) => {
         const result = await this.repository.getById(id, paranoid);
         if (!result) {
             throw new Error('Asociación no encontrada');

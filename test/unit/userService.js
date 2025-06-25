@@ -1,4 +1,6 @@
-const { jest } = require('@jest/globals');
+if(jest == undefined){
+  let { jest } = require('@jest/globals');
+}
 
 // Mock del repositorio de usuarios
 const mockUserRepository = {

@@ -11,7 +11,10 @@ class CreateColorController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de colores
      */
-    constructor(repository = new ColorRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new ColorRepository();
+        }
         this.service = new CreateColorService(repository);
     }
 
@@ -21,7 +24,7 @@ class CreateColorController {
      * @param {Object} res - Objeto de respuesta HTTP
      * @returns {Promise<void>}
      */
-    async execute(req, res) {
+    execute = async (req, res) => {
         try {
             const {nombre, valor} = req.body;
             const resp = await this.service.execute({nombre, valor});

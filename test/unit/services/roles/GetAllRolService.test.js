@@ -3,7 +3,7 @@ import GetAllRolService from '../../../../src/services/Rol/GetAllRolService.js';
 describe('GetAllRolService', () => {
     // Crear el mock del repositorio
     const mockRolRepository = {
-        getAllRol: jest.fn()
+        getAll: jest.fn()
     };
 
     let getAllRolService;
@@ -21,26 +21,26 @@ describe('GetAllRolService', () => {
             { id: 1, nombre: 'ADMIN' },
             { id: 2, nombre: 'USER' }
         ];
-        mockRolRepository.getAllRol.mockResolvedValue(mockRoles);
+        mockRolRepository.getAll.mockResolvedValue(mockRoles);
 
         // Act
-        const result = await getAllRolService.getAllRol();
+        const result = await getAllRolService.execute();
 
         // Assert
         expect(result).toEqual(mockRoles);
-        expect(mockRolRepository.getAllRol).toHaveBeenCalled();
-        expect(mockRolRepository.getAllRol).toHaveBeenCalledTimes(1);
+        expect(mockRolRepository.getAll).toHaveBeenCalled();
+        expect(mockRolRepository.getAll).toHaveBeenCalledTimes(1);
     });
 
     test('debería propagar el error si el repositorio falla', async () => {
         // Arrange
         const expectedError = new Error('Error de base de datos');
-        mockRolRepository.getAllRol.mockRejectedValue(expectedError);
+        mockRolRepository.getAll.mockRejectedValue(expectedError);
 
         // Act & Assert
-        await expect(getAllRolService.getAllRol())
+        await expect(getAllRolService.execute())
             .rejects
             .toThrow(expectedError);
-        expect(mockRolRepository.getAllRol).toHaveBeenCalled();
+        expect(mockRolRepository.getAll).toHaveBeenCalled();
     });
 }); 

@@ -22,7 +22,7 @@ class GetPageTipoDimensionesService {
      * @param {boolean} [paranoid=true] - Si se incluyen los registros eliminados
      * @returns {Promise<Object>} Objeto con los datos paginados
      */
-    async execute(page = 1, limit = Number(process.env.DEFAULT_REG_POR_PAGINA), paranoid = true) {
+    execute = async (page = 1, limit = Number(process.env.DEFAULT_REG_POR_PAGINA), paranoid = true) => {
         const offset = (page - 1) * limit;
         const { rows, count } = await this.repository.getPage(offset, limit, [['nombre', 'ASC']], paranoid);
         const totPag = Math.ceil(count / limit);
