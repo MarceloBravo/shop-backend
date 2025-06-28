@@ -1,25 +1,14 @@
-import dotenv from 'dotenv';
-dotenv.config({ path: '.env.test' });
 import request from 'supertest';
-import app from '../../../index.js';
+import { app } from '../../../src/index.js';
 import { sequelize } from '../../../config/database.js';
+import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 
 describe('Integration Test: CreateColorController', () => {
     let token;
     
     beforeAll(async () => {
         await sequelize.sync({ force: true }); // Sincroniza la base de datos para pruebas
-        // Realiza login para obtener el token
-        const loginResponse = await request(app)
-            .post('/api/login')
-            .send({
-                email: 'test@example.com',
-                password: 'password123',
-                host: 'localhost'
-            })
-            .expect(200);
-
-        token = loginResponse.body.access_token; // Guarda el token para usarlo en los tests
+        token = await TestAuthHelper.createUserAndLogin();
     });
 
     afterAll(async () => {
@@ -33,7 +22,7 @@ describe('Integration Test: CreateColorController', () => {
         };
 
         const response = await request(app)
-            .post('/api/colors') // Ajusta la ruta según tu configuración
+            .post('/api/v1/colors') // Ajusta la ruta según tu configuración
             .set('Authorization', `Bearer ${token}`) // Incluye el token en el encabezado
             .send(colorData)
             .expect(200);
@@ -52,7 +41,7 @@ describe('Integration Test: CreateColorController', () => {
         };
 
         const response = await request(app)
-            .post('/api/colors')
+            .post('/api/v1/colors')
             .set('Authorization', `Bearer ${token}`) // Incluye el token en el encabezado
             .send(invalidData)
             .expect(400);

@@ -1,11 +1,16 @@
-const request = require('supertest');
-const { app } = require('../../src/app');
-const { sequelize } = require('../../models');
+import request from 'supertest';
+import { app } from '../../src/index.js';
+import { sequelize } from '../../config/database.js';
+import { TestAuthHelper } from './helpers/TestAuthHelper.js';
+
+
 
 describe('User API Integration Tests', () => {
+  let token;
   beforeAll(async () => {
     // Aseguramos que la base de datos esté sincronizada
     await sequelize.sync({ force: true });
+    token = await TestAuthHelper.createUserAndLogin();
   });
 
   afterAll(async () => {
@@ -18,7 +23,7 @@ describe('User API Integration Tests', () => {
     await sequelize.truncate({ cascade: true });
   });
 
-  describe('POST /api/users', () => {
+  describe('POST /api/v1/usuario', () => {
     test('debería crear un nuevo usuario', async () => {
       const userData = {
         name: 'Ana García',
@@ -27,7 +32,8 @@ describe('User API Integration Tests', () => {
       };
 
       const response = await request(app)
-        .post('/api/users')
+        .post('/api/v1/usuario')
+        .set('Authorization', `Bearer ${token}`)
         .send(userData)
         .expect(201);
 
@@ -44,7 +50,8 @@ describe('User API Integration Tests', () => {
       };
 
       const response = await request(app)
-        .post('/api/users')
+        .post('/api/v1/usuario')
+        .set('Authorization', `Bearer ${token}`)
         .send(invalidUserData)
         .expect(400);
 
@@ -52,7 +59,7 @@ describe('User API Integration Tests', () => {
     });
   });
 
-  describe('GET /api/users/:id', () => {
+  describe('GET /api/v1/usuario/:id', () => {
     test('debería obtener un usuario existente', async () => {
       // Primero creamos un usuario
       const userData = {
@@ -62,14 +69,16 @@ describe('User API Integration Tests', () => {
       };
 
       const createResponse = await request(app)
-        .post('/api/users')
+        .post('/api/v1/usuario')
+        .set('Authorization', `Bearer ${token}`)
         .send(userData);
 
       const userId = createResponse.body.id;
 
       // Luego intentamos obtenerlo
       const response = await request(app)
-        .get(`/api/users/${userId}`)
+        .get(`/api/v1/usuario/${userId}`)
+        .set('Authorization', `Bearer ${token}`)
         .expect(200);
 
       expect(response.body.id).toBe(userId);
@@ -82,12 +91,13 @@ describe('User API Integration Tests', () => {
       const nonExistentId = 99999;
 
       await request(app)
-        .get(`/api/users/${nonExistentId}`)
+        .get(`/api/v1/usuario/${nonExistentId}`)
+        .set('Authorization', `Bearer ${token}`)
         .expect(404);
     });
   });
 
-  describe('PUT /api/users/:id', () => {
+  describe('PUT /api/v1/usuario/:id', () => {
     test('debería actualizar un usuario existente', async () => {
       // Crear usuario
       const userData = {
@@ -97,7 +107,8 @@ describe('User API Integration Tests', () => {
       };
 
       const createResponse = await request(app)
-        .post('/api/users')
+        .post('/api/v1/usuario')
+        .set('Authorization', `Bearer ${token}`)
         .send(userData);
 
       const userId = createResponse.body.id;
@@ -108,7 +119,8 @@ describe('User API Integration Tests', () => {
       };
 
       const response = await request(app)
-        .put(`/api/users/${userId}`)
+        .put(`/api/v1/usuario/${userId}`)
+        .set('Authorization', `Bearer ${token}`)
         .send(updateData)
         .expect(200);
 
@@ -116,4 +128,4 @@ describe('User API Integration Tests', () => {
       expect(response.body.email).toBe(userData.email);
     });
   });
-}); 
+});

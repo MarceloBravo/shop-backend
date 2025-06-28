@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.test' });
 import Sequelize from 'sequelize'
 
 /*
@@ -10,8 +12,12 @@ const DB_TEST = 'mabc_cv_test'
 const pwd = '123456'
 */
 
-export const sequelize = new Sequelize(process.env.NODE_ENV === 'test' ? process.env.DB_TEST : process.env.DB,'postgres',process.env.PWD.toString(),{
-    host: process.env.NODE_ENV === 'test' ? process.env.HOST_TEST : process.env.HOST,
-    port: process.env.NODE_ENV === 'text' ? process.env.PORT_TEST : process.env.PORT,
+const conect = process.env.NODE_ENV === 'test' ? process.env.DB_TEST : process.env.DB
+const host = process.env.NODE_ENV === 'test' ? process.env.HOST_TEST : process.env.HOST
+const port = process.env.NODE_ENV === 'test' ? process.env.PORT_TEST : process.env.PORT
+console.log('Conectando a la base de datos:', conect, host, port);
+export const sequelize = new Sequelize(conect,'postgres',process.env.PWD.toString(),{
+    host: host,
+    port: port,
     dialect: 'postgres'
 })
