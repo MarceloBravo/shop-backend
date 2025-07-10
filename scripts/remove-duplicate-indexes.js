@@ -1,19 +1,4 @@
-import Sequelize from 'sequelize';
-//import { readdir } from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
-const config = require('../src/config/config.json'); // Ajusta si usas otro archivo
-const __filename = fileURLToPath(import.meta.url);
-//const __dirname = path.dirname(__filename);
-
-// ⚙️ Ajusta a tu entorno (desarrollo, producción, etc.)
-const env = process.env.NODE_ENV || 'development';
-const dbConfig = config[env];
-
-const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
+import { sequelize } from '../config/database.js';
 
 export async function removeDuplicateConstraints() {
   try {
