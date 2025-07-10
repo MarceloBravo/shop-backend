@@ -1,4 +1,4 @@
-import { MaterialModel } from "../../models/MaterialModel.js";
+import { MaterialModel } from "../models/MaterialModel.js";
 
 
 class MaterialRepository{

@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../config/database.js'
+import { sequelize } from '../../config/database.js'
 
 export const ProductoModel = sequelize.define('productos', {
     id: {
@@ -46,7 +46,7 @@ export const ProductoModel = sequelize.define('productos', {
         }
     },
     precio:{
-        type: DataTypes.DOUBLE(10,2),
+        type: DataTypes.DECIMAL(10,2),
         allowNull: false,
     }
 },{

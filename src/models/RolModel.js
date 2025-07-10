@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { sequelize } from '../config/database.js';
+import { sequelize } from '../../config/database.js';
 
 export const RolModel = sequelize.define('roles', {
     id: {
@@ -17,17 +17,8 @@ export const RolModel = sequelize.define('roles', {
     timestamps: true,
     tableName: 'roles',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
-    hooks: {
-        beforeCreate: async (rol, options) => {
-            rol.created_at = new Date();
-            rol.updated_at = new Date();
-        },
-        beforeUpdate: async (rol, options) => {
-            rol.updated_at = new Date();
-        },
-        beforeDestroy: async (rol, options) => {
-            rol.deleted_at = new Date();
-        }
-    }
+    deletedAt: 'deleted_at',
+    createdAt: 'created_at',
+    updatedAt: 'updated_at'
 });
 

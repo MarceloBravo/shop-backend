@@ -25,7 +25,7 @@ class UpdateUsuarioController {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
-            res.json({ usuario: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.` });
+            res.json({ data: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.` });
         } catch (error) {
             const err = handleError(error);
             res.status(err.code).json(err);

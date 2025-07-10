@@ -1,4 +1,4 @@
-import { DimensionesProductoModel } from "../../models/DimensionesProductoModel.js";
+import { DimensionesProductoModel } from "../models/DimensionesProductoModel.js";
 
 class DimensionesProductoRepository {
 

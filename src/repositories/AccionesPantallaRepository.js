@@ -1,4 +1,4 @@
-import { AccionesPantallaModel } from "../../models/AccionesPantallaModel.js";
+import { AccionesPantallaModel } from "../models/AccionesPantallaModel.js";
 
 class AccionesPantallaRepository{
 

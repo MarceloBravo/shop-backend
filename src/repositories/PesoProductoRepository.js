@@ -1,4 +1,4 @@
-import { PesoProductoModel } from "../../models/PesoProductoModel.js";
+import { PesoProductoModel } from "../models/PesoProductoModel.js";
 
 
 class PesoProductoRepository{

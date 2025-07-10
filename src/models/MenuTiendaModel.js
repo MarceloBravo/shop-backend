@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../config/database.js'
+import { sequelize } from '../../config/database.js'
 
 export const MenuTiendaModel = sequelize.define('menu_tienda', {
     id: {

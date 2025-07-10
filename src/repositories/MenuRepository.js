@@ -1,4 +1,4 @@
-import { MenuModel } from "../../models/MenuModel.js";
+import { MenuModel } from "../models/MenuModel.js";
 
 class MenuRepository{
     getById = async (id, paranoid = true) => {

@@ -1,8 +1,8 @@
-import { UsuarioModel } from '../../models/UsuarioModel.js';
+import { UsuarioModel } from '../models/UsuarioModel.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import * as constantes  from '../shared/constants.js';
-import { RolModel } from '../../models/RolModel.js';
+import { RolModel } from '../models/RolModel.js';
 import os from 'os';
 
 const networkInterfaces = os.networkInterfaces();

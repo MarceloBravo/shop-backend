@@ -1,4 +1,4 @@
-import { ColorProductoModel } from "../../models/ColorProductoModel.js";
+import { ColorProductoModel } from "../models/ColorProductoModel.js";
 
 class ColorProductoRepository {
 

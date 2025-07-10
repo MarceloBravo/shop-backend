@@ -16,7 +16,7 @@ export async function loadModelsAndRelations() {
 
   // Importa createRequire y usa import.meta.url solo aquí
   const require = createRequire(import.meta.url);
-  const config = require('../config/config.json')[env];
+  const config = require('../../config../../config.json')[env];
 
   sequelize = new Sequelize(config.database, config.username, config.password, config);
   db.sequelize = sequelize;

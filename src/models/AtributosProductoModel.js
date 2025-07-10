@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../config/database.js'
+import { sequelize } from '../../config/database.js'
 
-export const MaterialProductoModel = sequelize.define('material_producto', {
+export const AtributosProductoModel = sequelize.define('atributos_producto', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -15,23 +15,24 @@ export const MaterialProductoModel = sequelize.define('material_producto', {
             key: 'id'
         }
     },
-    material_id: {
+    atributo_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-            model: 'materiales',
+            model: 'atributos',
             key: 'id'
         }
     },
     deleted_at: {
         type:DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
+        field: 'deleted_at'
     }
 
 },{
     timestamps: true,
-    tableName: 'material_producto',  // Asegura que el nombre de la tabla sea correcto
-    underscored: true,            // Usa snake_case en vez de camelCase
+    tableName: 'atributos_producto',  // Asegura que el nombre de la tabla sea correcto
+    underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {
         beforeCreate: async (color, options) => {
             color.created_at = new Date();

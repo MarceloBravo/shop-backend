@@ -1,20 +1,20 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../config/database.js'
+import { sequelize } from '../../config/database.js'
 
-export const TallaNumericaModel = sequelize.define('TallaNumero', {
+export const TallaLetraModel = sequelize.define('tallas_letras', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     valor: {
-        type: DataTypes.DECIMAL(4,1),
+        type: DataTypes.STRING(5),
         allowNull: false,
-        unique: true      
+        unique: true        
     }
 }, {
     timestamps: true,
-    tableName: 'tallas_numericas',
+    tableName: 'tallas_letras',
     underscored: true,
     paranoid: true,
     deletedAt: 'deleted_at'

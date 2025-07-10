@@ -1,5 +1,5 @@
 // Mock del modelo para evitar dependencias de Sequelize y variables de entorno
-jest.mock('../../../../models/ColorModel.js', () => ({
+jest.mock('../../../../src/models/ColorModel.js', () => ({
     ColorModel: {
         findAndCountAll: jest.fn()
     }

@@ -1,21 +1,28 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../config/database.js'
+import { sequelize } from '../../config/database.js'
 
-export const MaterialModel = sequelize.define('materiales', {
+export const AtributosModel = sequelize.define('atributos', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    valor: {
-        type: DataTypes.STRING(30),
-        allowNull: false,
-        unique: true       
+    nombre: {
+        type: DataTypes.STRING(100),
+        allowNull: false   
+    },
+    valor_string: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    valor_numerico: {
+        type: DataTypes.DECIMAL(15,5),
+        allowNull: true,
     }
 },{
     paranoid: true,         // Habilita el soft delete
     timestamps: true,
-    tableName: 'materiales',  // Asegura que el nombre de la tabla sea correcto
+    tableName: 'atributos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     hooks: {
         beforeCreate: async (color, options) => {

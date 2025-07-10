@@ -1,19 +1,19 @@
-import { AtributosModel } from "../../models/AtributosModel.js";
-import { AtributosProductoModel } from "../../models/AtributosProductoModel.js";
-import { ColorModel } from "../../models/ColorModel.js";
-import { ColorProductoModel } from "../../models/ColorProductoModel.js";
-import { DimensionesProductoModel } from "../../models/DimensionesProductoModel.js";
-import { MaterialModel } from "../../models/MaterialModel.js";
-import { MaterialProductoModel } from "../../models/MaterialProductoModel.js";
-import { PesoProductoModel } from "../../models/PesoProductoModel.js";
-import { ProductoModel } from "../../models/ProductoModel.js";
-import { TallaLetraModel } from "../../models/TallaLetraModel.js";
-import { TallaLetraProductoModel } from "../../models/TallaLetraProductoModel.js";
-import { TallaNumericaModel } from "../../models/TallaNumericaModel.js";
-import { TallaNumericaProductoModel } from "../../models/TallaNumericaProductoModel.js";
-import { TipoDimensionesModel } from "../../models/TipoDimensionesModel.js";
+import { AtributosModel } from "../models/AtributosModel.js";
+import { AtributosProductoModel } from "../models/AtributosProductoModel.js";
+import { ColorModel } from "../models/ColorModel.js";
+import { ColorProductoModel } from "../models/ColorProductoModel.js";
+import { DimensionesProductoModel } from "../models/DimensionesProductoModel.js";
+import { MaterialModel } from "../models/MaterialModel.js";
+import { MaterialProductoModel } from "../models/MaterialProductoModel.js";
+import { PesoProductoModel } from "../models/PesoProductoModel.js";
+import { ProductoModel } from "../models/ProductoModel.js";
+import { TallaLetraModel } from "../models/TallaLetraModel.js";
+import { TallaLetraProductoModel } from "../models/TallaLetraProductoModel.js";
+import { TallaNumericaModel } from "../models/TallaNumericaModel.js";
+import { TallaNumericaProductoModel } from "../models/TallaNumericaProductoModel.js";
+import { TipoDimensionesModel } from "../models/TipoDimensionesModel.js";
 import { sequelize } from '../../config/database.js';
-import { ValoracionProductoModel } from "../../models/ValoracionProductoModel.js";
+import { ValoracionProductoModel } from "../models/ValoracionProductoModel.js";
 import { Op } from 'sequelize';
 
 const include = [

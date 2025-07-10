@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../config/database.js'
+import { sequelize } from '../../config/database.js'
 
-export const TallaLetraProductoModel = sequelize.define('talla_letra_producto', {
+export const PesoProductoModel = sequelize.define('peso', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -15,19 +15,25 @@ export const TallaLetraProductoModel = sequelize.define('talla_letra_producto', 
             key: 'id'
         }
     },
-    talla_letra_id: {
+    peso: {
+        type: DataTypes.DECIMAL(10,2),
+        default: 0.0,
+        nullable: true
+    },
+    tipo_dimension_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
         references:{
-            model: 'tallas_letras',
+            model: 'tipo_dimensiones',
             key: 'id'
-        },
-        unique: true
+        }
     }
 },{
-    paranoid: true,         //Habilita soft-delete
+    paranoid: true,     //Habilita soft-delete
     timestamps: true,
-    tableName: 'talla_letra_producto',  // Asegura que el nombre de la tabla sea correcto
+    tableName: 'peso',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
-    deletedAt: 'deleted_at'
+    createdAt: 'created_at',
+    updatedAt: 'updated_at',
+    deletedAt: 'deleted_at',
 });

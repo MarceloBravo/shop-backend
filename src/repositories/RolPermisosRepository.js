@@ -1,4 +1,4 @@
-import { RolPermisosModel } from "../../models/RolPermisosModel.js";
+import { RolPermisosModel } from "../models/RolPermisosModel.js";
 
 class RolPermisosRepository {
     getById = async (id, paranoid = true) => {

@@ -1,4 +1,4 @@
-import { SubCategoriaModel } from "../../models/SubCategoriaModel.js";
+import { SubCategoriaModel } from "../models/SubCategoriaModel.js";
 
 class SubCategoriaRepository{
     getById = async (id, paranoid = true) => {

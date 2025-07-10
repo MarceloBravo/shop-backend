@@ -1,4 +1,4 @@
-import { GeneroModel } from "../../models/GeneroModel.js";
+import { GeneroModel } from "../models/GeneroModel.js";
 
 class GeneroRepository{
     getById = async (id, paranoid = true) => {

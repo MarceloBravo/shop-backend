@@ -1,4 +1,4 @@
-import { AtributosProductoModel } from "../../models/AtributosProductoModel.js";
+import { AtributosProductoModel } from "../models/AtributosProductoModel.js";
 
 class AtributoProductoRepository{
 

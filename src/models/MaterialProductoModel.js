@@ -1,36 +1,37 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../config/database.js'
+import { sequelize } from '../../config/database.js'
 
-export const ColorModel = sequelize.define('colores', {
+export const MaterialProductoModel = sequelize.define('material_producto', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
-    nombre: {
-        type: DataTypes.STRING(30),
+    producto_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
-        validate: {
-            notEmpty: true,
-            len: [3, 30]
+        references:{
+            model: 'productos',
+            key: 'id'
         }
     },
-    valor: {
-        type: DataTypes.STRING(30),
+    material_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
-        validate: {
-            notEmpty: true,
-            len: [3, 30]
+        references:{
+            model: 'materiales',
+            key: 'id'
         }
+    },
+    deleted_at: {
+        type:DataTypes.DATE,
+        allowNull: true
     }
 
 },{
-    paranoid: true,         // Habilita el borrado lógico
     timestamps: true,
-    tableName: 'colores',  // Asegura que el nombre de la tabla sea correcto
-    underscored: true,       // Usa snake_case en vez de camelCase
+    tableName: 'material_producto',  // Asegura que el nombre de la tabla sea correcto
+    underscored: true,            // Usa snake_case en vez de camelCase
     hooks: {
         beforeCreate: async (color, options) => {
             color.created_at = new Date();

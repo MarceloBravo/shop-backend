@@ -1,4 +1,4 @@
-import { MarcaModel } from "../../models/MarcaModel.js";
+import { MarcaModel } from "../models/MarcaModel.js";
 
 class MarcaRepository{
     getById = async (id, paranoid = true) => {

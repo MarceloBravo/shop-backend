@@ -1,4 +1,4 @@
-import { PantallaModel } from "../../models/PantallaModel.js";
+import { PantallaModel } from "../models/PantallaModel.js";
 
 
 class PantallaRepository{

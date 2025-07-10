@@ -1,4 +1,4 @@
-import { ColorModel } from "../../models/ColorModel.js";
+import { ColorModel } from "../models/ColorModel.js";
 
 class ColorRepository{
     getById = async (id, paranoid = true, transaction = null) => {

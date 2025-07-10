@@ -1,4 +1,4 @@
-import { ValoracionProductoModel } from "../../models/ValoracionProductoModel.js";
+import { ValoracionProductoModel } from "../models/ValoracionProductoModel.js";
 
 class ValoracionProductoRepository{
     getById = async (id, paranoid = true) => {

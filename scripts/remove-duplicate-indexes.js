@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
-const config = require('../config/config.json'); // Ajusta si usas otro archivo
+const config = require('../src/config/config.json'); // Ajusta si usas otro archivo
 const __filename = fileURLToPath(import.meta.url);
 //const __dirname = path.dirname(__filename);
 

@@ -1,4 +1,4 @@
-import { CategoriaModel } from "../../models/CategoriaModel.js";
+import { CategoriaModel } from "../models/CategoriaModel.js";
 
 class CategoriaRepository {
     

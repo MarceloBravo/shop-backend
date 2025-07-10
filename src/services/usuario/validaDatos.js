@@ -30,7 +30,7 @@ export const validaDatos = (data, isUpdate = false) => {
     if (!user_name || user_name.trim().length === 0 || user_name.length > 30) {
         errors.push("El campo nombre de usuario es obligatorio, ingresa un valor válido para el nombre de usuario.");
     }
-    if (((!isUpdate && !password) || (isUpdate && password)) && (password.trim().length === 0 || password.length > 150)) {
+    if (((!isUpdate && !password) || (isUpdate && password)) && (password && (password.trim().length === 0 || password.length > 150))) {
         errors.push((isUpdate ? "Contraseña no válida, " : "La contraseña es obligatoria, ") + "ingresa un valor válido para el campo contraseña.");
     }
     if (refresh_token && refresh_token.trim().length === 0) {

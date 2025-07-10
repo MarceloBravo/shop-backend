@@ -1,4 +1,4 @@
-import { TallaLetraProductoModel } from "../../models/TallaLetraProductoModel.js";
+import { TallaLetraProductoModel } from "../models/TallaLetraProductoModel.js";
 
 class TallaLetraProductoRepository{
     getById = async (id, paranoid = true) => {

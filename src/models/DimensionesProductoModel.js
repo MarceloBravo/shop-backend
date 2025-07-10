@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../config/database.js'
+import { sequelize } from '../../config/database.js'
 
 export const DimensionesProductoModel = sequelize.define('dimensiones_producto', {
     id: {
@@ -16,17 +16,17 @@ export const DimensionesProductoModel = sequelize.define('dimensiones_producto',
         }
     },
     alto: {
-        type: DataTypes.DOUBLE(10,2),
+        type: DataTypes.DECIMAL(10,2),
         default: 0.0,
         nullable: false
     },
     ancho: {
-        type: DataTypes.DOUBLE(10,2),
+        type: DataTypes.DECIMAL(10,2),
         default: 0.0,
         nullable: false
     },
     profundo: {
-        type: DataTypes.DOUBLE(10,2),
+        type: DataTypes.DECIMAL(10,2),
         default: 0.0,
         nullable: true
     },

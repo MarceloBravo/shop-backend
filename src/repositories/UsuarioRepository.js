@@ -1,8 +1,12 @@
-import { UsuarioModel } from "../../models/UsuarioModel.js";
+import { UniqueConstraintError } from "sequelize";
+import { UsuarioModel } from "../models/UsuarioModel.js";
 
 class UsuarioRepository {
     getById = async (id, paranoid = true) => {
         const data = await UsuarioModel.findByPk(id, { paranoid });
+        if(data){
+            delete data.dataValues.password;
+        }
         return data;
     }
 
@@ -26,6 +30,7 @@ class UsuarioRepository {
 
     create = async (values, transaction = null) => {
         const data = await UsuarioModel.create(values, { transaction });
+        delete data.dataValues.password;
         return data;
     }
 

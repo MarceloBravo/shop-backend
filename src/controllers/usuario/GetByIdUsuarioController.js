@@ -25,7 +25,7 @@ class GetByIdUsuarioController {
         try {
             const { id } = req.params;
             const data = await this.service.execute(id);
-            res.json(data);
+            res.json(data ? { data } : {code: 404, mensaje: 'El registro no existe.' });
         } catch (error) {
             const err = handleError(error);
             res.status(err.code).json(err);

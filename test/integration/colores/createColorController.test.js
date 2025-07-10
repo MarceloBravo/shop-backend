@@ -2,18 +2,15 @@ import request from 'supertest';
 import { app } from '../../../src/index.js';
 import { sequelize } from '../../../config/database.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import { ColorModel } from '../../../src/models/ColorModel.js';
 
 describe('Integration Test: CreateColorController', () => {
     let token;
     
     beforeAll(async () => {
-        await sequelize.sync({ force: true }); // Sincroniza la base de datos para pruebas
         token = await TestAuthHelper.createUserAndLogin();
     });
 
-    afterAll(async () => {
-        await sequelize.close(); // Cierra la conexión después de las pruebas
-    });
 
     it('should create a new color and return success response', async () => {
         const colorData = {
@@ -22,7 +19,7 @@ describe('Integration Test: CreateColorController', () => {
         };
 
         const response = await request(app)
-            .post('/api/v1/colors') // Ajusta la ruta según tu configuración
+            .post('/api/v1/color') // Ajusta la ruta según tu configuración
             .set('Authorization', `Bearer ${token}`) // Incluye el token en el encabezado
             .send(colorData)
             .expect(200);
@@ -41,7 +38,7 @@ describe('Integration Test: CreateColorController', () => {
         };
 
         const response = await request(app)
-            .post('/api/v1/colors')
+            .post('/api/v1/color')
             .set('Authorization', `Bearer ${token}`) // Incluye el token en el encabezado
             .send(invalidData)
             .expect(400);
