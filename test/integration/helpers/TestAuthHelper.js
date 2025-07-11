@@ -22,7 +22,7 @@ export class TestAuthHelper {
   static async createUserAndLogin({
     email = 'test@email.cl',
     password = '123123',
-    rut = '33333333-3',
+    rut = '77777777-7',
     nombres = 'Test',
     apellido1 = 'User',
     apellido2 = 'Test',
