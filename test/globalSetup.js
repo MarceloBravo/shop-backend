@@ -35,7 +35,7 @@ import '../src/models/ValoracionProductoModel.js';
 
 
 export default async () => {
-  sequelize.sync({alter: true});
+  await sequelize.sync({alter: true});
   console.log('Limpiando todas las tablas antes de los tests...');
   // Desactiva restricciones de FK temporalmente
   await sequelize.query('SET session_replication_role = replica;');
