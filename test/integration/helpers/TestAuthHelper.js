@@ -22,13 +22,13 @@ export class TestAuthHelper {
   static async createUserAndLogin({
     email = 'test@email.cl',
     password = '123123',
-    rut = '111111111-1',
+    rut = '33333333-3',
     nombres = 'Test',
     apellido1 = 'User',
     apellido2 = 'Test',
     user_name = 'mabc',
     direccion = 'dirección test',
-    fono = '1111111111',
+    fono = '3333333333',
     rol_id = 1
   } = {}) {
     // Genera valores únicos y válidos para rut y user_name en cada test
