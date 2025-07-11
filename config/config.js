@@ -1,7 +1,8 @@
-require('dotenv').config({ path: '.env.test' });
+//require('dotenv').config({ path: '.env.test' });
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.test' });
 
-module.exports = {
-  development: {
+export const development = {
     username: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASS || 'postgres',
     database: process.env.DB || 'mabc_cv',
@@ -9,8 +10,8 @@ module.exports = {
     port: process.env.PORT || 5432,
     dialect: 'postgres',
     logging: true
-  },
-  test: {
+};
+export const test = {
     username: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASS || 'postgres',
     database: process.env.DB_TEST || 'mabc_cv_test',
@@ -18,8 +19,8 @@ module.exports = {
     port: process.env.PORT_TEST || 5433,
     dialect: 'postgres',
     logging: false
-  },
-  production: {
+};
+export const production = {
     username: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASS || 'postgres',
     database: process.env.DB || 'mabc_cv',
@@ -27,5 +28,4 @@ module.exports = {
     port: process.env.PORT || 5432,
     dialect: 'postgres',
     logging: false
-  }
 }; 
