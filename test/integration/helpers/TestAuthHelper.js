@@ -31,13 +31,6 @@ export class TestAuthHelper {
     fono = '3333333333',
     rol_id = 1
   } = {}) {
-    // Genera valores únicos y válidos para rut y user_name en cada test
-    const uniqueSuffix = String(Date.now() + Math.floor(Math.random() * 1000));
-    const rutBase = rut.split('-')[0];
-    const rutSuffix = uniqueSuffix.slice(-4); // últimos 4 dígitos
-    const rutFinal = rutBase + `${rutSuffix}-K`.slice(0, 13);
-    // user_name: máx 20 caracteres 
-    const userNameFinal = (user_name + uniqueSuffix).slice(0, 20);
 
     const  rolDefaults = {
       1: { id: 1, nombre: 'Admin' },
@@ -67,7 +60,7 @@ export class TestAuthHelper {
     }
     try {
       const user = await UsuarioModel.findOrCreate({
-        where: { email },
+        where: { rut }, // Buscar por RUT en lugar de email
         paranoid: false,
         defaults: {
           rut: rut,
