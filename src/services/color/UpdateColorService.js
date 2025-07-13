@@ -24,7 +24,7 @@ class UpdateColorService {
      * @returns {Promise<Object>} Objeto con el color actualizado y un indicador de si fue creado
      */
     execute = async (id, values) => {
-        validaDatos(data);
+        validaDatos(values);
         const {data, created } = await this.repository.update(id, values);
         return { data, created };
     }   
