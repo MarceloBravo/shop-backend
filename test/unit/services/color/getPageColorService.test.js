@@ -31,7 +31,7 @@ describe('Unit Test: GetPageColorService', () => {
         const result = await service.execute(1, 5);
 
         // Assert
-        expect(mockRepository.getPage).toHaveBeenCalledWith(0, 5, false);
+        expect(mockRepository.getPage).toHaveBeenCalledWith(0, 5, true);
         expect(result).toEqual({
             rows: mockColors,
             count: 10,
@@ -69,7 +69,7 @@ describe('Unit Test: GetPageColorService', () => {
         await service.execute(3, 10);
 
         // Assert
-        expect(mockRepository.getPage).toHaveBeenCalledWith(20, 10, false);
+        expect(mockRepository.getPage).toHaveBeenCalledWith(20, 10, true);
     });
 
     it('Lanza error si no se proporciona un repositorio', () => {
