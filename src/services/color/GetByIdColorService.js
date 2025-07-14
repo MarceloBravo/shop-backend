@@ -18,13 +18,15 @@ class GetByIdColorService {
     /**
      * Ejecuta la obtención de un color por su ID
      * @param {string|number} id - ID del color a obtener
-     * @param {boolean} [includeDeleted=false] - Indica si se debe incluir el color si está eliminado
+     * @param {boolean} [paranoid=true] - Indica si se debe incluir el color si está eliminado
      * @returns {Promise<Object>} Color encontrado
      */
-    execute = async (id, includeDeleted = false) => {
-        const result = await this.repository.getById(id, includeDeleted);
+    execute = async (id, paranoid = true) => {
+        const result = await this.repository.getById(id, paranoid);
         if (!result) {
-            throw new Error('Color no encontrado');
+            const error = new Error('Color no encontrado');
+            error.code = 404;
+            throw error;
         }
         return result;
     }

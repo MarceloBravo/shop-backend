@@ -26,7 +26,9 @@ class CreateColorService {
         validaDatos(data);
         const existe = await this.repository.getBy('nombre', data.nombre);
         if (existe) {
-            throw new Error('Ya existe un color con ese nombre');
+            const error = new Error('Ya existe un color con ese nombre');
+            error.code = 409;
+            throw error;
         }
         return await this.repository.create(data);
     }   

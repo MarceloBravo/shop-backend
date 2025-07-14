@@ -27,7 +27,7 @@ describe('Unit Test: GetByIdColorService', () => {
         const result = await service.execute(1);
 
         // Assert
-        expect(mockRepository.getById).toHaveBeenCalledWith(1, false);
+        expect(mockRepository.getById).toHaveBeenCalledWith(1, true);
         expect(result).toEqual(mockColor);
     });
 
@@ -50,7 +50,7 @@ describe('Unit Test: GetByIdColorService', () => {
 
         // Act & Assert
         await expect(service.execute(999)).rejects.toThrow('Color no encontrado');
-        expect(mockRepository.getById).toHaveBeenCalledWith(999, false);
+        expect(mockRepository.getById).toHaveBeenCalledWith(999, true);
     });
 
     it('Lanza error si no se proporciona un repositorio', () => {

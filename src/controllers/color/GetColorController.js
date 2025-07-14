@@ -31,7 +31,7 @@ class GetColorController {
             res.json(data);
         } catch (error) {
             const err = handleError(error);
-            res.status(err.code).json(err);
+            res.status(error.code).json(err);
         }
     }
 }

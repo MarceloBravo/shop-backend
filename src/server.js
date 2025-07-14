@@ -1,17 +1,8 @@
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
-//import { loadModelsAndRelations } from '../models/index.js';
 import rutas from './routes/rutas.js';
-//import { sequelize } from '../config/database.js';
-//import { removeDuplicateConstraints } from '../scripts/remove-duplicate-indexes.js';
 
-//import '../models/index.js';
-//import '../models/relations.js';
-//await loadModelsAndRelations();
-
-
-//import listEndpoints from 'express-list-endpoints';
 const app = express();
 
 app.use(cors());
@@ -36,7 +27,7 @@ try{
     //sequelize.sync({alter: true});    //force
     //console.log('Conexión establecida con la base de datos...');
     //app.listen(app.get('port'), '0.0.0.0',() => { //heroku
-    if (process.env.NODE_ENV !== 'test') {  //En modo de prueba no se necesita estar escuchando a un puerto de red
+    if (process.env.NODE_ENV?.trim() !== 'test') {  //En modo de prueba no se necesita estar escuchando a un puerto de red
         server = app.listen(app.get('port'), app.get('host'),() => {    
             console.log(`Servidor nodemon activo en ${app.get('host')}:${app.get('port')}`);
         });

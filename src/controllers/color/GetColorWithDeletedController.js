@@ -27,7 +27,7 @@ class GetColorWithDeletedController {
     execute = async (req, res) => {
         try {
             const { id } = req.params;
-            const data = await this.service.execute(id, true);
+            const data = await this.service.execute(id, false);
             res.json(data);
         } catch (error) {
             const err = handleError(error);

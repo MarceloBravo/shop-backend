@@ -23,7 +23,9 @@ class SoftDeleteColorService {
     execute = async (id) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Color no encontrado');
+            const error = new Error('Color no encontrado');
+            error.code = 404;
+            throw error;
         }
         return await this.repository.softDelete(id);
     }

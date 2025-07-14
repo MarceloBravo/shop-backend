@@ -1,4 +1,4 @@
-import './loadEnv.js';
+//import './loadEnv.js';
 import fs from 'fs';
 import path from 'path';
 

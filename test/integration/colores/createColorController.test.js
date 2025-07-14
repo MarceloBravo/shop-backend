@@ -11,6 +11,10 @@ describe('Integration Test: CreateColorController', () => {
         token = await TestAuthHelper.createUserAndLogin();
     });
 
+    afterEach(async () => {
+        // Limpiar todos los colores después de cada test
+        await ColorModel.destroy({ where: {}, force: true });
+    });
 
     it('should create a new color and return success response', async () => {
         const colorData = {
