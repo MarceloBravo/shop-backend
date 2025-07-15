@@ -12,7 +12,7 @@ class CreateRolService {
      */
     constructor(repository) {
         if (!repository) {
-            throw new Error('El repositorio es requerido');
+            throw Error('El repositorio es requerido');
         }
         this.repository = repository;
     }

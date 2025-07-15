@@ -43,4 +43,8 @@ describe('GetAllRolService', () => {
             .toThrow(expectedError);
         expect(mockRolRepository.getAll).toHaveBeenCalled();
     });
+
+    test('debería lanzar un error si no es recibido un repositorio en el constructor', () => {
+        expect(() => new GetAllRolService()).toThrow('El repositorio es requerido');
+    });
 }); 
