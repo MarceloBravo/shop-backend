@@ -27,14 +27,14 @@ class RolRepository{
     }
 
 
-    create = async (values) => {
-        const data = await RolModel.create(values);
+    create = async (values, transaction = null) => {
+        const data = await RolModel.create(values, {transaction});
         return data;
     }
 
 
-    update = async (id, data) => {
-        const [ Rol, created ] = await RolModel.findOrCreate({where:{id}, defaults: data});
+    update = async (id, data, transaction = null) => {
+        const [ Rol, created ] = await RolModel.findOrCreate({where:{id}, transaction, defaults: data});
         if(created) return {data: Rol, created};
         // Si el registro ya existe, actualiza los valores
         Rol.nombre = data.nombre;

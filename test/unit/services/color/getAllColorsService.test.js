@@ -53,4 +53,5 @@ describe('Unit Test: GetAllColorService', () => {
     it('Lanza error si no se proporciona un repositorio', () => {
         expect(() => new GetAllColorService()).toThrow('Repository is required');
     });
+    
 }); 
