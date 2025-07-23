@@ -22,6 +22,12 @@ class HardDeleteAccionesPantallaService {
      * @returns {Promise<Object>} Resultado de la operación
      */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            const error = new Error('Registro no encontrado');
+            error.code = 404;
+            throw error;
+        }
         return await this.repository.hardDelete(id, transaction);
     }
 }

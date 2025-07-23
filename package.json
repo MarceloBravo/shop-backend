@@ -7,6 +7,7 @@
     "test": "jest",
     "test:unit": "set NODE_ENV=test && jest test/unit",
     "test:integration": "set NODE_ENV=test && jest test/integration --runInBand --detectOpenHandles",
+    "test:single": "set NODE_ENV=test && jest --runInBand --detectOpenHandles",
     "route:list": "node listarRutas.mjs",
     "test:watch": "jest --watch"
   },

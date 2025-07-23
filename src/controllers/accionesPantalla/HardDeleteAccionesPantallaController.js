@@ -23,9 +23,8 @@ class HardDeleteAccionesPantallaController {
      */
     execute = async (req, res) => {
         try {
-            const {id, result} = await this.service.execute(req.params);
-            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no pudo ser eliminado o registro inexistente';  
-            res.json({ id, code: result ? 200 : 500, mensaje });
+            const {id, result} = await this.service.execute(req.params.id);
+            res.json({ id, code: 200, mensaje: 'El registro ha sido eliminado exitosamente.' });
         } catch (error) {
             const err = handleError(error);
             res.status(err.code).json(err);

@@ -24,7 +24,7 @@ class CreateAccionesPantallaService {
      * @returns {Promise<Object>} Acción de pantalla creada
      */
     execute = async (data, transaction = null) => {
-        validaDatos(data);
+        await validaDatos(data);
         return await this.repository.create(data, transaction);
     }
 }

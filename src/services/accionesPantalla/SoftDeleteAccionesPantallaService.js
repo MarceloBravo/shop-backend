@@ -22,8 +22,13 @@ class SoftDeleteAccionesPantallaService {
      * @returns {Promise<Object>} Acción de pantalla eliminada
      */
     execute = async (id, transaction = null) => {
-        const record = await this.repository.softDelete(id, transaction);
-        return record;
+        const existe = await this.repository.getById(id);
+        if (!existe) {
+            const error = new Error('Registro no encontrado');
+            error.code = 404;
+            throw error;
+        }
+        return await this.repository.softDelete(id, transaction);
     }
 }
 

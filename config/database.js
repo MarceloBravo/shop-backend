@@ -16,8 +16,6 @@ const dbPass = process.env.DB_PASS;
 const dbHost = nodeEnv === 'test' ? process.env.HOST_TEST : process.env.HOST;
 const dbPort = nodeEnv === 'test' ? process.env.PORT_TEST : process.env.DB_PORT;
 
-console.log(dbName, dbUser, dbPass, dbHost, dbPort)
-
 export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
     host: dbHost,
     port: dbPort,

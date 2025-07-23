@@ -26,8 +26,8 @@ class SoftDeleteAccionesPantallaController {
             const { id } = req.params;
             const result = await this.service.execute(id);
             const resp = {
-                code: result, 
-                mensaje: result == 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no pudo ser borrado o registro inexistente'
+                code: 200, 
+                mensaje: 'El registro ha sido borrado exitosamente.' 
             };
             res.json(resp);
         } catch (error) {

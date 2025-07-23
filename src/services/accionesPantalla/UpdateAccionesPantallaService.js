@@ -25,7 +25,7 @@ class UpdateAccionesPantallaService {
      * @returns {Promise<Object>} Acción de pantalla actualizada
      */
     execute = async (id, data, transaction = null) => {
-        validaDatos(data, true);
+        await validaDatos(data);
         const result = await this.repository.update(id, data, transaction);
         return result;
     }
