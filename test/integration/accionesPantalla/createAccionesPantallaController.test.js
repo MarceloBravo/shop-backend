@@ -30,6 +30,7 @@ describe('Integration Test: CreateAccionesPantallaController', () => {
             permite_crear: true,
             permite_actualizar: false,
             permite_eliminar: false,
+            permite_ver: false,
             permite_listar: true
         };
 

@@ -35,6 +35,11 @@ export const AccionesPantallaModel = sequelize.define('acciones_pantallas', {
         default: false,
         allowNull: false
     },
+    permite_ver:{
+        type: DataTypes.BOOLEAN,
+        default: false,
+        allowNull: false
+    },
     acceso:{
         type: DataTypes.BOOLEAN,
         default: false,

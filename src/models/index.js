@@ -9,7 +9,7 @@ const db = {};
 let sequelize;
 
 export async function loadModelsAndRelations() {
-  if (process.env.NODE_ENV === 'test') {
+  if (env === 'test') {
     // En tests, puedes importar solo los modelos necesarios o mockear
     return db;
   }

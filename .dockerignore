@@ -1,0 +1,22 @@
+# Dependencias
+node_modules
+npm-debug.log
+
+# Sistema de control de versiones
+.git
+.gitignore
+
+# Ambiente
+.env
+.env.*
+
+# Otros
+README.md
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Directorios de desarrollo
+coverage/
+docs/
+test/

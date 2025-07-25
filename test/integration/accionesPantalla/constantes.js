@@ -6,6 +6,7 @@ export const recordData = {
     pantalla_id: null,
     permite_crear: true,
     permite_actualizar: false,
+    permite_ver: false,
     permite_eliminar: false,
     permite_listar: true
 };

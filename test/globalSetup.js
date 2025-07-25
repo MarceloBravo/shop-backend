@@ -1,5 +1,3 @@
-
-
 import { sequelize } from '../config/database.js';
 // Importa los seeders necesarios
 import rolSeeder from '../seeders/20250327121711-rol-seeder.js';
