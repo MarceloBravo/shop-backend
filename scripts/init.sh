@@ -2,7 +2,7 @@
 
 # Esperar a que PostgreSQL esté listo
 echo "Esperando que la base de datos esté disponible..."
-until pg_isready -h postgres_dev -p 5432 -U postgres; do
+until pg_isready -h postgres_test -p 5432 -U postgres > /dev/null 2>&1; do
   sleep 2
 done
 

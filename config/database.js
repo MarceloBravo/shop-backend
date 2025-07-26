@@ -32,15 +32,16 @@ export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
 
 export const waitForDb = async () => {
     let intentos=0;
+    let conected = false;
     const maxIntentos = 10;
 
-    while (intentos <= 10){
+    while (!conected && intentos <= 100){
         try{
                 intentos++;
                 await sequelize.authenticate();
+                conected = true;
                 console.log('Conexión establecida con la base dedatos...');
                 //await sequelize.close();
-                return;
             }catch(e){
                 console.log(`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
                 await new Promise((res) => setTimeout(res, 3000));
