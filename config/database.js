@@ -44,7 +44,6 @@ export const waitForDb = async () => {
             }catch(e){
                 console.log(`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
                 await new Promise((res) => setTimeout(res, 3000));
-                intentos++;
             }
     }
 }
