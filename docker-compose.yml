@@ -8,9 +8,9 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - HOST
+      - DB_HOST
       - DB_PORT
-      - DB
+      - DB_NAME
       - DB_PASS
       - APP_PORT
       - DB_USER
