@@ -71,8 +71,7 @@ describe('Integration Test: UpdateAccionesPantallaController', () => {
             .put(`/api/v1/acciones_pantalla/${invalidData.id}`)
             .set('Authorization', `Bearer ${token}`)
             .send(invalidData)
-            console.log('*******************',response.body)
-            //.expect(400);
+            .expect(400);
 
         expect(response.body).toHaveProperty('error');
         expect(response.body.error).toContain('Datos no válidos');

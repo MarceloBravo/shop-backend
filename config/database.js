@@ -16,9 +16,34 @@ const dbPass = nodeEnv === 'test' ? process.env.DB_PASS_TEST : process.env.DB_PA
 const dbHost = nodeEnv === 'test' ? process.env.DB_HOST_TEST : process.env.DB_HOST;
 const dbPort = nodeEnv === 'test' ? process.env.DB_PORT_TEST : process.env.DB_PORT;
 
+const dbJson = {
+    host: dbHost,
+    port: dbPort,
+    dialect: 'postgres',
+    logging: nodeEnv !== 'test' ? console.log : false,
+};
+
 export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
     host: dbHost,
     port: dbPort,
     dialect: 'postgres',
     logging: nodeEnv !== 'test' ? console.log : false,
 });
+
+export const waitForDb = async () => {
+    let intentos=0;
+    const maxIntentos = 10;
+
+    try{
+        while (intentos <= 10){
+            intentos++;
+            await sequelize.autenticate();
+            console.log('Conexión establecida con la base dedatos...');
+            await sequelize.close();
+        }
+    }catch(e){
+        console.log(`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
+        await new Promise((res) => setTimeout(res, 3000));
+        intentos++;
+    }
+}
