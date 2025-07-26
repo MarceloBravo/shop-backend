@@ -37,9 +37,10 @@ export const waitForDb = async () => {
     try{
         while (intentos <= 10){
             intentos++;
-            await sequelize.autenticate();
+            await sequelize.authenticate();
             console.log('Conexión establecida con la base dedatos...');
-            await sequelize.close();
+            //await sequelize.close();
+            return;
         }
     }catch(e){
         console.log(`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
