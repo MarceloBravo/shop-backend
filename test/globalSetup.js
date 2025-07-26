@@ -36,6 +36,7 @@ import '../src/models/ValoracionProductoModel.js';
 
 export default async () => {
   await waitForDb();
+  console.log('Iniciando sincronización de la base de datos');
   await sequelize.sync({alter: true});
   console.log('Limpiando todas las tablas antes de los tests...');
   // Desactiva restricciones de FK temporalmente
