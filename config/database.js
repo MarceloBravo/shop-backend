@@ -43,7 +43,7 @@ export const waitForDb = async () => {
                 console.log('Conexión establecida con la base dedatos...');
                 //await sequelize.close();
             }catch(e){
-                console.log(e, `Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
+                console.log(`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
                 await new Promise((res) => setTimeout(res, 3000));
             }
     }
