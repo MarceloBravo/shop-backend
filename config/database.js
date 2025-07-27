@@ -37,14 +37,15 @@ export const waitForDb = async () => {
 
     while (!conected && intentos <= maxIntentos){
         try{
-                intentos++;
-                await sequelize.authenticate();
-                conected = true;
-                console.log('Conexión establecida con la base dedatos...');
-                //await sequelize.close();
-            }catch(e){
-                console.log(`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
-                await new Promise((res) => setTimeout(res, 3000));
-            }
+            intentos++;
+            await sequelize.authenticate();
+            conected = true;
+            console.log('Conexión establecida con la base dedatos...');
+        }catch(e){
+            console.log(`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
+            await new Promise((res) => setTimeout(res, 3000));
+        } finally {
+            await sequelize.close(); // Cierra la conexión después de la configuración
+        }
     }
 }
