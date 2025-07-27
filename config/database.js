@@ -43,7 +43,7 @@ export const waitForDb = async () => {
             conected = true;
             console.log('Conexión establecida con la base dedatos...');
         }catch(e){
-            console.log(e.errors,`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
+            console.log('ERROR: ' + JSON.stringify(e),`Esperando a base de datos. Intento ${intentos} de ${maxIntentos}`);
             await new Promise((res) => setTimeout(res, 3000));
         }
     }
