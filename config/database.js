@@ -20,7 +20,8 @@ const dbJson = {
     host: dbHost,
     port: dbPort,
     dialect: 'postgres',
-    logging: nodeEnv !== 'test' ? console.log : false,
+    //logging: nodeEnv !== 'test' ? console.log : false,
+    logging: console.log,
 };
 
 export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
