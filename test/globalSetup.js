@@ -46,16 +46,21 @@ export default async () => {
   const result = await sequelize.query(`
     SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename != 'SequelizeMeta';
   `);
+
+  console.log('Tablas encontradas:', result[0]);
   const tables = result[0].map(row => `"${row.tablename}"`).join(', ');
   if (tables.length > 0) {
     // Trunca todas las tablas en cascada y reinicia los IDs
+    console.log(`Truncando las tablas: ${tables}`);
     await sequelize.query(`TRUNCATE TABLE ${tables} RESTART IDENTITY CASCADE;`);
   }
-
+  console.log('Todas las tablas han sido truncadas y reiniciadas.');
   // Reactiva restricciones de FK
   //await sequelize.query('SET session_replication_role = DEFAULT;');
 
   // Ejecuta los seeders necesarios para los tests
   await rolSeeder.up(sequelize.getQueryInterface(), sequelize.constructor);
+  console.log('Seeder de roles ejecutado correctamente.');
   await usuarioSeeder.up(sequelize.getQueryInterface(), sequelize.constructor);
+  console.log('Seeder de usuarios ejecutado correctamente.');
 };
