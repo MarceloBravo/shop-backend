@@ -47,7 +47,7 @@ export default async () => {
     SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename != 'SequelizeMeta';
   `);
 
-  console.log('Tablas encontradas:', result[0]);
+  console.log('Tablas encontradas:', JSON.stringify(result));
   const tables = result[0].map(row => `"${row.tablename}"`).join(', ');
   if (tables.length > 0) {
     // Trunca todas las tablas en cascada y reinicia los IDs
