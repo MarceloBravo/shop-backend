@@ -4,7 +4,7 @@ import { sequelize, waitForDb } from '../config/database.js';
 import rolSeeder from '../seeders/20250327121711-rol-seeder.js';
 import usuarioSeeder from '../seeders/20250327124254-usuario-seeder.js';
 // Importa todos los modelos explícitamente para que sequelize los registre
-/*
+
 import '../src/models/AccionesPantallaModel.js';
 import '../src/models/AtributosModel.js';
 import '../src/models/AtributosProductoModel.js';
@@ -32,7 +32,7 @@ import '../src/models/TallaNumericaProductoModel.js';
 import '../src/models/TipoDimensionesModel.js';
 import '../src/models/UsuarioModel.js';
 import '../src/models/ValoracionProductoModel.js';
-*/
+
 
 export default async () => {
   await waitForDb();
