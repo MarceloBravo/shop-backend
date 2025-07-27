@@ -40,7 +40,7 @@ export default async () => {
   await sequelize.sync({alter: true});
   console.log('Limpiando todas las tablas antes de los tests...');
   // Desactiva restricciones de FK temporalmente
-  await sequelize.query('SET session_replication_role = replica;');
+  //await sequelize.query('SET session_replication_role = replica;');
 
   // Obtiene todos los nombres de tablas del esquema público, excluyendo SequelizeMeta
   const result = await sequelize.query(`
@@ -53,7 +53,7 @@ export default async () => {
   }
 
   // Reactiva restricciones de FK
-  await sequelize.query('SET session_replication_role = DEFAULT;');
+  //await sequelize.query('SET session_replication_role = DEFAULT;');
 
   // Ejecuta los seeders necesarios para los tests
   await rolSeeder.up(sequelize.getQueryInterface(), sequelize.constructor);
