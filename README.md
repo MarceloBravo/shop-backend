@@ -14,6 +14,7 @@ Backend para una aplicación de tienda online básica, dockerizada y con un fluj
 *   **Dockerizado:** Entorno de desarrollo y pruebas consistente y fácil de levantar con Docker Compose.
 *   **Integración Continua:** Workflow de GitHub Actions para ejecutar tests unitarios y de integración automáticamente.
 *   **Testing:** Cobertura de pruebas con Jest y Supertest.
+*   **Implementación de principios SOLID y Clean Code** 
 
 ## 🛠️ Tecnologías Utilizadas
 
