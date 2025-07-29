@@ -14,7 +14,8 @@
     "test:watch": "jest --watch",
     "seed": "node scripts/run-seeders.js",
     "migrate:seed": "node scripts/run-migrate-seeders.js",
-    "seed:test": "NODE_ENV=test node scripts/run-seeders.js"
+    "seed:test": "NODE_ENV=test node scripts/run-seeders.js",
+    "rutas": "node scripts/listarRutas.mjs"
   },
   "keywords": [],
   "author": "",

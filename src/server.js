@@ -29,7 +29,7 @@ try{
     //await removeDuplicateConstraints();
     //sequelize.sync({alter: true});    //force
     //console.log('Conexión establecida con la base de datos...');
-    //app.listen(app.get('port'), '0.0.0.0',() => { //heroku
+    //app.listen(app.get('port'), '0.0.0.0',() => { 
     if (process.env.NODE_ENV?.trim() !== 'test') {  //En modo de prueba no se necesita estar escuchando a un puerto de red
         server = app.listen(app.get('port'), app.get('host'),() => {    
             console.log(`Servidor nodemon activo en ${app.get('host')}:${app.get('port')}`);

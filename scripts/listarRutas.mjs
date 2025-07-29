@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import app from './src/server.js'; // Ajusta el path a tu app
+import app from '../src/server.js'; // Ajusta el path a tu app
 import listEndpoints from 'express-list-endpoints';
 
 const rutas = listEndpoints(app);
