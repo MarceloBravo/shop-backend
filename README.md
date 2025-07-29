@@ -100,7 +100,7 @@ Sigue estos pasos para levantar el entorno de desarrollo local.
 | `POST` | `/api/v1/products`  | Crea un nuevo producto.      |
 | `GET`  | `/api/v1/products/:id` | Obtiene un producto por su ID. |
 
-Para un listado completo de las rutas disponibles puedes correr el comando:
+Para un listado completo de los endpoints disponibles puedes correr el comando:
 
 * `npm run routes`
 
