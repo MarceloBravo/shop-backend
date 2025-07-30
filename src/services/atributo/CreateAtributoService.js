@@ -24,7 +24,7 @@ class CreateAtributoService {
      * @returns {Promise<Object>} Atributo creado
      */
     execute = async (data, transaction = null) => {
-        validaDatos(data, this.repository);
+        await validaDatos(data, this.repository);
         return await this.repository.create(data, transaction);
     }
 }

@@ -22,6 +22,12 @@ class SoftDeleteAtributoService {
      * @returns {Promise<Object>} Resultado de la eliminación
      */
     execute = async (id, transaction = null) => {
+        const registro = await this.repository.getById(id);
+        if (!registro) {    
+            const error = new Error('Atributo no encontrado');
+            error.code = 404;
+            throw error;
+        }       
         return await this.repository.softDelete(id, transaction);
     }
 }   

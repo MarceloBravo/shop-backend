@@ -22,7 +22,13 @@ class GetByIdAtributoService {
      * @returns {Promise<Object>} Atributo encontrado
      */
     execute = async (id, paranoid = true) => {
-        return await this.repository.getById(id, paranoid);
+        const result = await this.repository.getById(id, paranoid);
+        if(!result) {
+            const error = new Error('Atributo no encontrado');
+            error.code = 404;
+            throw error;
+        }
+        return result;
     }
 }   
 

@@ -22,7 +22,13 @@ class HardDeleteAtributoService {
      * @returns {Promise<Object>} Resultado de la eliminación
      */
     execute = async (id, transaction = null) => {
-        return await this.repository.hardDelete(id, transaction);
+        const registro = await this.repository.getById(id, false);
+        if (!registro) {    
+            const error = new Error('Registro no encontrado');
+            error.code = 404;
+            throw error;
+        }   
+        return await this.repository.hardDelete(id, transaction, false);
     }
 }
 
