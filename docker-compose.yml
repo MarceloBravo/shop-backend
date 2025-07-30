@@ -17,10 +17,13 @@ services:
       - DEFAULT_REG_POR_PAGINA
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
     depends_on:
-      - postgres_dev
-    command: sh -c "./init.sh && npm run dev"
+      - ./wait-for-it.sh postgres_dev:5432 -- npm run dev
+    command: >
+      sh -c "chmod +x ./init.sh &&
+            ./init.sh &&
+            npm run dev"
+
 
   postgres_dev:
     image: postgres:14
@@ -30,6 +33,7 @@ services:
       POSTGRES_USER: ${ POSTGRES_USER }
       POSTGRES_PASSWORD: ${ POSTGRES_PASSWORD }
       POSTGRES_DB: ${ POSTGRES_DB }
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5433:5432"
     volumes:
@@ -48,6 +52,7 @@ services:
       POSTGRES_USER: ${ POSTGRES_USER }
       POSTGRES_PASSWORD: ${ POSTGRES_PASSWORD }
       POSTGRES_DB: ${ POSTGRES_DB }
+      PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5434:5432"
     volumes:
