@@ -8,6 +8,13 @@ on:
 
 jobs:
   test:
+    env:
+          DB_USER_TEST: ${{ secrets.DB_USER_TEST }}
+          DB_PASS_TEST: ${{ secrets.DB_PASS_TEST }}
+          DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
+          DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
+          DB_PORT_TEST: ${{ secrets.DB_PORT_TEST }}
+          NODE_ENV: test
     name: Test API en Node.js ${{ matrix.node }}
     runs-on: ubuntu-latest
 
@@ -50,38 +57,10 @@ jobs:
       - name: Instalar dependencias
         run: npm ci
 
-      - name: Esperar que PostgreSQL esté listo
-        run: |
-          echo "Esperando que PostgreSQL esté listo en el puerto..."
-          for i in {1..60}; do
-            if pg_isready -h localhost -p ${{ secrets.DB_PORT_TEST }} -U postgres -d ${{ secrets.DB_NAME_TEST }}; then
-              echo "PostgreSQL está listo."
-              exit 0
-            fi
-            echo "PostgreSQL aún no está listo. Reintentando en 1 segundo..."
-            sleep 1
-          done
-          echo "Error: PostgreSQL no se inició a tiempo."
-          exit 1
-
       - name: Ejecutar tests unitarios
-        env:
-          DB_USER_TEST: ${{ secrets.DB_USER_TEST }}
-          DB_PASS_TEST: ${{ secrets.DB_PASS_TEST }}
-          DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
-          DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
-          DB_PORT_TEST: ${{ secrets.DB_PORT_TEST }}
-          NODE_ENV: test
         run: npm run test:unit
 
       - name: Ejecutar tests de integración
-        env:
-          DB_USER_TEST: ${{ secrets.DB_USER_TEST }}
-          DB_PASS_TEST: ${{ secrets.DB_PASS_TEST }}
-          DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
-          DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
-          DB_PORT_TEST: ${{ secrets.DB_PORT_TEST }}
-          NODE_ENV: test
         run: npm run test:integration
 
       - name: Reportar éxito
