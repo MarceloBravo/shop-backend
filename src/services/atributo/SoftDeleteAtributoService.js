@@ -24,7 +24,7 @@ class SoftDeleteAtributoService {
     execute = async (id, transaction = null) => {
         const registro = await this.repository.getById(id);
         if (!registro) {    
-            const error = new Error('Atributo no encontrado');
+            const error = new Error('Registro no encontrado');
             error.code = 404;
             throw error;
         }       

@@ -39,7 +39,7 @@ describe('Unit Test: SoftDeleteAtributoService', () => {
         mockRepository.getById.mockResolvedValue(null);
 
         // Act & Assert
-        await expect(service.execute(999)).rejects.toThrow('Atributo no encontrado');
+        await expect(service.execute(999)).rejects.toThrow('Registro no encontrado');
         expect(mockRepository.getById).toHaveBeenCalledWith(999);
         expect(mockRepository.softDelete).not.toHaveBeenCalled();
     });
