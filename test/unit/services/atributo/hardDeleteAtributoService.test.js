@@ -4,7 +4,7 @@ const mockRepository = {
     hardDelete: jest.fn()
 };
 
-jest.mock('../../../../src/repositories/AtributoProductoRepository.js', () => {
+jest.mock('../../../../src/repositories/AtributosRepository.js', () => {
     return jest.fn().mockImplementation(() => mockRepository);
 });
 
@@ -30,7 +30,7 @@ describe('Unit Test: HardDeleteAtributoService', () => {
 
         // Assert
         expect(mockRepository.getById).toHaveBeenCalledWith(1, false);
-        expect(mockRepository.hardDelete).toHaveBeenCalledWith(1, null, false);
+        expect(mockRepository.hardDelete).toHaveBeenCalledWith(1, null);
         expect(result).toEqual({ deleted: true });
     });
 

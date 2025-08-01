@@ -6,10 +6,10 @@ const validaDatos = (data, repository) => {
     if(id && repository.getById(id) === null){
         arrError.push("El atributo no es válido o no existe, especifíca un atributo válido.");
     }
-    if(!nombre && !valor_string && !valor_numerico){
-        arrError.push("No se han especificado un datos válidos.");
+    if((!nombre || `${nombre}`.length === 0) && !valor_string && !valor_numerico){
+        arrError.push("No se han especificado datos válidos.");
     }
-    if(nombre && (`${nombre}`.length > 100)){
+    if((!nombre || `${nombre}`.length === 0 || `${nombre}`.length > 100)){
         arrError.push("El valor ingresado para el nombre del atributo no es válido.");
     }
     if(!valor_string && !valor_numerico){
@@ -20,7 +20,7 @@ const validaDatos = (data, repository) => {
     }
 
     if(arrError.length > 0){
-        const error = new Error('Datos no válidos:');
+        const error = new Error('Datos no válidos:')
         error.code = 400;
         error.details = arrError;
         throw error;

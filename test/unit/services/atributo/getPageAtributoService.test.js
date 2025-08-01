@@ -3,7 +3,7 @@ const mockRepository = {
     getPage: jest.fn()
 };
 
-jest.mock('../../../../src/repositories/AtributoProductoRepository.js', () => {
+jest.mock('../../../../src/repositories/AtributosRepository.js', () => {
     return jest.fn().mockImplementation(() => mockRepository);
 });
 

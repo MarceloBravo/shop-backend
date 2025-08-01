@@ -28,7 +28,7 @@ class HardDeleteAtributoService {
             error.code = 404;
             throw error;
         }   
-        return await this.repository.hardDelete(id, transaction, false);
+        return await this.repository.hardDelete(id, transaction);
     }
 }
 

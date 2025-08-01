@@ -73,8 +73,8 @@ class AtributoProductoRepository{
     }
 
 
-    hardDelete = async (id, transaction, paranoid = true) => {
-        const result = await AtributosProductoModel.destroy({where: {id},transaction, force: true, paranoid});
+    hardDelete = async (id, transaction = null) => {
+        const result = await AtributosProductoModel.destroy({where: {id},transaction, force: true, paranoid: false});
         return {id, result};
     }
 
