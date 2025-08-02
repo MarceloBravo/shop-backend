@@ -25,7 +25,7 @@ class GetPageGeneroService {
     execute = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
         const offset = (page - 1) * limit;
         const result = await this.repository.getPage(offset, limit, paranoid);
-        return result;
+        return { rows: result.rows, count: result.count, totPag: Math.ceil(result.count / limit) };
     }
 }
 
