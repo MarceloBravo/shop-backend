@@ -17,11 +17,11 @@ class GetAllCategoriaService {
 
     /**
      * Ejecuta la obtención de todas las categorías
-     * @param {boolean} [includeDeleted=false] - Indica si se deben incluir las categorías eliminadas
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las categorías eliminadas
      * @returns {Promise<Array>} Lista de categorías
      */
-    execute = async (includeDeleted = false) => {
-        return await this.repository.getAll(includeDeleted);
+    execute = async (paranoid = true) => {
+        return await this.repository.getAll(paranoid);
     }
 }
 

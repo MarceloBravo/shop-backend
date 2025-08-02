@@ -18,11 +18,11 @@ class GetByIdCategoriaService {
     /**
      * Ejecuta la obtención de una categoría por su ID
      * @param {string|number} id - ID de la categoría a obtener
-     * @param {boolean} [includeDeleted=false] - Indica si se debe incluir la categoría si está eliminada
+     * @param {boolean} [paranoid=true] - Indica si se debe incluir la categoría si está eliminada
      * @returns {Promise<Object>} Categoría encontrada
      */
-    execute = async (id, includeDeleted = false) => {
-        const result = await this.repository.getById(id, includeDeleted);
+    execute = async (id, paranoid = true) => {
+        const result = await this.repository.getById(id, paranoid);
         if (!result) {
             throw new Error('Categoría no encontrada');
         }

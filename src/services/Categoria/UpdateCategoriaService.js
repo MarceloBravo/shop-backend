@@ -24,7 +24,7 @@ class UpdateCategoriaService {
      * @returns {Promise<Object>} Objeto con la categoría actualizada y un indicador de si fue creada
      */
     execute = async (id, values) => {
-        validaDatos(data);
+        validaDatos(values);
         const {data, created } = await this.repository.update(id, values);
         return { data, created };
     }

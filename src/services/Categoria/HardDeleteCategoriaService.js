@@ -23,7 +23,7 @@ class HardDeleteCategoriaService {
     execute = async (id) => {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
-            throw new Error('Categoría no encontrado');
+            throw new Error('Categoría no encontrada');
         }
         return await this.repository.hardDelete(id);
     }

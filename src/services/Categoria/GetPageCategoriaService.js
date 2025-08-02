@@ -19,12 +19,12 @@ class GetPageCategoriaService {
      * Ejecuta la obtención de una página de categorías
      * @param {number} page - Número de página
      * @param {number} limit - Límite de registros por página
-     * @param {boolean} [includeDeleted=false] - Indica si se deben incluir las categorías eliminadas
+     * @param {boolean} [paranoid=true] - Indica si se deben incluir las categorías eliminadas
      * @returns {Promise<Object>} Objeto con los registros, total de registros y total de páginas
      */
-    execute = async (page, limit, includeDeleted = false) => {
+    execute = async (page, limit, paranoid = true) => {
         const offset = (page - 1) * limit;
-        const { rows, count } = await this.repository.getPage(offset, limit, includeDeleted);
+        const { rows, count } = await this.repository.getPage(offset, limit, paranoid);
         const totPag = Math.ceil(count / limit);
         return { rows, count, totPag };
     }
