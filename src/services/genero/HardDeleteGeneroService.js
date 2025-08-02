@@ -25,7 +25,9 @@ class HardDeleteGeneroService {
     execute = async (id) => {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
-            throw new Error('Género no encontrado');
+            const error = new Error('Género no encontrado');
+            error.code = 404;
+            throw error;
         }
         return await this.repository.hardDelete(id);
     }

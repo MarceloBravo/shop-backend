@@ -11,7 +11,10 @@ class UpdateGeneroController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de géneros
      */
-    constructor(repository = new GeneroRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new GeneroRepository();
+        }
         this.service = new UpdateGeneroService(repository);
     }
 
@@ -25,7 +28,7 @@ class UpdateGeneroController {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
-            res.json({genero: result.genero, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`});
+            res.json({genero: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`});
         } catch (error) {
             const err = handleError(error);
             res.status(err.code).json(err);

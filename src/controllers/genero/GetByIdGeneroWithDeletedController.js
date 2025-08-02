@@ -11,7 +11,10 @@ class GetByIdGeneroWithDeletedController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de géneros
      */
-    constructor(repository = new GeneroRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new GeneroRepository();
+        }
         this.service = new GetByIdGeneroService(repository);
     }
 
