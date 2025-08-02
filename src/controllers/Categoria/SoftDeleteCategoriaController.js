@@ -27,7 +27,7 @@ class SoftDeleteCategoriaController {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const resp = {code: result, mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
+            const resp = {code: result.result ? 200 : 500, mensaje: result.result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente' };
             res.json(resp);
         } catch (e) {
             const err = handleError(e);

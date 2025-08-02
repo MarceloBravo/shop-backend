@@ -27,8 +27,8 @@ class UpdateCategoriaController {
     execute = async (req, res) => {
         try {
             const { id } = req.params;
-            const result = await this.service.execute(id, req.body);
-            res.json({color: result.color, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`})
+            const data = await this.service.execute(id, req.body);
+            res.json({data: data.data, mensaje: `Registro ${data.created ? 'creado' : 'actualizado'} exitosamente.`})
         } catch (e) {
             const err = handleError(e);
             res.status(err.code).json(err);

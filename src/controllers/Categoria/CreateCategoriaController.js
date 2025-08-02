@@ -24,8 +24,8 @@ class CreateCategoriaController {
      */
     execute = async (req, res) => {
         try {
-            const result = await this.service.execute(req.body);
-            res.json({color: result.color, mensaje: 'Registro creado exitosamente.'});
+            const data = await this.service.execute(req.body);
+            res.json({data, mensaje: 'El registro ha sido creado exitosamente.'});
         } catch (e) {
             const err = handleError(e);
             res.status(err.code).json(err);
