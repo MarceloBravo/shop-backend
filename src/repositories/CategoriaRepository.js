@@ -46,7 +46,7 @@ class CategoriaRepository {
         let [ Categoria, created ] = await CategoriaModel.findOrCreate({where:{id}, defaults: data, transaction, paranoid:false});
         if(created) return {data: Categoria, created};
         // Si el registro ya existe, actualiza los valores
-        if(Categoria.deleted_at !== null) {
+        if(Categoria.deletedAt !== null) {
             await Categoria.restore({transaction});
             created = true;
         }
