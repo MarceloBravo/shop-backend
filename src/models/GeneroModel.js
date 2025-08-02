@@ -11,18 +11,12 @@ export const GeneroModel = sequelize.define('generos', {
         type: DataTypes.ENUM('Masculino','Femenino','Unisex','No aplica'),
         allowNull: false,
         default: 'No aplica'
-    },
-    deleted_at: {
-        type:DataTypes.DATE,
-        allowNull: true
     }
-
 },{
     paranoid: true,             // Habilita el soft delete
     timestamps: true,
     tableName: 'generos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,            // Usa snake_case en vez de camelCase
-    deletedAt: 'deleted_at', // Cambia el nombre de la columna de soft delete
 });
 
 

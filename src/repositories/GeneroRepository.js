@@ -43,7 +43,7 @@ class GeneroRepository{
 
     update = async (id, data, transaction = null) => {
         let [ record, created ] = await GeneroModel.findOrCreate({where:{id}, transaction, defaults: data, paranoid:false});
-        if(created) return {data: genero, created};
+        if(created) return {data: record, created};
         if(record.deletedAt !== null) {
             await record.restore({transaction});
             created = true;

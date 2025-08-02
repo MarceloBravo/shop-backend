@@ -27,9 +27,9 @@ class CreateGeneroService {
      */
     execute = async (data) => {
         validaDatos(data);
-        const existe = await this.repository.getBy('nombre', data.nombre);
+        const existe = await this.repository.getBy('genero', data.genero);
         if (existe) {
-            throw new Error('Ya existe un género con ese nombre');
+            throw new Error('El género ya existe');
         }
         return await this.repository.create(data);
     }
