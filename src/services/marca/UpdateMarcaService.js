@@ -26,10 +26,6 @@ class UpdateMarcaService {
      */
     execute = async (id, data, transaction = null) => {
         validaDatos(data);
-        const existe = await this.repository.getBy('nombre', data.nombre);
-        if (existe && existe.id !== id) {
-            throw new Error('Ya existe una marca con ese nombre');
-        }
         const record = await this.repository.update(id, data, transaction);
         return record;
     }

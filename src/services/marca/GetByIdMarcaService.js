@@ -20,9 +20,16 @@ class GetByIdMarcaService {
      * @param {number} id - ID de la marca a obtener
      * @param {boolean} [paranoid=true] - Si es true, se obtienen solo las marcas no eliminadas
      * @returns {Promise<Object>} Marca encontrada
+     * @throws {Error} Si la marca no existe
      */
     execute = async (id, paranoid = true) => {
-        return await this.repository.getById(id, paranoid);
+        const marca = await this.repository.getById(id, paranoid);
+        if (!marca) {
+            const error = new Error('Marca no encontrada');
+            error.code = 404;
+            throw error;
+        }
+        return marca;
     }
 }
 

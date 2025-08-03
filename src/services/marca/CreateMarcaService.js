@@ -27,7 +27,9 @@ class CreateMarcaService {
         validaDatos(data);
         const existe = await this.repository.getBy('nombre', data.nombre);
         if (existe) {
-            throw new Error('Ya existe una marca con ese nombre');
+            const error = new Error('Ya existe una marca con ese nombre');
+            error.code = 400;
+            throw error;
         }
         return await this.repository.create(data, transaction);
     }

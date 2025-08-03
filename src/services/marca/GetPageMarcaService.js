@@ -20,11 +20,19 @@ class GetPageMarcaService {
      * @param {number} [pag=1] - Número de página a obtener
      * @param {number} [limit=process.env.DEFAULT_REG_POR_PAGINA] - Número máximo de marcas por página
      * @param {boolean} [paranoid=true] - Si es true, se obtienen solo las marcas no eliminadas
-     * @returns {Promise<Array>} Lista de marcas de la página solicitada
+     * @returns {Promise<Object>} Lista de marcas de la página solicitada con información de paginación
      */
     execute = async (pag = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {
         const desde = (pag - 1) * limit;
-        return await this.repository.getPage(desde, limit, paranoid);
+        const result = await this.repository.getPage(desde, limit, paranoid);
+        
+        // Calcular el total de páginas
+        const totPag = Math.ceil(result.count / limit);
+        
+        return {
+            ...result,
+            totPag
+        };
     }
 }
 

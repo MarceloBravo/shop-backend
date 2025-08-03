@@ -1,7 +1,6 @@
 const validaDatos = (data) => {
     let errors = [];
     const { nombre, logo } = data;
-    console.log(nombre, logo)
     if(!nombre || nombre.trim().length ===  0 || nombre.length > 30){
         errors.push("El nombre la marca es obligatorio y debe tener un máximo de hasta 30 carácteres.");
     }

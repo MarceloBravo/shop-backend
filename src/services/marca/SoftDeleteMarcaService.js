@@ -22,8 +22,13 @@ class SoftDeleteMarcaService {
      * @returns {Promise<Object>} Marca eliminada
      */
     execute = async (id, transaction = null) => {
-        const record = await this.repository.softDelete(id, transaction);
-        return record;
+        const existe = await this.repository.getById(id, true);
+        if (!existe) {
+            const error = new Error('Regístro no encontrado');
+            error.code = 404;
+            throw error;
+        }
+        return await this.repository.softDelete(id, transaction);
     }
 }
 
