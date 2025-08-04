@@ -36,7 +36,7 @@ describe('Integration Test: UpdateMarcaController', () => {
             .set('Authorization', `Bearer ${token}`)
             .send(updateData)
             .expect(200);
-        console.log(response.body)
+            
         expect(response.body).toHaveProperty('marca');
         expect(response.body).toHaveProperty('mensaje');
         expect(response.body.marca.nombre).toBe(updateData.nombre);

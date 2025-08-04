@@ -26,8 +26,7 @@ describe('Integration Test: CreateMarcaController', () => {
             .post('/api/v1/marca') // Ajusta la ruta según tu configuración
             .set('Authorization', `Bearer ${token}`) // Incluye el token en el encabezado
             .send(marcaData)
-            console.log(response.body);
-            //.expect(200);
+            .expect(200);
 
         expect(response.body).toHaveProperty('data');
         expect(response.body.data).toHaveProperty('id');

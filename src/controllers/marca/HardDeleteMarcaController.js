@@ -29,7 +29,8 @@ class HardDeleteMarcaController {
             const { id } = req.params;
             const result = await this.service.execute(id);
             const resp = {
-                code: result,
+                id,
+                code: result ? 200 : 500,
                 mensaje: result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no pudo ser eliminado o registro inexistente'
             };
             res.json(resp);
