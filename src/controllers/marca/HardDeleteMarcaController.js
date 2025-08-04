@@ -11,7 +11,10 @@ class HardDeleteMarcaController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de marcas
      */
-    constructor(repository = new MarcaRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MarcaRepository();
+        }
         this.service = new HardDeleteMarcaService(repository);
     }
 

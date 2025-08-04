@@ -36,7 +36,7 @@ describe('Integration Test: UpdateMarcaController', () => {
             .set('Authorization', `Bearer ${token}`)
             .send(updateData)
             .expect(200);
-            
+        console.log(response.body)
         expect(response.body).toHaveProperty('marca');
         expect(response.body).toHaveProperty('mensaje');
         expect(response.body.marca.nombre).toBe(updateData.nombre);
@@ -101,6 +101,6 @@ describe('Integration Test: UpdateMarcaController', () => {
             .expect(400);
 
         expect(response.body).toHaveProperty('error');
-        expect(response.body.error).toContain('Ya existe una marca con ese nombre');
+        expect(response.body.error).toContain('Ya existe un registro con el valor ingresado.');
     });
 }); 

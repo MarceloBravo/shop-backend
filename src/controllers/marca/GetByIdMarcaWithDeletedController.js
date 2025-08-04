@@ -10,7 +10,10 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener un registro de marca por su ID.
  */
 class GetByIdMarcaWithDeletedController{
-    constructor(repository = new MarcaRepository()){
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MarcaRepository();
+        }
         this.service = new GetByIdMarcaService(repository);
     }  
 

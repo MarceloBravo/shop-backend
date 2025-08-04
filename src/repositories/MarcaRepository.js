@@ -10,7 +10,7 @@ class MarcaRepository{
     getBy = async (campo, valor, paranoid = true) => {
         const where = {};
         where[campo] = valor;
-        const data = await ColorModel.findOne({where, paranoid});
+        const data = await MarcaModel.findOne({where, paranoid});
         return data;
     }
 
@@ -42,7 +42,7 @@ class MarcaRepository{
 
 
     update = async (id, data, transaction = null) => {
-        let [ record, created ] = await MarcaModel.findOrCreate({where:{id}, defaults: data,transaction, paranoid:false});
+        let [ record, created ] = await MarcaModel.findOrCreate({where:{id}, transaction, defaults: data, paranoid:false});
         if(created) return {data: record, created};
         if(record.deletedAt !== null) {
             await record.restore({transaction});
@@ -51,7 +51,7 @@ class MarcaRepository{
         // Si el registro ya existe, actualiza los valores
         record.nombre = data.nombre;
         record.logo = data.logo;
-
+        
         await record.save();
 
         return {data: record, created};

@@ -10,8 +10,11 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener todas las marcas de la base de datos.
  */
 class GetAllMarcaWithDeletedController{
-    constructor(respository = new MarcaRepository()){
-        this.service = new GetAllMarcaService(respository);
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MarcaRepository();
+        }
+        this.service = new GetAllMarcaService(repository);
     }  
 
     /**

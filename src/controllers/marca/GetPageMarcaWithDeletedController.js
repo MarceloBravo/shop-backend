@@ -11,7 +11,10 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de marcas de la base de datos.
  */
 class GetPageMarcaWithDeletedController{
-    constructor(repository = new MarcaRepository()){
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MarcaRepository();
+        }
         this.service = new GetPageMarcaService(repository);
     }   
 
