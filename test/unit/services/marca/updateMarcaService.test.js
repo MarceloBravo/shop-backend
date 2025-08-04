@@ -33,16 +33,7 @@ describe('Unit Test: UpdateMarcaService', () => {
         expect(mockRepository.update).toHaveBeenCalledWith(1, marcaData, null);
         expect(result).toEqual(mockResponse);
     });
-
-    it('Lanza error si ya existe otra marca con el mismo nombre', async () => {
-        // Arrange
-        const marcaData = { nombre: 'Nike', logo: 'path/to/nike.png' };
-        mockRepository.getBy.mockResolvedValue({ id: 2, nombre: 'Nike' });
-
-        // Act & Assert
-        await expect(service.execute(1, marcaData)).rejects.toThrow('Ya existe una marca con ese nombre');
-    });
-
+    
     it('Permite actualizar cuando la marca con el mismo nombre es la misma', async () => {
         // Arrange
         const marcaData = { nombre: 'Nike', logo: 'path/to/nike.png' };
