@@ -22,9 +22,11 @@ class SoftDeleteMaterialService {
      * @returns {Promise<number>} Código de estado HTTP (200 si se eliminó, 404 si no se encontró)
      */
     execute = async (id, transaction = null) => {
-        const existe = await this.repository.getById(id, false);
+        const existe = await this.repository.getById(id, true);
         if (!existe) {
-            throw new Error('Material no encontrado');
+            const error = new Error('Material no encontrado');
+            error.code = 404
+            throw error;
         }
         const { result } = await this.repository.softDelete(id, transaction);
         return result;

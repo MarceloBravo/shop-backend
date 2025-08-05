@@ -22,7 +22,13 @@ class GetByIdMaterialService {
      * @returns {Promise<Object>} Material encontrado
      */
     execute = async (id, paranoid = true) => {
-        return await this.repository.getById(id, paranoid);
+        const material = await this.repository.getById(id, paranoid);
+        if (!material) {
+            const error = new Error('Material no encontrado');
+            error.code = 404;
+            throw error;
+        }
+        return material;
     }
 }
 

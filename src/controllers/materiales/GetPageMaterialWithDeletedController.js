@@ -10,7 +10,10 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de material incluyendo los regístros marcados como soft-deleted.
  * */
 class GetPageMaterialWithDeletedController{
-    constructor(repository = new MaterialRepository()){
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MaterialRepository();
+        }
         this.service = new GetPageMaterialService(repository);
     }
     

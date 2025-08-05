@@ -11,7 +11,10 @@ class UpdateMaterialController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de materiales
      */
-    constructor(repository = new MaterialRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MaterialRepository();
+        }
         this.service = new UpdateMaterialService(repository);
     }
 

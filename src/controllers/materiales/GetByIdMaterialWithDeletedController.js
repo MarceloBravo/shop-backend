@@ -11,7 +11,10 @@ import { handleError } from "../../shared/functions.js";
  *               incluyendo los regístros marcados con soft-deleted.
  * */
 class GetByIdMaterialWithDeletedController{
-    constructor(repository = new MaterialRepository()){
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MaterialRepository();
+        }
         this.service = new GetByIdMaterialService(repository);
     }
     

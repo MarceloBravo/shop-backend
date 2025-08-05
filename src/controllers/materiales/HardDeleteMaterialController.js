@@ -11,7 +11,10 @@ class HardDeleteMaterialController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de materiales
      */
-    constructor(repository = new MaterialRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MaterialRepository();
+        }
         this.service = new HardDeleteMaterialService(repository);
     }
 
@@ -25,7 +28,7 @@ class HardDeleteMaterialController {
         try {
             const { id } = req.params;
             const { result } = await this.service.execute(id);
-            const mensaje = result ? 'El material ha sido eliminado exitosamente.' : 'El material no pudo ser eliminado o no existe';
+            const mensaje = result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no pudo ser eliminado o no existe';
             res.json({ id, code: result ? 200 : 500, mensaje });
         } catch (error) {
             const err = handleError(error);

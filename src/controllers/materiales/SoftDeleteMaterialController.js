@@ -11,7 +11,10 @@ class SoftDeleteMaterialController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de materiales
      */
-    constructor(repository = new MaterialRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new MaterialRepository();
+        }
         this.service = new SoftDeleteMaterialService(repository);
     }
 
@@ -26,8 +29,9 @@ class SoftDeleteMaterialController {
             const { id } = req.params;
             const result = await this.service.execute(id);
             const resp = {
-                code: result,
-                mensaje: result ? 'El material ha sido eliminado exitosamente.' : 'El material no pudo ser eliminado o no existe'
+                id,
+                code: result ? 200 : 404,
+                mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no pudo ser borrado o no existe'
             };
             res.json(resp);
         } catch (error) {

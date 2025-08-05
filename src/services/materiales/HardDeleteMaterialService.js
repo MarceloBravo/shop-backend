@@ -24,7 +24,9 @@ class HardDeleteMaterialService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
-            throw new Error('Material no encontrado');
+            const error = new Error('Material no encontrado');
+            error.code = 404;
+            throw error;
         }
         return await this.repository.hardDelete(id, transaction);
     }
