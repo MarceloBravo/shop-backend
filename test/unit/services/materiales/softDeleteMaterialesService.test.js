@@ -4,26 +4,26 @@ const mockRepository = {
     getById: jest.fn()
 };
 
-jest.mock('../../../../src/repositories/MarcaRepository.js', () => {
+jest.mock('../../../../src/repositories/MaterialRepository.js', () => {
     return jest.fn().mockImplementation(() => mockRepository);
 });
 
-import SoftDeleteMarcaService from '../../../../src/services/marca/SoftDeleteMarcaService.js';
+import SoftDeleteMaterialesService from '../../../../src/services/materiales/SoftDeleteMaterialService.js';
 
-describe('Unit Test: SoftDeleteMarcaService', () => {
+describe('Unit Test: SoftDeleteMaterialesService', () => {
     let service;
 
     beforeEach(() => {
         // Limpia todos los mocks antes de cada test
         jest.clearAllMocks();
-        service = new SoftDeleteMarcaService(mockRepository);
+        service = new SoftDeleteMaterialesService(mockRepository);
     });
 
-    it('Elimina una marca lógicamente exitosamente', async () => {
+    it('Elimina una materiales lógicamente exitosamente', async () => {
         // Arrange
-        const mockMarca = { id: 1, nombre: 'Nike', logo: 'path/to/nike.png' };
-        mockRepository.getById.mockResolvedValue(mockMarca);
-        mockRepository.softDelete.mockResolvedValue(mockMarca);
+        const mockMateriales = { id: 1, valor: 'Lana' };
+        mockRepository.getById.mockResolvedValue(mockMateriales);
+        mockRepository.softDelete.mockResolvedValue(mockMateriales);
 
         // Act
         const result = await service.execute(1);
@@ -31,15 +31,15 @@ describe('Unit Test: SoftDeleteMarcaService', () => {
         // Assert
         expect(mockRepository.getById).toHaveBeenCalledWith(1, true);
         expect(mockRepository.softDelete).toHaveBeenCalledWith(1, null);
-        expect(result).toEqual(mockMarca);
+        expect(result).toEqual(mockMateriales);
     });
 
-    it('Elimina una marca con transacción', async () => {
+    it('Elimina una materiales con transacción', async () => {
         // Arrange
         const mockTransaction = { id: 'transaction-123' };
-        const mockMarca = { id: 1, nombre: 'Nike', logo: 'path/to/nike.png' };
-        mockRepository.getById.mockResolvedValue(mockMarca);
-        mockRepository.softDelete.mockResolvedValue(mockMarca);
+        const mockMateriales = { id: 1, valor: 'Cuero' };
+        mockRepository.getById.mockResolvedValue(mockMateriales);
+        mockRepository.softDelete.mockResolvedValue(mockMateriales);
 
         // Act
         const result = await service.execute(1, mockTransaction);
@@ -47,10 +47,10 @@ describe('Unit Test: SoftDeleteMarcaService', () => {
         // Assert
         expect(mockRepository.getById).toHaveBeenCalledWith(1, true);
         expect(mockRepository.softDelete).toHaveBeenCalledWith(1, mockTransaction);
-        expect(result).toEqual(mockMarca);
+        expect(result).toEqual(mockMateriales);
     });
 
-    it('Lanza error cuando la marca no existe', async () => {
+    it('Lanza error cuando la materiales no existe', async () => {
         // Arrange
         mockRepository.getById.mockResolvedValue(null);
 
@@ -61,6 +61,6 @@ describe('Unit Test: SoftDeleteMarcaService', () => {
     });
 
     it('Lanza error si no se proporciona un repositorio', () => {
-        expect(() => new SoftDeleteMarcaService()).toThrow('El repositorio es requerido');
+        expect(() => new SoftDeleteMaterialesService()).toThrow('El repositorio es requerido');
     });
 }); 

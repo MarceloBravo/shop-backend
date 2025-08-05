@@ -49,7 +49,7 @@ describe('Unit Test: GetByIdGeneroService', () => {
         mockRepository.getById.mockResolvedValue(null);
 
         // Act & Assert
-        await expect(service.execute(999)).rejects.toThrow('Regístro no encontrado');
+        await expect(service.execute(999)).rejects.toThrow('Registro no encontrado');
         expect(mockRepository.getById).toHaveBeenCalledWith(999, true);
     });
 

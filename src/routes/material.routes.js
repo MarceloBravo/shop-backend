@@ -30,7 +30,7 @@ router.get('/deleted/page/:pag/:limit?', checkToken, getPageMaterialWithDeletedC
 
 router.get('/', getAllMaterialController.execute);
 router.get('/:id', getByIdMaterialController.execute);
-router.get('/page/:page/:limit?', getPageMaterialController.execute);
+router.get('/page/:pag/:limit?', getPageMaterialController.execute);
 router.post('/', checkToken, createMaterialController.execute);
 router.put('/:id', checkToken, updateMaterialController.execute);
 router.delete('/:id', checkToken, hardDeleteMaterialController.execute);

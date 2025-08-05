@@ -25,7 +25,7 @@ class HardDeleteMenuTiendaService{
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
-            throw new Error('Regístro Menú-Pantall no encontrado');
+            throw new Error('Registro Menú-Pantall no encontrado');
         }
         return await this.repository.hardDelete(id, transaction);
     }

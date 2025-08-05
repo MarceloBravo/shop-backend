@@ -25,7 +25,7 @@ class GetByIdGeneroService {
     execute = async (id, paranoid = true) => {
         const data = await this.repository.getById(id, paranoid);
         if(!data){
-            const error = new Error('Regístro no encontrado');
+            const error = new Error('Registro no encontrado');
             error.code = 404;
             throw error;
         }

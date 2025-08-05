@@ -41,7 +41,7 @@ describe('Integration Test: GetGeneroController', () => {
             .expect(404);
             
         expect(response.body).toHaveProperty('error');
-        expect(response.body.error).toContain('Error: Regístro no encontrado');
+        expect(response.body.error).toContain('Error: Registro no encontrado');
     });
 }); 
 

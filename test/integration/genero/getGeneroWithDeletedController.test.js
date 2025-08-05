@@ -65,6 +65,6 @@ describe('Integration Test: GetGeneroWithDeletedController', () => {
             
         expect(response.statusCode).toBe(404);
         expect(response.body).toHaveProperty('error');
-        expect(response.body.error).toContain('Error: Regístro no encontrado');
+        expect(response.body.error).toContain('Error: Registro no encontrado');
     });
 }); 

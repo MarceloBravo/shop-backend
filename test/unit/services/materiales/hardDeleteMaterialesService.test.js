@@ -4,26 +4,26 @@ const mockRepository = {
     getById: jest.fn()
 };
 
-jest.mock('../../../../src/repositories/MarcaRepository.js', () => {
+jest.mock('../../../../src/repositories/MaterialRepository.js', () => {
     return jest.fn().mockImplementation(() => mockRepository);
 });
 
-import HardDeleteMarcaService from '../../../../src/services/marca/HardDeleteMarcaService.js';
+import HardDeleteMaterialesService from '../../../../src/services/materiales/HardDeleteMaterialService.js';
 
-describe('Unit Test: HardDeleteMarcaService', () => {
+describe('Unit Test: HardDeleteMaterialesService', () => {
     let service;
 
     beforeEach(() => {
         // Limpia todos los mocks antes de cada test
         jest.clearAllMocks();
-        service = new HardDeleteMarcaService(mockRepository);
+        service = new HardDeleteMaterialesService(mockRepository);
     });
 
-    it('Elimina una marca físicamente exitosamente', async () => {
+    it('Elimina una materiales físicamente exitosamente', async () => {
         // Arrange
-        const mockMarca = { id: 1, nombre: 'Nike', logo: 'path/to/nike.png' };
+        const mockMateriales = { id: 1, valor: 'Cuero' };
         const mockResult = { deleted: true };
-        mockRepository.getById.mockResolvedValue(mockMarca);
+        mockRepository.getById.mockResolvedValue(mockMateriales);
         mockRepository.hardDelete.mockResolvedValue(mockResult);
 
         // Act
@@ -35,12 +35,12 @@ describe('Unit Test: HardDeleteMarcaService', () => {
         expect(result).toEqual(mockResult);
     });
 
-    it('Elimina una marca con transacción', async () => {
+    it('Elimina una materiales con transacción', async () => {
         // Arrange
         const mockTransaction = { id: 'transaction-123' };
-        const mockMarca = { id: 1, nombre: 'Nike', logo: 'path/to/nike.png' };
+        const mockMateriales = { id: 1, valor: 'Cuero' };
         const mockResult = { deleted: true };
-        mockRepository.getById.mockResolvedValue(mockMarca);
+        mockRepository.getById.mockResolvedValue(mockMateriales);
         mockRepository.hardDelete.mockResolvedValue(mockResult);
 
         // Act
@@ -52,7 +52,7 @@ describe('Unit Test: HardDeleteMarcaService', () => {
         expect(result).toEqual(mockResult);
     });
 
-    it('Lanza error cuando la marca no existe', async () => {
+    it('Lanza error cuando la materiales no existe', async () => {
         // Arrange
         mockRepository.getById.mockResolvedValue(null);
 
@@ -63,6 +63,6 @@ describe('Unit Test: HardDeleteMarcaService', () => {
     });
 
     it('Lanza error si no se proporciona un repositorio', () => {
-        expect(() => new HardDeleteMarcaService()).toThrow('El repositorio es requerido');
+        expect(() => new HardDeleteMaterialesService()).toThrow('El repositorio es requerido');
     });
 }); 

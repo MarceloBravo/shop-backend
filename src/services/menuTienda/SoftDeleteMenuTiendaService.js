@@ -25,7 +25,7 @@ class SoftDeleteMenuTiendaService{
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Regístro Menú-Pantalla no encontrado');
+            throw new Error('Registro Menú-Pantalla no encontrado');
         }
         const {result} = await this.repository.softDelete(id, transaction);
         return result;

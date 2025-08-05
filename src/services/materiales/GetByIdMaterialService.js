@@ -24,7 +24,7 @@ class GetByIdMaterialService {
     execute = async (id, paranoid = true) => {
         const material = await this.repository.getById(id, paranoid);
         if (!material) {
-            const error = new Error('Material no encontrado');
+            const error = new Error('Registro no encontrado');
             error.code = 404;
             throw error;
         }

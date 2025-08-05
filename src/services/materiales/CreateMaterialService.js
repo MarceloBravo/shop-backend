@@ -27,7 +27,9 @@ class CreateMaterialService {
         validaDatos(data);
         const existe = await this.repository.getBy('valor', data.valor);
         if (existe) {
-            throw new Error('Ya existe un material con ese valor');
+            const error = new Error('Ya existe un material con ese valor');
+            error.code = 400;
+            throw error;
         }
         return await this.repository.create(data, transaction);
     }

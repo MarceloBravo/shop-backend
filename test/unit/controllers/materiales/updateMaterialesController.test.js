@@ -39,8 +39,8 @@ describe('Unit Test: UpdateMaterialesController', () => {
 
         expect(mockRepository.update).toHaveBeenCalledWith(id, materialesData, null);
         expect(res.json).toHaveBeenCalledWith({
-            material: mockResponse.material,
-            mensaje: 'Material actualizado exitosamente.'
+            material: mockResponse.material.material,
+            mensaje: 'Registro actualizado exitosamente.'
         });
         expect(res.status).not.toHaveBeenCalled();
     });
@@ -63,8 +63,8 @@ describe('Unit Test: UpdateMaterialesController', () => {
         await controller.execute(req, res);
         expect(mockRepository.update).toHaveBeenCalledWith(id, materialesData, null);
         expect(res.json).toHaveBeenCalledWith({
-            material: mockResponse.material,
-            mensaje: 'Material creado exitosamente.'
+            material: mockResponse.material.material,
+            mensaje: 'Registro creado exitosamente.'
         });
     });
 

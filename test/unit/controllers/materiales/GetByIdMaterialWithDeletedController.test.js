@@ -44,7 +44,7 @@ describe('Unit Test: GetByIdMaterialWithDeletedController', () => {
         expect(res.json).toHaveBeenCalledWith({
             code: 404,
             details: [],
-            error: 'Error: Material no encontrado'
+            error: 'Error: Registro no encontrado'
         });
     });
 

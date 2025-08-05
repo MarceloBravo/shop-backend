@@ -29,8 +29,8 @@ class UpdateMaterialController {
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
             res.json({
-                material: result.material,
-                mensaje: `Material ${result.created ? 'creado' : 'actualizado'} exitosamente.`
+                material: result.data,
+                mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`
             });
         } catch (error) {
             const err = handleError(error);

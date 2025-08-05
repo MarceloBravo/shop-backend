@@ -24,12 +24,11 @@ class SoftDeleteMaterialService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id, true);
         if (!existe) {
-            const error = new Error('Material no encontrado');
+            const error = new Error('Registro no encontrado');
             error.code = 404
             throw error;
         }
-        const { result } = await this.repository.softDelete(id, transaction);
-        return result;
+        return await this.repository.softDelete(id, transaction);
     }
 }
 
