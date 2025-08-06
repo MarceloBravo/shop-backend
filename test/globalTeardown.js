@@ -1,6 +1,6 @@
-// backend-cv/test/globalTeardown.js
-import { sequelize } from '../src/models/index.js';
+const { sequelize } = require('../config/database.js');
 
-export default async () => {
+module.exports = async () => {
   await sequelize.close();
+  console.log('Database connection closed.');
 };

@@ -1,14 +1,14 @@
 import cors from 'cors';
 import express from 'express';
 import morgan from 'morgan';
-import { loadModelsAndRelations } from '../models/index.js';
+import dbPromise from '../models/index.js';
 import rutas from './routes/rutas.js';
 
 const nodeEnv = process.env.NODE_ENV?.trim() || 'development';
 const app = express();
 
 // Inicializa modelos y relaciones antes de usar rutas
-await loadModelsAndRelations();
+
 
 app.use(cors());
 app.use(express.json()); // Para procesar JSON
