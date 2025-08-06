@@ -25,6 +25,12 @@ class CreateMenuService {
      */
     execute = async (data, transaction = null) => {
         await validaDatos(data);
+        const existe = await this.repository.getBy('nombre', data.nombre);
+        if(existe){
+            const error = new Error('El menú ya existe');
+            error.code = 400;
+            throw error;
+        }
         return await this.repository.create(data, transaction);
     }
 }

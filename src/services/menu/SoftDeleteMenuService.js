@@ -24,9 +24,12 @@ class SoftDeleteMenuService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Menú no encontrado');
+            const error = new Error('Menú no encontrado');
+            error.code = 400;
+            throw error;
         }
-        return await this.repository.softDelete(id, transaction);
+        const result = await this.repository.softDelete(id, transaction);
+        return result;
     }
 }
 

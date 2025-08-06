@@ -7,6 +7,13 @@ class MenuRepository{
     }
 
 
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = {campo: valor}
+        const data = await MenuModel.findOne({where, paranoid});
+        return data;
+    }
+
+
     getAll = async (paranoid = true) => {
         const { rows, count } = await MenuModel.findAndCountAll({
             order: [['nombre','ASC']],

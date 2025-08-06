@@ -10,7 +10,9 @@ class HardDeleteMenuService {
      */
     constructor(repository) {
         if (!repository) {
-            throw new Error('El repositorio es requerido');
+            const error = new Error('El repositorio es requerido');
+            error.code = 400;
+            throw error;
         }
         this.repository = repository;
     }
@@ -24,7 +26,9 @@ class HardDeleteMenuService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
-            throw new Error('Menú no encontrado');
+            const error = new Error('Menú no encontrado');
+            error.code = 400;
+            throw error;
         }
         return await this.repository.hardDelete(id, transaction);
     }
