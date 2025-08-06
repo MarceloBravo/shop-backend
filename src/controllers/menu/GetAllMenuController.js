@@ -11,7 +11,10 @@ class GetAllMenuController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de menús
      */
-    constructor(repository = new MenuRepository()) {
+    constructor(repository) {
+        if(!repository) {
+            repository = new MenuRepository()
+        }
         this.service = new GetAllMenuService(repository);
     }
 

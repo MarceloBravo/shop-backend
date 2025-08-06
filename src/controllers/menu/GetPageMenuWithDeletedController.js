@@ -10,8 +10,11 @@ import { handleError } from "../../shared/functions.js";
  * @description Este controlador se encarga de manejar la lógica para obtener una página de registros de menús de la base de datos.
  */
 class GetPageMenuWithDeletedController{
-    constructor(menuRepository = new MenuRepository()){
-        this.service = new GetPageMenuService(menuRepository);
+    constructor(repository) {
+        if(!repository) {
+            repository = new MenuRepository()
+        }
+                this.service = new GetPageMenuService(repository);
     }
 
     /**

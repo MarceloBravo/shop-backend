@@ -1,0 +1,29 @@
+import request from 'supertest';
+import { app } from '../../../src/index.js';
+import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import { MenuModel } from '../../../src/models/MenuModel.js';
+
+describe('Integration Test: GetPageMenuWithDeletedController', () => {
+    let token;
+
+    beforeAll(async () => {
+        token = await TestAuthHelper.createUserAndLogin();
+        const menu = await MenuModel.create({ nombre: 'Inicio', ruta: '/inicio', icono: 'home' });
+        await menu.destroy();
+    });
+
+    afterAll(async () => {
+        await MenuModel.destroy({ where: {}, force: true });
+    });
+
+    it('should get a paginated list of menus including deleted', async () => {
+        const response = await request(app)
+            .get('/api/v1/menu/deleted/page/1/10')
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200);
+
+        expect(response.body).toHaveProperty('data');
+        expect(response.body.data.data.length).toBe(1);
+        expect(response.body.data.data[0]).toHaveProperty('deletedAt');
+    });
+});

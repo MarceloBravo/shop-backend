@@ -8,7 +8,7 @@ class MenuRepository{
 
 
     getBy = async (campo, valor, paranoid = true) => {
-        const where = {campo: valor}
+        const where = {[campo]: valor}
         const data = await MenuModel.findOne({where, paranoid});
         return data;
     }

@@ -11,7 +11,10 @@ class UpdateMenuController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de menús
      */
-    constructor(repository = new MenuRepository()) {
+    constructor(repository) {
+        if(!repository) {
+            repository = new MenuRepository()
+        }
         this.service = new UpdateMenuService(repository);
     }
 
@@ -25,7 +28,7 @@ class UpdateMenuController {
         try{
             const { id } = req.params;
             const result = await this.service.execute(id, req.body);
-            res.json({menu: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`});
+            res.json({data: result.data, mensaje: `Registro ${result.created ? 'creado' : 'actualizado'} exitosamente.`});
         } catch (error) {
             const err = handleError(error);
             res.status(err.code).json(err);

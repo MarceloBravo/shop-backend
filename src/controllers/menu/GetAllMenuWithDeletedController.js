@@ -11,7 +11,10 @@ import { handleError } from "../../shared/functions.js";
  */
 class GetAllMenuWithDeletedController{
 
-    constructor(repository = new MenuRepository()){
+    constructor(repository) {
+        if(!repository) {
+            repository = new MenuRepository()
+        }
         this.service = new GetAllMenuService(repository);
     }
 
