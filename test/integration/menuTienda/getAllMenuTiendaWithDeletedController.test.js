@@ -1,0 +1,29 @@
+import request from 'supertest';
+import { app } from '../../../src/index.js';
+import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import { MenuTiendaModel } from '../../../src/models/MenuTiendaModel.js';
+
+describe('Integration Test: GetAllMenuTiendaWithDeletedController', () => {
+    let token;
+
+    beforeAll(async () => {
+        token = await TestAuthHelper.createUserAndLogin();
+        const menuTienda = await MenuTiendaModel.create({ nombre: 'Home', icono: 'house', menu_padre_id: null, uri: '/home', posicion: 1, pantalla_id: null });
+        await menuTienda.destroy();
+    });
+
+    afterAll(async () => {
+        await MenuTiendaModel.destroy({ where: {}, force: true });
+    });
+
+    it('should get all menuTiendas including deleted', async () => {
+        const response = await request(app)
+            .get('/api/v1/menu_tienda/deleted')
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200);
+
+        expect(response.body).toHaveProperty('data');
+        expect(response.body.data.length).toBe(1);
+        expect(response.body.data[0]).toHaveProperty('deletedAt');
+    });
+});

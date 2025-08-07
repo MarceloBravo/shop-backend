@@ -34,7 +34,7 @@ describe('SoftDeleteMenuTiendaService', () => {
     test('debería lanzar un error si el menu de tienda no existe', async () => {
         mockMenuTiendaRepository.getById.mockResolvedValue(null);
 
-        await expect(softDeleteMenuTiendaService.execute(1)).rejects.toThrow('Registro Menú-Pantalla no encontrado');
+        await expect(softDeleteMenuTiendaService.execute(1)).rejects.toThrow('Registro Menu-Pantalla no encontrado');
         expect(mockMenuTiendaRepository.softDelete).not.toHaveBeenCalled();
     });
 

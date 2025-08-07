@@ -22,6 +22,12 @@ class GetByIdMenuTiendaService{
      * @returns {Promise<Object>} - El menú de la tienda encontrado.
      * */
     execute = async (id, paranoid = true) => {
+        const result = await this.repository.getById(id, paranoid);
+        if (!result) {
+            const error = new Error('Regístro no encontrado');
+            error.code = 404;
+            throw error;
+        }   
         return await this.repository.getById(id, paranoid);
     }
 }

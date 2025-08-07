@@ -6,6 +6,12 @@ class MenuTiendaRepository{
         return data;
     }
 
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = {[campo]: valor}
+        const data = await MenuTiendaModel.findOne({where, paranoid});
+        return data;
+    }
+
 
     getAll = async (paranoid = true) => {
         const { rows, count } = await MenuTiendaModel.findAndCountAll({

@@ -25,6 +25,12 @@ class CreateMenuTiendaService{
      * */
     execute = async (data, transaction = null) => {
         await validaDatos(data);
+        const existe = await this.repository.getBy('nombre', data.nombre);
+        if(existe){
+            const error = new Error('Ya exíste un regístro con esos datos');
+            error.code = 400;
+            throw error;
+        }       
         return await this.repository.create(data, transaction);
     }
 }

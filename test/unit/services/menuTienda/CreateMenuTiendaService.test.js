@@ -14,6 +14,7 @@ describe('CreateMenuTiendaService', () => {
 
         mockMenuTiendaRepository = new MenuTiendaRepository();
         mockMenuTiendaRepository.create = jest.fn();
+        mockMenuTiendaRepository.getBy = jest.fn();
 
         MenuTiendaRepository.mockImplementation(() => mockMenuTiendaRepository);
 
@@ -25,6 +26,7 @@ describe('CreateMenuTiendaService', () => {
         const mockMenuTienda = { id: 1, ...data };
 
         validaDatos.mockResolvedValue();
+        mockMenuTiendaRepository.getBy.mockResolvedValue(null);
         mockMenuTiendaRepository.create.mockResolvedValue(mockMenuTienda);
 
         const result = await createMenuTiendaService.execute(data);
