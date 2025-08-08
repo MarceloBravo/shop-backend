@@ -7,7 +7,19 @@ class PantallaRepository{
         return data;
     }
 
+    getById = async (id, paranoid = true) => {
+        const data = await PantallaModel.findByPk(id, {paranoid});
+        return data;
+    }
 
+    
+    getBy = async (campo, value, paranoid = true) => {
+        const where = {[campo]: value}
+        const data = await PantallaModel.findOne({where, paranoid});
+        return data;
+    }
+
+    
     getAll = async (paranoid = true) => {
         const { rows, count } = await PantallaModel.findAndCountAll({
             order: [['nombre','ASC']],
