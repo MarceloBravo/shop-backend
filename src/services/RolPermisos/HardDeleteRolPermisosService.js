@@ -24,7 +24,7 @@ class HardDeleteRolPermisosService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
-            throw new Error('Permiso de rol no encontrado');
+            throw new Error('Permisos no encontrados');
         }
         return await this.repository.hardDelete(id, transaction);
     }

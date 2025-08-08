@@ -1,3 +1,5 @@
+import { configDotenv } from "dotenv";
+
 /**
  * Servicio para realizar borrado lógico de un permiso de rol
  * @class SoftDeleteRolPermisosService
@@ -24,9 +26,11 @@ class SoftDeleteRolPermisosService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Permiso de rol no encontrado');
+            const error = new Error('Permisos no encontrados');
+            error.code = 404;
+            throw error;
         }
-        const { result } = await this.repository.softDelete(id, transaction);
+        const result = await this.repository.softDelete(id, transaction);
         return result;
     }
 }

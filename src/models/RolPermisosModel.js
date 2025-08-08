@@ -54,6 +54,5 @@ export const RolPermisosModel = sequelize.define('roles_permisos', {
     tableName: 'roles_permisos',  // Asegura que el nombre de la tabla sea correcto
     underscored: true,       // Usa snake_case en vez de camelCase
     paranoid: true,     //Habilita paranoid,
-    deletedAt: 'deleted_at'
 });
 

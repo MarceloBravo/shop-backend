@@ -32,6 +32,12 @@ class CreateRolPermisosService {
      */
     execute = async (data, transaction = null) => {
         await validaDatos(data);
+        const existe = await this.repository.getBy({'rol_id': data.rol_id, 'acciones_pantalla_id': data.acciones_pantalla_id});
+        if (existe) {
+            const error = new Error('El permiso de rol ya existe');
+            error.code = 400; // Conflict
+            throw error;
+        }   
         return await this.repository.create(data, transaction);
     }
 }

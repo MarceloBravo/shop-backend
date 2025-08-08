@@ -24,7 +24,7 @@ class GetByIdRolPermisosService {
     execute = async (id, paranoid = true) => {
         const result = await this.repository.getById(id, paranoid);
         if (!result) {
-            throw new Error('Permiso de rol no encontrado');
+            throw new Error('Permisos no encontrados');
         }
         return result;
     }

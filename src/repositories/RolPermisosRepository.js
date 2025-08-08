@@ -6,6 +6,13 @@ class RolPermisosRepository {
         return data;
     }
 
+
+
+    getBy = async (where, paranoid = true) => {
+        const data = await RolPermisosModel.findByPk(id, {where, paranoid });
+        return data;
+    }
+
     getAll = async (paranoid = true) => {
         const { rows, count } = await RolPermisosModel.findAndCountAll({
             order: [['rol_id', 'ASC']],
