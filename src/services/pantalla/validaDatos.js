@@ -1,12 +1,11 @@
 const validaDatos = (data) => {
     let errors = [];
     const { nombre, uri } = data;
-    console.log(nombre, uri)
     if(!nombre || nombre.trim().length ===  0 || nombre.length > 30){
         errors.push("El nombre la pantalla es obligatorio y debe tener un máximo de hasta 30 carácteres.");
     }
-    if(uri && uri.trim().length > 500){
-        errors.push("La ruta del uri es demasiado extensa, ubica la imagen en una carpeta mas accesible.");
+    if(!uri || uri.trim().length === 0 || uri.trim().length > 500){
+        errors.push("Debe especificar una uri válida");
     }
 
     if(errors.length > 0){

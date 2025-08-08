@@ -26,6 +26,12 @@ class CreatePantallaService {
      */
     execute = async (data, transaction = null) => {
         validaDatos(data);
+        const existe = await this.repository.getBy({ nombre: data.nombre }, transaction);
+        if (existe) {
+            const error = new Error(`Ya existe una pantalla con el nombre: ${data.nombre}`);
+            error.code = 400;
+            throw error;
+        }   
         return await this.repository.create(data, transaction);
     }
 }

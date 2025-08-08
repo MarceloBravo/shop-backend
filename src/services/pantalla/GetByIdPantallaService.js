@@ -24,7 +24,9 @@ class GetByIdPantallaService {
     execute = async (id, paranoid = true) => {
         const result = await this.repository.getById(id, paranoid);
         if (!result) {
-            throw new Error('Pantalla no encontrada');
+            const error = new Error('Pantalla no encontrada');
+            error.code = 404;
+            throw error;
         }
         return result;
     }

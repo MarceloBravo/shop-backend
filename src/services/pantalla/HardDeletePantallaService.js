@@ -24,7 +24,9 @@ class HardDeletePantallaService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
-            throw new Error('Pantalla no encontrada');
+            const error = new Error('Pantalla no encontrada');
+            error.code = 404;
+            throw error;
         }
         return await this.repository.hardDelete(id, transaction);
     }

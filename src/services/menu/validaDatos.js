@@ -12,7 +12,6 @@ const validaDatos = async (data, id = null) => {
         errors.push("El nombre del menu es obligatorio y debe tener un máximo de hasta 50 carácteres.");
     }
     if(icono && icono.length > 500){
-        console.log(icono, icono.length)
         errors.push("La ruta del icono es demasiado extensa, ubica la el icono delmenu en una carpeta mas accesible.");
     }
     if(menu_padre_id && (await (new MenuRepository()).getById(menu_padre_id)) == null){

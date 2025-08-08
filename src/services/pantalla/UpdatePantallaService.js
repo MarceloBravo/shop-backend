@@ -28,7 +28,9 @@ class UpdatePantallaService {
         validaDatos(data);
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Pantalla no encontrada');
+            const error = new Error('Pantalla no encontrada');
+            error.code = 404;
+            throw error;    
         }
         return await this.repository.update(id, data, transaction);
     }
