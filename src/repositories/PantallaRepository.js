@@ -6,12 +6,6 @@ class PantallaRepository{
         const data = await PantallaModel.findByPk(id, {paranoid});
         return data;
     }
-
-    getById = async (id, paranoid = true) => {
-        const data = await PantallaModel.findByPk(id, {paranoid});
-        return data;
-    }
-
     
     getBy = async (campo, value, paranoid = true) => {
         const where = {[campo]: value}

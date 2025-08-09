@@ -1,26 +1,16 @@
 import CreatePantallaService from '../../../../src/services/pantalla/CreatePantallaService.js';
-import PantallaRepository from '../../../../src/repositories/PantallaRepository.js';
-
-jest.mock('../../../../src/repositories/PantallaRepository.js');
 
 describe('CreatePantallaService', () => {
     let createPantallaService;
-    let mockPantallaRepository;
+    const mockPantallaRepository = {
+        getBy: jest.fn(),
+        getById: jest.fn(),
+        create: jest.fn(),
+        getById: jest.fn(),
+    };
 
     beforeEach(() => {
         jest.clearAllMocks();
-
-        mockPantallaRepository = new PantallaRepository();
-
-        // Asignar mocks a los métodos
-        mockPantallaRepository.getBy = jest.fn();
-        mockPantallaRepository.getById = jest.fn();
-        mockPantallaRepository.create = jest.fn();
-        mockPantallaRepository.getById = jest.fn();
-
-        PantallaRepository.mockImplementation(() => mockPantallaRepository);
-        PantallaRepository.mockImplementation(() => mockPantallaRepository);
-
         createPantallaService = new CreatePantallaService(mockPantallaRepository);
     });
 
@@ -28,7 +18,7 @@ describe('CreatePantallaService', () => {
         const data = { nombre: 'ADMIN', uri: 'admin' };
         const mockPantalla = { id: 1, ...data };
 
-        mockPantallaRepository.getBy.mockResolvedValue(undefined);
+        mockPantallaRepository.getBy.mockResolvedValue(null);
         mockPantallaRepository.create.mockResolvedValue(mockPantalla);
 
         const result = await createPantallaService.execute(data);
