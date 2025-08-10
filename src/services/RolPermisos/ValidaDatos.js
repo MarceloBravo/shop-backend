@@ -1,5 +1,6 @@
 import RolRepository from "../../repositories/RolRepository.js";
-import PantallaRepository from '../../repositories/PantallaRepository.js';
+import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
+
 
 /**
  * Valida los datos para crear o actualizar un permiso de rol
@@ -21,8 +22,8 @@ const validaDatos = async (data) => {
     if (!rol_id || (await (new RolRepository()).getById(rol_id)) === null) {
         errors.push("El 'rol' no es válido o no existe.");
     }
-    if (!acciones_pantalla_id || (await (new PantallaRepository()).getById(acciones_pantalla_id)) === null) {
-        errors.push("La 'pantalla' no es válida o no existe.");
+    if (!acciones_pantalla_id || (await (new AccionesPantallaRepository()).getById(acciones_pantalla_id)) === null) {
+        errors.push("No se han encontrado las 'acciones de pantalla' configuradas.");
     }
     if (crear === undefined || crear === null) {
         errors.push("El campo 'crear' es obligatorio.");

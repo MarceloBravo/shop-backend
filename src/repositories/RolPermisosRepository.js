@@ -9,7 +9,7 @@ class RolPermisosRepository {
 
 
     getBy = async (where, paranoid = true) => {
-        const data = await RolPermisosModel.findByOne({where, paranoid });
+        const data = await RolPermisosModel.findOne({where, paranoid });
         return data;
     }
 

@@ -1,7 +1,7 @@
 import RolRepository from '../../../../src/repositories/RolRepository.js';
-import PantallaRepository from '../../../../src/repositories/PantallaRepository.js';
+import AccionesPantallaRepository from '../../../../src/repositories/AccionesPantallaRepository.js';
 jest.mock('../../../../src/repositories/RolRepository.js');
-jest.mock('../../../../src/repositories/PantallaRepository.js');
+jest.mock('../../../../src/repositories/AccionesPantallaRepository.js');
     
 
 import UpdateRolPermisosController from '../../../../src/controllers/RolPermisos/UpdateRolPermisosController.js';
@@ -21,7 +21,7 @@ describe('Unit Test: UpdateRolPermisosController', () => {
                 getById: jest.fn().mockResolvedValue({ id: 1 })
             };
         });
-        PantallaRepository.mockImplementation(() => {
+        AccionesPantallaRepository.mockImplementation(() => {
             return {
                 getById: jest.fn().mockResolvedValue({ id: 1 })
             };
@@ -70,7 +70,7 @@ describe('Unit Test: UpdateRolPermisosController', () => {
             code: 400,
             details: [
                 "El 'rol' no es válido o no existe.", 
-                "La 'pantalla' no es válida o no existe.", 
+                "No se han encontrado las 'acciones de pantalla' configuradas.", 
                 "El campo 'crear' es obligatorio.", 
                 "El campo 'actualizar' es obligatorio.", 
                 "El campo 'eliminar' es obligatorio.", 

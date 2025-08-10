@@ -1,9 +1,9 @@
 import UpdateRolPermisosService from '../../../../src/services/RolPermisos/UpdateRolPermisosService.js';
 import RolRepository from '../../../../src/repositories/RolRepository.js';
-import PantallaRepository from '../../../../src/repositories/PantallaRepository.js';
+import AccionesPantallaRepository from '../../../../src/repositories/AccionesPantallaRepository.js';
 
 jest.mock('../../../../src/repositories/RolRepository.js');
-jest.mock('../../../../src/repositories/PantallaRepository.js');
+jest.mock('../../../../src/repositories/AccionesPantallaRepository.js');
 
 describe('UpdateRolPermisosService', () => {
     const mockRolPermisosRepository = {
@@ -18,7 +18,7 @@ describe('UpdateRolPermisosService', () => {
                 getById: jest.fn().mockResolvedValue({ id: 1 })
             };
         });
-        PantallaRepository.mockImplementation(() => {
+        AccionesPantallaRepository.mockImplementation(() => {
             return {
                 getById: jest.fn().mockResolvedValue({ id: 1 })
             };

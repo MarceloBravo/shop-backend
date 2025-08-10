@@ -1,4 +1,5 @@
 import { sequelize, waitForDb } from '../config/database.js';
+import { app } from '../src/index.js';
 
 // Importa los seeders necesarios
 import rolSeeder from '../seeders/20250327121711-rol-seeder.js';
@@ -40,7 +41,7 @@ export default async () => {
   await sequelize.sync({alter: true});
   console.log('Limpiando todas las tablas antes de los tests...');
   // Desactiva restricciones de FK temporalmente
-  //await sequelize.query('SET session_replication_role = replica;');
+  await sequelize.query('SET session_replication_role = replica;');
 
   // Obtiene todos los nombres de tablas del esquema público, excluyendo SequelizeMeta
   const result = await sequelize.query(`
@@ -48,19 +49,33 @@ export default async () => {
   `);
 
   console.log('Tablas encontradas:', JSON.stringify(result));
-  const tables = result[0].map(row => `"${row.tablename}"`).join(', ');
+  const tables = result[0].map(row => `"${row.tablename}"`);
   if (tables.length > 0) {
-    // Trunca todas las tablas en cascada y reinicia los IDs
-    console.log(`Truncando las tablas: ${tables}`);
-    await sequelize.query(`TRUNCATE TABLE ${tables} RESTART IDENTITY CASCADE;`);
+    console.log(`Truncando ${tables.length} tablas una por una...`);
+    for (const table of tables) {
+      try {
+        // Se trunca cada tabla individualmente
+        await sequelize.query(`TRUNCATE TABLE ${table} RESTART IDENTITY CASCADE;`);
+      } catch (error) {
+        console.error(`Error detallado al truncar la tabla: ${table}`, error);
+        // Re-lanza el error para que Jest falle como se espera
+        throw error;
+      }
+    }
   }
   console.log('Todas las tablas han sido truncadas y reiniciadas.');
   // Reactiva restricciones de FK
-  //await sequelize.query('SET session_replication_role = DEFAULT;');
+  await sequelize.query('SET session_replication_role = DEFAULT;');
 
   // Ejecuta los seeders necesarios para los tests
   await rolSeeder.up(sequelize.getQueryInterface(), sequelize.constructor);
   console.log('Seeder de roles ejecutado correctamente.');
   await usuarioSeeder.up(sequelize.getQueryInterface(), sequelize.constructor);
   console.log('Seeder de usuarios ejecutado correctamente.');
+
+  // Start the server and store it globally
+  global.__TEST_SERVER__ = app.listen(0, () => {
+    const port = global.__TEST_SERVER__.address().port;
+    console.log(`Test server listening on port ${port}`);
+  });
 };

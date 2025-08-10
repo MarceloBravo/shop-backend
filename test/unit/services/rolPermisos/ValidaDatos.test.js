@@ -1,9 +1,9 @@
 import validaDatos from '../../../../src/services/RolPermisos/ValidaDatos';
 import RolRepository from '../../../../src/repositories/RolRepository';
-import PantallaRepository from '../../../../src/repositories/PantallaRepository';
+import AccionesPantallaRepository from '../../../../src/repositories/AccionesPantallaRepository';
 
 jest.mock('../../../../src/repositories/RolRepository');
-jest.mock('../../../../src/repositories/PantallaRepository');
+jest.mock('../../../../src/repositories/AccionesPantallaRepository');
 
 describe('validaDatos', () => {
   let validData;
@@ -11,11 +11,11 @@ describe('validaDatos', () => {
   beforeEach(() => {
     // Restablecer mocks antes de cada prueba
     RolRepository.mockClear();
-    PantallaRepository.mockClear();
+    AccionesPantallaRepository.mockClear();
 
     // Mockear las implementaciones de los repositorios
     RolRepository.prototype.getById = jest.fn();
-    PantallaRepository.prototype.getById = jest.fn();
+    AccionesPantallaRepository.prototype.getById = jest.fn();
 
     validData = {
       rol_id: 1,
@@ -30,14 +30,14 @@ describe('validaDatos', () => {
 
   test('debería pasar si todos los datos son válidos', async () => {
     RolRepository.prototype.getById.mockResolvedValue({ id: 1 });
-    PantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
 
     await expect(validaDatos(validData)).resolves.not.toThrow();
   });
 
   test('debería lanzar un error si rol_id no es válido', async () => {
     RolRepository.prototype.getById.mockResolvedValue(null);
-    PantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
 
     const data = { ...validData, rol_id: 999 };
     await expect(validaDatos(data)).rejects.toThrow('Datos no válidos:');
@@ -50,20 +50,20 @@ describe('validaDatos', () => {
 
   test('debería lanzar un error si acciones_pantalla_id no es válido', async () => {
     RolRepository.prototype.getById.mockResolvedValue({ id: 1 });
-    PantallaRepository.prototype.getById.mockResolvedValue(null);
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue(null);
 
     const data = { ...validData, acciones_pantalla_id: 999 };
     await expect(validaDatos(data)).rejects.toThrow('Datos no válidos:');
     try {
       await validaDatos(data);
     } catch (error) {
-      expect(error.details).toContain("La 'pantalla' no es válida o no existe.");
+      expect(error.details).toContain("No se han encontrado las 'acciones de pantalla' configuradas.");
     }
   });
 
   test('debería lanzar un error si falta el campo "crear"', async () => {
     RolRepository.prototype.getById.mockResolvedValue({ id: 1 });
-    PantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
 
     const data = { ...validData, crear: undefined };
     await expect(validaDatos(data)).rejects.toThrow('Datos no válidos:');
@@ -76,7 +76,7 @@ describe('validaDatos', () => {
 
   test('debería lanzar un error si falta el campo "actualizar"', async () => {
     RolRepository.prototype.getById.mockResolvedValue({ id: 1 });
-    PantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
 
     const data = { ...validData, actualizar: null };
     await expect(validaDatos(data)).rejects.toThrow('Datos no válidos:');
@@ -89,7 +89,7 @@ describe('validaDatos', () => {
 
   test('debería lanzar un error si falta el campo "eliminar"', async () => {
     RolRepository.prototype.getById.mockResolvedValue({ id: 1 });
-    PantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
 
     const data = { ...validData, eliminar: undefined };
     await expect(validaDatos(data)).rejects.toThrow('Datos no válidos:');
@@ -102,7 +102,7 @@ describe('validaDatos', () => {
 
   test('debería lanzar un error si falta el campo "listar"', async () => {
     RolRepository.prototype.getById.mockResolvedValue({ id: 1 });
-    PantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
 
     const data = { ...validData, listar: null };
     await expect(validaDatos(data)).rejects.toThrow('Datos no válidos:');
@@ -115,7 +115,7 @@ describe('validaDatos', () => {
 
   test('debería lanzar un error si falta el campo "ver"', async () => {
     RolRepository.prototype.getById.mockResolvedValue({ id: 1 });
-    PantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue({ id: 1 });
 
     const data = { ...validData, ver: undefined };
     await expect(validaDatos(data)).rejects.toThrow('Datos no válidos:');
@@ -128,7 +128,7 @@ describe('validaDatos', () => {
 
   test('debería acumular múltiples errores', async () => {
     RolRepository.prototype.getById.mockResolvedValue(null);
-    PantallaRepository.prototype.getById.mockResolvedValue(null);
+    AccionesPantallaRepository.prototype.getById.mockResolvedValue(null);
 
     const data = { ...validData, rol_id: 999, acciones_pantalla_id: 999, crear: undefined };
     await expect(validaDatos(data)).rejects.toThrow('Datos no válidos:');
@@ -137,7 +137,7 @@ describe('validaDatos', () => {
     } catch (error) {
       expect(error.details).toHaveLength(3);
       expect(error.details).toContain("El 'rol' no es válido o no existe.");
-      expect(error.details).toContain("La 'pantalla' no es válida o no existe.");
+      expect(error.details).toContain("No se han encontrado las 'acciones de pantalla' configuradas.");
       expect(error.details).toContain("El campo 'crear' es obligatorio.");
     }
   });

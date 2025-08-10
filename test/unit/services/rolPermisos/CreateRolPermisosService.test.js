@@ -1,12 +1,12 @@
 import CreateRolPermisosService from '../../../../src/services/RolPermisos/CreateRolPermisosService.js';
 import RolRepository from '../../../../src/repositories/RolRepository.js';
-import PantallaRepository from '../../../../src/repositories/PantallaRepository.js';
+import AccionesPantallaRepository from '../../../../src/repositories/AccionesPantallaRepository.js';
 
 jest.mock('../../../../src/repositories/RolRepository.js');
-jest.mock('../../../../src/repositories/PantallaRepository.js');
+jest.mock('../../../../src/repositories/AccionesPantallaRepository.js');
 
 describe('CreateRolPermisosService', () => {
-    jest.mock('../../../../src/services/accionesPantalla/validaDatos.js');
+    //jest.mock('../../../../src/services/accionesPantalla/validaDatos.js');
     const mockRolPermisosRepository = {
         create: jest.fn(),
         getBy: jest.fn()
@@ -20,7 +20,7 @@ describe('CreateRolPermisosService', () => {
                 getById: jest.fn().mockResolvedValue({ id: 1 })
             };
         });
-        PantallaRepository.mockImplementation(() => {
+        AccionesPantallaRepository.mockImplementation(() => {
             return {
                 getById: jest.fn().mockResolvedValue({ id: 1 })
             };
