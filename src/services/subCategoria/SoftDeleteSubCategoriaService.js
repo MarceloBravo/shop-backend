@@ -24,10 +24,11 @@ class SoftDeleteSubCategoriaService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Subcategoría no encontrada');
+            const error = new Error('Subcategoría no encontrada');
+            error.code = 404;
+            throw error;
         }
-        const record = await this.repository.softDelete(id, transaction);
-        return record && record.deleted_at !== null;
+        return await this.repository.softDelete(id, transaction);
     }
 }
 

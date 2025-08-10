@@ -24,7 +24,9 @@ class GetByIdSubCategoriaService {
     execute = async (id, paranoid = true) => {
         const result = await this.repository.getById(id, paranoid);
         if (!result) {
-            throw new Error('Subcategoría no encontrada');
+            const error = new Error('Subcategoría no encontrada');
+            error.code = 404;
+            throw error;
         }
         return result;
     }

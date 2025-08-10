@@ -24,7 +24,9 @@ class HardDeleteSubCategoriaService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
-            throw new Error('Subcategoría no encontrada');
+            const error = new Error('Subcategoría no encontrada');
+            error.code = 404;
+            throw error;
         }
         return await this.repository.hardDelete(id, transaction);
     }

@@ -25,6 +25,12 @@ class CreateSubCategoriaService {
      */
     execute = async (data, transaction = null) => {
         await validaDatos(data);
+        const existe = await this.repository.findBy(data.nombre);
+        if (existe) {
+            const error = new Error('Ya existe un registro con el nombre proporcionado');
+            error.code = 400;
+            throw error;
+        }   
         return await this.repository.create(data, transaction);
     }
 }

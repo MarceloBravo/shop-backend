@@ -11,7 +11,10 @@ class UpdateSubCategoriaController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de subcategorías
      */
-    constructor(repository = new SubCategoriaRepository()) {
+    constructor(repository) {
+        if(!repository){
+            repository = new SubCategoriaRepository();
+        }
         this.service = new UpdateSubCategoriaService(repository);
     }
 

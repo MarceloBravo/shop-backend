@@ -5,6 +5,12 @@ class SubCategoriaRepository{
         const data = await SubCategoriaModel.findByPk(id, { paranoid });
         return data;
     }
+    
+    getBy = async ( campo, valor, paranoid = true) => {
+        const where = {[campo]: valor}
+        const data = await SubCategoriaModel.findOne({where, paranoid});
+        return data;
+    }
 
     getAll = async (orderBy = [['nombre', 'ASC']], paranoid = true) => {
         const { rows, count } = await SubCategoriaModel.findAndCountAll({
