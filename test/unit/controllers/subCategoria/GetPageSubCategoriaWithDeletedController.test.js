@@ -33,21 +33,27 @@ describe('GetPageSubCategoriaWithDeletedController', () => {
             { id: 1, nombre: 'Test SubCategoria 1', categoria_id: 1, deletedAt: null },
             { id: 2, nombre: 'Test SubCategoria 2', categoria_id: 1, deletedAt: new Date() }
         ];
+        const pag = 1;
         const serviceResponse = {
-            data: {
-                data: subcategories,
-                totReg: 2,
-                rows: 2,
-                pag: 1,
-                totPag: 1
-            }
+            rows: subcategories,
+            count: 2,
+            totPag: 1,
+        };
+        const expectedResponse = { 
+            data: { 
+                data: subcategories, 
+                totReg: subcategories.length, 
+                rows: subcategories.length, 
+                pag: pag,
+                totPag: serviceResponse.totPag 
+            } 
         };
         mockServiceInstance.execute.mockResolvedValue(serviceResponse);
 
         await controller.execute(req, res);
-
-        expect(mockServiceInstance.execute).toHaveBeenCalledWith(1, 10, false);
-        expect(res.json).toHaveBeenCalledWith(serviceResponse);
+        
+        expect(mockServiceInstance.execute).toHaveBeenCalledWith(pag, 10, false);
+        expect(res.json).toHaveBeenCalledWith(expectedResponse);
     });
 
     it('should handle errors and return an error response', async () => {

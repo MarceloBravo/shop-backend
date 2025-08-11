@@ -6,8 +6,7 @@ class SubCategoriaRepository{
         return data;
     }
     
-    getBy = async ( campo, valor, paranoid = true) => {
-        const where = {[campo]: valor}
+    getBy = async ( where, paranoid = true) => {
         const data = await SubCategoriaModel.findOne({where, paranoid});
         return data;
     }

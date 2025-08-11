@@ -9,6 +9,8 @@ describe('Integration Test: GetPageCategoriaWithDeletedController', () => {
     
     beforeAll(async () => {
         token = await TestAuthHelper.createUserAndLogin();
+        // Asegurarse de que la tabla de categorias esté limpia antes de que comiencen las pruebas en este archivo
+        await CategoriaModel.destroy({ where: {}, force: true });
     });
 
     beforeEach(async () => {

@@ -10,7 +10,7 @@ describe('CreateSubCategoriaService', () => {
 
     beforeEach(() => {
         repositoryMock = {
-            findBy: jest.fn(),
+            getBy: jest.fn(),
             create: jest.fn(),
         };
         service = new CreateSubCategoriaService(repositoryMock);
@@ -37,23 +37,23 @@ describe('CreateSubCategoriaService', () => {
     it('should throw an error if subcategory with the same name already exists', async () => {
         const data = { nombre: 'Test', categoria_id: 1 };
         validaDatos.mockResolvedValue();
-        repositoryMock.findBy.mockResolvedValue({ id: 1, nombre: 'Test' });
+        repositoryMock.getBy.mockResolvedValue({ id: 1, nombre: 'Test' });
 
         await expect(service.execute(data)).rejects.toThrow('Ya existe un registro con el nombre proporcionado');
-        expect(repositoryMock.findBy).toHaveBeenCalledWith(data.nombre);
+        expect(repositoryMock.getBy).toHaveBeenCalledWith(data);
     });
 
     it('should create a new subcategory successfully', async () => {
         const data = { nombre: 'Test', categoria_id: 1 };
         const newSubCategoria = { id: 1, ...data };
         validaDatos.mockResolvedValue();
-        repositoryMock.findBy.mockResolvedValue(null);
+        repositoryMock.getBy.mockResolvedValue(null);
         repositoryMock.create.mockResolvedValue(newSubCategoria);
 
         const result = await service.execute(data);
 
         expect(validaDatos).toHaveBeenCalledWith(data);
-        expect(repositoryMock.findBy).toHaveBeenCalledWith(data.nombre);
+        expect(repositoryMock.getBy).toHaveBeenCalledWith(data);
         expect(repositoryMock.create).toHaveBeenCalledWith(data, null);
         expect(result).toEqual(newSubCategoria);
     });

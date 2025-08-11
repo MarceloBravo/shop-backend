@@ -1,7 +1,8 @@
 import { UsuarioModel } from '../../../src/models/UsuarioModel.js';
 import { RolModel } from '../../../src/models/RolModel.js';
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js'; // Import CategoriaModel
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../../src/server.js'; // This import might still be an issue, but let's focus on the data seeding first
 import { encriptarPassword } from '../../../src/shared/functions.js'
 
 export class TestAuthHelper {
@@ -51,13 +52,23 @@ export class TestAuthHelper {
           rol.deleted_at = null;
           await rol.save();
       }
-    /*
-      await RolModel.findOrCreate({
-        where: {id: rolData.id },
-        defaults: {nombre: rolData.nombre, deleted_at: null }
-      });
-      */
     }
+
+    // Ensure a default Categoria exists for subcategory tests
+    const defaultCategoriaId = 1;
+    const categoria = await CategoriaModel.findByPk(defaultCategoriaId, { paranoid: false });
+    if (!categoria) {
+      await CategoriaModel.create({
+        id: defaultCategoriaId,
+        nombre: 'Default Category',
+        descripcion: 'Default description for category', // <--- ADDED THIS LINE
+        deleted_at: null
+      });
+    } else if (categoria.deleted_at !== null) {
+      categoria.deleted_at = null;
+      await categoria.save();
+    }
+
     try {
       const user = await UsuarioModel.findOrCreate({
         where: { rut }, // Buscar por RUT en lugar de email

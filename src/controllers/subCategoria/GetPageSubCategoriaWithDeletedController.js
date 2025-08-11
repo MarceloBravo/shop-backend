@@ -27,9 +27,9 @@ class GetPageSubCategoriaWithDeletedController{
      * */
     execute = async (req, res) => {
         try{
-            const { pag, limit } = req.params;
-            const data = await this.service.execute(parseInt(pag), parseInt(limit), false);
-            res.json(data);
+            const { pag = 1, limit = 10 } = req.params;
+            const { rows, count, totPag } = await this.service.execute(pag, limit, false);
+            res.json({ data: { data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag } });
         }catch(e){
             const err = handleError(e);
             res.status(err.code).json(err);

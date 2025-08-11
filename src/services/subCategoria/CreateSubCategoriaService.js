@@ -25,7 +25,7 @@ class CreateSubCategoriaService {
      */
     execute = async (data, transaction = null) => {
         await validaDatos(data);
-        const existe = await this.repository.findBy(data.nombre);
+        const existe = await this.repository.getBy({nombre: data.nombre, categoria_id: data.categoria_id});
         if (existe) {
             const error = new Error('Ya existe un registro con el nombre proporcionado');
             error.code = 400;
