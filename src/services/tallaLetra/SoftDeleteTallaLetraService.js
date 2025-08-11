@@ -25,10 +25,11 @@ class SoftDeleteTallaLetraService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Talla letra no encontrada');
+            const error = new Error('Regístro no encontrado');
+            error.code = 404;
+            throw error;
         }
-        const record = await this.repository.softDelete(id, transaction);
-        return record && record.deleted_at !== null;
+        return await this.repository.softDelete(id, transaction);
     }
 }
 

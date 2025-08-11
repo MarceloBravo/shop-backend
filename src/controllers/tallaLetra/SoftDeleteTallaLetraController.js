@@ -29,8 +29,9 @@ class SoftDeleteTallaLetraController {
             const { id } = req.params;
             const result = await this.service.execute(id);
             const resp = {
-                code: result, 
-                mensaje: result == 200 ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'
+                id,
+                code: result.deleted_at ? 200 : 500, 
+                mensaje: result.deleted_at ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'
             };
             res.json(resp);
         } catch(e) {

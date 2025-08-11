@@ -27,10 +27,12 @@ class HardDeleteTallaLetraController {
     execute = async (req, res) => {
         try {
             const { id } = req.params;
-            await this.service.execute(id);
+            const result = await this.service.execute(id);
+            console.log('Resultado del borrado físico:', result);
             res.json({
                 id,
-                mensaje: 'El registro ha sido eliminado permanentemente.'
+                code: result.deleted_at ? 200 : 500,
+                mensaje: result.deleted_at ? 'El registro ha sido eliminado exitosamente.' : 'No se pudo eliminar el registro.'
             });
         } catch(e) {
             const err = handleError(e);
