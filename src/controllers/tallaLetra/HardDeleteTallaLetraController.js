@@ -28,7 +28,6 @@ class HardDeleteTallaLetraController {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            console.log('Resultado del borrado físico:', result);
             res.json({
                 id,
                 code: result.deleted_at ? 200 : 500,

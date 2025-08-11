@@ -20,14 +20,14 @@ describe('SoftDeleteTallaLetraService', () => {
 
         const result = await softDeleteTallaLetraService.execute(1);
 
-        expect(result).toBe(true);
+        expect(result).toBe(mockDeleted);
         expect(mockTallaLetraRepository.getById).toHaveBeenCalledWith(1);
         expect(mockTallaLetraRepository.softDelete).toHaveBeenCalledWith(1, null);
     });
 
     test('debería lanzar error si el tallaLetra no existe', async () => {
         mockTallaLetraRepository.getById.mockResolvedValue(null);
-        await expect(softDeleteTallaLetraService.execute(99)).rejects.toThrow('Talla letra no encontrada');
+        await expect(softDeleteTallaLetraService.execute(99)).rejects.toThrow('Regístro no encontrado');
         expect(mockTallaLetraRepository.getById).toHaveBeenCalledWith(99);
         expect(mockTallaLetraRepository.softDelete).not.toHaveBeenCalled();
     });

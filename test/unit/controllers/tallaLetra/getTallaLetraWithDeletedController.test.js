@@ -49,9 +49,9 @@ describe('Unit Test: GetByIdTallaLetraWithDeletedController', () => {
         await controller.execute(req, res);
 
         // Assert
-        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.status).toHaveBeenCalledWith(404);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-            code: 500,
+            code: 404,
             error: expect.any(String)
         }));
     });

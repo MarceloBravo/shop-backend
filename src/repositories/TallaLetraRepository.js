@@ -62,7 +62,7 @@ class TallaLetraRepository {
             where: { id },
             transaction
         });
-        return result;
+        return { id, result };
     }
 }
 

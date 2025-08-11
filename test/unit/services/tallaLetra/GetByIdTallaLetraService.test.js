@@ -23,7 +23,7 @@ describe('GetByIdTallaLetraService', () => {
 
     test('debería lanzar error si el tallaLetra no existe', async () => {
         mockTallaLetraRepository.getById.mockResolvedValue(null);
-        await expect(getByIdTallaLetraService.execute(99)).rejects.toThrow('Talla letra no encontrada');
+        await expect(getByIdTallaLetraService.execute(99)).rejects.toThrow('Registro no encontrado');
         expect(mockTallaLetraRepository.getById).toHaveBeenCalledWith(99, true);
     });
 
