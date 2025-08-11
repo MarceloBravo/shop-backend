@@ -11,7 +11,10 @@ class GetPageTallaLetraController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de tallas letra
      */
-    constructor(repository = new TallaLetraRepository()) {
+    constructor(repository) {
+        if(!repository) {
+            repository = new TallaLetraRepository()
+        }
         this.service = new GetPageTallaLetraService(repository);
     }
 
