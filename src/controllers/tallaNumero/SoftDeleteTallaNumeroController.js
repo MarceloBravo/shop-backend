@@ -30,7 +30,7 @@ class SoftDeleteTallaNumeroController {
             const result = await this.service.execute(id);
             const resp = {
                 id,
-                code: result.deleted_at ? 200 : 500, 
+                code: result ? 200 : 500, 
                 mensaje: result.deleted_at ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'
             };
             res.json(resp);
