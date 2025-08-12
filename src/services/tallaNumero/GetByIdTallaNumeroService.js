@@ -25,7 +25,7 @@ class GetByIdTallaNumeroService {
     execute = async (id, paranoid = true) => {
         const result = await this.repository.getById(id, paranoid);
         if (!result) {
-            const error = new Error('Talla numérica no encontrada');
+            const error = new Error('Registro no encontrado');
             error.code = 404;
             throw error;
         }

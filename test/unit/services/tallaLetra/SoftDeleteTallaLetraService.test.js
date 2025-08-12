@@ -27,7 +27,7 @@ describe('SoftDeleteTallaLetraService', () => {
 
     test('debería lanzar error si el tallaLetra no existe', async () => {
         mockTallaLetraRepository.getById.mockResolvedValue(null);
-        await expect(softDeleteTallaLetraService.execute(99)).rejects.toThrow('Regístro no encontrado');
+        await expect(softDeleteTallaLetraService.execute(99)).rejects.toThrow('Registro no encontrado');
         expect(mockTallaLetraRepository.getById).toHaveBeenCalledWith(99);
         expect(mockTallaLetraRepository.softDelete).not.toHaveBeenCalled();
     });
