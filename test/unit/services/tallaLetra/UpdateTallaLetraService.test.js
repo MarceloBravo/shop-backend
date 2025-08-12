@@ -2,7 +2,8 @@ import UpdateTallaLetraService from '../../../../src/services/tallaLetra/UpdateT
 
 describe('UpdateTallaLetraService', () => {
     const mockTallaLetraRepository = {
-        update: jest.fn()
+        update: jest.fn(),
+        getBy: jest.fn(),
     };
     let updateTallaLetraService;
 
@@ -14,6 +15,7 @@ describe('UpdateTallaLetraService', () => {
     test('debería actualizar un tallaLetra correctamente', async () => {
         const data = { valor: 'M' };
         const mockTallaLetra = { id: 1, valor: 'M' };
+        mockTallaLetraRepository.getBy.mockResolvedValue(null);
         mockTallaLetraRepository.update.mockResolvedValue(mockTallaLetra);
 
         const result = await updateTallaLetraService.execute(1, data);
