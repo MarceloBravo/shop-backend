@@ -27,9 +27,11 @@ class UpdateTallaNumeroService {
      */
     execute = async (id, data, transaction = null) => {
         validaDatos(data);
-        const existe = await this.repository.getById(id);
-        if (!existe) {
-            throw new Error('Talla numérica no encontrada');
+        const existe = await this.repository.getBy('valor', data.valor);
+        if (existe && existe.id !== id) {
+            const error = new Error('Talla numérica ya existe');
+            error.code = 409;
+            throw error;
         }
         return await this.repository.update(id, data, transaction);
     }

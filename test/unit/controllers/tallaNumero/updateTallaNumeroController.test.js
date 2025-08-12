@@ -1,30 +1,30 @@
-// Mock del repositorio antes de importar el conttallaLetraador
+// Mock del repositorio antes de importar el conttallaNumeroador
 const mockRepository = {
     update: jest.fn(),
-    getBy: jest.fn()
+    getBy: jest.fn(),
 };
 
-jest.mock('../../../../src/repositories/TallaLetraRepository.js', () => {
+jest.mock('../../../../src/repositories/TallaNumeroRepository.js', () => {
     return jest.fn().mockImplementation(() => mockRepository);
 });
 
-import UpdateTallaLetraController from '../../../../src/controllers/tallaLetra/UpdateTallaLetraController.js';
+import UpdateTallaNumeroController from '../../../../src/controllers/tallaNumero/UpdateTallaNumeroController.js';
 
-describe('Unit Test: UpdateTallaLetraController', () => {
+describe('Unit Test: UpdateTallaNumeroController', () => {
     let controller;
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new UpdateTallaLetraController(mockRepository);
+        controller = new UpdateTallaNumeroController(mockRepository);
     });
 
-    it('Actualiza un tallaLetra exitosamente', async () => {
+    it('Actualiza un tallaNumero exitosamente', async () => {
         // Arrange
-        const tallaLetraData = { valor: 'L' };
-        const mockResponse = { data: { id: 1, valor: 'L' }, created: false };
-        mockRepository.getBy.mockResolvedValue({id: 1, valor: 'L'});
+        const tallaNumeroData = { valor: 39.5 };
+        const mockResponse = { data: { id: 1, valor: 39.5 }, created: false };
+        mockRepository.getBy.mockResolvedValue({ id: 1, valor: 39 });
         mockRepository.update.mockResolvedValue(mockResponse);
-        const req = { params: { id: 1 }, body: tallaLetraData };
+        const req = { params: { id: 1 }, body: tallaNumeroData };
         const res = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis()
@@ -32,9 +32,9 @@ describe('Unit Test: UpdateTallaLetraController', () => {
 
         // Act
         await controller.execute(req, res);
-
+        
         // Assert
-        expect(mockRepository.update).toHaveBeenCalledWith(1, tallaLetraData, null);
+        expect(mockRepository.update).toHaveBeenCalledWith(1, tallaNumeroData, null);
         expect(res.json).toHaveBeenCalledWith({
             data: mockResponse.data,
             mensaje: 'Registro actualizado exitosamente.'
@@ -58,31 +58,32 @@ describe('Unit Test: UpdateTallaLetraController', () => {
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
             code: 400,
-            details: ["El campo valor es obligatorio y debe tener un máximo de hasta 5 caracteres."],
+            details: ["El campo valor es obligatorio."],
             error: "Error: Datos no válidos:"
         }));
     });
 
     it('Maneja errores del repositorio correctamente', async () => {
         // Arrange
-        const tallaLetraData = { valor: 'L' };
-        const req = { params: { id: 1 }, body: tallaLetraData };
+        const tallaNumeroData = { valor: 39.5 };
+        const req = { params: { id: 1 }, body: tallaNumeroData };
         const res = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis()
         };
-        const error = new Error('Error de base de datos');
+        const error = new Error('Talla numérica ya existe');
+        error.code = 409;
         mockRepository.update.mockRejectedValue(error);
 
         // Act
         await controller.execute(req, res);
 
         // Assert
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
-            code: 500,
+        expect(res.status).toHaveBeenCalledWith(409);
+        expect(res.json).toHaveBeenCalledWith({
+            code: 409,
             details: [],
-            error: expect.any(String)
-        }));
+            error: "Error: Talla numérica ya existe"
+        });
     });
 }); 

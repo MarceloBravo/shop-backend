@@ -1,30 +1,32 @@
-// Mock del repositorio antes de importar el conttallaLetraador
+// Mock del repositorio antes de importar el conttallaNumeroador
 const mockRepository = {
-    update: jest.fn(),
-    getBy: jest.fn()
+    create: jest.fn()
 };
 
-jest.mock('../../../../src/repositories/TallaLetraRepository.js', () => {
+jest.mock('../../../../src/repositories/TallaNumeroRepository.js', () => {
     return jest.fn().mockImplementation(() => mockRepository);
 });
 
-import UpdateTallaLetraController from '../../../../src/controllers/tallaLetra/UpdateTallaLetraController.js';
+import CreateTallaNumeroController from '../../../../src/controllers/tallaNumero/CreateTallaNumeroController.js';
 
-describe('Unit Test: UpdateTallaLetraController', () => {
+
+describe('Unit Test: CreateTallaNumeroController', () => {
     let controller;
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new UpdateTallaLetraController(mockRepository);
+        controller = new CreateTallaNumeroController(mockRepository);
     });
 
-    it('Actualiza un tallaLetra exitosamente', async () => {
+    it('Crea un tallaNumero exitosamente', async () => {
         // Arrange
-        const tallaLetraData = { valor: 'L' };
-        const mockResponse = { data: { id: 1, valor: 'L' }, created: false };
-        mockRepository.getBy.mockResolvedValue({id: 1, valor: 'L'});
-        mockRepository.update.mockResolvedValue(mockResponse);
-        const req = { params: { id: 1 }, body: tallaLetraData };
+        const tallaNumeroData = { valor: 40 };
+        const mockResponse = { id: 1, ...tallaNumeroData };
+        mockRepository.create.mockResolvedValue(mockResponse);
+
+        const req = {
+            body: { valor: 40 }
+        };
         const res = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis()
@@ -34,10 +36,10 @@ describe('Unit Test: UpdateTallaLetraController', () => {
         await controller.execute(req, res);
 
         // Assert
-        expect(mockRepository.update).toHaveBeenCalledWith(1, tallaLetraData, null);
+        expect(mockRepository.create).toHaveBeenCalledWith({ valor: 40 }, null);
         expect(res.json).toHaveBeenCalledWith({
-            data: mockResponse.data,
-            mensaje: 'Registro actualizado exitosamente.'
+            data: mockResponse,
+            mensaje: 'El registro ha sido creado exitosamente.'
         });
         expect(res.status).not.toHaveBeenCalled();
     });
@@ -45,7 +47,9 @@ describe('Unit Test: UpdateTallaLetraController', () => {
     it('Maneja errores de validación correctamente', async () => {
         // Arrange
         const invalidData = { nombre: '' };
-        const req = { params: { id: 1 }, body: invalidData };
+        const req = {
+            body: invalidData
+        };
         const res = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis()
@@ -58,21 +62,24 @@ describe('Unit Test: UpdateTallaLetraController', () => {
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
             code: 400,
-            details: ["El campo valor es obligatorio y debe tener un máximo de hasta 5 caracteres."],
+            details: ["El campo valor es obligatorio."],
             error: "Error: Datos no válidos:"
         }));
     });
 
     it('Maneja errores del repositorio correctamente', async () => {
         // Arrange
-        const tallaLetraData = { valor: 'L' };
-        const req = { params: { id: 1 }, body: tallaLetraData };
+        const tallaNumeroData = { valor: 40 };
+        const req = {
+            body: tallaNumeroData
+        };
         const res = {
             json: jest.fn(),
             status: jest.fn().mockReturnThis()
         };
+
         const error = new Error('Error de base de datos');
-        mockRepository.update.mockRejectedValue(error);
+        mockRepository.create.mockRejectedValue(error);
 
         // Act
         await controller.execute(req, res);

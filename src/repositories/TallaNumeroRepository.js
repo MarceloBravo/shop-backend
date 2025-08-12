@@ -5,6 +5,12 @@ class TallaNumeroRepository {
         const data = await TallaNumericaModel.findByPk(id, { paranoid });
         return data;
     }
+    
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = {[campo]: valor};
+        const data = await TallaNumericaModel.findOne({where, paranoid });
+        return data;
+    }
 
     getAll = async (orderBy = [['valor', 'ASC']], paranoid = true) => {
         const { rows, count } = await TallaNumericaModel.findAndCountAll({

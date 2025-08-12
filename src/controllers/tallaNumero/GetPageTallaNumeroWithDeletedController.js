@@ -11,7 +11,10 @@ class GetPageTallaNumeroWithDeletedController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de tallas numéricas
      */
-    constructor(repository = new TallaNumeroRepository()) {
+    constructor(repository) {
+        if(!repository) {
+            repository = new TallaNumeroRepository()
+        }
         this.service = new GetPageTallaNumeroService(repository);
     }
 

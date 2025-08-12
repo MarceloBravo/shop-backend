@@ -11,7 +11,10 @@ class GetAllTallaNumeroWithDeletedController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de tallas numéricas
      */
-    constructor(repository = new TallaNumeroRepository()) {
+    constructor(repository) {
+        if(!repository) {
+            repository = new TallaNumeroRepository()
+        }
         this.service = new GetAllTallaNumeroService(repository);
     }
 
@@ -23,8 +26,7 @@ class GetAllTallaNumeroWithDeletedController {
      */
     execute = async (req, res) => {
         try {
-            const { id } = req.params;
-            const data = await this.service.execute(id, false);
+            const data = await this.service.execute(false);
             res.json(data);
         } catch(e) {
             const err = handleError(e);

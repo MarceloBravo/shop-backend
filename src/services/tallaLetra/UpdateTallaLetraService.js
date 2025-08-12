@@ -26,6 +26,12 @@ class UpdateTallaLetraService {
      */
     execute = async (id, data, transaction = null) => {
         validaDatos(data);
+        const existe = await this.repository.getBy('valor', data.valor);
+        if (existe && existe.id !== id) {   
+            const error = new Error("Ya existe un regístro con el valor ingresado");
+            error.code = 409;
+            throw error;
+        }
         return await this.repository.update(id, data, transaction);
     }
 }
