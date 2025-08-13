@@ -24,7 +24,9 @@ class GetByIdTipoDimensionesService {
     execute = async (id, paranoid = true) => {
         const result = await this.repository.getById(id, paranoid);
         if (!result) {
-            throw new Error('Tipo de dimensión no encontrado');
+            const error = new Error('Regístro no encontrado');
+            error.code = 404;
+            throw error;
         }
         return result;
     }
