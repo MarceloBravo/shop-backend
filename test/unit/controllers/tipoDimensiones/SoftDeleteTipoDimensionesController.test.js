@@ -31,11 +31,12 @@ describe('SoftDeleteTipoDimensionesController', () => {
 
   it('should soft delete a tipo dimensiones and return success message', async () => {
     mockRequest.params.id = 1;
-    mockServiceInstance.execute.mockResolvedValue(200);
+    mockServiceInstance.execute.mockResolvedValue({id: mockRequest.params.id, result: true});
 
     await softDeleteTipoDimensionesController.execute(mockRequest, mockResponse);
 
     expect(mockResponse.json).toHaveBeenCalledWith({
+      id: 1,
       code: 200,
       mensaje: 'El registro ha sido borrado exitosamente.',
     });
@@ -44,11 +45,12 @@ describe('SoftDeleteTipoDimensionesController', () => {
 
   it('should return error message if soft delete fails', async () => {
     mockRequest.params.id = 1;
-    mockServiceInstance.execute.mockResolvedValue(500);
+    mockServiceInstance.execute.mockResolvedValue({id: mockRequest.params.id, result: false});
 
     await softDeleteTipoDimensionesController.execute(mockRequest, mockResponse);
 
     expect(mockResponse.json).toHaveBeenCalledWith({
+      id: 1,
       code: 500,
       mensaje: 'El registro no púdo ser borrado o registro inexistente',
     });

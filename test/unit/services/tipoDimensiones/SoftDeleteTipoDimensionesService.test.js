@@ -29,7 +29,7 @@ describe('SoftDeleteTipoDimensionesService', () => {
   it('should throw an error if tipo dimensiones is not found', async () => {
     mockRepository.getById.mockResolvedValue(null);
 
-    await expect(softDeleteTipoDimensionesService.execute(999)).rejects.toThrow('Regístro no encontrado');
+    await expect(softDeleteTipoDimensionesService.execute(999)).rejects.toThrow('Registro no encontrado');
     expect(mockRepository.softDelete).not.toHaveBeenCalled();
   });
 

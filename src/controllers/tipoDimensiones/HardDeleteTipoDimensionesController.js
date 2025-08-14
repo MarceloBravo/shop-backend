@@ -28,7 +28,7 @@ class HardDeleteTipoDimensionesController {
         try {
             const { id } = req.params;
             const resp = await this.service.execute(id);
-            const mensaje = resp.result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente';
+            const mensaje = resp.result ? 'El registro ha sido eliminado exitosamente.' : 'El registro no púdo ser eliminado o registro inexistente';
             res.json({ id, code: resp.result ? 200 : 500, mensaje });
         } catch (error) {
             const err = handleError(error);

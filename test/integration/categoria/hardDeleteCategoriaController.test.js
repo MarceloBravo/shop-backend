@@ -10,6 +10,7 @@ describe('Integration Test: HardDeleteCategoriaController', () => {
     
     beforeAll(async () => {
         token = await TestAuthHelper.createUserAndLogin();
+        await CategoriaModel.destroy({ where: {}, force: true });
     });
 
     beforeEach(async () => {

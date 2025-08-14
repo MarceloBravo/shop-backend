@@ -23,6 +23,11 @@ class GetPageTipoDimensionesService {
      * @returns {Promise<Object>} Objeto con los datos paginados
      */
     execute = async (page = 1, limit = Number(process.env.DEFAULT_REG_POR_PAGINA), paranoid = true) => {
+        if(page <= 0 || limit <= 0) {
+            const error = new Error('Límite de página o número de página inválido');
+            error.code = 400;
+            throw error;
+        }
         const offset = (page - 1) * limit;
         const { rows, count } = await this.repository.getPage(offset, limit, [['nombre', 'ASC']], paranoid);
         const totPag = Math.ceil(count / limit);

@@ -1,7 +1,6 @@
 import CreateTipoDimensionesService from '../../services/tipoDimensiones/CreateTipoDimensionesService.js';
 import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
-import GetAllTallaNumeroController from '../tallaNumero/GetAllTallaNumeroController.js';
 
 /**
  * Controlador para crear un nuevo tipo de dimensión

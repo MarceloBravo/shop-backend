@@ -35,7 +35,7 @@ describe('GetByIdTipoDimensionesService', () => {
   it('should throw an error if tipo dimensiones is not found', async () => {
     mockRepository.getById.mockResolvedValue(null);
 
-    await expect(getByIdTipoDimensionesService.execute(999)).rejects.toThrow('Regístro no encontrado');
+    await expect(getByIdTipoDimensionesService.execute(999)).rejects.toThrow('Registro no encontrado');
   });
 
   it('should throw an error if repository is not provided', () => {

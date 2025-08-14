@@ -38,7 +38,7 @@ describe('HardDeleteTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({
       id: 1,
       code: 200,
-      mensaje: 'El registro ha sido borrado exitosamente.',
+      mensaje: 'El registro ha sido eliminado exitosamente.',
     });
     expect(mockResponse.status).not.toHaveBeenCalled();
   });
@@ -52,7 +52,7 @@ describe('HardDeleteTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({
       id: 1,
       code: 500,
-      mensaje: 'El registro no púdo ser borrado o registro inexistente',
+      mensaje: 'El registro no púdo ser eliminado o registro inexistente',
     });
     expect(mockResponse.status).not.toHaveBeenCalled();
   });

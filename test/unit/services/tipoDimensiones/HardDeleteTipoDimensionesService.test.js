@@ -28,7 +28,7 @@ describe('HardDeleteTipoDimensionesService', () => {
   it('should throw an error if tipo dimensiones is not found', async () => {
     mockRepository.getById.mockResolvedValue(null);
 
-    await expect(hardDeleteTipoDimensionesService.execute(999)).rejects.toThrow('Regístro no encontrado');
+    await expect(hardDeleteTipoDimensionesService.execute(999)).rejects.toThrow('Registro no encontrado');
     expect(mockRepository.hardDelete).not.toHaveBeenCalled();
   });
 

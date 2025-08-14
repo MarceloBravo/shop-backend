@@ -24,7 +24,7 @@ class SoftDeleteTipoDimensionesService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            const error = new Error('Regístro no encontrado');
+            const error = new Error('Registro no encontrado');
             error.code = 404;
             throw error;
         }

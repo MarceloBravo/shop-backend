@@ -6,6 +6,12 @@ class TipoDimensionesRepository {
         return data;
     }
 
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = { [campo]: valor };
+        const data = await TipoDimensionesModel.findOne({where, paranoid });
+        return data;
+    }
+
     getAll = async (orderBy = [['nombre', 'ASC']], paranoid = true) => {
         const { rows, count } = await TipoDimensionesModel.findAndCountAll({
             order: orderBy,
