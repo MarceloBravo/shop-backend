@@ -11,7 +11,10 @@ class GetByIdTipoDimensionesWithDeletedController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de tipos de dimensión
      */
-    constructor(repository = new TipoDimensionesRepository()) {
+    constructor(repository = null) {
+        if (!repository) {
+            repository = new TipoDimensionesRepository()
+        }
         this.service = new GetByIdTipoDimensionesService(repository);
     }
 

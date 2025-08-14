@@ -1,6 +1,7 @@
 import CreateTipoDimensionesService from '../../services/tipoDimensiones/CreateTipoDimensionesService.js';
 import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
+import GetAllTallaNumeroController from '../tallaNumero/GetAllTallaNumeroController.js';
 
 /**
  * Controlador para crear un nuevo tipo de dimensión
@@ -11,7 +12,10 @@ class CreateTipoDimensionesController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de tipos de dimensión
      */
-    constructor(repository = new TipoDimensionesRepository()) {
+    constructor(repository = null) {
+        if (!repository) {
+            repository = new TipoDimensionesRepository()
+        }
         this.service = new CreateTipoDimensionesService(repository);
     }
 
