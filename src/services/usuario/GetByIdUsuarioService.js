@@ -24,7 +24,7 @@ class GetByIdUsuarioService {
         const data = await this.repository.getById(id, paranoid);
         if (!data) {
             const error = new Error("El usuario no existe.");
-            error.status = 404;
+            error.code = 404;
             throw error;
         }
         return data;

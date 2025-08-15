@@ -24,7 +24,7 @@ class HardDeleteUsuarioService {
         const existe = await this.repository.getById(id, false);
         if (!existe) {
             const error = new Error("El usuario no existe.");
-            error.status = 404;
+            error.code = 404;
             throw error;
         }   
         return await this.repository.hardDelete(id, transaction);

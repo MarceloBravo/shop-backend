@@ -29,7 +29,7 @@ class UpdateUsuarioService {
         const existe = await this.repository.getById(id, true);
         if (!existe) {
             const error = new Error("El usuario no existe.");
-            error.status = 404;
+            error.code = 404;
             throw error;
         }
         const result = await this.repository.update(id, data, transaction);
