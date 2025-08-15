@@ -23,6 +23,12 @@ class CreateUsuarioService {
      */
     execute = async (data) => {
         validaDatos(data);
+        const existe = await this.repository.getBy('rut', data.rut);
+        if (existe) {
+            const error = new Error("El usuario ya está exíste.");
+            error.status = 400;
+            throw error;
+        }
         return await this.repository.create(data);
     }
 }

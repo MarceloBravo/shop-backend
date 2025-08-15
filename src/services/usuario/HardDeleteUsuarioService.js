@@ -21,6 +21,12 @@ class HardDeleteUsuarioService {
      * @returns {Promise<void>} - Indica que la operación se completó.
      */
     execute = async (id, transaction = null) => {
+        const existe = await this.repository.getById(id, false);
+        if (!existe) {
+            const error = new Error("El usuario no existe.");
+            error.status = 404;
+            throw error;
+        }   
         return await this.repository.hardDelete(id, transaction);
     }
 }

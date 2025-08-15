@@ -21,7 +21,13 @@ class GetByIdUsuarioService {
      * @returns {Promise<Object>} - El usuario obtenido.
      */
     execute = async (id, paranoid = true) => {
-        return await this.repository.getById(id, paranoid);
+        const data = await this.repository.getById(id, paranoid);
+        if (!data) {
+            const error = new Error("El usuario no existe.");
+            error.status = 404;
+            throw error;
+        }
+        return data;
     }
 }
 

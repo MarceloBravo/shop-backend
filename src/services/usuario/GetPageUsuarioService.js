@@ -23,8 +23,9 @@ class GetPageUsuarioService {
      */
     execute = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true, orderBy = [['nombres', 'ASC']]) => {
         const desde = (page - 1) * limit;
-        const result = await this.repository.getPage(desde, limit, paranoid, orderBy);
-        return result;
+        const { rows, count } = await this.repository.getPage(desde, limit, paranoid, orderBy);
+        const totPag = Math.ceil(count / limit);
+        return { rows, count, totPag };
     }
 }
 

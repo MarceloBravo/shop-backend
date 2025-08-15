@@ -21,6 +21,12 @@ class SoftDeleteUsuarioService {
      * @returns {Promise<void>} - Indica que la operación se completó.
      */
     execute = async (id, transaction) => {
+        const existe = await this.repository.getById(id, true);
+        if (!existe) {
+            const error = new Error("El usuario no existe.");
+            error.status = 404;
+            throw error;
+        }
         const { result } = await this.repository.softDelete(id, transaction);
         return result;
     }

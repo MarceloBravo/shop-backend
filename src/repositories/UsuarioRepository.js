@@ -9,6 +9,12 @@ class UsuarioRepository {
         }
         return data;
     }
+    
+    getBy = async (campo, valor, paranoid = true) => {
+        const where = {[campo]: valor};
+        const data = await UsuarioModel.findOne({where, paranoid});
+        return data;
+    }
 
     getAll = async (paranoid = true, orderBy = null) => {
         const { rows, count } = await UsuarioModel.findAndCountAll({

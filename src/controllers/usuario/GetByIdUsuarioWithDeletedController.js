@@ -11,7 +11,10 @@ class GetByIdUsuarioWithDeletedController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de usuarios
      */
-    constructor(repository = new UsuarioRepository()) {
+    constructor(repository = null) {
+        if (!repository) {
+            repository = new UsuarioRepository();
+        }   
         this.service = new GetByIdUsuarioService(repository);
     }
 
