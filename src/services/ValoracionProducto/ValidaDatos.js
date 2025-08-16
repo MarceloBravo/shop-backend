@@ -1,16 +1,20 @@
+import { MENSAJE_VALORACION_NO_VALIDA } from "../../shared/mensajes.js";
+
 const validaDatos = (data) => {
-    let errors = [];
-    const { nombre } = data;
-    if (!nombre || nombre.trim().length === 0 || nombre.length > 30) {
-        errors.push("Ingresa un nombre válido.");
+    const { calificacion, comentario, id_producto, id_usuario } = data;
+
+    if (calificacion === undefined || calificacion < 1 || calificacion > 5) {
+        throw new Error(MENSAJE_VALORACION_NO_VALIDA);
     }
-    if(errors.length > 0){
-        const error = new Error('Datos no válidos:');
-        error.code = 400;
-        error.details = errors;
-        throw error;
+
+    if (comentario && typeof comentario !== 'string') {
+        throw new Error('El comentario debe ser una cadena de texto.');
     }
-    
+
+    if (!id_producto || !id_usuario) {
+        throw new Error('El id del producto y del usuario son requeridos.');
+    }
 }
+
 
 export default validaDatos;

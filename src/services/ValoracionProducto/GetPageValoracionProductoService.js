@@ -23,9 +23,10 @@ class GetPageValoracionProductoService {
      * @returns {Promise<Object>} Objeto con los registros, total de registros y total de páginas
      */
     execute = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true) => {    
-        const offset = (page - 1) * limit;
-        const { rows, count } = await this.repository.getPage(offset, limit, paranoid);
-        const totPag = Math.ceil(count / limit);
+        const limitNumber = parseInt(limit, 10);
+        const offset = (page - 1) * limitNumber;
+        const { rows, count } = await this.repository.getPage(offset, limitNumber, paranoid);
+        const totPag = Math.ceil(count / limitNumber);
         return { rows, count, totPag };
     }
 }
