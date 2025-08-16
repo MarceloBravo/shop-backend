@@ -24,10 +24,11 @@ class SoftDeleteValoracionProductoService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Valoración no encontrada');
+            const error = new Error('Valoración no encontrada');
+            error.code = 404;
+            throw error;
         }
-        const { result } = await this.repository.softDelete(id, transaction);
-        return result;
+        return await this.repository.softDelete(id, transaction);
     }
 }
 

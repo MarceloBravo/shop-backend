@@ -14,7 +14,7 @@ describe('SoftDeleteValoracionProductoService', () => {
     });
 
     it('debe eliminar lógicamente una valoración de producto', async () => {
-        const valoracion = { id: 1, id_producto: 1, id_usuario: 1, calificacion: 5, comentario: 'Excelente' };
+        const valoracion = { id: 1, producto_id: 1, estrellas: 5, comentario: 'Excelente' };
         repository.getById.mockResolvedValue(valoracion);
         repository.softDelete.mockResolvedValue({ result: true });
 
@@ -22,7 +22,7 @@ describe('SoftDeleteValoracionProductoService', () => {
 
         expect(repository.getById).toHaveBeenCalledWith(1);
         expect(repository.softDelete).toHaveBeenCalledWith(1, null);
-        expect(result).toBe(true);
+        expect(result.result).toBe(true);
     });
 
     it('debe lanzar un error si el repositorio no es proporcionado', () => {

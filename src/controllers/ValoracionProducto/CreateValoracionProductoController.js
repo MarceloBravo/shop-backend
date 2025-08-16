@@ -11,7 +11,10 @@ class CreateValoracionProductoController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de valoraciones de productos
      */
-    constructor(repository = new ValoracionProductoRepository()) {
+    constructor(repository = null) {
+        if(!repository) {
+            repository = new ValoracionProductoRepository();
+        }
         this.service = new CreateValoracionProductoService(repository);
     }
 

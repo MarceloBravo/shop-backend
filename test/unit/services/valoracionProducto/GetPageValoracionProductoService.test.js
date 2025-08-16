@@ -18,8 +18,8 @@ describe('GetPageValoracionProductoService', () => {
         const limit = 10;
         const valoraciones = {
             rows: [
-                { id: 1, id_producto: 1, id_usuario: 1, calificacion: 5, comentario: 'Excelente' },
-                { id: 2, id_producto: 2, id_usuario: 2, calificacion: 4, comentario: 'Bueno' }
+                { id: 1, producto_id: 1, estrellas: 5, comentario: 'Excelente' },
+                { id: 2, producto_id: 2, estrellas: 4, comentario: 'Bueno' }
             ],
             count: 2
         };

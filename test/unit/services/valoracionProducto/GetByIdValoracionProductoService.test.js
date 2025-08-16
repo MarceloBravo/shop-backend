@@ -13,7 +13,7 @@ describe('GetByIdValoracionProductoService', () => {
     });
 
     it('debe retornar una valoración de producto por su id', async () => {
-        const valoracion = { id: 1, id_producto: 1, id_usuario: 1, calificacion: 5, comentario: 'Excelente' };
+        const valoracion = { id: 1, producto_id: 1, estrellas: 5, comentario: 'Excelente' };
         repository.getById.mockResolvedValue(valoracion);
 
         const result = await service.execute(1);
@@ -33,7 +33,7 @@ describe('GetByIdValoracionProductoService', () => {
     });
 
     it('debe llamar a getById con paranoid false', async () => {
-        const valoracion = { id: 1, id_producto: 1, id_usuario: 1, calificacion: 5, comentario: 'Excelente' };
+        const valoracion = { id: 1, producto_id: 1, estrellas: 5, comentario: 'Excelente' };
         repository.getById.mockResolvedValue(valoracion);
 
         const result = await service.execute(1, false);

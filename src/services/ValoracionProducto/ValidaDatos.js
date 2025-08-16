@@ -1,18 +1,26 @@
 import { MENSAJE_VALORACION_NO_VALIDA } from "../../shared/mensajes.js";
 
 const validaDatos = (data) => {
-    const { calificacion, comentario, id_producto, id_usuario } = data;
+    const errors = [];
+    const { estrellas, comentario, producto_id } = data;
 
-    if (calificacion === undefined || calificacion < 1 || calificacion > 5) {
-        throw new Error(MENSAJE_VALORACION_NO_VALIDA);
+    if (estrellas === undefined || estrellas < 1 || estrellas > 5) {
+        errors.push('No a calificado el producto. Debe ser un número entre 1 y 5.');
     }
 
     if (comentario && typeof comentario !== 'string') {
-        throw new Error('El comentario debe ser una cadena de texto.');
+        errors.push('El comentario debe ser una cadena de texto.');
     }
 
-    if (!id_producto || !id_usuario) {
-        throw new Error('El id del producto y del usuario son requeridos.');
+    if (!producto_id) {
+        errors.push('El producto es requerido.');
+    }
+
+    if (errors.length > 0) {
+        const error = new Error('Datos no válidos:');
+        error.code = 400; // Bad Request
+        error.details = errors;
+        throw error;
     }
 }
 

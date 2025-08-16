@@ -1,6 +1,5 @@
 
 import CreateValoracionProductoService from '../../../../src/services/ValoracionProducto/CreateValoracionProductoService.js';
-import { MENSAJE_VALORACION_NO_VALIDA } from '../../../../src/shared/mensajes.js';
 
 describe('CreateValoracionProductoService', () => {
     let repository;
@@ -15,9 +14,8 @@ describe('CreateValoracionProductoService', () => {
 
     it('debe crear una nueva valoración de producto correctamente', async () => {
         const data = {
-            id_producto: 1,
-            id_usuario: 1,
-            calificacion: 5,
+            producto_id: 1,
+            estrellas: 5,
             comentario: 'Excelente producto'
         };
         const expectedValoracion = { id: 1, ...data };
@@ -35,12 +33,11 @@ describe('CreateValoracionProductoService', () => {
 
     it('debe lanzar un error si los datos de la valoración no son válidos', async () => {
         const data = {
-            id_producto: 1,
-            id_usuario: 1,
-            calificacion: 6, // Calificación inválida
+            producto_id: 1,
+            estrellas: 6, // Calificación inválida
             comentario: 'Excelente producto'
         };
 
-        await expect(service.execute(data)).rejects.toThrow(MENSAJE_VALORACION_NO_VALIDA);
+        await expect(service.execute(data)).rejects.toThrow('Datos no válidos:');
     });
 });

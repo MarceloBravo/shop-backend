@@ -14,8 +14,8 @@ describe('GetAllValoracionProductoService', () => {
 
     it('debe retornar todas las valoraciones de productos', async () => {
         const valoraciones = [
-            { id: 1, id_producto: 1, id_usuario: 1, calificacion: 5, comentario: 'Excelente' },
-            { id: 2, id_producto: 2, id_usuario: 2, calificacion: 4, comentario: 'Bueno' }
+            { id: 1, producto_id: 1, estrellas: 5, comentario: 'Excelente' },
+            { id: 2, producto_id: 2, estrellas: 4, comentario: 'Bueno' }
         ];
         repository.getAll.mockResolvedValue(valoraciones);
 
@@ -31,8 +31,8 @@ describe('GetAllValoracionProductoService', () => {
 
     it('debe llamar a getAll con paranoid false', async () => {
         const valoraciones = [
-            { id: 1, id_producto: 1, id_usuario: 1, calificacion: 5, comentario: 'Excelente' },
-            { id: 2, id_producto: 2, id_usuario: 2, calificacion: 4, comentario: 'Bueno' }
+            { id: 1, producto_id: 1, estrellas: 5, comentario: 'Excelente' },
+            { id: 2, producto_id: 2, estrellas: 4, comentario: 'Bueno' }
         ];
         repository.getAll.mockResolvedValue(valoraciones);
 

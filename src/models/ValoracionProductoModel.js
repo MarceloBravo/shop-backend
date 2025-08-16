@@ -40,11 +40,6 @@ export const ValoracionProductoModel = sequelize.define('valoraciones_producto',
     foto: {
         type: DataTypes.STRING(500),
         allowNull: true
-    },    
-    deleted_at: {
-        type: DataTypes.DATE,
-        allowNull: true,
-        defaultValue: null
     }
 }, {
     paranoid: true,         // Habilita soft-delete

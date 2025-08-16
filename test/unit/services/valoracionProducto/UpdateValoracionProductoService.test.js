@@ -16,9 +16,8 @@ describe('UpdateValoracionProductoService', () => {
     it('debe actualizar una valoración de producto correctamente', async () => {
         const id = 1;
         const data = {
-            id_producto: 1,
-            id_usuario: 1,
-            calificacion: 4,
+            producto_id: 1,
+            estrellas: 4,
             comentario: 'Buen producto'
         };
         const expectedValoracion = { id, ...data };
@@ -37,7 +36,7 @@ describe('UpdateValoracionProductoService', () => {
     it('debe lanzar un error si los datos de la valoración no son válidos', async () => {
         const id = 1;
         const data = {
-            calificacion: 6, // Calificación inválida
+            estrellas: 6, // Calificación inválida
             comentario: 'Buen producto'
         };
 

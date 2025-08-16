@@ -14,7 +14,7 @@ describe('HardDeleteValoracionProductoService', () => {
     });
 
     it('debe eliminar físicamente una valoración de producto', async () => {
-        const valoracion = { id: 1, id_producto: 1, id_usuario: 1, calificacion: 5, comentario: 'Excelente' };
+        const valoracion = { id: 1, producto_id: 1, estrellas: 5, comentario: 'Excelente' };
         repository.getById.mockResolvedValue(valoracion);
         repository.hardDelete.mockResolvedValue({ message: 'Valoración eliminada correctamente' });
 
