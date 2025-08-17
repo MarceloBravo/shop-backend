@@ -10,7 +10,10 @@ class UpdateProductoController {
      * Crea una instancia del controlador
      * @param {Object} orchestrator - Orquestador de productos
      */
-    constructor(orchestrator = new UpdateProductoOrchestrator()) {
+    constructor(orchestrator = null) {
+        if(!orchestrator) {
+            orchestrator = new UpdateProductoOrchestrator();
+        }
         this.orchestrator = orchestrator;
     }
 

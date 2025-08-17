@@ -11,7 +11,10 @@ class GetPageProductoWithDeletedController {
      * @constructor
      * @description Inicializa el servicio de obtención de página de productos
      */
-    constructor(repository = new ProductoRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new ProductoRepository()
+        }
         this.service = new GetPageProductoService(repository);
     }
 

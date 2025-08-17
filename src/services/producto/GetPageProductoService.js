@@ -24,6 +24,7 @@ class GetPageProductoService {
      * @returns {Promise<Object>} Objeto con los registros, total de registros y total de páginas
      */
     execute = async (page = 1, limit = process.env.DEFAULT_REG_POR_PAGINA, paranoid = true, filter = {}) => {
+        limit = parseInt(limit);
         const offset = (page - 1) * limit;
         const { rows, count } = await this.repository.getPage(offset, limit, paranoid, filter);
         const totPag = Math.ceil(count / limit);

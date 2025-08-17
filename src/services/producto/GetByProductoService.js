@@ -29,7 +29,9 @@ class GetByProductoService {
             await this.repository.getById(id, paranoid);
         
         if (!result) {
-            throw new Error('Producto no encontrado');
+            const error = new Error('Producto no encontrado');
+            error.code = 404;
+            throw error;
         }
         return result;
     }

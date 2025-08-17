@@ -12,6 +12,8 @@ describe('Integration Test: GetPageCategoriaController', () => {
     });
 
     beforeEach(async () => {
+        await CategoriaModel.destroy({ where: {}, force: true });
+
         // Crear algunos categoriaes de prueba antes de cada test
         await CategoriaModel.bulkCreate([
             { nombre: 'Categoria 1', descripcion: 'Descripción categoría 1' },

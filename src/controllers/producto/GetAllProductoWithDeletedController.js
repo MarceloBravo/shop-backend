@@ -12,7 +12,10 @@ class GetAllProductoWithDeletedController {
      * @description Inicializa el servicio de obtención de todos los productos
      * @param {Object} repository - Repositorio de productos
      */
-    constructor(repository = new ProductoRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new ProductoRepository()
+        }
         this.service = new GetAllProductoService(repository);
     }
 

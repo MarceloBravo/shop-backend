@@ -11,7 +11,10 @@ class SoftDeleteProductoController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de productos
      */
-    constructor(repository = new ProductoRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new ProductoRepository()
+        }
         this.service = new SoftDeleteProductoService(repository);
     }
 
@@ -25,7 +28,7 @@ class SoftDeleteProductoController {
         try {
             const { id } = req.params;
             const result = await this.service.execute(id);
-            const resp = {code: result, mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'};
+            const resp = {id, code: result ? 200 : 500, mensaje: result ? 'El registro ha sido borrado exitosamente.' : 'El registro no púdo ser borrado o registro inexistente'};
             res.json(resp);
         } catch (error) {
             const err = handleError(error);

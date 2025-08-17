@@ -11,7 +11,10 @@ class GetPageProductoController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de productos
      */
-    constructor(repository = new ProductoRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            repository = new ProductoRepository()
+        }
         this.service = new GetPageProductoService(repository);
     }
 

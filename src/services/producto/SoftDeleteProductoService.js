@@ -24,10 +24,11 @@ class SoftDeleteProductoService {
     execute = async (id, transaction = null) => {
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Producto no encontrado');
+            const error = new Error('Producto no encontrado');
+            error.code = 404;
+            throw error;
         }
-        const { result } = await this.repository.softDelete(id, transaction);
-        return result;
+        return await this.repository.softDelete(id, transaction);
     }
 }
 

@@ -26,11 +26,13 @@ class UpdateProductoService {
      * @throws {Error} Si la validación falla o hay un error en la actualización
      */
     execute = async (id, data, transaction = null) => {
-        await validaDatos(data);
         const existe = await this.repository.getById(id);
         if (!existe) {
-            throw new Error('Producto no encontrado');
+            const error = new Error('Producto no encontrado');
+            error.code = 404;
+            throw error;
         }
+        await validaDatos(data);
         return await this.repository.update(id, data, transaction);
     }
 }

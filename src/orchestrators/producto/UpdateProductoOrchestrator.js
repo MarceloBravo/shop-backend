@@ -288,8 +288,14 @@ class UpdateProductoOrchestrator {
 
         const result = { atributos, color, dimensiones, material, talla_letra, talla_numero, peso };
 
-        return Object.fromEntries(
-            Object.entries(result).filter(([_, valor]) => valor !== null && valor?.result)
+                return Object.fromEntries(
+            Object.entries(result).filter(([_, valor]) => {
+                if (valor === null) return false;
+                if (Array.isArray(valor)) {
+                    return valor.some(v => v.result);
+                }
+                return valor.result;
+            })
         );
     }
 }
