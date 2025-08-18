@@ -40,7 +40,7 @@ describe('GetPageProductoController', () => {
 
     await controller.execute(req, res);
 
-    expect(mockService.execute).toHaveBeenCalledWith(1, 10, true, {});
+    expect(mockService.execute).toHaveBeenCalledWith(1, 10, true, null);
     expect(res.json).toHaveBeenCalledWith({ data: { data: mockData.rows, totReg: mockData.count, rows: mockData.rows.length, pag: 1, totPag: 1 } });
   });
 
@@ -52,7 +52,7 @@ describe('GetPageProductoController', () => {
 
     await controller.execute(req, res);
 
-    expect(mockService.execute).toHaveBeenCalledWith(1, 10, true, {});
+    expect(mockService.execute).toHaveBeenCalledWith(1, 10, true, null);
     expect(handleError).toHaveBeenCalledWith(mockError);
     expect(res.status).toHaveBeenCalledWith(formattedError.code);
     expect(res.json).toHaveBeenCalledWith(formattedError);

@@ -41,8 +41,8 @@ describe('CreateProductoController', () => {
 
     expect(mockOrchestrator.createProducto).toHaveBeenCalledWith(req.body);
     expect(res.json).toHaveBeenCalledWith({
-      result: mockResult,
-      mensaje: 'El producto ha sido registrado exitosamente.',
+      mensaje: 'El producto ha sido ingresado exitosamente.',
+      data: mockResult,
     });
   });
 

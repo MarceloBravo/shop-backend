@@ -26,7 +26,7 @@ class GetPageProductoController {
      */
     execute = async (req, res) => { 
         try {
-            const { pag = 1, limit = 10, filter = {} } = req.params;
+            const { pag = 1, limit = 10, filter = null } = req.params;
             const { rows, count, totPag } = await this.service.execute(pag, limit, true, filter);
             res.json({data: {data: rows, totReg: count, rows: rows.length, pag: parseInt(pag), totPag}});
         } catch (error) {

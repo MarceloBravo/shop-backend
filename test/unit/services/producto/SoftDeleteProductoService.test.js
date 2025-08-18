@@ -8,7 +8,7 @@ describe('SoftDeleteProductoService', () => {
 
     beforeEach(() => {
         mockRepository = {
-            getById: jest.fn(),
+            findById: jest.fn(),
             softDelete: jest.fn()
         };
         service = new SoftDeleteProductoService(mockRepository);
@@ -24,30 +24,30 @@ describe('SoftDeleteProductoService', () => {
     });
 
     it('should soft delete product successfully', async () => {
-        mockRepository.getById.mockResolvedValue(mockProduct);
+        mockRepository.findById.mockResolvedValue(mockProduct);
         mockRepository.softDelete.mockResolvedValue(true);
 
         const result = await service.execute(1);
 
-        expect(mockRepository.getById).toHaveBeenCalledWith(1);
+        expect(mockRepository.findById).toHaveBeenCalledWith(1);
         expect(mockRepository.softDelete).toHaveBeenCalledWith(1, null);
         expect(result).toBe(true);
     });
 
     it('should soft delete with transaction', async () => {
         const mockTransaction = { id: 'transaction-1' };
-        mockRepository.getById.mockResolvedValue(mockProduct);
+        mockRepository.findById.mockResolvedValue(mockProduct);
         mockRepository.softDelete.mockResolvedValue(true);
 
         const result = await service.execute(1, mockTransaction);
 
-        expect(mockRepository.getById).toHaveBeenCalledWith(1);
+        expect(mockRepository.findById).toHaveBeenCalledWith(1);
         expect(mockRepository.softDelete).toHaveBeenCalledWith(1, mockTransaction);
         expect(result).toBe(true);
     });
 
     it('should throw 404 error when product is not found', async () => {
-        mockRepository.getById.mockResolvedValue(null);
+        mockRepository.findById.mockResolvedValue(null);
 
         await expect(service.execute(999))
             .rejects

@@ -1,101 +1,94 @@
-import { AtributosModel } from "../models/AtributosModel.js";
-import { AtributosProductoModel } from "../models/AtributosProductoModel.js";
-import { ColorModel } from "../models/ColorModel.js";
-import { ColorProductoModel } from "../models/ColorProductoModel.js";
-import { DimensionesProductoModel } from "../models/DimensionesProductoModel.js";
-import { MaterialModel } from "../models/MaterialModel.js";
-import { MaterialProductoModel } from "../models/MaterialProductoModel.js";
-import { PesoProductoModel } from "../models/PesoProductoModel.js";
 import { ProductoModel } from "../models/ProductoModel.js";
-import { TallaLetraModel } from "../models/TallaLetraModel.js";
-import { TallaLetraProductoModel } from "../models/TallaLetraProductoModel.js";
-import { TallaNumericaModel } from "../models/TallaNumericaModel.js";
-import { TallaNumericaProductoModel } from "../models/TallaNumericaProductoModel.js";
-import { TipoDimensionesModel } from "../models/TipoDimensionesModel.js";
 import { sequelize } from '../../config/database.js';
-import { ValoracionProductoModel } from "../models/ValoracionProductoModel.js";
 import { Op } from 'sequelize';
 
 const include = [
         {
-            model: AtributosProductoModel,
+            association: 'atributos_producto',
             attributes: { exclude:['producto_id','atributo_id','tipo_dimension_id','createdAt', 'updatedAt', 'deleted_at'] },
             include: [
                 {
-                    model: AtributosModel,
+                    association: 'atributo',
                     attributes: { exclude:['createdAt', 'updatedAt', 'deleted_at'] },
                 }
             ]
         },
         {
-            model: ColorProductoModel,
-            as: 'colores',
-            attributes: { exclude:['producto_id','color_id','color_id','createdAt', 'updatedAt', 'deleted_at'] },
+            association: 'colores',
+            attributes: { exclude:['producto_id','color_id','createdAt', 'updatedAt', 'deleted_at'] },
             include: [
                 {
-                    model: ColorModel,
-                    as: 'color',
+                    association: 'color',
                     attributes: { exclude:['createdAt', 'updatedAt', 'deleted_at'] },
                 }
             ]
         },
         {
-            model: DimensionesProductoModel,
+            association: 'dimensiones',
             attributes: { exclude:['producto_id','tipo_dimension_id','createdAt', 'updatedAt', 'deleted_at'] },
             include: [
                 {
-                    model: TipoDimensionesModel,
-                    as: 'unidad_metrica',                            
+                    association: 'unidad_metrica',
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deleted_at'] },
                 }
             ]
         },
         {
-            model: MaterialProductoModel,
+            association: 'materiales',
             attributes: { exclude:['producto_id','material_id','createdAt', 'updatedAt', 'deleted_at'] },
             include: [
                 {
-                    model: MaterialModel,
+                    association: 'material',
                     attributes: { exclude:['createdAt', 'updatedAt', 'deleted_at'] },
                 }
             ]
         },
         {
-            model: TallaLetraProductoModel,
+            association: 'tallas_letra',
             attributes: { exclude:['producto_id','talla_letra_id','createdAt', 'updatedAt', 'deleted_at'] },
             include: [
                 {
-                    model: TallaLetraModel,
+                    association: 'talla',
                     attributes: { exclude:['createdAt', 'updatedAt', 'deleted_at'] },
                 }
             ]
         },
         {
-            model: TallaNumericaProductoModel,
+            association: 'tallas_numerica',
             attributes: { exclude:['producto_id','talla_numerica_id','createdAt', 'updatedAt', 'deleted_at'] },
             include: [
                 {
-                    model: TallaNumericaModel,
+                    association: 'talla',
                     attributes: { exclude:['createdAt', 'updatedAt', 'deleted_at'] },
                 }
             ]
         },
         {
-            model: PesoProductoModel,
+            association: 'pesos',
             attributes: { exclude: ['producto_id','tipo_dimension_id','createdAt', 'updatedAt', 'deleted_at'] },
             include: [
                 {
-                    model: TipoDimensionesModel,
-                    as: 'unidad_metrica',
+                    association: 'unidad_metrica',
                     attributes: { exclude: ['createdAt', 'updatedAt', 'deleted_at'] },
                 }
             ]
         },
         {
-            model: ValoracionProductoModel,
+            association: 'valoraciones',
             attributes: { exclude:['producto_id','estrellas','nombre','email','foto'] }
+        },
+        {
+            association: 'subcategoria',
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deleted_at'] }
+        },
+        {
+            association: 'marca',
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deleted_at'] }
+        },
+        {
+            association: 'genero',
+            attributes: { exclude: ['createdAt', 'updatedAt', 'deleted_at'] }
         }
-        
     ];
 
 
@@ -146,6 +139,11 @@ class ProductoRepository {
         this.query = query; 
     }
 
+    findById = async (id, paranoid = true, transaction = null) => {
+        const data = await ProductoModel.findByPk(id, { paranoid, transaction });
+        return data;
+    }
+
     getById = async (id, paranoid = true, transaction = null) => {
         const data = await ProductoModel.findByPk(id, {include, paranoid, transaction});
         return data;
@@ -163,16 +161,27 @@ class ProductoRepository {
     }
 
 
-    getPage = async (desde = 1, regPorPag = 10, paranoid = true, filter = {}, orderBy = [['nombre', 'ASC']]) => {
+    getPage = async (desde = 1, regPorPag = 10, paranoid = true, filter = null, orderBy = [['nombre', 'ASC']]) => {
         const { rows , count } = await ProductoModel.findAndCountAll({
             offset:desde,
             limit: regPorPag,
             order: orderBy,
-            include,
+            include: this.include,
             paranoid,
-            where: filter
-        });    
+            where: filter ? this.filterConfig(filter) : {}
+        });        
         return {rows, count, totPag: Math.ceil(count / regPorPag)};
+    }
+
+
+    filterConfig = (filter) => {
+        const search = `%${filter}%`;
+        return {
+            [Op.or]: [
+                { nombre: { [Op.like]: search } },
+                { descripcion: { [Op.like]: search } }
+            ]
+        };
     }
 
 
@@ -204,7 +213,7 @@ class ProductoRepository {
 
 
     hardDelete = async (id, transaction) => {
-        const result = await ProductoModel.destroy({where: {id}},{transaction, force: true, paranoid: false});
+        const result = await ProductoModel.destroy({where: {id}, transaction, force: true, paranoid: false});
         return {id, result};
     }
 

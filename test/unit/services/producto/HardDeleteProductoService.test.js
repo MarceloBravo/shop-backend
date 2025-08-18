@@ -8,6 +8,7 @@ describe('HardDeleteProductoService', () => {
 
     beforeEach(() => {
         mockRepository = {
+            findById: jest.fn(),
             getById: jest.fn(),
             hardDelete: jest.fn()
         };
@@ -24,30 +25,30 @@ describe('HardDeleteProductoService', () => {
     });
 
     it('should hard delete product successfully', async () => {
-        mockRepository.getById.mockResolvedValue(mockProduct);
+        mockRepository.findById.mockResolvedValue(mockProduct);
         mockRepository.hardDelete.mockResolvedValue(true);
 
         const result = await service.execute(1);
 
-        expect(mockRepository.getById).toHaveBeenCalledWith(1, false);
+        expect(mockRepository.findById).toHaveBeenCalledWith(1, false);
         expect(mockRepository.hardDelete).toHaveBeenCalledWith(1, null);
         expect(result).toBe(true);
     });
 
     it('should hard delete with transaction', async () => {
         const mockTransaction = { id: 'transaction-1' };
-        mockRepository.getById.mockResolvedValue(mockProduct);
+        mockRepository.findById.mockResolvedValue(mockProduct);
         mockRepository.hardDelete.mockResolvedValue(true);
 
         const result = await service.execute(1, mockTransaction);
 
-        expect(mockRepository.getById).toHaveBeenCalledWith(1, false);
+        expect(mockRepository.findById).toHaveBeenCalledWith(1, false);
         expect(mockRepository.hardDelete).toHaveBeenCalledWith(1, mockTransaction);
         expect(result).toBe(true);
     });
 
     it('should throw 404 error when product is not found', async () => {
-        mockRepository.getById.mockResolvedValue(null);
+        mockRepository.findById.mockResolvedValue(null);
 
         await expect(service.execute(999))
             .rejects

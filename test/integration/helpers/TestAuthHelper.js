@@ -10,6 +10,8 @@ import { MarcaModel } from '../../../src/models/MarcaModel.js';
 import { ProductoModel } from '../../../src/models/ProductoModel.js';
 import { encriptarPassword } from '../../../src/shared/functions.js'
 import { ValoracionProductoModel } from '../../../src/models/ValoracionProductoModel.js';
+import { AtributosModel } from '../../../src/models/AtributosModel.js';
+import { AtributosProductoModel } from '../../../src/models/AtributosProductoModel.js';
 
 export class TestAuthHelper {
   
@@ -67,7 +69,7 @@ export class TestAuthHelper {
       await CategoriaModel.create({
         id: defaultCategoriaId,
         nombre: 'Default Category',
-        descripcion: 'Default description for category', // <--- ADDED THIS LINE
+        descripcion: 'Default description for category', 
         deleted_at: null
       });
     } else if (categoria.deleted_at !== null) {
@@ -117,64 +119,119 @@ export class TestAuthHelper {
 
 }
 
+
+
 export const createProductoTestData = async (cantidad = 1) => {
-   await destroyProductoTestData();
+  await destroyProductoTestData();
 
-    const categoria = await CategoriaModel.create({
-        nombre: 'Categoria Test',
-        descripcion: 'Descripcion de la categoria test' 
-    });
-    const subCategoria = await SubCategoriaModel.create({
-        nombre: 'SubCategoria Test',
-        categoria_id: categoria.id
-    });
-    const genero = await GeneroModel.create({
-        genero: 'Masculino'
-    });
-    const marca = await MarcaModel.create({
-        nombre: 'Marca Test',
-        logo: 'http://example.com/logo.jpg'
-    });
-    const productos = [];
-    while (cantidad--) {
-      let producto = await ProductoModel.create({
-          sku: 'SKU123'+ cantidad,
-          nombre: 'Producto Test ' + cantidad,
-          descripcion: 'Descripcion del producto test ' + cantidad,
-          sub_categoria_id: subCategoria.id,
-          genero_id: genero.id,
-          marca_id: marca.id,
-          precio: 100.00 * cantidad
-        });
-        productos.push(producto);
-    }
-    return productos.length === 1 ? productos[0] : productos;
+  const categoria = await CategoriaModel.create({
+      nombre: 'Categoria Test',
+      descripcion: 'Descripcion de la categoria test' 
+  });
+  const subCategoria = await SubCategoriaModel.create({
+      nombre: 'SubCategoria Test',
+      categoria_id: categoria.id
+  });
+  const genero = await GeneroModel.create({
+      genero: 'Masculino'
+  });
+  const marca = await MarcaModel.create({
+      nombre: 'Marca Test',
+      logo: 'http://example.com/logo.jpg'
+  });
+
+  const atributo = await AtributosModel.create({
+      nombre: 'Atributo Test',
+      valor_string: 'Valor String Test',
+      valor_numerico: 123.45
+  });
+
+  const productos = [];
+  while (cantidad--) {
+    let producto = await ProductoModel.create({
+        sku: 'SKU123'+ cantidad,
+        nombre: 'Producto Test ' + cantidad,
+        descripcion: 'Descripcion del producto test ' + cantidad,
+        sub_categoria_id: subCategoria.id,
+        genero_id: genero.id,
+        marca_id: marca.id,
+        precio: 100.00 * cantidad
+      }).catch(err => {
+        console.error('Error creating ProductoModel:', err) ;
+      });
+
+      await AtributosProductoModel.create({
+          producto_id: producto.id,
+          atributo_id: atributo.id
+      });
+
+      productos.push(producto);
   }
+  return productos.length === 1 ? productos[0] : productos;
+}
 
-  export const destroyProductoTestData = async () => {
-      await ValoracionProductoModel.destroy({ where: {}, force: true });
-      await ProductoModel.destroy({ where: {}, force: true });
-      await SubCategoriaModel.destroy({ where: {}, force: true });
-      await CategoriaModel.destroy({ where: {}, force: true });
-      await MarcaModel.destroy({ where: {}, force: true });
-      await GeneroModel.destroy({ where: {}, force: true });
-      await ProductoModel.destroy({ where: {}, force: true });
+export const destroyProductoTestData = async () => {
+  await ValoracionProductoModel.destroy({ where: {}, force: true });
+  await AtributosProductoModel.destroy({ where: {}, force: true });
+  await AtributosModel.destroy({ where: {}, force: true });
+  await ProductoModel.destroy({ where: {}, force: true });
+  await SubCategoriaModel.destroy({ where: {}, force: true });
+  await CategoriaModel.destroy({ where: {}, force: true });
+  await MarcaModel.destroy({ where: {}, force: true });
+  await GeneroModel.destroy({ where: {}, force: true });
+}
+
+
+export const createValoracionProductoTestData = async (productoId, cantidad = 1, isDeleted = false) => {
+    const valoraciones = [];
+    while (cantidad--) {
+        let valoracion = await ValoracionProductoModel.create({
+            producto_id: productoId,
+            estrellas: Math.floor(Math.random() * 5) + 1, // De 5 a 1 estrellas
+            comentario: 'Comentario de prueba ' + cantidad,
+            email: `test${cantidad}@test.com`,
+            nombre: 'Usuario de prueba ' + cantidad,
+            foto: `http://example.com/foto${cantidad}.jpg`,
+            deleted_at: isDeleted ? new Date() : null // Si isDeleted es true, asigna una fecha de eliminación
+        });
+        valoraciones.push(valoracion);
     }
+    return valoraciones.length === 1 ? valoraciones[0] : valoraciones;
+}
 
 
-    export const createValoracionProductoTestData = async (productoId, cantidad = 1, isDeleted = false) => {
-        const valoraciones = [];
-        while (cantidad--) {
-            let valoracion = await ValoracionProductoModel.create({
-                producto_id: productoId,
-                estrellas: Math.floor(Math.random() * 5) + 1, // De 5 a 1 estrellas
-                comentario: 'Comentario de prueba ' + cantidad,
-                email: `test${cantidad}@test.com`,
-                nombre: 'Usuario de prueba ' + cantidad,
-                foto: `http://example.com/foto${cantidad}.jpg`,
-                deleted_at: isDeleted ? new Date() : null // Si isDeleted es true, asigna una fecha de eliminación
-            });
-            valoraciones.push(valoracion);
-        }
-       return valoraciones.length === 1 ? valoraciones[0] : valoraciones;
-    }
+export const createRelatedTestDataProducto = async (borrarDatos = true) => {
+  if(borrarDatos) await destroyRelatedTestDataProducto();
+  const sufijo = Math.random().toString(36).substring(2, 5);
+
+  const categoria = await CategoriaModel.create({
+      nombre: 'Categoria Test' + sufijo,
+      descripcion: 'Descripcion de la categoria test' + sufijo
+  });
+  const subCategoria = await SubCategoriaModel.create({
+      nombre: 'SubCategoria Test' + sufijo,
+      categoria_id: categoria.id
+  });
+  const genero = await GeneroModel.create({
+      genero: 'Masculino'
+  });
+  const marca = await MarcaModel.create({
+      nombre: 'Marca Test' + sufijo,
+      logo: `http://example.com/logo-${sufijo}.jpg`
+  });
+
+  return {
+      categoria,
+      subCategoria,
+      genero,
+      marca
+  };
+}
+
+
+export const destroyRelatedTestDataProducto = async () => {
+    await SubCategoriaModel.destroy({ where: {}, force: true });
+    await CategoriaModel.destroy({ where: {}, force: true });
+    await MarcaModel.destroy({ where: {}, force: true });
+    await GeneroModel.destroy({ where: {}, force: true });
+}   

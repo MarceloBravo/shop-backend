@@ -26,7 +26,7 @@ class CreateProductoController {
     execute = async (req, res) => {
         try {
             const result = await this.orchestrator.createProducto(req.body);
-            res.json({ result, mensaje: 'El producto ha sido registrado exitosamente.' });
+            res.json({ data: result, mensaje: 'El producto ha sido ingresado exitosamente.' });
         } catch(e) {
             const err = handleError(e);
             res.status(err.code).json(err);

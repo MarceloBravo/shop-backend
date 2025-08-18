@@ -22,7 +22,7 @@ class SoftDeleteProductoService {
      * @returns {Promise<boolean>} true si el borrado fue exitoso, false en caso contrario
      */
     execute = async (id, transaction = null) => {
-        const existe = await this.repository.getById(id);
+        const existe = await this.repository.findById(id);
         if (!existe) {
             const error = new Error('Producto no encontrado');
             error.code = 404;

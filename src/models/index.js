@@ -87,7 +87,7 @@ const initializeDatabase = async () => {
 
   // Cargar relaciones
   const { default: defineRelations } = await import(path.toNamespacedPath(path.join(__dirname, 'relations.js')));
-  defineRelations(sequelize);
+  defineRelations(db);
 
 
   return db;

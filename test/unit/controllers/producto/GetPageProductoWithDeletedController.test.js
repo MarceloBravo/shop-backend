@@ -40,7 +40,7 @@ describe('GetPageProductoWithDeletedController', () => {
 
     await controller.execute(req, res);
 
-    expect(mockService.execute).toHaveBeenCalledWith(1, 10, false, {});
+    expect(mockService.execute).toHaveBeenCalledWith(1, 10, false, null);
     expect(res.json).toHaveBeenCalledWith({ data: { data: mockData.rows, totReg: mockData.count, rows: mockData.rows.length, pag: 1, totPag: 1 } });
   });
 
@@ -52,7 +52,7 @@ describe('GetPageProductoWithDeletedController', () => {
 
     await controller.execute(req, res);
 
-    expect(mockService.execute).toHaveBeenCalledWith(1, 10, false, {});
+    expect(mockService.execute).toHaveBeenCalledWith(1, 10, false, null);
     expect(handleError).toHaveBeenCalledWith(mockError);
     expect(res.status).toHaveBeenCalledWith(formattedError.code);
     expect(res.json).toHaveBeenCalledWith(formattedError);

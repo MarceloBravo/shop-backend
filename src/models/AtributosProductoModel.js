@@ -13,7 +13,8 @@ export const AtributosProductoModel = sequelize.define('atributos_producto', {
         references:{
             model: 'productos',
             key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
     },
     atributo_id: {
         type: DataTypes.INTEGER,

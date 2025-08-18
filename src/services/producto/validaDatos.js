@@ -5,7 +5,7 @@ import MarcaRepository from '../../repositories/MarcaRepository.js';
 export const validaDatos = async (data) => {
     const errors = [];
     const { sku, nombre, descripcion, sub_categoria_id, genero_id, marca_id, precio } = data;
-
+    
     if(!sku || sku.trim().length === 0 || sku.length > 100){
         errors.push("El SKU ingresado no es válido, ingresa un SKU de hasta 100 carácteres.");
     }

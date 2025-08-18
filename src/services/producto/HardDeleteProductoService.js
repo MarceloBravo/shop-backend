@@ -22,7 +22,8 @@ class HardDeleteProductoService {
      * @returns {Promise<Object>} Resultado de la operación
      */
     execute = async (id, transaction = null) => {
-        const existe = await this.repository.getById(id, false);
+        // Verificar existencia sin cargar asociaciones
+        const existe = await this.repository.findById(id, false);
         if (!existe) {
             const error = new Error('Producto no encontrado');
             error.code = 404;

@@ -143,7 +143,7 @@ class UpdateProductoOrchestrator {
 
         const dataProducto = { sku, nombre, descripcion, sub_categoria_id, genero_id, marca_id, precio };
         const producto = await this.updateProductoService.execute(producto_id, dataProducto, transaction);
-        peso.producto_id = producto_id;
+        if(peso)peso.producto_id = producto_id;
         
         const atributosActualizados = atributos ? await this.actualizarAtributos(atributos, transaction) : [];
         const atributos_result = await this.actualizarAtributosProducto(producto_id, atributosActualizados, transaction);
@@ -158,12 +158,12 @@ class UpdateProductoOrchestrator {
         return {
             producto,
             atributos: atributos_result,
-            color: color_result.data.toJSON(),
-            dimensiones: dimensiones_result.data.toJSON(),
+            color: color_result?.data?.toJSON() ?? color_result,
+            dimensiones: dimensiones_result?.data?.toJSON() ?? dimensiones_result,
             material,
             talla_letra,
             talla_numero,
-            peso: peso_result.data.toJSON()
+            peso: peso_result?.data?.toJSON() ?? peso_result
         };
     }
 
