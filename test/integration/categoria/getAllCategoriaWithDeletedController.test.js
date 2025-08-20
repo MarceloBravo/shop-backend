@@ -12,6 +12,7 @@ describe('Integration Test: GetAllCategoriaWithDeletedController', () => {
     });
 
     beforeEach(async () => {
+        await CategoriaModel.destroy({ where: {}, force: true });
         // Crear algunos categoriaes de prueba, incluyendo uno eliminado
         await CategoriaModel.bulkCreate([
             { nombre: 'Categoría 1', descripcion: 'Descripción categoría 1' },
