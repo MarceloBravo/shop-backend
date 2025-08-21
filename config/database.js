@@ -9,7 +9,7 @@ dotenv.config({ path: './.env' });
 let sequelize;
 
 if (process.env.DATABASE_URL) {
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
+    sequelize = new Sequelize(process.env.NEON_DATABASE_URL || process.env.DATABASE_URL, {
         dialect: 'postgres',
         protocol: 'postgres',
         dialectOptions: {
