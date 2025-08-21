@@ -4,7 +4,7 @@ import { runSeeders } from './run-seeders.js';
 async function runMigrateSeeders() {
     try {
         console.log('Iniciando migraciones y seeders...');
-        await sequelize.sync({alter: true}); 
+        await sequelize.sync({force: true}); 
         console.log('Base de datos sincronizada correctamente.');
 
         console.log('Poblando la base de datos con seeders...');
