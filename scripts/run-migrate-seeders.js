@@ -1,14 +1,15 @@
-import { sequelize } from '../config/database.js';
+import dbPromise from '../src/models/index.js';
 import { runSeeders } from './run-seeders.js';
 
 async function runMigrateSeeders() {
     try {
         console.log('Iniciando migraciones y seeders...');
-        await sequelize.sync({force: true}); 
+        const db = await dbPromise;
+        await db.sequelize.sync({force: true}); 
         console.log('Base de datos sincronizada correctamente.');
 
         console.log('Poblando la base de datos con seeders...');
-        await runSeeders()
+        await runSeeders(db.sequelize)
         console.log('Base de datos poblada correctamente.');
         
         console.log('Migraciones y seeders completados con éxito. 🚀');

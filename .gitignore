@@ -3,6 +3,7 @@ node_modules
 # Archivos de entorno
 # Contienen secretos y configuraciones locales. ¡Nunca deben subirse!
 .env
+.env_
 .env.local
 .env.development.local
 .env.test.local

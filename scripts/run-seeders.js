@@ -1,4 +1,3 @@
-import { sequelize } from '../config/database.js';
 import rolSeeder from '../seeders/20250327121711-rol-seeder.js';
 import usuarioSeeder from '../seeders/20250327124254-usuario-seeder.js';
 import pantallaSeeder from '../seeders/20250327130144-pantalla-seeder.js';
@@ -8,7 +7,7 @@ import rolPermisoSeeder from '../seeders/20250327150624-rol_permiso-seeder.js';
 import tiendaMenuSeeder from '../seeders/20250329222237-tienda_menu-seeder.js';
 import categoriasSeeder from '../seeders/20250330174204-categorias-seeder.js';
 
-export async function runSeeders() {
+export async function runSeeders(sequelize) {
     try {
         console.log('Iniciando seeders...');
         
@@ -38,13 +37,10 @@ export async function runSeeders() {
         console.log('✅ Categorías creadas');
         
         console.log('¡Todos los seeders se ejecutaron correctamente! 🚀');
-        process.exit(0);
     } catch (error) {
         console.error('Error ejecutando los seeders:', error);
-        process.exit(1);
+        throw error;
     }
 }
-
-runSeeders();
 
 
