@@ -14,11 +14,12 @@ if (process.env.DATABASE_URL) {
         dialect: 'postgres',
         protocol: 'postgres',
         schema: process.env.DB_NAME || 'mabc_cv',
-        dialectOptions: {
+                dialectOptions: {
             ssl: {
                 require: true,
                 rejectUnauthorized: false
-            }
+            },
+            options: `-c search_path=${process.env.DB_NAME},public`
         },
         logging: nodeEnv !== 'test' ? console.log : false,
     });
