@@ -1,5 +1,3 @@
-import { MENSAJE_VALORACION_NO_VALIDA } from "../../shared/mensajes.js";
-
 const validaDatos = (data) => {
     const errors = [];
     const { estrellas, comentario, producto_id } = data;

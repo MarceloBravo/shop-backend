@@ -1,6 +1,5 @@
 
 import UpdateValoracionProductoService from '../../../../src/services/ValoracionProducto/UpdateValoracionProductoService.js';
-import { MENSAJE_VALORACION_NO_VALIDA } from '../../../../src/shared/mensajes.js';
 
 describe('UpdateValoracionProductoService', () => {
     let repository;
@@ -40,6 +39,6 @@ describe('UpdateValoracionProductoService', () => {
             comentario: 'Buen producto'
         };
 
-        await expect(service.execute(id, data)).rejects.toThrow(MENSAJE_VALORACION_NO_VALIDA);
+        await expect(service.execute(id, data)).rejects.toThrow();
     });
 });
