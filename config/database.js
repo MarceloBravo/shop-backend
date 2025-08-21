@@ -7,7 +7,8 @@ const nodeEnv = process.env.NODE_ENV?.trim() || 'development';
 dotenv.config({ path: './.env' });
 
 let sequelize;
-
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+console.log("NEON_DATABASE_URL:", process.env.NEON_DATABASE_URL);
 if (process.env.DATABASE_URL) {
     sequelize = new Sequelize(process.env.NEON_DATABASE_URL || process.env.DATABASE_URL, {
         dialect: 'postgres',
