@@ -18,8 +18,7 @@ if (process.env.DATABASE_URL) {
             ssl: {
                 require: true,
                 rejectUnauthorized: false
-            },
-            options: `-c search_path=${process.env.DB_NAME},public`
+            }
         },
         logging: nodeEnv !== 'test' ? console.log : false,
     });
