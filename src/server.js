@@ -13,7 +13,7 @@ app.use(morgan('dev'));
 
 app.set('host', '0.0.0.0');
 const port = nodeEnv == 'test' ? process.env.APP_PORT_TEST : process.env.APP_PORT;
-//app.set('port', port || 3000);
+app.set('port', port || '');
 
 // Prefijo global opcional
 //const ADMIN_PREFIX = '/admin/v1';
@@ -42,5 +42,6 @@ try{
 
 
 export default app;
+
 
 
