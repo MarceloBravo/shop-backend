@@ -39,7 +39,7 @@ export const handleError = (e) => {
     }else{
         message = "Error: " + e.message;
     }
-    code = parseInt(e.parent?.code ? 400 : e.code ?? 500);
+    code = parseInt(e?.parent?.code ? 400 : e?.code ?? 500);
     return {code,error: message, details: e.details ?? []};
 }
 
