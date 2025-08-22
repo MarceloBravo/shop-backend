@@ -10,6 +10,10 @@ export const AccionesPantallaModel = sequelize.define('acciones_pantallas', {
     pantalla_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
+        references:{
+            model: 'pantallas', // Nombre de la tabla de pantallas
+            key: 'id'           // Clave primaria de pantallas
+     },
     },
     permite_crear:{
         type: DataTypes.BOOLEAN,
