@@ -65,7 +65,7 @@ Sigue estos pasos para levantar el entorno de desarrollo local.
     # Test
     DB_HOST_TEST=localhost
     DB_PORT_TEST=5434
-    DB_NAME_TEST=shop_test_db
+    POSTGRES_DB_TEST=shop_test_db
     DB_USER_TEST=postgres
     DB_PASS_TEST=tu_contraseña_test
     APP_PORT_TEST=3000

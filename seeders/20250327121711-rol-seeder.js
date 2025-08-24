@@ -1,25 +1,35 @@
 'use strict';
 
+import { RolModel } from '../src/models/RolModel.js';
+
 /** @type {import('sequelize-cli').Migration} */
 export default {
-  async up (queryInterface, Sequelize) {
+  async up () {
     
-    return queryInterface.bulkInsert('roles',[
-      {
-        nombre: 'Admin',
-        created_at: new Date(),
-        updated_at: new Date()
+    await RolModel.bulkCreate(
+      [
+        {
+          nombre: 'Admin',
+          created_at: new Date(),
+          updated_at: new Date()
 
-      },
-      {
-        nombre: 'Cliente',
-        created_at: new Date(),
-        updated_at: new Date()
+        },
+        {
+          nombre: 'Cliente',
+          created_at: new Date(),
+          updated_at: new Date()
+        }
+      ], {
+        ignoreDuplicates: true
       }
-    ], {})
+    )
   },
 
-  async down (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('roles', null, {});
+  async down () {
+    await RolModel.destroy({
+      where: {
+        nombre: ['Admin', 'Cliente']
+      }
+    });
   }
 };

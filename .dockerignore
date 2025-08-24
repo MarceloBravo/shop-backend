@@ -5,9 +5,12 @@ npm-debug.log
 # Sistema de control de versiones
 .git
 .gitignore
+github_sshkey
+github_sshkey.pub
 
 # Ambiente
 .env
+.env_
 .env.*
 
 # Otros

@@ -8,16 +8,23 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Instalar dependencias
-RUN npm install
+RUN npm install --production=false
 
 # Copiar el código fuente
 COPY . .
 
-# instala postgresql-client para usar pg_isready en el archivo scripts/init.sh
-RUN apt-get update && apt-get install -y postgresql-client
+# Instalar dependencias para agregar el repositorio de PostgreSQL y luego el cliente
+RUN apt-get update -y && apt-get install -y curl gnupg lsb-release \
+    && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+    && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
+    && apt-get update -y \
+    && apt-get install -y postgresql-client-15
+
+# Dar permisos de ejecución al script de inicialización
+RUN chmod +x /usr/src/app/scripts/init.sh
 
 # Exponer el puerto
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación
-CMD ["npm", "run", "dev"]
+# Establecer el script de inicialización como punto de entrada
+ENTRYPOINT ["/usr/src/app/scripts/init.sh"]
