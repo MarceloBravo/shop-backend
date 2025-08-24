@@ -1,30 +1,37 @@
-# Usar una imagen base de Node.js
-FROM node:20
+# Etapa de construcción
+FROM node:20-alpine AS builder
 
-# Crear directorio de la aplicación
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copiar package.json y package-lock.json
 COPY package*.json ./
+RUN npm install --omit=dev
 
-# Instalar dependencias
-RUN npm install --production=false
-
-# Copiar el código fuente
 COPY . .
+# Si tienes un paso de transpilación (ej. Babel, TypeScript), hazlo aquí
+# RUN npm run build # Si aplica
 
-# Instalar dependencias para agregar el repositorio de PostgreSQL y luego el cliente
-RUN apt-get update -y && apt-get install -y curl gnupg lsb-release \
-    && curl -sS https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
-    && echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
-    && apt-get update -y \
-    && apt-get install -y postgresql-client-15
+# Etapa final (producción)
+FROM node:20-alpine
 
-# Dar permisos de ejecución al script de inicialización
-RUN chmod +x /usr/src/app/scripts/init.sh
+WORKDIR /app
 
-# Exponer el puerto
+# Copia solo los archivos necesarios de la etapa de construcción
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/index.js .
+COPY --from=builder /app/package.json .
+COPY --from=builder /app/module-alias-register.js .
+COPY --from=builder /app/loadEnv.js .
+COPY --from=builder /app/babel.config.js .
+COPY --from=builder /app/jsconfig.json .
+
+
+# Configura el entorno de producción
+ENV NODE_ENV=production
+ENV APP_PORT=3000 # O el puerto que uses en producción
+
+# Expone el puerto
 EXPOSE 3000
 
-# Establecer el script de inicialización como punto de entrada
-ENTRYPOINT ["/usr/src/app/scripts/init.sh"]
+# Comando para iniciar la aplicación
+CMD ["node", "src/index.js"]
