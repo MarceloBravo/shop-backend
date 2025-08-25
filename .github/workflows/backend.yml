@@ -48,7 +48,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Create test database
-        run: PGPASSWORD=$POSTGRES_PASSWORD psql -h localhost -p 5434 -U $POSTGRES_USER -c "CREATE DATABASE $DB_NAME_TEST;"
+        run: PGPASSWORD=$POSTGRES_PASSWORD psql -h postgres -p 5432 -U $POSTGRES_USER -c "CREATE DATABASE $DB_NAME_TEST;"
 
       - name: Cachear dependencias npm
         uses: actions/cache@v3
