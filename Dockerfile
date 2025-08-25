@@ -24,6 +24,8 @@ COPY --from=builder /app/module-alias-register.js .
 COPY --from=builder /app/loadEnv.js .
 COPY --from=builder /app/babel.config.js .
 COPY --from=builder /app/jsconfig.json .
+COPY --from=builder /app/config ./config
+COPY --from=builder /app/seeders ./seeders
 
 
 # Configura el entorno de producción
