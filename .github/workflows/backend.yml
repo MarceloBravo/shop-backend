@@ -8,15 +8,10 @@ on:
 
 jobs:
   test:
-    env:
-      NODE_ENV: test
-      DB_USER: ${{ secrets.POSTGRES_USER }}
-      DB_PASS: ${{ secrets.POSTGRES_PASSWORD }}
-      DB_NAME: ${{ secrets.POSTGRES_DB }}
-      DB_PORT: 5432
-
-    name: Test API en Node.js ${{ matrix.node }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22.x]
 
     services:
       postgres:
@@ -24,18 +19,22 @@ jobs:
         ports:
           - 5434:5432
         env:
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: testdb
         options: >-
-          --health-cmd="pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"
+          --health-cmd="pg_isready -U testuser -d testdb"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
 
-    strategy:
-      matrix:
-        node: [22.x]
+    env:
+      NODE_ENV: test
+      DB_HOST: localhost
+      DB_PORT: 5434
+      DB_USER: testuser
+      DB_PASS: testpass
+      DB_NAME: testdb
 
     steps:
       - name: Checkout del código
@@ -45,35 +44,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-
-      - name: Debug env vars
-        run: |
-          echo "DB_HOST=postgres"
-          echo "DB_USER=$DB_USER"
-          echo "DB_NAME=$DB_NAME"
-
-      - name: Esperar a que Postgres esté listo
-        run: |
-          for i in {1..10}; do
-            PGPASSWORD=$DB_PASS psql -h postgres -p $DB_PORT -U $DB_USER -d postgres -c "SELECT 1;" && break
-            echo "Postgres no está listo aún... reintentando en 3s"
-            sleep 3
-          done
-
-      - name: Crear base de datos para tests
-        run: |
-          PGPASSWORD=$DB_PASS psql \
-            -h $DB_HOST \
-            -p $DB_PORT \
-            -U $DB_USER \
-            -d postgres \
-            -c "CREATE DATABASE $DB_NAME;"
-        env:
-          DB_HOST: postgres   # 👈 fuerza a usar el servicio del contenedor
-          DB_USER: ${{ secrets.POSTGRES_USER }}
-          DB_PASS: ${{ secrets.POSTGRES_PASSWORD }}
-          DB_NAME: ${{ secrets.POSTGRES_DB }}
-          DB_PORT: 5432
 
       - name: Cachear dependencias npm
         uses: actions/cache@v3
@@ -88,26 +58,22 @@ jobs:
 
       - name: Ejecutar tests unitarios
         run: npm run test:unit
-        env:
-          DB_HOST: postgres   # 👈 asegura que no use los secrets de Neon
 
       - name: Ejecutar tests de integración
         run: npm run test:integration
-        env:
-          DB_HOST: postgres   # 👈 idem arriba
-
-      - name: Reportar éxito
-        if: success()
-        run: echo "API funcional en Node ${{ matrix.node }} (unitarios e integración OK)"
-
-      - name: Reportar error
-        if: failure()
-        run: echo "Falla detectada en los tests para Node ${{ matrix.node }}"
 
   deploy:
     needs: test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+
+    env:
+      DB_HOST: ${{ secrets.NEON_DB_HOST }}
+      DB_USER: ${{ secrets.NEON_DB_USER }}
+      DB_PASS: ${{ secrets.NEON_DB_PASS }}
+      DB_NAME: ${{ secrets.NEON_DB_NAME }}
+      DB_PORT: ${{ secrets.NEON_DB_PORT }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
