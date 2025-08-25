@@ -45,7 +45,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}私も
+          node-version: ${{ matrix.node }}
 
       - name: Cachear dependencias npm
         uses: actions/cache@v3
