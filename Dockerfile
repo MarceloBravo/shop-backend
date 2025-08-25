@@ -28,7 +28,8 @@ COPY --from=builder /app/jsconfig.json .
 
 # Configura el entorno de producción
 ENV NODE_ENV=production
-ENV APP_PORT=3000 # O el puerto que uses en producción
+# O el puerto que uses en producción
+ENV APP_PORT=3000
 
 # Expone el puerto
 EXPOSE 3000
