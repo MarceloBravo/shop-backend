@@ -9,12 +9,13 @@ on:
 jobs:
   test:
     env:
-          DB_USER_TEST: ${{ secrets.DB_USER_TEST }}
-          DB_PASS_TEST: ${{ secrets.DB_PASS_TEST }}
-          DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
-          DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
-          DB_PORT_TEST: ${{ secrets.DB_PORT_TEST }}
-          NODE_ENV: test
+      NODE_ENV: test
+      DB_USER: ${{ secrets.POSTGRES_USER }}
+      DB_PASS: ${{ secrets.POSTGRES_PASSWORD }}
+      DB_NAME: ${{ secrets.POSTGRES_DB }}
+      DB_HOST: postgres
+      DB_PORT: 5432
+
     name: Test API en Node.js ${{ matrix.node }}
     runs-on: ubuntu-latest
 
@@ -33,7 +34,6 @@ jobs:
           --health-timeout=5s
           --health-retries=5
 
-          
     strategy:
       matrix:
         node: [22.x]
@@ -47,8 +47,14 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Create test database
-        run: PGPASSWORD=$POSTGRES_PASSWORD psql -h postgres -p 5432 -U $POSTGRES_USER -c "CREATE DATABASE $DB_NAME_TEST;"
+      - name: Crear base de datos para tests
+        run: |
+          PGPASSWORD=$DB_PASS psql \
+            -h $DB_HOST \
+            -p $DB_PORT \
+            -U $DB_USER \
+            -d postgres \
+            -c "CREATE DATABASE $DB_NAME;"
 
       - name: Cachear dependencias npm
         uses: actions/cache@v3
@@ -74,6 +80,7 @@ jobs:
       - name: Reportar error
         if: failure()
         run: echo "Falla detectada en los tests para Node ${{ matrix.node }}"
+
   deploy:
     needs: test
     if: github.ref == 'refs/heads/main'
