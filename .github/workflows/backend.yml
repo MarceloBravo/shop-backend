@@ -73,12 +73,12 @@ jobs:
       DB_PASS: ${{ secrets.NEON_DB_PASS }}
       DB_NAME: ${{ secrets.NEON_DB_NAME }}
       DB_PORT: ${{ secrets.NEON_DB_PORT }}
+      SVC_ID: a6778598-99b5-4a3a-826e-bf761cce1367
+      RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Deploy to Railway
-        uses: railway/cli-action@v2
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --service=${{ env.SVC_ID }}
