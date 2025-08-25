@@ -10,7 +10,7 @@ jobs:
   test:
     env:
           DB_USER_TEST: ${{ secrets.DB_USER_TEST }}
-          DB_PASS_TEST: ${{ secrets.DB_PASS_TEST }}
+          DB_PASS_TEST: password # Temporarily hardcoded for testing
           DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
           DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
           DB_PORT_TEST: ${{ secrets.DB_PORT_TEST }}
