@@ -13,7 +13,7 @@ jobs:
       DB_USER: ${{ secrets.POSTGRES_USER }}
       DB_PASS: ${{ secrets.POSTGRES_PASSWORD }}
       DB_NAME: ${{ secrets.POSTGRES_DB }}
-      DB_HOST: postgres
+      DB_HOST: postgres   # 👈 nombre del contenedor del servicio
       DB_PORT: 5432
 
     name: Test API en Node.js ${{ matrix.node }}
@@ -29,7 +29,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         options: >-
-          --health-cmd="pg_isready -U $POSTGRES_USER -d $POSTGRES_DB" 
+          --health-cmd="pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -47,14 +47,22 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Crear base de datos para tests
+      - name: Debug env vars
         run: |
           echo "DB_HOST=$DB_HOST"
           echo "DB_USER=$DB_USER"
           echo "DB_NAME=$DB_NAME"
-          echo "DB_PORT=$DB_PORT"
-          echo "DB_PASS=$DB_PASS"
 
+      - name: Esperar a que Postgres esté listo
+        run: |
+          for i in {1..10}; do
+            PGPASSWORD=$DB_PASS psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d postgres -c "SELECT 1;" && break
+            echo "Postgres no está listo aún... reintentando en 3s"
+            sleep 3
+          done
+
+      - name: Crear base de datos para tests
+        run: |
           PGPASSWORD=$DB_PASS psql \
             -h $DB_HOST \
             -p $DB_PORT \
@@ -86,16 +94,3 @@ jobs:
       - name: Reportar error
         if: failure()
         run: echo "Falla detectada en los tests para Node ${{ matrix.node }}"
-
-  deploy:
-    needs: test
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Deploy to Railway
-        uses: railway/cli-action@v2
-        with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
