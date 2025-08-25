@@ -13,7 +13,6 @@ jobs:
       DB_USER: ${{ secrets.POSTGRES_USER }}
       DB_PASS: ${{ secrets.POSTGRES_PASSWORD }}
       DB_NAME: ${{ secrets.POSTGRES_DB }}
-      DB_HOST: postgres   # 👈 nombre del contenedor del servicio
       DB_PORT: 5432
 
     name: Test API en Node.js ${{ matrix.node }}
@@ -49,14 +48,14 @@ jobs:
 
       - name: Debug env vars
         run: |
-          echo "DB_HOST=$DB_HOST"
+          echo "DB_HOST=postgres"
           echo "DB_USER=$DB_USER"
           echo "DB_NAME=$DB_NAME"
 
       - name: Esperar a que Postgres esté listo
         run: |
           for i in {1..10}; do
-            PGPASSWORD=$DB_PASS psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d postgres -c "SELECT 1;" && break
+            PGPASSWORD=$DB_PASS psql -h postgres -p $DB_PORT -U $DB_USER -d postgres -c "SELECT 1;" && break
             echo "Postgres no está listo aún... reintentando en 3s"
             sleep 3
           done
@@ -64,11 +63,13 @@ jobs:
       - name: Crear base de datos para tests
         run: |
           PGPASSWORD=$DB_PASS psql \
-            -h $DB_HOST \
+            -h postgres \
             -p $DB_PORT \
             -U $DB_USER \
             -d postgres \
             -c "CREATE DATABASE $DB_NAME;"
+        env:
+          DB_HOST: postgres   # 👈 fuerza a usar el servicio
 
       - name: Cachear dependencias npm
         uses: actions/cache@v3
@@ -83,9 +84,13 @@ jobs:
 
       - name: Ejecutar tests unitarios
         run: npm run test:unit
+        env:
+          DB_HOST: postgres   # 👈 asegura que no use los secrets de Neon
 
       - name: Ejecutar tests de integración
         run: npm run test:integration
+        env:
+          DB_HOST: postgres   # 👈 idem arriba
 
       - name: Reportar éxito
         if: success()
@@ -94,3 +99,16 @@ jobs:
       - name: Reportar error
         if: failure()
         run: echo "Falla detectada en los tests para Node ${{ matrix.node }}"
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy to Railway
+        uses: railway/cli-action@v2
+        with:
+          railway_token: ${{ secrets.RAILWAY_TOKEN }}
