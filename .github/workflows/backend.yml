@@ -63,13 +63,17 @@ jobs:
       - name: Crear base de datos para tests
         run: |
           PGPASSWORD=$DB_PASS psql \
-            -h postgres \
+            -h $DB_HOST \
             -p $DB_PORT \
             -U $DB_USER \
             -d postgres \
             -c "CREATE DATABASE $DB_NAME;"
         env:
-          DB_HOST: postgres   # 👈 fuerza a usar el servicio
+          DB_HOST: postgres   # 👈 fuerza a usar el servicio del contenedor
+          DB_USER: ${{ secrets.POSTGRES_USER }}
+          DB_PASS: ${{ secrets.POSTGRES_PASSWORD }}
+          DB_NAME: ${{ secrets.POSTGRES_DB }}
+          DB_PORT: 5432
 
       - name: Cachear dependencias npm
         uses: actions/cache@v3
