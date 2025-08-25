@@ -28,7 +28,6 @@ jobs:
           POSTGRES_USER: ${{ secrets.DB_USER }}
           POSTGRES_PASSWORD: ${{ secrets.DB_PASS }}
         options: >-
-          -health-cmd="pg_isready -U ${{ secrets.DB_USER_TEST }} -d ${{ secrets.DB_NAME_TEST }}" 
           --health-cmd="pg_isready -U $DB_USER_TEST -d $DB_NAME_TEST" 
           --health-interval=10s
           --health-timeout=5s
@@ -46,7 +45,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.node }}私も
 
       - name: Cachear dependencias npm
         uses: actions/cache@v3
