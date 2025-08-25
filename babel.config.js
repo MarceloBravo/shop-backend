@@ -1,17 +1,11 @@
+// babel.config.js
 export default function (api) {
-  const isTest = api.env('test');
-
-  const presets = [
-    [
-      '@babel/preset-env',
-      {
-        targets: { node: 'current' },
-        modules: isTest ? 'commonjs' : false,
-      },
-    ],
-  ];
+  // Cache según el entorno, obligatorio para babel-jest
+  api.cache(true);
 
   return {
-    presets,
+    presets: [
+      ["@babel/preset-env", { targets: { node: "current" } }]
+    ]
   };
 }

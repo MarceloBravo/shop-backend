@@ -1,23 +1,37 @@
-# Usar una imagen base de Node.js
-FROM node:20
+# Etapa de construcción
+FROM node:20-alpine AS builder
 
-# Crear directorio de la aplicación
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copiar package.json y package-lock.json
 COPY package*.json ./
+RUN npm install --omit=dev
 
-# Instalar dependencias
-RUN npm install
-
-# Copiar el código fuente
 COPY . .
+# Si tienes un paso de transpilación (ej. Babel, TypeScript), hazlo aquí
+# RUN npm run build # Si aplica
 
-# instala postgresql-client para usar pg_isready en el archivo scripts/init.sh
-RUN apt-get update && apt-get install -y postgresql-client
+# Etapa final (producción)
+FROM node:20-alpine
 
-# Exponer el puerto
+WORKDIR /app
+
+# Copia solo los archivos necesarios de la etapa de construcción
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/index.js .
+COPY --from=builder /app/package.json .
+COPY --from=builder /app/module-alias-register.js .
+COPY --from=builder /app/loadEnv.js .
+COPY --from=builder /app/babel.config.js .
+COPY --from=builder /app/jsconfig.json .
+
+
+# Configura el entorno de producción
+ENV NODE_ENV=production
+ENV APP_PORT=3000 # O el puerto que uses en producción
+
+# Expone el puerto
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación
-CMD ["npm", "run", "dev"]
+# Comando para iniciar la aplicación
+CMD ["node", "src/index.js"]

@@ -6,6 +6,7 @@ import app from '../src/server.js'; // Ajusta el path a tu app
 import listEndpoints from 'express-list-endpoints';
 
 const rutas = listEndpoints(app);
+const __dirname = path.join(process.cwd());
 
 // Filtrar por método
 const metodo = process.argv.find(arg => arg.startsWith('--method='))?.split('=')[1];

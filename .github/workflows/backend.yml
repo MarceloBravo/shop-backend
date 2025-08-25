@@ -8,15 +8,10 @@ on:
 
 jobs:
   test:
-    env:
-          DB_USER_TEST: ${{ secrets.DB_USER_TEST }}
-          DB_PASS_TEST: ${{ secrets.DB_PASS_TEST }}
-          DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
-          DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
-          DB_PORT_TEST: ${{ secrets.DB_PORT_TEST }}
-          NODE_ENV: test
-    name: Test API en Node.js ${{ matrix.node }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [22.x]
 
     services:
       postgres:
@@ -24,18 +19,22 @@ jobs:
         ports:
           - 5434:5432
         env:
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: testdb
         options: >-
-          --health-cmd="pg_isready -U postgres -d mabc_cv_test" 
+          --health-cmd="pg_isready -U postgres -d testdb"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
 
-    strategy:
-      matrix:
-        node: [22.x]
+    env:
+      NODE_ENV: test
+      DB_HOST_TEST: localhost
+      DB_PORT_TEST: 5434
+      DB_USER_TEST: postgres
+      DB_PASS_TEST: postgres
+      DB_NAME_TEST: testdb
 
     steps:
       - name: Checkout del código
@@ -63,17 +62,18 @@ jobs:
       - name: Ejecutar tests de integración
         run: npm run test:integration
 
-      - name: Reportar éxito
-        if: success()
-        run: echo "API funcional en Node ${{ matrix.node }} (unitarios e integración OK)"
-
-      - name: Reportar error
-        if: failure()
-        run: echo "Falla detectada en los tests para Node ${{ matrix.node }}"
   deploy:
     needs: test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+
+    env:
+      DB_HOST: ${{ secrets.NEON_DB_HOST }}
+      DB_USER: ${{ secrets.NEON_DB_USER }}
+      DB_PASS: ${{ secrets.NEON_DB_PASS }}
+      DB_NAME: ${{ secrets.NEON_DB_NAME }}
+      DB_PORT: ${{ secrets.NEON_DB_PORT }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -1,9 +1,11 @@
 'use strict';
+import { AccionesPantallaModel } from '../src/models/AccionesPantallaModel.js';
 
 /** @type {import('sequelize-cli').Migration} */
 export default {
-  async up (queryInterface, Sequelize) {
-      await queryInterface.bulkInsert('acciones_pantallas', [
+  async up () {
+    await AccionesPantallaModel.bulkCreate(
+      [
         {
           pantalla_id: 1,
           permite_crear: false,
@@ -64,10 +66,16 @@ export default {
           created_at: new Date(),
           updated_at: new Date()
         }
-    ], {});
+    ], {
+      ignoreDuplicates: true
+    });
   },
 
-  async down (queryInterface, Sequelize) {
-     await queryInterface.bulkDelete('acciones_pantallas', null, {});
+  async down () {
+    await AccionesPantallaModel.destroy({
+      where: {
+        pantalla_id: [1, 2, 3, 4, 5, 6]
+      }
+    });
   }
 };

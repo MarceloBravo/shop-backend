@@ -8,21 +8,13 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DB_HOST
-      - DB_PORT
-      - DB_NAME
-      - DB_PASS
-      - APP_PORT
-      - DB_USER
-      - DEFAULT_REG_POR_PAGINA
-    volumes:
-      - .:/usr/src/app
-    depends_on:
-      - ./wait-for-it.sh postgres_dev:5432 -- npm run dev
-    command: >
-      sh -c "chmod +x ./init.sh &&
-            ./init.sh &&
-            npm run dev"
+      DB_HOST: postgres_dev
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      APP_PORT: ${APP_PORT:-3000}
+      DEFAULT_REG_POR_PAGINA: ${DEFAULT_REG_POR_PAGINA:-10}
 
 
   postgres_dev:
@@ -30,9 +22,9 @@ services:
     container_name: postgres_cv_dev
     restart: always
     environment:
-      POSTGRES_USER: ${ POSTGRES_USER }
-      POSTGRES_PASSWORD: ${ POSTGRES_PASSWORD }
-      POSTGRES_DB: ${ POSTGRES_DB }
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5433:5432"
@@ -49,9 +41,9 @@ services:
     container_name: postgres_cv_test
     restart: always
     environment:
-      POSTGRES_USER: ${ POSTGRES_USER }
-      POSTGRES_PASSWORD: ${ POSTGRES_PASSWORD }
-      POSTGRES_DB: ${ POSTGRES_DB }
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "5434:5432"

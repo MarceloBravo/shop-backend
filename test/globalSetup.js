@@ -1,81 +1,59 @@
-import { sequelize, waitForDb } from '../config/database.js';
-import { app } from '../src/index.js';
-
-// Importa los seeders necesarios
+// test/globalSetup.js
+import getModelsInOrder from '../src/shared/getModelsInOrder.js';
 import rolSeeder from '../seeders/20250327121711-rol-seeder.js';
 import usuarioSeeder from '../seeders/20250327124254-usuario-seeder.js';
-// Importa todos los modelos explícitamente para que sequelize los registre
 
-import '../src/models/AccionesPantallaModel.js';
-import '../src/models/AtributosModel.js';
-import '../src/models/AtributosProductoModel.js';
-import '../src/models/CategoriaModel.js';
-import '../src/models/ColorModel.js';
-import '../src/models/ColorProductoModel.js';
-import '../src/models/DimensionesProductoModel.js';
-import '../src/models/GeneroModel.js';
-import '../src/models/MarcaModel.js';
-import '../src/models/MaterialModel.js';
-import '../src/models/MaterialProductoModel.js';
-import '../src/models/MenuModel.js';
-import '../src/models/MenuTiendaModel.js';
-import '../src/models/PantallaModel.js';
-import '../src/models/PesoProductoModel.js';
-import '../src/models/ProductoModel.js';
-import '../src/models/relations.js';
-import '../src/models/RolModel.js';
-import '../src/models/RolPermisosModel.js';
-import '../src/models/SubCategoriaModel.js';
-import '../src/models/TallaLetraModel.js';
-import '../src/models/TallaLetraProductoModel.js';
-import '../src/models/TallaNumericaModel.js';
-import '../src/models/TallaNumericaProductoModel.js';
-import '../src/models/TipoDimensionesModel.js';
-import '../src/models/UsuarioModel.js';
-import '../src/models/ValoracionProductoModel.js';
+export default async function globalSetup() {
+  if (process.env.RUN_GLOBAL_SETUP) {
+    console.log('Ejecutando globalSetup para tests de integración...');
+    try {
+      const { app } = await import('../src/index.js');
+      //const { getModelsInOrder } = await import('../helpers/getModelsInOrder.js');
+      const { default: dbPromise } = await import('../src/models/index.js');
+      console.log('Iniciando migraciones y seeders...');
 
+      // Espera la conexión a la DB
+      const db = await dbPromise;
+      const sequelize = db.sequelize;
 
-export default async () => {
-  await waitForDb();
-  console.log('Iniciando sincronización de la base de datos');
-  await sequelize.sync({alter: true});
-  console.log('Limpiando todas las tablas antes de los tests...');
-  // Desactiva restricciones de FK temporalmente
-  await sequelize.query('SET session_replication_role = replica;');
+      // Crea el schema si no existe (útil para tests locales)
+      const schemaName = process.env.DB_NAME || 'mabc_cv_test';
+      await sequelize.query(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
 
-  // Obtiene todos los nombres de tablas del esquema público, excluyendo SequelizeMeta
-  const result = await sequelize.query(`
-    SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename != 'SequelizeMeta';
-  `);
+      console.log('Determinando dinámicamente el orden de creación de tablas...');
+      const orderedModelNames = getModelsInOrder(db, sequelize.Sequelize.Model);
+      console.log('Orden de sincronización determinado:', orderedModelNames.join(' -> '));
 
-  console.log('Tablas encontradas:', JSON.stringify(result));
-  const tables = result[0].map(row => `"${row.tablename}"`);
-  if (tables.length > 0) {
-    console.log(`Truncando ${tables.length} tablas una por una...`);
-    for (const table of tables) {
-      try {
-        // Se trunca cada tabla individualmente
-        await sequelize.query(`TRUNCATE TABLE ${table} RESTART IDENTITY CASCADE;`);
-      } catch (error) {
-        console.error(`Error detallado al truncar la tabla: ${table}`, error);
-        // Re-lanza el error para que Jest falle como se espera
-        throw error;
+      // Elimina todas las tablas para un estado limpio
+      console.log('Eliminando todas las tablas existentes...');
+      await sequelize.drop({ cascade: true }); // La opción cascade elimina también las dependencias (claves foráneas)
+      console.log('Tablas eliminadas correctamente.');
+
+      // Crea las tablas en el orden correcto
+      for (const modelName of orderedModelNames) {
+        console.log(`Creando tabla para el modelo: ${modelName}`);
+        await db[modelName].sync({ force: true });
       }
+      console.log('Base de datos sincronizada correctamente.');
+
+      // Ejecuta seeders
+      console.log('Ejecutando seeders...');
+      await rolSeeder.up(db.sequelize.getQueryInterface(), db.sequelize.Sequelize);
+      console.log('Seeder de roles ejecutado correctamente.');
+      await usuarioSeeder.up(db.sequelize.getQueryInterface(), db.sequelize.Sequelize);
+      console.log('Seeder de usuarios ejecutado correctamente.');
+
+      // Levanta el server para tests y lo guarda globalmente
+      global.__TEST_SERVER__ = app.listen(0, () => {
+        const port = global.__TEST_SERVER__.address().port;
+        console.log(`Test server listening on port ${port}`);
+      });
+
+    } catch (e) {
+      console.error('globalSetup ERROR:', e);
+      throw e; // Importante para que Jest falle si hay error en setup
     }
+  } else {
+    console.log('Omitiendo globalSetup para tests unitarios.');
   }
-  console.log('Todas las tablas han sido truncadas y reiniciadas.');
-  // Reactiva restricciones de FK
-  await sequelize.query('SET session_replication_role = DEFAULT;');
-
-  // Ejecuta los seeders necesarios para los tests
-  await rolSeeder.up(sequelize.getQueryInterface(), sequelize.constructor);
-  console.log('Seeder de roles ejecutado correctamente.');
-  await usuarioSeeder.up(sequelize.getQueryInterface(), sequelize.constructor);
-  console.log('Seeder de usuarios ejecutado correctamente.');
-
-  // Start the server and store it globally
-  global.__TEST_SERVER__ = app.listen(0, () => {
-    const port = global.__TEST_SERVER__.address().port;
-    console.log(`Test server listening on port ${port}`);
-  });
-};
+}
