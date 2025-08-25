@@ -73,7 +73,7 @@ jobs:
       DB_PASS: ${{ secrets.NEON_DB_PASS }}
       DB_NAME: ${{ secrets.NEON_DB_NAME }}
       DB_PORT: ${{ secrets.NEON_DB_PORT }}
-      SVC_ID: a6778598-99b5-4a3a-826e-bf761cce1367
+      SVC_ID: f87e8313-0572-4ae6-8d8d-aed9a13274f2
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
     steps:
