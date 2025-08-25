@@ -19,11 +19,11 @@ jobs:
         ports:
           - 5434:5432
         env:
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_DB: testdb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: mabc_cv_test
         options: >-
-          --health-cmd="pg_isready -U testuser -d testdb"
+          --health-cmd="pg_isready -U postgres -d mabc_cv_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -32,9 +32,9 @@ jobs:
       NODE_ENV: test
       DB_HOST: localhost
       DB_PORT: 5434
-      DB_USER: testuser
-      DB_PASS: testpass
-      DB_NAME: testdb
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_NAME: mabc_cv_test
 
     steps:
       - name: Checkout del código
