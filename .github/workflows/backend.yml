@@ -12,7 +12,7 @@ jobs:
           DB_USER_TEST: ${{ secrets.DB_USER_TEST }}
           DB_PASS_TEST: ${{ secrets.DB_PASS_TEST }}
           DB_NAME_TEST: ${{ secrets.DB_NAME_TEST }}
-                    DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
+          DB_HOST_TEST: ${{ secrets.DB_HOST_TEST }}
           DB_PORT_TEST: ${{ secrets.DB_PORT_TEST }}
           NODE_ENV: test
     name: Test API en Node.js ${{ matrix.node }}
@@ -24,9 +24,9 @@ jobs:
         ports:
           - 5434:5432
         env:
-          POSTGRES_DB: ${{ secrets.DB_NAME }}
-          POSTGRES_USER: ${{ secrets.DB_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.DB_PASS }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         options: >-
           --health-cmd="pg_isready -U $POSTGRES_USER -d $POSTGRES_DB" 
           --health-interval=10s
