@@ -28,7 +28,7 @@ jobs:
           DB_USER: ${ secrets.DB_USER }
           DB_PASS: ${ secrets.DB_PASS }
         options: >-
-          --health-cmd="pg_isready -U ${{ secrets.DB_USER_TEST }} -d ${{ secrets.DB_NAME_TEST }}" 
+          --health-cmd="pg_isready -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME }}" 
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
