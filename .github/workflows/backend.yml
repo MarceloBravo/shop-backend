@@ -49,6 +49,12 @@ jobs:
 
       - name: Crear base de datos para tests
         run: |
+          echo "DB_HOST=$DB_HOST"
+          echo "DB_USER=$DB_USER"
+          echo "DB_NAME=$DB_NAME"
+          echo "DB_PORT=$DB_PORT"
+          echo "DB_PASS=$DB_PASS"
+
           PGPASSWORD=$DB_PASS psql \
             -h $DB_HOST \
             -p $DB_PORT \
