@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node src/index.js",
+    "start": "NODE_ENV=production node src/index.js",
     "dev": "node --watch src/index.js",
     "test": "NODE_ENV=test jest",
     "test:unit": "NODE_ENV=test node --experimental-print-required-tla ./node_modules/jest/bin/jest.js test/unit",
@@ -44,7 +44,7 @@
     "@testing-library/react": "^16.3.0",
     "@types/jest": "^29.5.14",
     "babel-jest": "^29.7.0",
-    "cross-env": "^7.0.3",
+    
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "sequelize-cli": "^6.6.3",
