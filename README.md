@@ -138,14 +138,17 @@ Ejemplo del comando `npm run rout:list` para listar rutas, en éste ejemplo sól
 
  Listado de rutas:
 
-│ (index) │ Métodos                   │ Ruta                                                  │ Middlewares           │
-|─────────|───────────────────────────|────────────────────────────────────────────────────── |────────────────────── |
-│ 0       │ 'GET'                     │ '/api/v1/producto/deleted'                            │ 'checkToken, execute' │
-│ 1       │ 'GET'                     │ '/api/v1/producto/deleted/:id'                        │ 'checkToken, execute' │
-│ 2       │ 'GET'                     │ '/api/v1/producto/deleted/page/:pag/:limit?/:filter?' │ 'checkToken, execute' │
-│ 3       │ 'GET, POST'               │ '/api/v1/producto'                                    │ 'execute'             │
-│ 4       │ 'GET, PUT, DELETE, PATCH' │ '/api/v1/producto/:id'                                │ 'execute'             │
-│ 5       │ 'GET'                     │ '/api/v1/producto/page/:pag/:limit?/:filter?'         │ 'execute'             │
+## Endpoints del recurso `producto`
+
+| # | Método(s)               | Ruta                                               | Middlewares         |
+|---|-------------------------|----------------------------------------------------|---------------------|
+| 0 | GET                     | /api/v1/producto/deleted                           | checkToken, execute |
+| 1 | GET                     | /api/v1/producto/deleted/:id                       | checkToken, execute |
+| 2 | GET                     | /api/v1/producto/deleted/page/:pag/:limit?/:filter?| checkToken, execute |
+| 3 | GET, POST               | /api/v1/producto                                   | execute             |
+| 4 | GET, PUT, DELETE, PATCH | /api/v1/producto/:id                               | execute             |
+| 5 | GET                     | /api/v1/producto/page/:pag/:limit?/:filter?        | execute             |
+
 
 Para un listado completo de los endpoints disponibles puedes correr el comando:
 
