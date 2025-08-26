@@ -137,7 +137,7 @@ Ejemplo del comando `npm run rout:list` para listar rutas, en éste ejemplo sól
  `npm run route:list -- --ruta=/product`
 
  Listado de rutas:
-┌─────────┬───────────────────────────┬───────────────────────────────────────────────────────┬───────────────────────┐
+
 │ (index) │ Métodos                   │ Ruta                                                  │ Middlewares           │
 ├─────────┼───────────────────────────┼───────────────────────────────────────────────────────┼───────────────────────┤
 │ 0       │ 'GET'                     │ '/api/v1/producto/deleted'                            │ 'checkToken, execute' │
@@ -146,13 +146,6 @@ Ejemplo del comando `npm run rout:list` para listar rutas, en éste ejemplo sól
 │ 3       │ 'GET, POST'               │ '/api/v1/producto'                                    │ 'execute'             │
 │ 4       │ 'GET, PUT, DELETE, PATCH' │ '/api/v1/producto/:id'                                │ 'execute'             │
 │ 5       │ 'GET'                     │ '/api/v1/producto/page/:pag/:limit?/:filter?'         │ 'execute'             │
-└─────────┴───────────────────────────┴───────────────────────────────────────────────────────┴───────────────────────┘
-
-| Método | Ruta                | Descripción                  | 
-| :----- | :------------------ | :--------------------------- | 
-| `GET, POST` | `/api/v1/producto`  | Obtiene una lista de productos. |
-| `POST     ` | `/api/v1/products`  | Crea un nuevo producto.      |
-| `GET`  | `/api/v1/products/:id` | Obtiene un producto por su ID. |
 
 Para un listado completo de los endpoints disponibles puedes correr el comando:
 
