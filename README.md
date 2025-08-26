@@ -139,7 +139,7 @@ Ejemplo del comando `npm run rout:list` para listar rutas, en éste ejemplo sól
  Listado de rutas:
 
 │ (index) │ Métodos                   │ Ruta                                                  │ Middlewares           │
-├─────────┼───────────────────────────┼───────────────────────────────────────────────────────┼───────────────────────┤
+|─────────|───────────────────────────|────────────────────────────────────────────────────── |────────────────────── |
 │ 0       │ 'GET'                     │ '/api/v1/producto/deleted'                            │ 'checkToken, execute' │
 │ 1       │ 'GET'                     │ '/api/v1/producto/deleted/:id'                        │ 'checkToken, execute' │
 │ 2       │ 'GET'                     │ '/api/v1/producto/deleted/page/:pag/:limit?/:filter?' │ 'checkToken, execute' │
