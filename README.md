@@ -10,10 +10,13 @@ Backend para una aplicación de tienda online básica, dockerizada y con un fluj
 ## ✨ Características Principales
 
 *   **API RESTful:** Endpoints para gestionar productos, categorías, etc.
+*   **Autenticación con JWT:** Para ciertos endpoints se requiere estar autenticado ya que las peticiones se ,manejas con tokens y refresh tokens (ver el punto **listado de rutas** para conocer los endpoints de acceso restringido y ver aquellos en los cuales se implementa el midleware checkTocken), 
 *   **ORM con Sequelize:** Mapeo de objetos relacional para una interacción sencilla con la base de datos.
+*   **Base de datos de producción alojada en hosting Neon:** Base de datos relacional postgres.
 *   **Dockerizado:** Entorno de desarrollo y pruebas consistente y fácil de levantar con Docker Compose. **Ahora con optimizaciones para producción (multi-stage build) y soporte para ejecutar tests dentro de contenedores.**
-*   **Integración Continua:** Workflow de GitHub Actions para ejecutar tests unitarios y de integración automáticamente.
 *   **Testing:** Cobertura de pruebas con Jest y Supertest.
+*   **Integración Continua:** Workflow de GitHub Actions para ejecutar tests unitarios y de integración automáticamente.
+*   **Despliegue contínuo:** Workflow de GitHub Actions para para desplegar la aplicación en un servidor de Railway.
 *   **Implementación de principios SOLID y Clean Code**
 
 ## 🛠️ Tecnologías Utilizadas
@@ -54,23 +57,25 @@ Sigue estos pasos para levantar el entorno de desarrollo local.
 
     ```env
     # Develop
-    DB_HOST=postgresql://neondb_owner:npg_EshOSdNkY8G6@ep-delicate-cherry-adssicbe-pooler.c-2.us-east-1.aws.neon.tech/mabc_cv?sslmode=require
+    DB_HOST=127.0.0.1
     DB_PORT=5432
-    DB_NAME=mabc_cv
-    DB_PASS=npg_EshOSdNkY8G6
-    APP_PORT=3000
-    DB_USER=neondb_owner
-    DEFAULT_REG_POR_PAGINA=10
-    DATABASE_URL=postgresql://neondb_owner:npg_EshOSdNkY8G6@ep-delicate-cherry-adssicbe-pooler.c-2.us-east-1.aws.neon.tech/mabc_cv?sslmode=require
-    NEON_DATABASE_URL=postgresql://neondb_owner:npg_EshOSdNkY8G6@ep-delicate-cherry-adssicbe-pooler.c-2.us-east-1.aws.neon.tech/mabc_cv?sslmode=require
+    DB_NAME=nombre_base_de_datos
+    DB_PASS=password_base_de_datos
+    APP_PORT=puerto_de_la_aplicacion
+    DB_USER=usuario_base_de_datos
+    DEFAULT_REG_POR_PAGINA=10  #Cantidad de regístros por defecto a mostrar por pagina al paginas los registros
+
+    # Producción (Configuración para conectar a la base de datos de producción)
+    DATABASE_URL=url_hosting_base_de
+    NEON_DATABASE_URL=url_hosting_base_de
 
     # Test
     DB_HOST_TEST=localhost
     DB_PORT_TEST=5434
     DB_NAME_TEST=mabc_cv_test
-    DB_PASS_TEST=123456
+    DB_PASS_TEST=password_base_de_datos_test
     APP_PORT_TEST=3000
-    DB_USER_TEST=postgres
+    DB_USER_TEST=postgres  # Usuario base de datos test por defecto postgres
     ```
 
 4.  **Levantar los servicios con Docker:**
@@ -107,6 +112,7 @@ Una vez que los servicios de Docker estén levantados:
     ```
     Los tests se ejecutarán contra la base de datos de tests dockerizada.
 
+## 📝 Documentación de la API
 ## 📜 Scripts Disponibles
 
 Aquí están los comandos disponibles en `package.json` para facilitar el desarrollo y las pruebas:
@@ -123,19 +129,36 @@ Aquí están los comandos disponibles en `package.json` para facilitar el desarr
 *   `npm run migrate:seed`: Sincroniza la base de datos y ejecuta los seeders.
 *   `npm run seed:test`: Ejecuta los seeders para la base de datos de tests.
 *   `npm run test:unit:debug`: Ejecuta los tests unitarios en modo depuración.
-*   `npm run test:coverage`: Ejecuta los tests y genera un reporte de cobertura de código.
+*   `npm run test:coverage`: Ejecuta los tests (unitarios y de integración) y genera un reporte de cobertura de código.
 
-## 📝 Documentación de la API (Ejemplo)
+## Listado de rutas
+Ejemplo del comando `npm run rout:list` para listar rutas, en éste ejemplo sólo se listarán las rutas para el endpoint de productos:
 
-| Método | Ruta                | Descripción                  |
-| :----- | :------------------ | :--------------------------- |
-| `GET`  | `/api/v1/products`  | Obtiene una lista de productos. |
-| `POST` | `/api/v1/products`  | Crea un nuevo producto.      |
+ `npm run route:list -- --ruta=/product`
+
+ Listado de rutas:
+┌─────────┬───────────────────────────┬───────────────────────────────────────────────────────┬───────────────────────┐
+│ (index) │ Métodos                   │ Ruta                                                  │ Middlewares           │
+├─────────┼───────────────────────────┼───────────────────────────────────────────────────────┼───────────────────────┤
+│ 0       │ 'GET'                     │ '/api/v1/producto/deleted'                            │ 'checkToken, execute' │
+│ 1       │ 'GET'                     │ '/api/v1/producto/deleted/:id'                        │ 'checkToken, execute' │
+│ 2       │ 'GET'                     │ '/api/v1/producto/deleted/page/:pag/:limit?/:filter?' │ 'checkToken, execute' │
+│ 3       │ 'GET, POST'               │ '/api/v1/producto'                                    │ 'execute'             │
+│ 4       │ 'GET, PUT, DELETE, PATCH' │ '/api/v1/producto/:id'                                │ 'execute'             │
+│ 5       │ 'GET'                     │ '/api/v1/producto/page/:pag/:limit?/:filter?'         │ 'execute'             │
+└─────────┴───────────────────────────┴───────────────────────────────────────────────────────┴───────────────────────┘
+
+| Método | Ruta                | Descripción                  | 
+| :----- | :------------------ | :--------------------------- | 
+| `GET, POST` | `/api/v1/producto`  | Obtiene una lista de productos. |
+| `POST     ` | `/api/v1/products`  | Crea un nuevo producto.      |
 | `GET`  | `/api/v1/products/:id` | Obtiene un producto por su ID. |
 
 Para un listado completo de los endpoints disponibles puedes correr el comando:
 
-*   `npm run routes`
+*   `npm run route:list`
+
+el parámetro `--ruta=` acepta todo o parte de un texto a buscar de una URI
 
 ## 🌳 Estructura de Directorios Clave
 
