@@ -154,7 +154,7 @@ Para un listado completo de los endpoints disponibles puedes correr el comando:
 
 *   `npm run route:list`
 
-el parámetro `--ruta=` acepta todo o parte de un texto a buscar de una URI
+el parámetro `--ruta=` puede aceptar todo o parte de un texto de la URI a buscar
 
 ## 🌳 Estructura de Directorios Clave
 
