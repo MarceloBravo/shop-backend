@@ -1,0 +1,168 @@
+paths:
+  /api/v1/rol_permisos:
+    get:
+      summary: Obtiene todos los permisos de rol
+      tags:
+        - RolPermisos
+      responses:
+        '200':
+          description: Lista de permisos de rol
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo permiso de rol
+      tags:
+        - RolPermisos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rol_id:
+                  type: integer
+                permiso_id:
+                  type: integer
+      responses:
+        '201':
+          description: Permiso de rol creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/rol_permisos/{id}:
+    get:
+      summary: Obtiene un permiso de rol por ID
+      tags:
+        - RolPermisos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Permiso de rol encontrado
+        '404':
+          description: Permiso de rol no encontrado
+    put:
+      summary: Actualiza un permiso de rol por ID
+      tags:
+        - RolPermisos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rol_id:
+                  type: integer
+                permiso_id:
+                  type: integer
+      responses:
+        '200':
+          description: Permiso de rol actualizado
+        '404':
+          description: Permiso de rol no encontrado
+    delete:
+      summary: Elimina (hard delete) un permiso de rol por ID
+      tags:
+        - RolPermisos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Permiso de rol eliminado
+        '404':
+          description: Permiso de rol no encontrado
+    patch:
+      summary: Elimina (soft delete) un permiso de rol por ID
+      tags:
+        - RolPermisos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Permiso de rol marcado como eliminado
+        '404':
+          description: Permiso de rol no encontrado
+
+  /api/v1/rol_permisos/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de permisos de rol
+      tags:
+        - RolPermisos
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de permisos de rol
+
+  /api/v1/rol_permisos/deleted:
+    get:
+      summary: Obtiene todos los permisos de rol eliminados (soft delete)
+      tags:
+        - RolPermisos
+      responses:
+        '200':
+          description: Lista de permisos de rol eliminados
+
+  /api/v1/rol_permisos/deleted/{id}:
+    get:
+      summary: Obtiene un permiso de rol eliminado (soft delete) por ID
+      tags:
+        - RolPermisos
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Permiso de rol eliminado encontrado
+        '404':
+          description: Permiso de rol no encontrado
+
+  /api/v1/rol_permisos/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de permisos de rol eliminados (soft delete)
+      tags:
+        - RolPermisos
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de permisos de rol eliminados

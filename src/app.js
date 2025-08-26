@@ -7,8 +7,6 @@ const nodeEnv = process.env.NODE_ENV?.trim() || 'development';
 const app = express();
 
 // Inicializa modelos y relaciones antes de usar rutas
-
-
 app.use(cors());
 app.use(express.json()); // Para procesar JSON
 app.use(morgan('dev'));

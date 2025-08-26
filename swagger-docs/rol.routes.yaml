@@ -1,0 +1,166 @@
+paths:
+  /api/v1/rol:
+    get:
+      summary: Obtiene todos los roles
+      tags:
+        - Rol
+      responses:
+        '200':
+          description: Lista de roles
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo rol
+      tags:
+        - Rol
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Admin"
+      responses:
+        '201':
+          description: Rol creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/rol/{id}:
+    get:
+      summary: Obtiene un rol por ID
+      tags:
+        - Rol
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Rol encontrado
+        '404':
+          description: Rol no encontrado
+    put:
+      summary: Actualiza un rol por ID
+      tags:
+        - Rol
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Editor"
+      responses:
+        '200':
+          description: Rol actualizado
+        '404':
+          description: Rol no encontrado
+    delete:
+      summary: Elimina (hard delete) un rol por ID
+      tags:
+        - Rol
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Rol eliminado
+        '404':
+          description: Rol no encontrado
+    patch:
+      summary: Elimina (soft delete) un rol por ID
+      tags:
+        - Rol
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Rol marcado como eliminado
+        '404':
+          description: Rol no encontrado
+
+  /api/v1/rol/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de roles
+      tags:
+        - Rol
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de roles
+
+  /api/v1/rol/deleted:
+    get:
+      summary: Obtiene todos los roles eliminados (soft delete)
+      tags:
+        - Rol
+      responses:
+        '200':
+          description: Lista de roles eliminados
+
+  /api/v1/rol/deleted/{id}:
+    get:
+      summary: Obtiene un rol eliminado (soft delete) por ID
+      tags:
+        - Rol
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Rol eliminado encontrado
+        '404':
+          description: Rol no encontrado
+
+  /api/v1/rol/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de roles eliminados (soft delete)
+      tags:
+        - Rol
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de roles eliminados

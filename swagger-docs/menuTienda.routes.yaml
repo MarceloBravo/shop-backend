@@ -1,0 +1,166 @@
+paths:
+  /api/v1/menu_tienda:
+    get:
+      summary: Obtiene todos los menús de la tienda
+      tags:
+        - MenuTienda
+      responses:
+        '200':
+          description: Lista de menús de la tienda
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo menú de tienda
+      tags:
+        - MenuTienda
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Menú de Verano"
+      responses:
+        '201':
+          description: Menú de tienda creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/menu_tienda/{id}:
+    get:
+      summary: Obtiene un menú de tienda por ID
+      tags:
+        - MenuTienda
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Menú de tienda encontrado
+        '404':
+          description: Menú de tienda no encontrado
+    put:
+      summary: Actualiza un menú de tienda por ID
+      tags:
+        - MenuTienda
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Menú de Invierno"
+      responses:
+        '200':
+          description: Menú de tienda actualizado
+        '404':
+          description: Menú de tienda no encontrado
+    delete:
+      summary: Elimina (hard delete) un menú de tienda por ID
+      tags:
+        - MenuTienda
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Menú de tienda eliminado
+        '404':
+          description: Menú de tienda no encontrado
+    patch:
+      summary: Elimina (soft delete) un menú de tienda por ID
+      tags:
+        - MenuTienda
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Menú de tienda marcado como eliminado
+        '404':
+          description: Menú de tienda no encontrado
+
+  /api/v1/menu_tienda/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de menús de la tienda
+      tags:
+        - MenuTienda
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de menús de la tienda
+
+  /api/v1/menu_tienda/deleted:
+    get:
+      summary: Obtiene todos los menús de la tienda eliminados (soft delete)
+      tags:
+        - MenuTienda
+      responses:
+        '200':
+          description: Lista de menús de la tienda eliminados
+
+  /api/v1/menu_tienda/deleted/{id}:
+    get:
+      summary: Obtiene un menú de tienda eliminado (soft delete) por ID
+      tags:
+        - MenuTienda
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Menú de tienda eliminado encontrado
+        '404':
+          description: Menú de tienda no encontrado
+
+  /api/v1/menu_tienda/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de menús de la tienda eliminados (soft delete)
+      tags:
+        - MenuTienda
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de menús de la tienda eliminados

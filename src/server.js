@@ -10,8 +10,8 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Para procesar JSON
 app.use(morgan('dev'));
-
-app.set('host', '0.0.0.0');
+console.log('nodeEnv =',nodeEnv)
+app.set('host', nodeEnv === 'development' ? '127.0.0.1' :'0.0.0.0');
 const port = nodeEnv == 'test' ? process.env.APP_PORT_TEST : process.env.APP_PORT;
 app.set('port', port || 3000);
 
@@ -22,6 +22,11 @@ const API_PREFIX = '/api/v1';
 rutas.forEach(({ path, router }) => {
     app.use(`${API_PREFIX}${path}`, router);
 });
+
+// Servir documentacion de Swagger
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './swaggerConfig.js';
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //console.log(listEndpoints(app));
 

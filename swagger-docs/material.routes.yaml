@@ -1,0 +1,166 @@
+paths:
+  /api/v1/material:
+    get:
+      summary: Obtiene todos los materiales
+      tags:
+        - Material
+      responses:
+        '200':
+          description: Lista de materiales
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo material
+      tags:
+        - Material
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Algodón"
+      responses:
+        '201':
+          description: Material creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/material/{id}:
+    get:
+      summary: Obtiene un material por ID
+      tags:
+        - Material
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Material encontrado
+        '404':
+          description: Material no encontrado
+    put:
+      summary: Actualiza un material por ID
+      tags:
+        - Material
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Poliéster"
+      responses:
+        '200':
+          description: Material actualizado
+        '404':
+          description: Material no encontrado
+    delete:
+      summary: Elimina (hard delete) un material por ID
+      tags:
+        - Material
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Material eliminado
+        '404':
+          description: Material no encontrado
+    patch:
+      summary: Elimina (soft delete) un material por ID
+      tags:
+        - Material
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Material marcado como eliminado
+        '404':
+          description: Material no encontrado
+
+  /api/v1/material/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de materiales
+      tags:
+        - Material
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de materiales
+
+  /api/v1/material/deleted:
+    get:
+      summary: Obtiene todos los materiales eliminados (soft delete)
+      tags:
+        - Material
+      responses:
+        '200':
+          description: Lista de materiales eliminados
+
+  /api/v1/material/deleted/{id}:
+    get:
+      summary: Obtiene un material eliminado (soft delete) por ID
+      tags:
+        - Material
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Material eliminado encontrado
+        '404':
+          description: Material no encontrado
+
+  /api/v1/material/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de materiales eliminados (soft delete)
+      tags:
+        - Material
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de materiales eliminados

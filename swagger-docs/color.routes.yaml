@@ -1,0 +1,166 @@
+paths:
+  /api/v1/color:
+    get:
+      summary: Obtiene todos los colores
+      tags:
+        - Color
+      responses:
+        '200':
+          description: Lista de colores
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo color
+      tags:
+        - Color
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Rojo"
+      responses:
+        '201':
+          description: Color creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/color/{id}:
+    get:
+      summary: Obtiene un color por ID
+      tags:
+        - Color
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Color encontrado
+        '404':
+          description: Color no encontrado
+    put:
+      summary: Actualiza un color por ID
+      tags:
+        - Color
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Azul"
+      responses:
+        '200':
+          description: Color actualizado
+        '404':
+          description: Color no encontrado
+    delete:
+      summary: Elimina (hard delete) un color por ID
+      tags:
+        - Color
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Color eliminado
+        '404':
+          description: Color no encontrado
+    patch:
+      summary: Elimina (soft delete) un color por ID
+      tags:
+        - Color
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Color marcado como eliminado
+        '404':
+          description: Color no encontrado
+
+  /api/v1/color/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de colores
+      tags:
+        - Color
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de colores
+
+  /api/v1/color/deleted:
+    get:
+      summary: Obtiene todos los colores eliminados (soft delete)
+      tags:
+        - Color
+      responses:
+        '200':
+          description: Lista de colores eliminados
+
+  /api/v1/color/deleted/{id}:
+    get:
+      summary: Obtiene un color eliminado (soft delete) por ID
+      tags:
+        - Color
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Color eliminado encontrado
+        '404':
+          description: Color no encontrado
+
+  /api/v1/color/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de colores eliminados (soft delete)
+      tags:
+        - Color
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de colores eliminados

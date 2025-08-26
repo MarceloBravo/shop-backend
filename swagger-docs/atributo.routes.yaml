@@ -1,0 +1,166 @@
+paths:
+  /api/v1/atributo:
+    get:
+      summary: Obtiene todos los atributos
+      tags:
+        - Atributo
+      responses:
+        '200':
+          description: Lista de atributos
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo atributo
+      tags:
+        - Atributo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Color"
+      responses:
+        '201':
+          description: Atributo creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/atributo/{id}:
+    get:
+      summary: Obtiene un atributo por ID
+      tags:
+        - Atributo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Atributo encontrado
+        '404':
+          description: Atributo no encontrado
+    put:
+      summary: Actualiza un atributo por ID
+      tags:
+        - Atributo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Talla"
+      responses:
+        '200':
+          description: Atributo actualizado
+        '404':
+          description: Atributo no encontrado
+    delete:
+      summary: Elimina (hard delete) un atributo por ID
+      tags:
+        - Atributo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Atributo eliminado
+        '404':
+          description: Atributo no encontrado
+    patch:
+      summary: Elimina (soft delete) un atributo por ID
+      tags:
+        - Atributo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Atributo marcado como eliminado
+        '404':
+          description: Atributo no encontrado
+
+  /api/v1/atributo/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de atributos
+      tags:
+        - Atributo
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de atributos
+
+  /api/v1/atributo/deleted:
+    get:
+      summary: Obtiene todos los atributos eliminados (soft delete)
+      tags:
+        - Atributo
+      responses:
+        '200':
+          description: Lista de atributos eliminados
+
+  /api/v1/atributo/deleted/{id}:
+    get:
+      summary: Obtiene un atributo eliminado (soft delete) por ID
+      tags:
+        - Atributo
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Atributo eliminado encontrado
+        '404':
+          description: Atributo no encontrado
+
+  /api/v1/atributo/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de atributos eliminados (soft delete)
+      tags:
+        - Atributo
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de atributos eliminados

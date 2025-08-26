@@ -1,0 +1,166 @@
+paths:
+  /api/v1/tipo_dimensiones:
+    get:
+      summary: Obtiene todos los tipos de dimensiones
+      tags:
+        - TipoDimensiones
+      responses:
+        '200':
+          description: Lista de tipos de dimensiones
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo tipo de dimensión
+      tags:
+        - TipoDimensiones
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Pulgadas"
+      responses:
+        '201':
+          description: Tipo de dimensión creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/tipo_dimensiones/{id}:
+    get:
+      summary: Obtiene un tipo de dimensión por ID
+      tags:
+        - TipoDimensiones
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tipo de dimensión encontrado
+        '404':
+          description: Tipo de dimensión no encontrado
+    put:
+      summary: Actualiza un tipo de dimensión por ID
+      tags:
+        - TipoDimensiones
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Centímetros"
+      responses:
+        '200':
+          description: Tipo de dimensión actualizado
+        '404':
+          description: Tipo de dimensión no encontrado
+    delete:
+      summary: Elimina (hard delete) un tipo de dimensión por ID
+      tags:
+        - TipoDimensiones
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Tipo de dimensión eliminado
+        '404':
+          description: Tipo de dimensión no encontrado
+    patch:
+      summary: Elimina (soft delete) un tipo de dimensión por ID
+      tags:
+        - TipoDimensiones
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tipo de dimensión marcado como eliminado
+        '404':
+          description: Tipo de dimensión no encontrado
+
+  /api/v1/tipo_dimensiones/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de tipos de dimensiones
+      tags:
+        - TipoDimensiones
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de tipos de dimensiones
+
+  /api/v1/tipo_dimensiones/deleted:
+    get:
+      summary: Obtiene todos los tipos de dimensiones eliminados (soft delete)
+      tags:
+        - TipoDimensiones
+      responses:
+        '200':
+          description: Lista de tipos de dimensiones eliminados
+
+  /api/v1/tipo_dimensiones/deleted/{id}:
+    get:
+      summary: Obtiene un tipo de dimensión eliminado (soft delete) por ID
+      tags:
+        - TipoDimensiones
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Tipo de dimensión eliminado encontrado
+        '404':
+          description: Tipo de dimensión no encontrado
+
+  /api/v1/tipo_dimensiones/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de tipos de dimensiones eliminados (soft delete)
+      tags:
+        - TipoDimensiones
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de tipos de dimensiones eliminados

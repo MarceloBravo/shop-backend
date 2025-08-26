@@ -1,0 +1,166 @@
+paths:
+  /api/v1/categoria:
+    get:
+      summary: Obtiene todas las categorías
+      tags:
+        - Categoria
+      responses:
+        '200':
+          description: Lista de categorías
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea una nueva categoría
+      tags:
+        - Categoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Ropa"
+      responses:
+        '201':
+          description: Categoría creada
+        '400':
+          description: Datos inválidos
+
+  /api/v1/categoria/{id}:
+    get:
+      summary: Obtiene una categoría por ID
+      tags:
+        - Categoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Categoría encontrada
+        '404':
+          description: Categoría no encontrada
+    put:
+      summary: Actualiza una categoría por ID
+      tags:
+        - Categoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Calzado"
+      responses:
+        '200':
+          description: Categoría actualizada
+        '404':
+          description: Categoría no encontrada
+    delete:
+      summary: Elimina (hard delete) una categoría por ID
+      tags:
+        - Categoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Categoría eliminada
+        '404':
+          description: Categoría no encontrada
+    patch:
+      summary: Elimina (soft delete) una categoría por ID
+      tags:
+        - Categoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Categoría marcada como eliminada
+        '404':
+          description: Categoría no encontrada
+
+  /api/v1/categoria/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de categorías
+      tags:
+        - Categoria
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de categorías
+
+  /api/v1/categoria/deleted:
+    get:
+      summary: Obtiene todas las categorías eliminadas (soft delete)
+      tags:
+        - Categoria
+      responses:
+        '200':
+          description: Lista de categorías eliminadas
+
+  /api/v1/categoria/deleted/{id}:
+    get:
+      summary: Obtiene una categoría eliminada (soft delete) por ID
+      tags:
+        - Categoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Categoría eliminada encontrada
+        '404':
+          description: Categoría no encontrada
+
+  /api/v1/categoria/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de categorías eliminadas (soft delete)
+      tags:
+        - Categoria
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de categorías eliminadas

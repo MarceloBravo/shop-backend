@@ -26,6 +26,7 @@ COPY --from=builder /app/babel.config.js .
 COPY --from=builder /app/jsconfig.json .
 COPY --from=builder /app/config ./config
 COPY --from=builder /app/seeders ./seeders
+COPY --from=builder /app/swagger-docs ./swagger-docs
 
 
 # Configura el entorno de producción

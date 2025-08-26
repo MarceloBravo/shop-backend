@@ -1,0 +1,166 @@
+paths:
+  /api/v1/tallaLetra:
+    get:
+      summary: Obtiene todas las tallas de letra
+      tags:
+        - TallaLetra
+      responses:
+        '200':
+          description: Lista de tallas de letra
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea una nueva talla de letra
+      tags:
+        - TallaLetra
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                talla:
+                  type: string
+                  example: "M"
+      responses:
+        '201':
+          description: Talla de letra creada
+        '400':
+          description: Datos inválidos
+
+  /api/v1/tallaLetra/{id}:
+    get:
+      summary: Obtiene una talla de letra por ID
+      tags:
+        - TallaLetra
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Talla de letra encontrada
+        '404':
+          description: Talla de letra no encontrada
+    put:
+      summary: Actualiza una talla de letra por ID
+      tags:
+        - TallaLetra
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                talla:
+                  type: string
+                  example: "L"
+      responses:
+        '200':
+          description: Talla de letra actualizada
+        '404':
+          description: Talla de letra no encontrada
+    delete:
+      summary: Elimina (hard delete) una talla de letra por ID
+      tags:
+        - TallaLetra
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Talla de letra eliminada
+        '404':
+          description: Talla de letra no encontrada
+    patch:
+      summary: Elimina (soft delete) una talla de letra por ID
+      tags:
+        - TallaLetra
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Talla de letra marcada como eliminada
+        '404':
+          description: Talla de letra no encontrada
+
+  /api/v1/tallaLetra/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de tallas de letra
+      tags:
+        - TallaLetra
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de tallas de letra
+
+  /api/v1/tallaLetra/deleted:
+    get:
+      summary: Obtiene todas las tallas de letra eliminadas (soft delete)
+      tags:
+        - TallaLetra
+      responses:
+        '200':
+          description: Lista de tallas de letra eliminadas
+
+  /api/v1/tallaLetra/deleted/{id}:
+    get:
+      summary: Obtiene una talla de letra eliminada (soft delete) por ID
+      tags:
+        - TallaLetra
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Talla de letra eliminada encontrada
+        '404':
+          description: Talla de letra no encontrada
+
+  /api/v1/tallaLetra/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de tallas de letra eliminadas (soft delete)
+      tags:
+        - TallaLetra
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de tallas de letra eliminadas

@@ -1,0 +1,176 @@
+paths:
+  /api/v1/valoracion_producto:
+    get:
+      summary: Obtiene todas las valoraciones de productos
+      tags:
+        - ValoracionProducto
+      responses:
+        '200':
+          description: Lista de valoraciones de productos
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea una nueva valoración de producto
+      tags:
+        - ValoracionProducto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                producto_id:
+                  type: integer
+                usuario_id:
+                  type: integer
+                puntuacion:
+                  type: integer
+                  example: 5
+                comentario:
+                  type: string
+                  example: "¡Excelente producto!"
+      responses:
+        '201':
+          description: Valoración de producto creada
+        '400':
+          description: Datos inválidos
+
+  /api/v1/valoracion_producto/{id}:
+    get:
+      summary: Obtiene una valoración de producto por ID
+      tags:
+        - ValoracionProducto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Valoración de producto encontrada
+        '404':
+          description: Valoración de producto no encontrada
+    put:
+      summary: Actualiza una valoración de producto por ID
+      tags:
+        - ValoracionProducto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                puntuacion:
+                  type: integer
+                  example: 4
+                comentario:
+                  type: string
+                  example: "Buen producto, pero podría mejorar."
+      responses:
+        '200':
+          description: Valoración de producto actualizada
+        '404':
+          description: Valoración de producto no encontrada
+    delete:
+      summary: Elimina (hard delete) una valoración de producto por ID
+      tags:
+        - ValoracionProducto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Valoración de producto eliminada
+        '404':
+          description: Valoración de producto no encontrada
+    patch:
+      summary: Elimina (soft delete) una valoración de producto por ID
+      tags:
+        - ValoracionProducto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Valoración de producto marcada como eliminada
+        '404':
+          description: Valoración de producto no encontrada
+
+  /api/v1/valoracion_producto/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de valoraciones de productos
+      tags:
+        - ValoracionProducto
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de valoraciones de productos
+
+  /api/v1/valoracion_producto/deleted:
+    get:
+      summary: Obtiene todas las valoraciones de productos eliminadas (soft delete)
+      tags:
+        - ValoracionProducto
+      responses:
+        '200':
+          description: Lista de valoraciones de productos eliminadas
+
+  /api/v1/valoracion_producto/deleted/{id}:
+    get:
+      summary: Obtiene una valoración de producto eliminada (soft delete) por ID
+      tags:
+        - ValoracionProducto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Valoración de producto eliminada encontrada
+        '404':
+          description: Valoración de producto no encontrada
+
+  /api/v1/valoracion_producto/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de valoraciones de productos eliminadas (soft delete)
+      tags:
+        - ValoracionProducto
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de valoraciones de productos eliminadas

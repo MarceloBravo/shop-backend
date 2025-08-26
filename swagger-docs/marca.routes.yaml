@@ -1,0 +1,166 @@
+paths:
+  /api/v1/marca:
+    get:
+      summary: Obtiene todas las marcas
+      tags:
+        - Marca
+      responses:
+        '200':
+          description: Lista de marcas
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea una nueva marca
+      tags:
+        - Marca
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Nike"
+      responses:
+        '201':
+          description: Marca creada
+        '400':
+          description: Datos inválidos
+
+  /api/v1/marca/{id}:
+    get:
+      summary: Obtiene una marca por ID
+      tags:
+        - Marca
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Marca encontrada
+        '404':
+          description: Marca no encontrada
+    put:
+      summary: Actualiza una marca por ID
+      tags:
+        - Marca
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Adidas"
+      responses:
+        '200':
+          description: Marca actualizada
+        '404':
+          description: Marca no encontrada
+    delete:
+      summary: Elimina (hard delete) una marca por ID
+      tags:
+        - Marca
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Marca eliminada
+        '404':
+          description: Marca no encontrada
+    patch:
+      summary: Elimina (soft delete) una marca por ID
+      tags:
+        - Marca
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Marca marcada como eliminada
+        '404':
+          description: Marca no encontrada
+
+  /api/v1/marca/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de marcas
+      tags:
+        - Marca
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de marcas
+
+  /api/v1/marca/deleted:
+    get:
+      summary: Obtiene todas las marcas eliminadas (soft delete)
+      tags:
+        - Marca
+      responses:
+        '200':
+          description: Lista de marcas eliminadas
+
+  /api/v1/marca/deleted/{id}:
+    get:
+      summary: Obtiene una marca eliminada (soft delete) por ID
+      tags:
+        - Marca
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Marca eliminada encontrada
+        '404':
+          description: Marca no encontrada
+
+  /api/v1/marca/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de marcas eliminadas (soft delete)
+      tags:
+        - Marca
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de marcas eliminadas

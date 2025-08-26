@@ -1,0 +1,166 @@
+paths:
+  /api/v1/pantalla:
+    get:
+      summary: Obtiene todas las pantallas
+      tags:
+        - Pantalla
+      responses:
+        '200':
+          description: Lista de pantallas
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea una nueva pantalla
+      tags:
+        - Pantalla
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Inicio"
+      responses:
+        '201':
+          description: Pantalla creada
+        '400':
+          description: Datos inválidos
+
+  /api/v1/pantalla/{id}:
+    get:
+      summary: Obtiene una pantalla por ID
+      tags:
+        - Pantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Pantalla encontrada
+        '404':
+          description: Pantalla no encontrada
+    put:
+      summary: Actualiza una pantalla por ID
+      tags:
+        - Pantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Perfil"
+      responses:
+        '200':
+          description: Pantalla actualizada
+        '404':
+          description: Pantalla no encontrada
+    delete:
+      summary: Elimina (hard delete) una pantalla por ID
+      tags:
+        - Pantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Pantalla eliminada
+        '404':
+          description: Pantalla no encontrada
+    patch:
+      summary: Elimina (soft delete) una pantalla por ID
+      tags:
+        - Pantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Pantalla marcada como eliminada
+        '404':
+          description: Pantalla no encontrada
+
+  /api/v1/pantalla/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de pantallas
+      tags:
+        - Pantalla
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de pantallas
+
+  /api/v1/pantalla/deleted:
+    get:
+      summary: Obtiene todas las pantallas eliminadas (soft delete)
+      tags:
+        - Pantalla
+      responses:
+        '200':
+          description: Lista de pantallas eliminadas
+
+  /api/v1/pantalla/deleted/{id}:
+    get:
+      summary: Obtiene una pantalla eliminada (soft delete) por ID
+      tags:
+        - Pantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Pantalla eliminada encontrada
+        '404':
+          description: Pantalla no encontrada
+
+  /api/v1/pantalla/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de pantallas eliminadas (soft delete)
+      tags:
+        - Pantalla
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de pantallas eliminadas

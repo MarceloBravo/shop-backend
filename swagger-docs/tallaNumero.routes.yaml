@@ -1,0 +1,166 @@
+paths:
+  /api/v1/tallaNumero:
+    get:
+      summary: Obtiene todas las tallas numéricas
+      tags:
+        - TallaNumero
+      responses:
+        '200':
+          description: Lista de tallas numéricas
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea una nueva talla numérica
+      tags:
+        - TallaNumero
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                talla:
+                  type: number
+                  example: 42
+      responses:
+        '201':
+          description: Talla numérica creada
+        '400':
+          description: Datos inválidos
+
+  /api/v1/tallaNumero/{id}:
+    get:
+      summary: Obtiene una talla numérica por ID
+      tags:
+        - TallaNumero
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Talla numérica encontrada
+        '404':
+          description: Talla numérica no encontrada
+    put:
+      summary: Actualiza una talla numérica por ID
+      tags:
+        - TallaNumero
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                talla:
+                  type: number
+                  example: 43
+      responses:
+        '200':
+          description: Talla numérica actualizada
+        '404':
+          description: Talla numérica no encontrada
+    delete:
+      summary: Elimina (hard delete) una talla numérica por ID
+      tags:
+        - TallaNumero
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Talla numérica eliminada
+        '404':
+          description: Talla numérica no encontrada
+    patch:
+      summary: Elimina (soft delete) una talla numérica por ID
+      tags:
+        - TallaNumero
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Talla numérica marcada como eliminada
+        '404':
+          description: Talla numérica no encontrada
+
+  /api/v1/tallaNumero/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de tallas numéricas
+      tags:
+        - TallaNumero
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de tallas numéricas
+
+  /api/v1/tallaNumero/deleted:
+    get:
+      summary: Obtiene todas las tallas numéricas eliminadas (soft delete)
+      tags:
+        - TallaNumero
+      responses:
+        '200':
+          description: Lista de tallas numéricas eliminadas
+
+  /api/v1/tallaNumero/deleted/{id}:
+    get:
+      summary: Obtiene una talla numérica eliminada (soft delete) por ID
+      tags:
+        - TallaNumero
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Talla numérica eliminada encontrada
+        '404':
+          description: Talla numérica no encontrada
+
+  /api/v1/tallaNumero/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de tallas numéricas eliminadas (soft delete)
+      tags:
+        - TallaNumero
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de tallas numéricas eliminadas

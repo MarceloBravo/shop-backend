@@ -1,0 +1,172 @@
+paths:
+  /api/v1/producto:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Producto
+      responses:
+        '200':
+          description: Lista de productos
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo producto
+      tags:
+        - Producto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Camiseta"
+                precio:
+                  type: number
+                  example: 25.99
+      responses:
+        '201':
+          description: Producto creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/producto/{id}:
+    get:
+      summary: Obtiene un producto por ID
+      tags:
+        - Producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Producto encontrado
+        '404':
+          description: Producto no encontrado
+    put:
+      summary: Actualiza un producto por ID
+      tags:
+        - Producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Pantalón"
+                precio:
+                  type: number
+                  example: 39.99
+      responses:
+        '200':
+          description: Producto actualizado
+        '404':
+          description: Producto no encontrado
+    delete:
+      summary: Elimina (hard delete) un producto por ID
+      tags:
+        - Producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Producto eliminado
+        '404':
+          description: Producto no encontrado
+    patch:
+      summary: Elimina (soft delete) un producto por ID
+      tags:
+        - Producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Producto marcado como eliminado
+        '404':
+          description: Producto no encontrado
+
+  /api/v1/producto/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de productos
+      tags:
+        - Producto
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de productos
+
+  /api/v1/producto/deleted:
+    get:
+      summary: Obtiene todos los productos eliminados (soft delete)
+      tags:
+        - Producto
+      responses:
+        '200':
+          description: Lista de productos eliminados
+
+  /api/v1/producto/deleted/{id}:
+    get:
+      summary: Obtiene un producto eliminado (soft delete) por ID
+      tags:
+        - Producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Producto eliminado encontrado
+        '404':
+          description: Producto no encontrado
+
+  /api/v1/producto/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de productos eliminados (soft delete)
+      tags:
+        - Producto
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de productos eliminados

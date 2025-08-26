@@ -1,0 +1,166 @@
+paths:
+  /api/v1/acciones_pantalla:
+    get:
+      summary: Obtiene todas las acciones de pantalla
+      tags:
+        - AccionesPantalla
+      responses:
+        '200':
+          description: Lista de acciones de pantalla
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea una nueva acción de pantalla
+      tags:
+        - AccionesPantalla
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Crear"
+      responses:
+        '201':
+          description: Acción de pantalla creada
+        '400':
+          description: Datos inválidos
+
+  /api/v1/acciones_pantalla/{id}:
+    get:
+      summary: Obtiene una acción de pantalla por ID
+      tags:
+        - AccionesPantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Acción de pantalla encontrada
+        '404':
+          description: Acción de pantalla no encontrada
+    put:
+      summary: Actualiza una acción de pantalla por ID
+      tags:
+        - AccionesPantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Editar"
+      responses:
+        '200':
+          description: Acción de pantalla actualizada
+        '404':
+          description: Acción de pantalla no encontrada
+    delete:
+      summary: Elimina (hard delete) una acción de pantalla por ID
+      tags:
+        - AccionesPantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Acción de pantalla eliminada
+        '404':
+          description: Acción de pantalla no encontrada
+    patch:
+      summary: Elimina (soft delete) una acción de pantalla por ID
+      tags:
+        - AccionesPantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Acción de pantalla marcada como eliminada
+        '404':
+          description: Acción de pantalla no encontrada
+
+  /api/v1/acciones_pantalla/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de acciones de pantalla
+      tags:
+        - AccionesPantalla
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de acciones de pantalla
+
+  /api/v1/acciones_pantalla/deleted:
+    get:
+      summary: Obtiene todas las acciones de pantalla eliminadas (soft delete)
+      tags:
+        - AccionesPantalla
+      responses:
+        '200':
+          description: Lista de acciones de pantalla eliminadas
+
+  /api/v1/acciones_pantalla/deleted/{id}:
+    get:
+      summary: Obtiene una acción de pantalla eliminada (soft delete) por ID
+      tags:
+        - AccionesPantalla
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Acción de pantalla eliminada encontrada
+        '404':
+          description: Acción de pantalla no encontrada
+
+  /api/v1/acciones_pantalla/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de acciones de pantalla eliminadas (soft delete)
+      tags:
+        - AccionesPantalla
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de acciones de pantalla eliminadas

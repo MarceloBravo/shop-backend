@@ -1,0 +1,166 @@
+paths:
+  /api/v1/menu:
+    get:
+      summary: Obtiene todos los menús
+      tags:
+        - Menu
+      responses:
+        '200':
+          description: Lista de menús
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea un nuevo menú
+      tags:
+        - Menu
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Menú Principal"
+      responses:
+        '201':
+          description: Menú creado
+        '400':
+          description: Datos inválidos
+
+  /api/v1/menu/{id}:
+    get:
+      summary: Obtiene un menú por ID
+      tags:
+        - Menu
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Menú encontrado
+        '404':
+          description: Menú no encontrado
+    put:
+      summary: Actualiza un menú por ID
+      tags:
+        - Menu
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Menú Secundario"
+      responses:
+        '200':
+          description: Menú actualizado
+        '404':
+          description: Menú no encontrado
+    delete:
+      summary: Elimina (hard delete) un menú por ID
+      tags:
+        - Menu
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Menú eliminado
+        '404':
+          description: Menú no encontrado
+    patch:
+      summary: Elimina (soft delete) un menú por ID
+      tags:
+        - Menu
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Menú marcado como eliminado
+        '404':
+          description: Menú no encontrado
+
+  /api/v1/menu/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de menús
+      tags:
+        - Menu
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de menús
+
+  /api/v1/menu/deleted:
+    get:
+      summary: Obtiene todos los menús eliminados (soft delete)
+      tags:
+        - Menu
+      responses:
+        '200':
+          description: Lista de menús eliminados
+
+  /api/v1/menu/deleted/{id}:
+    get:
+      summary: Obtiene un menú eliminado (soft delete) por ID
+      tags:
+        - Menu
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Menú eliminado encontrado
+        '404':
+          description: Menú no encontrado
+
+  /api/v1/menu/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de menús eliminados (soft delete)
+      tags:
+        - Menu
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de menús eliminados

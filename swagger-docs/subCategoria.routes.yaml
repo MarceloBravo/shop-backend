@@ -1,0 +1,170 @@
+paths:
+  /api/v1/sub_categoria:
+    get:
+      summary: Obtiene todas las sub-categorías
+      tags:
+        - SubCategoria
+      responses:
+        '200':
+          description: Lista de sub-categorías
+        '500':
+          description: Error del servidor
+    post:
+      summary: Crea una nueva sub-categoría
+      tags:
+        - SubCategoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Camisetas"
+                categoria_id:
+                  type: integer
+      responses:
+        '201':
+          description: Sub-categoría creada
+        '400':
+          description: Datos inválidos
+
+  /api/v1/sub_categoria/{id}:
+    get:
+      summary: Obtiene una sub-categoría por ID
+      tags:
+        - SubCategoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sub-categoría encontrada
+        '404':
+          description: Sub-categoría no encontrada
+    put:
+      summary: Actualiza una sub-categoría por ID
+      tags:
+        - SubCategoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombre:
+                  type: string
+                  example: "Pantalones"
+                categoria_id:
+                  type: integer
+      responses:
+        '200':
+          description: Sub-categoría actualizada
+        '404':
+          description: Sub-categoría no encontrada
+    delete:
+      summary: Elimina (hard delete) una sub-categoría por ID
+      tags:
+        - SubCategoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Sub-categoría eliminada
+        '404':
+          description: Sub-categoría no encontrada
+    patch:
+      summary: Elimina (soft delete) una sub-categoría por ID
+      tags:
+        - SubCategoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sub-categoría marcada como eliminada
+        '404':
+          description: Sub-categoría no encontrada
+
+  /api/v1/sub_categoria/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de sub-categorías
+      tags:
+        - SubCategoria
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de sub-categorías
+
+  /api/v1/sub_categoria/deleted:
+    get:
+      summary: Obtiene todas las sub-categorías eliminadas (soft delete)
+      tags:
+        - SubCategoria
+      responses:
+        '200':
+          description: Lista de sub-categorías eliminadas
+
+  /api/v1/sub_categoria/deleted/{id}:
+    get:
+      summary: Obtiene una sub-categoría eliminada (soft delete) por ID
+      tags:
+        - SubCategoria
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Sub-categoría eliminada encontrada
+        '404':
+          description: Sub-categoría no encontrada
+
+  /api/v1/sub_categoria/deleted/page/{pag}/{limit}:
+    get:
+      summary: Obtiene una página de sub-categorías eliminadas (soft delete)
+      tags:
+        - SubCategoria
+      parameters:
+        - in: path
+          name: pag
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: limit
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Página de sub-categorías eliminadas
