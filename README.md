@@ -13,11 +13,13 @@ Backend para una aplicación de tienda online básica, dockerizada y con un fluj
 *   **Autenticación con JWT:** Para ciertos endpoints se requiere estar autenticado ya que las peticiones se ,manejas con tokens y refresh tokens (ver el punto **listado de rutas** para conocer los endpoints de acceso restringido y ver aquellos en los cuales se implementa el midleware checkTocken), 
 *   **ORM con Sequelize:** Mapeo de objetos relacional para una interacción sencilla con la base de datos.
 *   **Base de datos de producción alojada en hosting Neon:** Base de datos relacional postgres.
-*   **Dockerizado:** Entorno de desarrollo y pruebas consistente y fácil de levantar con Docker Compose. **Ahora con optimizaciones para producción (multi-stage build) y soporte para ejecutar tests dentro de contenedores.**
+*   **Docker, Docker compose :** Entorno de desarrollo y pruebas consistente y fácil de levantar con Docker Compose. **Ahora con optimizaciones para producción (multi-stage build) y soporte para ejecutar tests dentro de contenedores.**
 *   **Testing:** Cobertura de pruebas con Jest y Supertest.
+*   **Implementación de principios SOLID y Clean Code**
 *   **Integración Continua:** Workflow de GitHub Actions para ejecutar tests unitarios y de integración automáticamente.
 *   **Despliegue contínuo:** Workflow de GitHub Actions para para desplegar la aplicación en un servidor de Railway.
-*   **Implementación de principios SOLID y Clean Code**
+*   **SonarCloud** integrada al despliegue continuo para evaluación de calidad de código.
+*   **Swagger** para la documentación de la API.
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -245,3 +247,9 @@ test/
     ├── usuarios/
     └── valoracionProducto/
 ```
+
+![Texto descriptivo de la imagen](assets/prompt.png)
+![Texto descriptivo de la imagen](assets/Evaluación%20-%20parte%201.png)
+![Texto descriptivo de la imagen](assets/Evaluación%20-%20parte%202.png)
+![Texto descriptivo de la imagen](assets/Evaluación%20-%20parte%203.png)
+![Texto descriptivo de la imagen](assets/Evaluación%20-%20parte%204.png)
