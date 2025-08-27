@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Para procesar JSON
 app.use(morgan('dev'));
-console.log('nodeEnv =',nodeEnv)
+
 app.set('host', nodeEnv === 'development' ? '127.0.0.1' :'0.0.0.0');
 const port = nodeEnv == 'test' ? process.env.APP_PORT_TEST : process.env.APP_PORT;
 app.set('port', port || 3000);
