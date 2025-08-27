@@ -10,7 +10,7 @@ Backend para una aplicación de tienda online básica, dockerizada y con un fluj
 ## ✨ Características Principales
 
 *   **API RESTful:** Endpoints para gestionar productos, categorías, etc.
-*   **Autenticación con JWT:** Para ciertos endpoints se requiere estar autenticado ya que las peticiones se ,manejas con tokens y refresh tokens (ver el punto **listado de rutas** para conocer los endpoints de acceso restringido y ver aquellos en los cuales se implementa el midleware checkTocken), 
+*   **Autenticación con JWT:** Para ciertos endpoints se requiere estar autenticado para la obtención del tokens y refresh tokens necesarios para la erealización de las peticiones en auellas URI de la API. (ver el punto **listado de rutas** para conocer los endpoints de acceso restringido y ver aquellos en los cuales se implementa el midleware checkTocken), 
 *   **ORM con Sequelize:** Mapeo de objetos relacional para una interacción sencilla con la base de datos.
 *   **Base de datos de producción alojada en hosting Neon:** Base de datos relacional postgres.
 *   **Docker, Docker compose :** Entorno de desarrollo y pruebas consistente y fácil de levantar con Docker Compose. **Ahora con optimizaciones para producción (multi-stage build) y soporte para ejecutar tests dentro de contenedores.**
