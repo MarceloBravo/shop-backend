@@ -83,8 +83,8 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           args: >
-            -Dsonar.organization=mi-org-en-sonarcloud
-            -Dsonar.projectKey=mi-repo-node
+            -Dsonar.organization=${{ secrets.SONAR_ORGANISATION }}
+            -Dsonar.projectKey= ${{ secrets.SONAR_PROJECT_KEY }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
