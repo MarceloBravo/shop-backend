@@ -19,7 +19,7 @@ Backend para una aplicación de tienda online básica, dockerizada y con un fluj
 *   **Integración Continua:** Workflow de GitHub Actions para ejecutar tests unitarios y de integración automáticamente.
 *   **Despliegue contínuo:** Workflow de GitHub Actions para para desplegar la aplicación en un servidor de Railway.
 *   **SonarCloud** integrada al despliegue continuo para evaluación de calidad de código.
-*   **Swagger** para la documentación de la API.
+*   **Swagger** para la documentación de la API (https://shop-backend-production-acc2.up.railway.app/api-docs/)
 
 ## 🛠️ Tecnologías Utilizadas
 
