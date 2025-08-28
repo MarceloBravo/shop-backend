@@ -11,7 +11,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:3000', // Asegúrate de que coincida con tu servidor
+        url: 'https://shop-backend-production-acc2.up.railway.app', // Asegúrate de que coincida con tu servidor
         description: 'Servidor de desarrollo',
       },
     ],
