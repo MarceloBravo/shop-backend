@@ -7,7 +7,7 @@ export default async function globalSetup() {
   if (process.env.RUN_GLOBAL_SETUP) {
     console.log('Ejecutando globalSetup para tests de integración...');
     try {
-      const { app } = await import('../src/index.js');
+      const { default: app } = await import('../src/server.js');
       //const { getModelsInOrder } = await import('../helpers/getModelsInOrder.js');
       const { default: dbPromise } = await import('../src/models/index.js');
       console.log('Iniciando migraciones y seeders...');

@@ -18,10 +18,12 @@ const main = async () => {
         });
 
 
-        // 2. Sincroniza la base de datos.
+        // 2. Sincroniza la base de datos solo si no estamos en modo 'test'.
         //    `alter: true` actualiza el esquema sin borrar datos. Es seguro para desarrollo.
-        await db.sequelize.sync({ alter: true }); 
-        console.log('Base de datos sincronizada correctamente.');
+        if (process.env.NODE_ENV?.trim() !== 'test') {
+            await db.sequelize.sync({ alter: true }); 
+            console.log('Base de datos sincronizada correctamente.');
+        }
 
         // 3. Configura la documentación de Swagger
         app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
