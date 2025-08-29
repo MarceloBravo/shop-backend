@@ -17,7 +17,7 @@ describe('Integration Test: GetAllProductoController', () => {
         const response = await request(app)
             .get('/api/v1/producto')
             .expect(200);
-
+        console.log(response.body);
         expect(response.body).toHaveProperty('data');
         expect(response.body.data.length).toBe(3);
         expect(response.body.count).toBe(3);

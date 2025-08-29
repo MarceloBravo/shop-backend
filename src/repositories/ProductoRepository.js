@@ -140,12 +140,12 @@ class ProductoRepository {
     }
 
     findById = async (id, paranoid = true, transaction = null) => {
-        const data = await ProductoModel.findByPk(id, { paranoid, transaction });
+        const data = await ProductoModel.findByPk(id, {include: this.include, paranoid, transaction });
         return data;
     }
 
     getById = async (id, paranoid = true, transaction = null) => {
-        const data = await ProductoModel.findByPk(id, {include, paranoid, transaction});
+        const data = await ProductoModel.findByPk(id, {include: this.include, paranoid, transaction});
         return data;
     }
 
@@ -153,7 +153,7 @@ class ProductoRepository {
     getAll = async (paranoid = true, filter = {}, orderBy = [['nombre', 'ASC']]) => {
         const { rows, count } = await ProductoModel.findAndCountAll({
             order: orderBy,
-            include,
+            include: this.include,
             paranoid,
             where: filter
         },);

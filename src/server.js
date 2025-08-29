@@ -1,53 +1,48 @@
-import cors from 'cors';
-import express from 'express';
-import morgan from 'morgan';
-import rutas from './routes/rutas.js';
-//import { sequelize } from '../config/database.js';
-
-const nodeEnv = process.env.NODE_ENV?.trim() || 'development';
-const app = express();
-
-app.use(cors());
-app.use(express.json()); // Para procesar JSON
-app.use(morgan('dev'));
-
-app.set('host', nodeEnv === 'development' ? '127.0.0.1' :'0.0.0.0');
-const port = nodeEnv == 'test' ? process.env.APP_PORT_TEST : process.env.APP_PORT;
-app.set('port', port || 3000);
-
-// Prefijo global opcional
-//const ADMIN_PREFIX = '/admin/v1';
-const API_PREFIX = '/api/v1';
-
-rutas.forEach(({ path, router }) => {
-    app.use(`${API_PREFIX}${path}`, router);
-});
-
-// Servir documentacion de Swagger
+import app from './app.js';
+import dbPromise from './models/index.js';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './swaggerConfig.js';
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+import rutas from './routes/rutas.js';
 
-//console.log(listEndpoints(app));
 
-try{
-    //await removeDuplicateConstraints();    
-    //sequelize.sync({alter: true});    //force
-    //console.log('Conexión establecida con la base de datos...');
-    //app.listen(app.get('port'), '0.0.0.0',() => { 
-    if (process.env.NODE_ENV?.trim() !== 'test') {  //En modo de prueba no se necesita estar escuchando a un puerto de red
-        const server = app.listen(app.get('port'), app.get('host'),() => {    
-            console.log(`Servidor nodemon activo en ${app.get('host')}:${app.get('port')}`);
+const main = async () => {
+    try {
+        // 1. Espera a que la promesa de la BD se resuelva. 
+        //    Esto asegura que todos los modelos y relaciones están cargados.
+        const db = await dbPromise;
+
+        const API_PREFIX = '/api/v1';
+
+        rutas.forEach(({ path, router }) => {
+            app.use(`${API_PREFIX}${path}`, router);
         });
+
+
+        // 2. Sincroniza la base de datos.
+        //    `alter: true` actualiza el esquema sin borrar datos. Es seguro para desarrollo.
+        await db.sequelize.sync({ alter: true }); 
+        console.log('Base de datos sincronizada correctamente.');
+
+        // 3. Configura la documentación de Swagger
+        app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+        // 4. Inicia el servidor solo si no estamos en modo 'test'
+        if (process.env.NODE_ENV?.trim() !== 'test') {
+            console.log('Iniciando servidor')
+            const host = app.get('host');
+            const port = app.get('port');
+            app.listen(port, host, () => {
+                console.log(`Servidor activo en http://${host}:${port}`);
+            });
+        }
+    } catch (error) {
+        console.error('Error al iniciar la aplicación:', error);
+        process.exit(1); // Termina el proceso si la inicialización falla
     }
-    
-}catch(e){  
-    console.log('--->',e.message);
-}
+};
 
+// Llama a la función principal para iniciar
+main();
 
+// Exporta la app para que pueda ser usada en los tests de integración
 export default app;
-
-
-
-
