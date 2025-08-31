@@ -1,5 +1,4 @@
 import SoftDeleteMenuService from "../../services/menu/SoftDeleteMenuService.js";
-import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,9 +10,11 @@ class SoftDeleteMenuController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de menús
      */
-    constructor(repository) {
-        if(!repository) {
-            repository = new MenuRepository()
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new SoftDeleteMenuService(repository);
     }

@@ -9,20 +9,21 @@ import CreateMaterialController from '../controllers/materiales/CreateMaterialCo
 import UpdateMaterialController from '../controllers/materiales/UpdateMaterialController.js';
 import HardDeleteMaterialController from '../controllers/materiales/HardDeleteMaterialController.js';
 import SoftDeleteMaterialController from '../controllers/materiales/SoftDeleteMaterialController.js';
+import MaterialRepository from "../repositories/MaterialRepository.js";
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
-
-const getByIdMaterialController = new GetByIdMaterialController();
-const getAllMaterialController = new GetAllMaterialController();
-const getPageMaterialController = new GetPageMaterialController();
-const getByIdMaterialWithDeletedController = new GetByIdMaterialWithDeletedController();
-const getAllMaterialWithDeletedController = new GetAllMaterialWithDeletedController();
-const getPageMaterialWithDeletedController = new GetPageMaterialWithDeletedController();
-const createMaterialController = new CreateMaterialController();
-const updateMaterialController = new UpdateMaterialController();
-const hardDeleteMaterialController = new HardDeleteMaterialController();
-const softDeleteMaterialController = new SoftDeleteMaterialController();
+const repository = new MaterialRepository();
+const getByIdMaterialController = new GetByIdMaterialController(repository);
+const getAllMaterialController = new GetAllMaterialController(repository);
+const getPageMaterialController = new GetPageMaterialController(repository);
+const getByIdMaterialWithDeletedController = new GetByIdMaterialWithDeletedController(repository);
+const getAllMaterialWithDeletedController = new GetAllMaterialWithDeletedController(repository);
+const getPageMaterialWithDeletedController = new GetPageMaterialWithDeletedController(repository);
+const createMaterialController = new CreateMaterialController(repository);
+const updateMaterialController = new UpdateMaterialController(repository);
+const hardDeleteMaterialController = new HardDeleteMaterialController(repository);
+const softDeleteMaterialController = new SoftDeleteMaterialController(repository);
 
 router.get('/deleted', checkToken, getAllMaterialWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getByIdMaterialWithDeletedController.execute);

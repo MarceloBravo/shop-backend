@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { sequelize } from '../../../config/database.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { MarcaModel } from '../../../src/models/MarcaModel.js';
@@ -9,7 +9,7 @@ describe('Integration Test: UpdateMarcaController', () => {
     let testMarca;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

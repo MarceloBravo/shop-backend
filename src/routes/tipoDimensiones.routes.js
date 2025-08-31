@@ -9,21 +9,23 @@ import CreateTipoDimensionesController from '../controllers/tipoDimensiones/Crea
 import UpdateTipoDimensionesController from '../controllers/tipoDimensiones/UpdateTipoDimensionesController.js';
 import HardDeleteTipoDimensionesController from '../controllers/tipoDimensiones/HardDeleteTipoDimensionesController.js';
 import SoftDeleteTipoDimensionesController from '../controllers/tipoDimensiones/SoftDeleteTipoDimensionesController.js';
+import TipoDimensionesRepository from '../repositories/TipoDimensionesRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new TipoDimensionesRepository();
 
 // Instanciar controladores
-const getByIdController = new GetByIdTipoDimensionesController();
-const getAllController = new GetAllTipoDimensionesController();
-const getPageController = new GetPageTipoDimensionesController();
-const getByIdWithDeletedController = new GetByIdTipoDimensionesWithDeletedController();
-const getAllWithDeletedController = new GetAllTipoDimensionesWithDeletedController();
-const getPageWithDeletedController = new GetPageTipoDimensionesWithDeletedController();
-const createController = new CreateTipoDimensionesController();
-const updateController = new UpdateTipoDimensionesController();
-const hardDeleteController = new HardDeleteTipoDimensionesController();
-const softDeleteController = new SoftDeleteTipoDimensionesController();
+const getByIdController = new GetByIdTipoDimensionesController(repository);
+const getAllController = new GetAllTipoDimensionesController(repository);
+const getPageController = new GetPageTipoDimensionesController(repository);
+const getByIdWithDeletedController = new GetByIdTipoDimensionesWithDeletedController(repository);
+const getAllWithDeletedController = new GetAllTipoDimensionesWithDeletedController(repository);
+const getPageWithDeletedController = new GetPageTipoDimensionesWithDeletedController(repository);
+const createController = new CreateTipoDimensionesController(repository);
+const updateController = new UpdateTipoDimensionesController(repository);
+const hardDeleteController = new HardDeleteTipoDimensionesController(repository);
+const softDeleteController = new SoftDeleteTipoDimensionesController(repository);
 
 // Rutas para registros eliminados (soft deleted)
 router.get('/deleted', checkToken, getAllWithDeletedController.execute);

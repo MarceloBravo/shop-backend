@@ -1,5 +1,4 @@
 import GetByIdMarcaService from '../../services/marca/GetByIdMarcaService.js';
-import MarcaRepository from "../../repositories/MarcaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -13,7 +12,9 @@ class GetByIdMarcaController {
      */
     constructor(repository = null) {
         if(!repository){
-            repository = new MarcaRepository();
+            const error = new Error('No sde ha recibido el repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new GetByIdMarcaService(repository);
     }

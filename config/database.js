@@ -18,7 +18,7 @@ if (process.env.DATABASE_URL) {
     sequelize = new Sequelize(process.env.NEON_DATABASE_URL || process.env.DATABASE_URL, {
         dialect: 'postgres',
         protocol: 'postgres',
-        schema: process.env.DB_NAME || dbName,
+        schema: dbName,
         dialectOptions: {
             ssl: {
                 require: true,
@@ -26,16 +26,18 @@ if (process.env.DATABASE_URL) {
             }
         },
         logging: nodeEnv !== 'test' ? console.log : false,
+        searchPath: dbName,
     });
 } else {
     
 
     sequelize = new Sequelize(dbName, dbUser, dbPass, {
-        schema: process.env.DB_NAME || dbName,
+        schema: dbName,
         host: dbHost,
         port: dbPort,
         dialect: 'postgres',
         logging: nodeEnv !== 'test' ? console.log : false,
+        searchPath: dbName,
     });
 }
 

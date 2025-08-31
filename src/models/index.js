@@ -1,43 +1,35 @@
 'use strict';
+import { createRequire } from "module";
 import path from 'path';
-import { readdir } from 'fs/promises';
 import { sequelize } from '../../config/database.js';
+import { defineRelations } from './relations.js';
+import fs from "fs";
 
-const initializeDatabase = async () => {
-  const __dirname = path.join(process.cwd(), 'src', 'models');
 
-  let db = {};
+
+const initializeDatabase = () => {
+  const url = path.join(process.cwd(), 'src', 'models')
+  const require = createRequire(url);
+  const db = {};
 
   db.sequelize = sequelize;
   db.Sequelize = sequelize.Sequelize;
-  const files = await readdir(__dirname);
-
-  const modelFiles = files.filter(file =>
-    file.indexOf('.') !== 0 &&
+  
+  const modelFiles = fs.readdirSync(url)
+    .filter(file => file.endsWith(".js") &&
     file !== 'index.js' &&
     file !== 'relations.js' &&
     file.slice(-8) === 'Model.js' // Asegurarse de que solo carga archivos de modelo
   );
 
+  
   for (const file of modelFiles) {
-    const modelPath = path.join(__dirname, file);
-    const module = await import(path.toNamespacedPath(modelPath));
-    const modelName = file.replace('.js', '');
-    const model = module[modelName];
-    db[modelName] = model;
+    const module = require(path.join(process.cwd(), "src/models", file));
+    const modelName = file.replace(".js", "");
+    db[modelName] = module[modelName];
   }
-
-  Object.keys(db).forEach(modelName => {
-    if (db[modelName].associate) {
-      db[modelName].associate(db);
-    }
-  });
-
-  // Cargar relaciones
-  //const { defineRelations } = await import(path.toNamespacedPath(path.join(__dirname, 'relations.js')));
-  const { defineRelations } = await import(path.join(__dirname, 'relations.js'));
+  
   defineRelations(db);
-
 
   return db;
 };

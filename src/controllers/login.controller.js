@@ -23,7 +23,7 @@ export const login = async (req, res) => {
         const user = await UsuarioModel.findOne({where: {email}});
         if(user){
 
-            const rol = await RolModel.findByPk(user.rolId);    
+            const rol = await RolModel.findByPk(user.rolId ?? user.rol_id);    
             bcrypt.compare(password.toString(), user.password.toString(), async (err, result)=>{
                 if(err || !result){
                     res.status(err ? 500 : 401).json({mensaje: err ? 'Ocurrió un error al identificar el usuario.' : 'Usuario o contraseña incorrectos. Intentalo nuevamente'});

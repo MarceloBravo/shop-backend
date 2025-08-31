@@ -64,10 +64,8 @@ describe('GetPageUsuarioController', () => {
     expect(mockResponse.status).toHaveBeenCalledWith(500);
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 500, status: 500 });
   });
-
-  it('should use default repository if none is provided', () => {
-    const controller = new GetPageUsuarioController();
-    expect(UsuarioRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(GetPageUsuarioService);
+  
+  it('throw a error if none repository is provided', () => {
+    expect(() => new GetPageUsuarioController()).toThrow('No se ha recibido un repositorio');
   });
 });

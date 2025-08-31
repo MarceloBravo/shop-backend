@@ -1,5 +1,4 @@
 import HardDeleteCategoriaService from '../../services/Categoria/HardDeleteCategoriaService.js';
-import CategoriaRepository from '../../repositories/CategoriaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,7 +10,12 @@ class HardDeleteCategoriaController {
      * Crea una instancia del controlador
      * @param {CategoriaRepository} repository - Repositorio de categorías
      */
-    constructor(repository = new CategoriaRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
         this.service = new HardDeleteCategoriaService(repository);
     }
 

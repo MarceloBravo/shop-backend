@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { MenuModel } from '../../../src/models/MenuModel.js';
 
@@ -7,7 +7,7 @@ describe('Integration Test: CreateMenuController', () => {
     let token;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     afterEach(async () => {

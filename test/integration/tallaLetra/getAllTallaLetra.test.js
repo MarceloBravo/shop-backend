@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TallaLetraModel } from '../../../src/models/TallaLetraModel.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 
@@ -13,7 +13,7 @@ describe('Integration Test: GetAllTallaLetra', () => {
     let token;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

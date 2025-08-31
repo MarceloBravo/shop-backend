@@ -1,35 +1,36 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('GetByIdSubCategoriaWithDeletedController Integration', () => {
     let token;
-    let createdSubCategoriaId;
+    let categoria;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken;
+        await CategoriaModel.destroy({ where: {}, force: true });
+        await SubCategoriaModel.destroy({ where: {}, force: true });
+        categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
+        
     });
 
     afterEach(async () => {
-        if (createdSubCategoriaId) {
-            await SubCategoriaModel.destroy({ where: { id: createdSubCategoriaId }, force: true });
-            createdSubCategoriaId = null;
-        }
+        await SubCategoriaModel.destroy({ where: {}, force: true });
     });
 
     test('should get a soft deleted subcategory by id', async () => {
-        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Get By Id Deleted', categoria_id: 1 });
+        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Get By Id Deleted', categoria_id: categoria.id });
         await subCategoria.destroy(); // Soft delete
-        createdSubCategoriaId = subCategoria.id;
 
         const response = await request(app)
-            .get(`/api/v1/sub_categoria/deleted/${createdSubCategoriaId}`)
+            .get(`/api/v1/sub_categoria/deleted/${subCategoria.id}`)
             .set('Authorization', `Bearer ${token}`);
 
         expect(response.statusCode).toBe(200);
-        expect(response.body).toHaveProperty('id', createdSubCategoriaId);
+        expect(response.body).toHaveProperty('id', subCategoria.id);
         expect(response.body.nombre).toBe('Test Get By Id Deleted');
         expect(response.body).toHaveProperty('deleted_at');
         expect(response.body.deletedAt).not.toBeNull();

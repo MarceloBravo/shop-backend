@@ -49,4 +49,9 @@ describe('Unit Test: UpdateAccionesPantallaController', () => {
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error de base de datos', details: [] });
     });
+
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new UpdateAccionesPantallaController()).toThrow('No se ha recibido un repositorio');
+    });
 }); 

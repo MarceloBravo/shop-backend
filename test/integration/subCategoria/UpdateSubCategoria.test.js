@@ -1,38 +1,42 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('UpdateSubCategoriaController Integration', () => {
     let token;
     let createdSubCategoriaId;
+    let categoria;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
+        await CategoriaModel.destroy({ where: {}, force: true });
+        await SubCategoriaModel.destroy({ where: {}, force: true });
+        categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
     });
 
     afterEach(async () => {
         if (createdSubCategoriaId) {
-            await SubCategoriaModel.destroy({ where: { id: createdSubCategoriaId }, force: true });
+            await SubCategoriaModel.destroy({ where: {}, force: true });
             createdSubCategoriaId = null;
         }
     });
 
     test('should update an existing subcategory', async () => {
-        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Update Original', categoria_id: 1 });
+        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Update Original', categoria_id: categoria.id });
         createdSubCategoriaId = subCategoria.id;
 
         const updatedData = {
             nombre: 'Test Update New Name',
-            categoria_id: 1
+            categoria_id: categoria.id
         };
 
         const response = await request(app)
             .put(`/api/v1/sub_categoria/${createdSubCategoriaId}`)
             .set('Authorization', `Bearer ${token}`)
             .send(updatedData);
-
+            
         expect(response.statusCode).toBe(200);
         expect(response.body.subcategoria.nombre).toBe(updatedData.nombre);
     });
@@ -41,7 +45,7 @@ describe('UpdateSubCategoriaController Integration', () => {
         const nonExistentId = 99999;
         const newData = {
             nombre: 'Test Update Create New',
-            categoria_id: 1
+            categoria_id: categoria.id
         };
 
         const response = await request(app)
@@ -56,7 +60,7 @@ describe('UpdateSubCategoriaController Integration', () => {
     });
 
     test('should return 400 with invalid data during update', async () => {
-        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Update Invalid', categoria_id: 1 });
+        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Update Invalid', categoria_id: categoria.id });
         createdSubCategoriaId = subCategoria.id;
 
         const invalidData = {

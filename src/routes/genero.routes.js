@@ -9,20 +9,22 @@ import CreateGeneroController from '../controllers/genero/CreateGeneroController
 import UpdateGeneroController from '../controllers/genero/UpdateGeneroController.js';
 import HardDeleteGeneroController from '../controllers/genero/HardDeleteGeneroController.js';
 import SoftDeleteGeneroController from '../controllers/genero/SoftDeleteGeneroController.js';
+import GeneroRepository from '../repositories/GeneroRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new GeneroRepository();
 
-const getGeneroController = new GetByIdGeneroController();
-const getAllGeneroController = new GetAllGeneroController();
-const getPageGeneroController = new GetPageGeneroController();
-const getAllGeneroWithDeletedController = new GetAllGeneroWithDeletedController();
-const getByIdGeneroWithDeletedController = new GetByIdGeneroWithDeletedController();
-const getPageGeneroWithDeletedController = new GetPageGeneroWithDeletedController();
-const createGeneroController = new CreateGeneroController();
-const updateGeneroController = new UpdateGeneroController();
-const hardDeleteGeneroController = new HardDeleteGeneroController();
-const softDeleteGeneroController = new SoftDeleteGeneroController();
+const getGeneroController = new GetByIdGeneroController(repository);
+const getAllGeneroController = new GetAllGeneroController(repository);
+const getPageGeneroController = new GetPageGeneroController(repository);
+const getAllGeneroWithDeletedController = new GetAllGeneroWithDeletedController(repository);
+const getByIdGeneroWithDeletedController = new GetByIdGeneroWithDeletedController(repository);
+const getPageGeneroWithDeletedController = new GetPageGeneroWithDeletedController(repository);
+const createGeneroController = new CreateGeneroController(repository);
+const updateGeneroController = new UpdateGeneroController(repository);
+const hardDeleteGeneroController = new HardDeleteGeneroController(repository);
+const softDeleteGeneroController = new SoftDeleteGeneroController(repository);
 
 router.get('/deleted', checkToken, getAllGeneroWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getByIdGeneroWithDeletedController.execute);

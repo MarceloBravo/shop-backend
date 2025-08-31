@@ -1,4 +1,6 @@
-import { ColorModel } from "../models/ColorModel.js";
+import db from '../models/index.js';
+
+const  ColorModel = db.ColorModel;
 
 class ColorRepository{
     getById = async (id, paranoid = true, transaction = null) => {

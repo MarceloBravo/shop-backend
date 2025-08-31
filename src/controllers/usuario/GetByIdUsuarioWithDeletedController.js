@@ -1,5 +1,4 @@
 import GetByIdUsuarioService from '../../services/usuario/GetByIdUsuarioService.js';
-import UsuarioRepository from "../../repositories/UsuarioRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -12,9 +11,11 @@ class GetByIdUsuarioWithDeletedController {
      * @param {Object} repository - Repositorio de usuarios
      */
     constructor(repository = null) {
-        if (!repository) {
-            repository = new UsuarioRepository();
-        }   
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
         this.service = new GetByIdUsuarioService(repository);
     }
 

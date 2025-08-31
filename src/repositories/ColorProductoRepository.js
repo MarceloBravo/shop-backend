@@ -1,4 +1,7 @@
-import { ColorProductoModel } from "../models/ColorProductoModel.js";
+import db from '../models/index.js';
+
+const ColorProductoModel = db.ColorProductoModel;
+const ColorModel = db.ColorModel;
 
 class ColorProductoRepository {
 

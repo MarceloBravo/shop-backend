@@ -9,20 +9,22 @@ import CreateMenuController from '../controllers/menu/CreateMenuController.js';
 import UpdateMenuController from '../controllers/menu/UpdateMenuController.js';
 import HardDeleteMenuController from '../controllers/menu/HardDeleteMenuController.js';
 import SoftDeleteMenuController from '../controllers/menu/SoftDeleteMenuController.js';
+import MenuRepository from "../repositories/MenuRepository.js";
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new MenuRepository();
 
-const getByIdMenuController = new GetByIdMenuController();
-const getAllMenuController = new GetAllMenuController();
-const getPageMenuController = new GetPageMenuController();
-const getByIdMenuWithDeletedController = new GetByIdMenuWithDeletedController();
-const getAllMenuWithDeletedController = new GetAllMenuWithDeletedController();
-const getPageMenuWithDeletedController = new GetPageMenuWithDeletedController();
-const createMenuController = new CreateMenuController();
-const updateMenuController = new UpdateMenuController();
-const hardDeleteMenuController = new HardDeleteMenuController();
-const softDeleteMenuController = new SoftDeleteMenuController();
+const getByIdMenuController = new GetByIdMenuController(repository);
+const getAllMenuController = new GetAllMenuController(repository);
+const getPageMenuController = new GetPageMenuController(repository);
+const getByIdMenuWithDeletedController = new GetByIdMenuWithDeletedController(repository);
+const getAllMenuWithDeletedController = new GetAllMenuWithDeletedController(repository);
+const getPageMenuWithDeletedController = new GetPageMenuWithDeletedController(repository);
+const createMenuController = new CreateMenuController(repository);
+const updateMenuController = new UpdateMenuController(repository);
+const hardDeleteMenuController = new HardDeleteMenuController(repository);
+const softDeleteMenuController = new SoftDeleteMenuController(repository);
 
 router.get('/deleted', checkToken, getAllMenuWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getByIdMenuWithDeletedController.execute);

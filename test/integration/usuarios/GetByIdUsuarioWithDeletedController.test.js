@@ -1,4 +1,4 @@
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import request from 'supertest';
 import { sequelize } from '../../../config/database.js';
 import { UsuarioModel } from '../../../src/models/UsuarioModel.js';
@@ -10,7 +10,7 @@ describe('GetByIdUsuarioWithDeletedController', () => {
     let token;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         await UsuarioModel.destroy({ 
             where: {}, 
             force: true 
@@ -59,7 +59,7 @@ describe('GetByIdUsuarioWithDeletedController', () => {
             where: {}, 
             force: true 
         }); // Clear existing records
-        await sequelize.close();
+        //await sequelize.close();
     });
 
     it('should return non-deleted usuario by id', async () => {

@@ -1,11 +1,15 @@
-import AccionesPantallaRepository from '../../repositories/AccionesPantallaRepository.js';
 import GetAllAccionesPantallaService from '../../services/accionesPantalla/GetAllAccionesPantallaService.js';
 import { handleError } from "../../shared/functions.js";
 
 class GetAllAccionesPantallaWithDeletedController{
     
-    constructor(reppository = new AccionesPantallaRepository()){
-        this.service = new GetAllAccionesPantallaService(reppository);
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
+        this.service = new GetAllAccionesPantallaService(repository);
     }
 
 

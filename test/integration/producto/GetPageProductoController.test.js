@@ -1,8 +1,8 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
-import '../helpers/TestRelations.js';
+//import '../helpers/TestRelations.js';
 
 describe('Integration Test: GetPageProductoController', () => {
     const cantidadProductos = 10;
@@ -31,7 +31,7 @@ describe('Integration Test: GetPageProductoController', () => {
         const response = await request(app)
             .get(`/api/v1/producto/page/1/${registrosPorPagina}/${productos[0].nombre}`)
             .expect(200);
-               
+            
         expect(response.body).toHaveProperty('data');
         expect(response.body.data.data.length).toBe(1);
         expect(response.body.data.rows).toBe(1);

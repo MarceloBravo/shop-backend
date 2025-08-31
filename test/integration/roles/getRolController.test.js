@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { RolModel } from '../../../src/models/RolModel.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 
@@ -14,7 +14,7 @@ describe('Integration Test: GetByIdRolController', () => {
     let testRol;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

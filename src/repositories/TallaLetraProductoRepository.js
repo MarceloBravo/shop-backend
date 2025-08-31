@@ -1,4 +1,6 @@
-import { TallaLetraProductoModel } from "../models/TallaLetraProductoModel.js";
+import db from '../models/index.js';
+const TallaLetraProductoModel = db.TallaLetraProductoModel;
+const TallaLetraModel = db.TallaLetraModel;
 
 class TallaLetraProductoRepository{
     getById = async (id, paranoid = true) => {

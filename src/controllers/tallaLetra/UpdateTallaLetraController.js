@@ -1,5 +1,4 @@
 import UpdateTallaLetraService from '../../services/tallaLetra/UpdateTallaLetraService.js';
-import TallaLetraRepository from '../../repositories/TallaLetraRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,9 +10,11 @@ class UpdateTallaLetraController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de tallas letra
      */
-    constructor(repository) {
-        if(!repository) {
-            repository = new TallaLetraRepository()
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new UpdateTallaLetraService(repository);
     }

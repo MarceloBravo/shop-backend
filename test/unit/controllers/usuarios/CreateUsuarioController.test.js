@@ -61,9 +61,8 @@ describe('CreateUsuarioController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 400, status: 400 });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new CreateUsuarioController();
-    expect(UsuarioRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(CreateUsuarioService);
+  it('throw a error if none repository is provided', () => {
+    expect(() => new CreateUsuarioController()).toThrow('No se ha recibido un repositorio');
   });
+
 });

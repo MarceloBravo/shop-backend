@@ -9,21 +9,24 @@ import CreateUsuarioController from '../controllers/usuario/CreateUsuarioControl
 import UpdateUsuarioController from '../controllers/usuario/UpdateUsuarioController.js';
 import HardDeleteUsuarioController from '../controllers/usuario/HardDeleteUsuarioController.js';
 import SoftDeleteUsuarioController from '../controllers/usuario/SoftDeleteUsuarioController.js';
+import UsuarioRepository from "../repositories/UsuarioRepository.js";
+
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new UsuarioRepository();
 
 // Instanciar los controladores
-const getByIdUsuarioWithDeletedController = new GetByIdUsuarioWithDeletedController();
-const getAllUsuarioWithDeletedController = new GetAllUsuarioWithDeletedController();
-const getPageUsuarioWithDeletedController = new GetPageUsuarioWithDeletedController();
-const getByIdUsuarioController = new GetByIdUsuarioController();
-const getAllUsuarioController = new GetAllUsuarioController();
-const getPageUsuarioController = new GetPageUsuarioController();
-const createUsuarioController = new CreateUsuarioController();
-const updateUsuarioController = new UpdateUsuarioController();
-const hardDeleteUsuarioController = new HardDeleteUsuarioController();
-const softDeleteUsuarioController = new SoftDeleteUsuarioController();
+const getByIdUsuarioWithDeletedController = new GetByIdUsuarioWithDeletedController(repository);
+const getAllUsuarioWithDeletedController = new GetAllUsuarioWithDeletedController(repository);
+const getPageUsuarioWithDeletedController = new GetPageUsuarioWithDeletedController(repository);
+const getByIdUsuarioController = new GetByIdUsuarioController(repository);
+const getAllUsuarioController = new GetAllUsuarioController(repository);
+const getPageUsuarioController = new GetPageUsuarioController(repository);
+const createUsuarioController = new CreateUsuarioController(repository);
+const updateUsuarioController = new UpdateUsuarioController(repository);
+const hardDeleteUsuarioController = new HardDeleteUsuarioController(repository);
+const softDeleteUsuarioController = new SoftDeleteUsuarioController(repository);
 
 // Definir las rutas
 router.get('/deleted/', getAllUsuarioWithDeletedController.execute);

@@ -1,7 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { sequelize } from '../../../config/database.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('Integration Test: GetCategoriaController', () => {
@@ -9,10 +7,8 @@ describe('Integration Test: GetCategoriaController', () => {
     let testCategoria;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
-    });
-
-    beforeEach(async () => {
+        token = global.testToken;
+        await CategoriaModel.destroy({ where: {}, force: true });
         // Crear un categoria de prueba antes de cada test
         testCategoria = await CategoriaModel.create({
             nombre: 'Test Categoria',
@@ -20,7 +16,7 @@ describe('Integration Test: GetCategoriaController', () => {
         });
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         // Limpiar el categoria de prueba después de cada test
         await CategoriaModel.destroy({ where: {}, force: true });
     });

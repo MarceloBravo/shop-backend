@@ -1,4 +1,4 @@
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import request from 'supertest';
 import { sequelize } from '../../../config/database.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
@@ -9,12 +9,12 @@ describe('CreateTipoDimensionesController', () => {
 
     beforeAll(async () => {
         await TipoDimensionesModel.destroy({ where: {} }); // Clear existing records
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
     
     afterAll(async () => {
         await TipoDimensionesModel.destroy({ where: {} }); // Clear existing records
-        await sequelize.close();
+        //await sequelize.close();
     });
     
     it('should create a new tipo dimension', async () => {

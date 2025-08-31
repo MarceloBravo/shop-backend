@@ -1,33 +1,36 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
-import rutas from '../../../src/routes/rutas.js'; // Import rutas
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
+//import rutas from '../../../src/routes/rutas.js'; // Import rutas
 
 describe('CreateSubCategoriaController Integration', () => {
     let token;
-    let createdSubCategoriaId;
+    let categoria;
+
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken;
+        await CategoriaModel.destroy({ where: {}, force: true });
+        await SubCategoriaModel.destroy({ where: {}, force: true });
+        categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
+        /*
         // Manually apply routes to the app instance for testing
         const API_PREFIX = '/api/v1';
         rutas.forEach(({ path, router }) => {
             app.use(`${API_PREFIX}${path}`, router);
         });
+        */
     });
 
     afterEach(async () => {
-        if (createdSubCategoriaId) {
-            await SubCategoriaModel.destroy({ where: { id: createdSubCategoriaId }, force: true });
-            createdSubCategoriaId = null;
-        }
+        await SubCategoriaModel.destroy({ where: {}, force: true });
     });
 
     test('should create a new subcategoria', async () => {
         const subCategoriaData = {
             nombre: 'Test Create SubCategoria',
-            categoria_id: 1
+            categoria_id: categoria.id
         };
 
         const response = await request(app)
@@ -38,7 +41,6 @@ describe('CreateSubCategoriaController Integration', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.data).toHaveProperty('id');
         expect(response.body.data.nombre).toBe(subCategoriaData.nombre);
-        createdSubCategoriaId = response.body.data.id;
     });
 
     test('should return 400 with invalid data', async () => {

@@ -1,24 +1,27 @@
 
 import UpdateTipoDimensionesController from '../../../../src/controllers/tipoDimensiones/UpdateTipoDimensionesController.js';
 import UpdateTipoDimensionesService from '../../../../src/services/tipoDimensiones/UpdateTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../../../src/repositories/TipoDimensionesRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/tipoDimensiones/UpdateTipoDimensionesService.js');
-jest.mock('../../../../src/repositories/TipoDimensionesRepository.js');
 
 describe('UpdateTipoDimensionesController', () => {
   let updateTipoDimensionesController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockDimensionesRepository;
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.clearAllMocks();
     mockServiceInstance = new UpdateTipoDimensionesService();
     mockServiceInstance.execute = jest.fn();
+    mockDimensionesRepository = {
+      update: jest.fn(),
+      findById: jest.fn(),
+    }
     UpdateTipoDimensionesService.mockImplementation(() => mockServiceInstance);
-    updateTipoDimensionesController = new UpdateTipoDimensionesController();
+    updateTipoDimensionesController = new UpdateTipoDimensionesController(mockDimensionesRepository);
     mockRequest = {
       params: {},
       body: {},
@@ -29,6 +32,11 @@ describe('UpdateTipoDimensionesController', () => {
     };
     jest.spyOn(functions, 'handleError').mockImplementation((error) => ({ code: error.code || 500, message: error.message }));
   });
+
+  afterAll(() => {
+    jest.clearAllMocks();
+  });
+
 
   it('should update a tipo dimensiones and return success message', async () => {
     const tipoDimensionesData = { nombre: 'Updated Test', nombre_corto: 'UT' };
@@ -84,9 +92,4 @@ describe('UpdateTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 400, message: 'Validation failed' });
   });
   
-  it('should use default repository if none is provided', () => {
-    const controller = new UpdateTipoDimensionesController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Una vez en beforeEach, otra aquí
-    expect(controller.service).toBeInstanceOf(UpdateTipoDimensionesService);
-  });
 });

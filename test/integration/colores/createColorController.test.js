@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { sequelize } from '../../../config/database.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { ColorModel } from '../../../src/models/ColorModel.js';
@@ -8,7 +8,7 @@ describe('Integration Test: CreateColorController', () => {
     let token;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     afterEach(async () => {

@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { createTestRecords } from './constantes.js'
 import { PantallaModel } from '../../../src/models/PantallaModel.js';
@@ -9,7 +9,7 @@ describe('Integration Test: GetPageAccionesPantallaController', () => {
     let token;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

@@ -1,5 +1,4 @@
 import UpdateCategoriaService from "../../services/Categoria/UpdateCategoriaService.js";
-import CategoriaRepository from '../../repositories/CategoriaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,7 +10,12 @@ class UpdateCategoriaController {
      * Crea una instancia del controlador
      * @param {CategoriaRepository} repository - Repositorio de categorías
      */
-    constructor(repository = new CategoriaRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
         this.service = new UpdateCategoriaService(repository);
     }
 

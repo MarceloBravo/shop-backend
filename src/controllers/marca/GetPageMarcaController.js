@@ -1,5 +1,4 @@
 import GetPageMarcaService from "../../services/marca/GetPageMarcaService.js";
-import MarcaRepository from "../../repositories/MarcaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -13,7 +12,9 @@ class GetPageMarcaController {
      */
     constructor(repository = null) {
         if(!repository){
-            repository = new MarcaRepository();
+            const error = new Error('No sde ha recibido el repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new GetPageMarcaService(repository);
     }

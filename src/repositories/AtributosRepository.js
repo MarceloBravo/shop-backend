@@ -1,5 +1,6 @@
-import { AtributosModel } from "../models/AtributosModel.js";
+import db from '../models/index.js';
 
+const  AtributosModel = db.AtributosModel;
 class AtributosRepository{
 
     getById = async (id, paranoid = true) => {

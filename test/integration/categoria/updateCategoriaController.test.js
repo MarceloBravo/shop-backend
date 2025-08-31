@@ -1,7 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { sequelize } from '../../../config/database.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('Integration Test: UpdateCategoriaController', () => {
@@ -9,7 +7,7 @@ describe('Integration Test: UpdateCategoriaController', () => {
     let testCategoria;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

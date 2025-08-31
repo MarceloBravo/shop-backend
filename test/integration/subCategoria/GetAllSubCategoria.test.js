@@ -1,28 +1,29 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('GetAllSubCategoriaController Integration', () => {
     let token;
-    let createdSubCategoriaIds = [];
+    let categoria;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken;
+        await CategoriaModel.destroy({ where: {}, force: true });
+        await SubCategoriaModel.destroy({ where: {}, force: true });
+        categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
     });
 
     beforeEach(async () => {
         // Create some test data
-        const subCategoria1 = await SubCategoriaModel.create({ nombre: 'Test Get All 1', categoria_id: 1 });
-        const subCategoria2 = await SubCategoriaModel.create({ nombre: 'Test Get All 2', categoria_id: 1 });
-        createdSubCategoriaIds.push(subCategoria1.id, subCategoria2.id);
+        const subCategoria1 = await SubCategoriaModel.create({ nombre: 'Test Get All 1', categoria_id: categoria.id });
+        const subCategoria2 = await SubCategoriaModel.create({ nombre: 'Test Get All 2', categoria_id: categoria.id });
     });
 
     afterEach(async () => {
         // Clean up test data
-        await SubCategoriaModel.destroy({ where: { id: createdSubCategoriaIds }, force: true });
-        createdSubCategoriaIds = [];
+        await SubCategoriaModel.destroy({ where: {}, force: true });
     });
 
     test('should get all subcategories', async () => {

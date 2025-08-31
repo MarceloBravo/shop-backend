@@ -9,20 +9,22 @@ import CreateAtributoController from '../controllers/atributo/CreateAtributoCont
 import UpdateAtributoController from '../controllers/atributo/UpdateAtributoController.js';
 import HardDeleteAtributoController from '../controllers/atributo/HardDeleteAtributoController.js';
 import SoftDeleteAtributoController from '../controllers/atributo/SoftDeleteAtributoController.js';
+import AtributosRepository from "../repositories/AtributosRepository.js";
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new AtributosRepository();
 
-const getByIdAtributoController = new GetByIdAtributoController();
-const getByIdAtributoWithDeletedController = new GetByIdAtributoWithDeletedController();
-const getAllAtributoController = new GetAllAtributoController();
-const getAllAtributoWithDeletedController = new GetAllAtributoWithDeletedController();
-const getPageAtributoController = new GetPageAtributoController();
-const getPageAtributoWithDeletedController = new GetPageAtributoWithDeletedController();
-const createAtributoController = new CreateAtributoController();
-const updateAtributoController = new UpdateAtributoController();
-const hardDeleteAtributoController = new HardDeleteAtributoController();
-const softDeleteAtributoController = new SoftDeleteAtributoController();
+const getByIdAtributoController = new GetByIdAtributoController(repository)
+const getByIdAtributoWithDeletedController = new GetByIdAtributoWithDeletedController(repository)
+const getAllAtributoController = new GetAllAtributoController(repository)
+const getAllAtributoWithDeletedController = new GetAllAtributoWithDeletedController(repository)
+const getPageAtributoController = new GetPageAtributoController(repository)
+const getPageAtributoWithDeletedController = new GetPageAtributoWithDeletedController(repository)
+const createAtributoController = new CreateAtributoController(repository)
+const updateAtributoController = new UpdateAtributoController(repository)
+const hardDeleteAtributoController = new HardDeleteAtributoController(repository)
+const softDeleteAtributoController = new SoftDeleteAtributoController(repository)
 
 router.get('/deleted', checkToken, getAllAtributoWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getByIdAtributoWithDeletedController.execute);

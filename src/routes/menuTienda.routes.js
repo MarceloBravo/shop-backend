@@ -9,20 +9,22 @@ import CreateMenuTiendaController from '../controllers/menuTienda/CreateMenuTien
 import UpdateMenuTiendaController from '../controllers/menuTienda/UpdateMenuTiendaController.js';
 import HardDeleteMenuTiendaController from '../controllers/menuTienda/HardDeleteMenuTiendaController.js';
 import SoftDeleteMenuTiendaController from '../controllers/menuTienda/SoftDeleteMenuTiendaController.js';
+import MenuTiendaRepository from '../repositories/MenuTiendaRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new MenuTiendaRepository();
 
-const getByIdMenuTiendaController = new GetByIdMenuTiendaController();
-const getAllMenuTiendaController = new GetAllMenuTiendaController();
-const getPageMenuTiendaController = new GetPageMenuTiendaController();
-const getByIdMenuTiendaWithDeletedController = new GetByIdMenuTiendaWithDeletedController();
-const getAllMenuTiendaWithDeletedController = new GetAllMenuTiendaWithDeletedController();
-const getPageMenuTiendaWithDeletedController = new GetPageMenuTiendaWithDeletedController();
-const createMenuTiendaController = new CreateMenuTiendaController();
-const updateMenuTiendaController = new UpdateMenuTiendaController();
-const hardDeleteMenuTiendaController = new HardDeleteMenuTiendaController();
-const softDeleteMenuTiendaController = new SoftDeleteMenuTiendaController();
+const getByIdMenuTiendaController = new GetByIdMenuTiendaController(repository);
+const getAllMenuTiendaController = new GetAllMenuTiendaController(repository);
+const getPageMenuTiendaController = new GetPageMenuTiendaController(repository);
+const getByIdMenuTiendaWithDeletedController = new GetByIdMenuTiendaWithDeletedController(repository);
+const getAllMenuTiendaWithDeletedController = new GetAllMenuTiendaWithDeletedController(repository);
+const getPageMenuTiendaWithDeletedController = new GetPageMenuTiendaWithDeletedController(repository);
+const createMenuTiendaController = new CreateMenuTiendaController(repository);
+const updateMenuTiendaController = new UpdateMenuTiendaController(repository);
+const hardDeleteMenuTiendaController = new HardDeleteMenuTiendaController(repository);
+const softDeleteMenuTiendaController = new SoftDeleteMenuTiendaController(repository);
 
 router.get('/deleted', checkToken, getAllMenuTiendaWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getByIdMenuTiendaWithDeletedController.execute);

@@ -8,7 +8,7 @@ jest.mock('../../../../src/repositories/AccionesPantallaRepository');
 describe('validaDatos', () => {
   let validData;
 
-  beforeEach(() => {
+  beforeAll(() => {
     // Restablecer mocks antes de cada prueba
     RolRepository.mockClear();
     AccionesPantallaRepository.mockClear();

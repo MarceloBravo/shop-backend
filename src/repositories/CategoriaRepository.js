@@ -1,4 +1,6 @@
-import { CategoriaModel } from "../models/CategoriaModel.js";
+import db from '../models/index.js';
+
+const  CategoriaModel = db.CategoriaModel;
 
 class CategoriaRepository {
     

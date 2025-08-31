@@ -9,20 +9,22 @@ import CreateAccionesPantallaController from '../controllers/accionesPantalla/Cr
 import UpdateAccionesPantallaController from '../controllers/accionesPantalla/UpdateAccionesPantallaController.js';
 import HardDeleteAccionesPantallaController from '../controllers/accionesPantalla/HardDeleteAccionesPantallaController.js';
 import SoftDeleteAccionesPantallaController from '../controllers/accionesPantalla/SoftDeleteAccionesPantallaController.js';
+import AccionesPantallaRepository from "../repositories/AccionesPantallaRepository.js";
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new AccionesPantallaRepository();
 
-const getByIdAccionesPantallaController = new GetByIdAccionesPantallaController();
-const getByIdAccionesPantallaWithDeletedController = new GetByIdAccionesPantallaWithDeletedController();
-const getAllAccionesPantallaController = new GetAllAccionesPantallaController();
-const getAllAccionesPantallaWithDeletedController = new GetAllAccionesPantallaWithDeletedController();
-const getPageAccionesPantallaController = new GetPageAccionesPantallaController();
-const getPageAccionesPantallaWithDeletedController = new GetPageAccionesPantallaWithDeletedController();
-const createAccionesPantallaController = new CreateAccionesPantallaController(); 
-const updateAccionesPantallaController = new UpdateAccionesPantallaController(); 
-const deleteAccionesPantallaController = new HardDeleteAccionesPantallaController(); 
-const softDeleteAccionesPantallaController = new SoftDeleteAccionesPantallaController();
+const getByIdAccionesPantallaController = new GetByIdAccionesPantallaController(repository)
+const getByIdAccionesPantallaWithDeletedController = new GetByIdAccionesPantallaWithDeletedController(repository)
+const getAllAccionesPantallaController = new GetAllAccionesPantallaController(repository)
+const getAllAccionesPantallaWithDeletedController = new GetAllAccionesPantallaWithDeletedController(repository)
+const getPageAccionesPantallaController = new GetPageAccionesPantallaController(repository)
+const getPageAccionesPantallaWithDeletedController = new GetPageAccionesPantallaWithDeletedController(repository)
+const createAccionesPantallaController = new CreateAccionesPantallaController(repository) 
+const updateAccionesPantallaController = new UpdateAccionesPantallaController(repository) 
+const deleteAccionesPantallaController = new HardDeleteAccionesPantallaController(repository) 
+const softDeleteAccionesPantallaController = new SoftDeleteAccionesPantallaController(repository)
 
 
 router.get('/deleted', checkToken, getAllAccionesPantallaWithDeletedController.execute);

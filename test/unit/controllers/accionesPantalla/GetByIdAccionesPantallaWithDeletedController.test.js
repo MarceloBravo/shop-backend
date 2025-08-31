@@ -49,4 +49,8 @@ describe('Unit Test: GetByIdAccionesPantallaWithDeletedController', () => {
         expect(res.status).toHaveBeenCalledWith(404);
         expect(res.json).toHaveBeenCalledWith({ code: 404, error: 'No encontrado', details: [] });
     });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetByIdAccionesPantallaWithDeletedController()).toThrow('No se ha recibido un repositorio');
+    });
 }); 

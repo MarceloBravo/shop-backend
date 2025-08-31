@@ -1,5 +1,4 @@
 import SoftDeleteMaterialService from "../../services/materiales/SoftDeleteMaterialService.js";
-import MaterialRepository from "../../repositories/MaterialRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -13,7 +12,9 @@ class SoftDeleteMaterialController {
      */
     constructor(repository = null) {
         if(!repository){
-            repository = new MaterialRepository();
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new SoftDeleteMaterialService(repository);
     }

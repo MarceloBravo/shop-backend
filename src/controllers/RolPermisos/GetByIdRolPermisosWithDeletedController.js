@@ -1,5 +1,4 @@
 import GetByIdRolPermisosService from "../../services/RolPermisos/GetByIdRolPermisosService.js";
-import RolPermisosRepository from '../../repositories/RolPermisosRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,7 +10,12 @@ class GetByIdRolPermisosWithDeletedController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de permisos de rol
      */
-    constructor(repository = new RolPermisosRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
         this.service = new GetByIdRolPermisosService(repository);
     }
 

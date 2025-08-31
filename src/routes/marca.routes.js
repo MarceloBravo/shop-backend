@@ -9,20 +9,22 @@ import CreateMarcaController from '../controllers/marca/CreateMarcaController.js
 import UpdateMarcaController from '../controllers/marca/UpdateMarcaController.js';
 import HardDeleteMarcaController from '../controllers/marca/HardDeleteMarcaController.js';
 import SoftDeleteMarcaController from '../controllers/marca/SoftDeleteMarcaController.js';
+import MarcaRepository from '../repositories/MarcaRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new MarcaRepository()
 
-const getByIdMarcaController = new GetByIdMarcaController();
-const getAllMarcaController = new GetAllMarcaController();
-const getPageMarcaController = new GetPageMarcaController();
-const getByIdMarcaWithDeletedController = new GetByIdMarcaWithDeletedController();
-const getAllMarcaWithDeletedController = new GetAllMarcaWithDeletedController();
-const getPageMarcaWithDeletedController = new GetPageMarcaWithDeletedController();
-const createMarcaController = new CreateMarcaController();
-const updateMarcaController = new UpdateMarcaController();
-const deleteMarcaController = new HardDeleteMarcaController();
-const softDeleteMarcaController = new SoftDeleteMarcaController();
+const getByIdMarcaController = new GetByIdMarcaController(repository);
+const getAllMarcaController = new GetAllMarcaController(repository);
+const getPageMarcaController = new GetPageMarcaController(repository);
+const getByIdMarcaWithDeletedController = new GetByIdMarcaWithDeletedController(repository);
+const getAllMarcaWithDeletedController = new GetAllMarcaWithDeletedController(repository);
+const getPageMarcaWithDeletedController = new GetPageMarcaWithDeletedController(repository);
+const createMarcaController = new CreateMarcaController(repository);
+const updateMarcaController = new UpdateMarcaController(repository);
+const deleteMarcaController = new HardDeleteMarcaController(repository);
+const softDeleteMarcaController = new SoftDeleteMarcaController(repository);
 
 router.get('/deleted', checkToken, getAllMarcaWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getByIdMarcaWithDeletedController.execute);

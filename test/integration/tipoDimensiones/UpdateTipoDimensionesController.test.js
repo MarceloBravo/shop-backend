@@ -1,4 +1,4 @@
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import request from 'supertest';
 import { sequelize } from '../../../config/database.js';
 import { TipoDimensionesModel } from '../../../src/models/TipoDimensionesModel.js';
@@ -9,7 +9,7 @@ describe('UpdateTipoDimensionesController', () => {
     let token;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         await TipoDimensionesModel.destroy({ 
             where: {}, 
             force: true 
@@ -32,7 +32,7 @@ describe('UpdateTipoDimensionesController', () => {
             where: {}, 
             force: true 
         }); // Clear existing records
-        await sequelize.close();
+        //await sequelize.close();
     });
 
     it('should update tipo dimension', async () => {

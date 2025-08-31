@@ -1,24 +1,28 @@
 
 import UpdateUsuarioController from '../../../../src/controllers/usuario/UpdateUsuarioController.js';
 import UpdateUsuarioService from '../../../../src/services/usuario/UpdateUsuarioService.js';
-import UsuarioRepository from '../../../../src/repositories/UsuarioRepository.js';
+//import UsuarioRepository from '../../../../src/repositories/UsuarioRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/usuario/UpdateUsuarioService.js');
-jest.mock('../../../../src/repositories/UsuarioRepository.js');
+//jest.mock('../../../../src/repositories/UsuarioRepository.js');
 
 describe('UpdateUsuarioController', () => {
   let updateUsuarioController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockUsuarioRepository;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
+  beforeAll(() => {
     mockServiceInstance = new UpdateUsuarioService();
     mockServiceInstance.execute = jest.fn();
+    mockUsuarioRepository = {
+      update: jest.fn(),
+      findById: jest.fn(),      
+    }
     UpdateUsuarioService.mockImplementation(() => mockServiceInstance);
-    updateUsuarioController = new UpdateUsuarioController();
+    updateUsuarioController = new UpdateUsuarioController(mockUsuarioRepository);
     mockRequest = {
       params: {},
       body: {},
@@ -29,6 +33,11 @@ describe('UpdateUsuarioController', () => {
     };
     jest.spyOn(functions, 'handleError').mockImplementation((error) => ({ code: error.status || 500, ...error }));
   });
+
+  afterAll(() => {
+    jest.restoreAllMocks();
+  });
+
 
   it('should update a usuario and return success message', async () => {
     const usuarioData = { nombre: 'Updated Test' };
@@ -84,9 +93,7 @@ describe('UpdateUsuarioController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 400, status: 400 });
   });
   
-  it('should use default repository if none is provided', () => {
-    const controller = new UpdateUsuarioController();
-    expect(UsuarioRepository).toHaveBeenCalledTimes(2); // Una vez en beforeEach, otra aquí
-    expect(controller.service).toBeInstanceOf(UpdateUsuarioService);
+  it('throw a error if none repository is provided', () => {
+    expect(() => new UpdateUsuarioController()).toThrow('No se ha recibido un repositorio');
   });
 });

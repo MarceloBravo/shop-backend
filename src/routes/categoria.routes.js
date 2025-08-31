@@ -9,20 +9,21 @@ import CreateCategoriaController from '../controllers/Categoria/CreateCategoriaC
 import UpdateCategoriaController from '../controllers/Categoria/UpdateCategoriaController.js';
 import HardDeleteCategoriaController from '../controllers/Categoria/HardDeleteCategoriaController.js';
 import SoftDeleteCategoriaController from '../controllers/Categoria/SoftDeleteCategoriaController.js';
+import CategoriaRepository from '../repositories/CategoriaRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
-
-const getCategoriaWithDeletedController = new GetCategoriaWithDeletedController();
-const getAllCategoriaWithDeletedController = new GetAllCategoriaWithDeletedController();
-const getPageCategoriaWithDeletedController = new GetPageCategoriaWithDeletedController();
-const getCategoriaController = new GetCategoriaController();
-const getAllCategoriaController = new GetAllCategoriaController();
-const getPageCategoriaController = new GetPageCategoriaController();
-const createCategoriaController = new CreateCategoriaController();
-const updateCategoriaController = new UpdateCategoriaController();
-const hardDeleteCategoriaController = new HardDeleteCategoriaController();
-const softDeleteCategoriaController = new SoftDeleteCategoriaController();
+const repository = new CategoriaRepository();
+const getCategoriaWithDeletedController = new GetCategoriaWithDeletedController(repository)
+const getAllCategoriaWithDeletedController = new GetAllCategoriaWithDeletedController(repository)
+const getPageCategoriaWithDeletedController = new GetPageCategoriaWithDeletedController(repository)
+const getCategoriaController = new GetCategoriaController(repository)
+const getAllCategoriaController = new GetAllCategoriaController(repository)
+const getPageCategoriaController = new GetPageCategoriaController(repository)
+const createCategoriaController = new CreateCategoriaController(repository)
+const updateCategoriaController = new UpdateCategoriaController(repository)
+const hardDeleteCategoriaController = new HardDeleteCategoriaController(repository)
+const softDeleteCategoriaController = new SoftDeleteCategoriaController(repository)
 
 router.get('/deleted', checkToken, getAllCategoriaWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getCategoriaWithDeletedController.execute);

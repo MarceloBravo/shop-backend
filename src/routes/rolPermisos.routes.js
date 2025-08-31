@@ -9,21 +9,23 @@ import CreateRolPermisosController from '../controllers/RolPermisos/CreateRolPer
 import UpdateRolPermisosController from '../controllers/RolPermisos/UpdateRolPermisosController.js';
 import HardDeleteRolPermisosController from '../controllers/RolPermisos/HardDeleteRolPermisosController.js';
 import SoftDeleteRolPermisosController from '../controllers/RolPermisos/SoftDeleteRolPermisosController.js';
+import RolPermisosRepository from '../repositories/RolPermisosRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new RolPermisosRepository();
 
 // Instanciar los controladores
-const getByIdRolPermisosController = new GetByIdRolPermisosController();
-const getByIdRolPermisosWithDeletedController = new GetByIdRolPermisosWithDeletedController();
-const getAllRolPermisosController = new GetAllRolPermisosController();
-const getAllRolPermisosWithDeletedController = new GetAllRolPermisosWithDeletedController();
-const getPageRolPermisosController = new GetPageRolPermisosController();
-const getPageRolPermisosWithDeletedController = new GetPageRolPermisosWithDeletedController();
-const createRolPermisosController = new CreateRolPermisosController();
-const updateRolPermisosController = new UpdateRolPermisosController();
-const hardDeleteRolPermisosController = new HardDeleteRolPermisosController();
-const softDeleteRolPermisosController = new SoftDeleteRolPermisosController();
+const getByIdRolPermisosController = new GetByIdRolPermisosController(repository);
+const getByIdRolPermisosWithDeletedController = new GetByIdRolPermisosWithDeletedController(repository);
+const getAllRolPermisosController = new GetAllRolPermisosController(repository);
+const getAllRolPermisosWithDeletedController = new GetAllRolPermisosWithDeletedController(repository);
+const getPageRolPermisosController = new GetPageRolPermisosController(repository);
+const getPageRolPermisosWithDeletedController = new GetPageRolPermisosWithDeletedController(repository);
+const createRolPermisosController = new CreateRolPermisosController(repository);
+const updateRolPermisosController = new UpdateRolPermisosController(repository);
+const hardDeleteRolPermisosController = new HardDeleteRolPermisosController(repository);
+const softDeleteRolPermisosController = new SoftDeleteRolPermisosController(repository);
 
 // Definir las rutas
 router.get('/deleted', checkToken, getAllRolPermisosWithDeletedController.execute);

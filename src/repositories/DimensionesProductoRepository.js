@@ -1,4 +1,6 @@
-import { DimensionesProductoModel } from "../models/DimensionesProductoModel.js";
+import db from '../models/index.js';
+
+const DimensionesProductoModel = db.DimensionesProductoModel;
 
 class DimensionesProductoRepository {
 

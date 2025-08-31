@@ -1,5 +1,5 @@
-import { UniqueConstraintError } from "sequelize";
-import { UsuarioModel } from "../models/UsuarioModel.js";
+import db from '../models/index.js';
+const UsuarioModel = db.UsuarioModel;
 
 class UsuarioRepository {
     getById = async (id, paranoid = true) => {

@@ -1,5 +1,5 @@
-import { MaterialModel } from "../models/MaterialModel.js";
-
+import db from '../models/index.js';
+const MaterialModel = db.MaterialModel;
 
 class MaterialRepository{
     getById = async (id, paranoid = true) => {

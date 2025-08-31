@@ -1,5 +1,4 @@
 import CreatePantallaService from "../../services/pantalla/CreatePantallaService.js";
-import PantallaRepository from '../../repositories/PantallaRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,7 +10,12 @@ class CreatePantallaController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de pantallas
      */
-    constructor(repository = new PantallaRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
         this.service = new CreatePantallaService(repository);
     }
 

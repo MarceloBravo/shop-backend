@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { RolPermisosModel } from '../../../src/models/RolPermisosModel.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { RolModel } from '../../../src/models/RolModel.js';
@@ -15,7 +15,7 @@ describe('Integration Test: GetAllRolPermisosController', () => {
     const ROL_PERMISOS_DATA = { rol_id: null, acciones_pantalla_id: null, crear: true, actualizar: true, eliminar: true, listar: true, ver: true };
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         ACCIONES_PANTALLA_DATA.pantalla_id = (await PantallaModel.create(pantalla)).id;        
         ROL_PERMISOS_DATA.rol_id = (await RolModel.create(rol)).id;
         ROL_PERMISOS_DATA.acciones_pantalla_id = (await AccionesPantallaModel.create(ACCIONES_PANTALLA_DATA)).id;

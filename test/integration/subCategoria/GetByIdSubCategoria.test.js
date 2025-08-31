@@ -1,34 +1,33 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('GetByIdSubCategoriaController Integration', () => {
     let token;
-    let createdSubCategoriaId;
+    let categoria;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken;
+        await CategoriaModel.destroy({ where: {}, force: true });
+        await SubCategoriaModel.destroy({ where: {}, force: true });
+        categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
     });
 
     afterEach(async () => {
-        if (createdSubCategoriaId) {
-            await SubCategoriaModel.destroy({ where: { id: createdSubCategoriaId }, force: true });
-            createdSubCategoriaId = null;
-        }
+        await SubCategoriaModel.destroy({ where: {}, force: true });
     });
 
     test('should get a subcategory by id', async () => {
-        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Get By Id', categoria_id: 1 });
-        createdSubCategoriaId = subCategoria.id;
+        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Get By Id', categoria_id: categoria.id });
 
         const response = await request(app)
-            .get(`/api/v1/sub_categoria/${createdSubCategoriaId}`)
+            .get(`/api/v1/sub_categoria/${subCategoria.id}`)
             .set('Authorization', `Bearer ${token}`);
 
         expect(response.statusCode).toBe(200);
-        expect(response.body).toHaveProperty('id', createdSubCategoriaId);
+        expect(response.body).toHaveProperty('id', subCategoria.id);
         expect(response.body.nombre).toBe('Test Get By Id');
     });
 

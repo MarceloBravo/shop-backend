@@ -1,5 +1,5 @@
-import { PantallaModel } from "../models/PantallaModel.js";
-
+import db from '../models/index.js';
+const PantallaModel = db.PantallaModel;
 
 class PantallaRepository{
     getById = async (id, paranoid = true) => {

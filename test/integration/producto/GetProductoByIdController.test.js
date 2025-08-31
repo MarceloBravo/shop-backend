@@ -1,8 +1,8 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
-import '../helpers/TestRelations.js';
+//import '../helpers/TestRelations.js';
 
 describe('Integration Test: GetProductoByIdController', () => {
     let producto;

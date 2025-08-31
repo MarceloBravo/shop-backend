@@ -1,6 +1,5 @@
 import HardDeleteRolService from '../../services/Rol/HardDeleteRolService.js';
 import { handleError } from "../../shared/functions.js";
-import RolRepository from '../../repositories/RolRepository.js';
 
 /**
  * Controlador para realizar borrado físico de un rol
@@ -11,7 +10,12 @@ class HardDeleteRolController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de roles
      */
-    constructor(repository = new RolRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
         this.service = new HardDeleteRolService(repository);
     }
 

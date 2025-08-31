@@ -1,4 +1,5 @@
-import { RolModel } from "../models/RolModel.js";
+import db from '../models/index.js';
+const RolModel = db.RolModel;
 
 class RolRepository{
     getById = async (id, paranoid = true) => {

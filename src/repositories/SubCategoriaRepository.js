@@ -1,4 +1,5 @@
-import { SubCategoriaModel } from "../models/SubCategoriaModel.js";
+import db from '../models/index.js';
+const SubCategoriaModel = db.SubCategoriaModel;
 
 class SubCategoriaRepository{
     getById = async (id, paranoid = true) => {

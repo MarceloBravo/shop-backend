@@ -1,5 +1,4 @@
 import CreateMarcaService from "../../services/marca/CreateMarcaService.js";
-import MarcaRepository from "../../repositories/MarcaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -13,7 +12,9 @@ class CreateMarcaController {
      */
     constructor(repository = null) {
         if(!repository){
-            repository = new MarcaRepository();
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new CreateMarcaService(repository);
     }

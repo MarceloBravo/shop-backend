@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { PantallaModel } from '../../../src/models/PantallaModel.js';
 import { AccionesPantallaModel } from '../../../src/models/AccionesPantallaModel.js';
@@ -11,7 +11,7 @@ describe('Integration Test: GetAllAccionesPantallaWithDeletedController', () => 
     //const deletedData = recordData;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

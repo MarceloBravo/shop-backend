@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { MenuTiendaModel } from '../../../src/models/MenuTiendaModel.js';
 
@@ -7,7 +7,7 @@ describe('Integration Test: GetAllMenuTiendaController', () => {
     let token;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         await MenuTiendaModel.bulkCreate([
             {nombre: 'Home', icono: 'house', menu_padre_id: null, uri: '/home', posicion: 1, pantalla_id: null},
             {nombre: 'Dashboard', icono: 'dashboard', menu_padre_id: null, uri: '/dashboard', posicion: 2, pantalla_id: null}

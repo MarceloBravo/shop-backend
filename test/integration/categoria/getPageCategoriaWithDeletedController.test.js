@@ -1,14 +1,12 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { sequelize } from '../../../config/database.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('Integration Test: GetPageCategoriaWithDeletedController', () => {
     let token;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         // Asegurarse de que la tabla de categorias esté limpia antes de que comiencen las pruebas en este archivo
         await CategoriaModel.destroy({ where: {}, force: true });
     });

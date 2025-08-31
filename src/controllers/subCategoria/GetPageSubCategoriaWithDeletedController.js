@@ -1,5 +1,4 @@
 import GetPageSubCategoriaService from "../../services/subCategoria/GetPageSubCategoriaService.js";
-import SubCategoriaRepository from "../../repositories/SubCategoriaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,9 +10,11 @@ class GetPageSubCategoriaWithDeletedController{
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de subcategorías
      */
-    constructor(repository) {
+    constructor(repository = null) {
         if(!repository){
-            repository = new SubCategoriaRepository();
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new GetPageSubCategoriaService(repository);
     }

@@ -1,7 +1,7 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
-import '../helpers/TestRelations.js';
+//import '../helpers/TestRelations.js';
 
 describe('Integration Test: GetAllProductoController', () => {
 
@@ -17,7 +17,7 @@ describe('Integration Test: GetAllProductoController', () => {
         const response = await request(app)
             .get('/api/v1/producto')
             .expect(200);
-        console.log(response.body);
+            
         expect(response.body).toHaveProperty('data');
         expect(response.body.data.length).toBe(3);
         expect(response.body.count).toBe(3);

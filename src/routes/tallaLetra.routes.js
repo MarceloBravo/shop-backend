@@ -9,21 +9,23 @@ import CreateTallaLetraController from '../controllers/tallaLetra/CreateTallaLet
 import UpdateTallaLetraController from '../controllers/tallaLetra/UpdateTallaLetraController.js';
 import SoftDeleteTallaLetraController from '../controllers/tallaLetra/SoftDeleteTallaLetraController.js';
 import HardDeleteTallaLetraController from '../controllers/tallaLetra/HardDeleteTallaLetraController.js';
+import TallaLetraRepository from '../repositories/TallaLetraRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new TallaLetraRepository();
 
 // Instanciar controladores
-const getByIdTallaLetraController = new GetByIdTallaLetraController();
-const getAllTallaLetraController = new GetAllTallaLetraController();
-const getPageTallaLetraController = new GetPageTallaLetraController();
-const createTallaLetraController = new CreateTallaLetraController();
-const updateTallaLetraController = new UpdateTallaLetraController();
-const getByIdWithDeletedController = new GetByIdTallaLetraWithDeletedController();
-const getAllWithDeletedController = new GetAllTallaLetraWithDeletedController();
-const getPageWithDeletedController = new GetPageTallaLetraWithDeletedController();
-const hardDeleteController = new HardDeleteTallaLetraController();
-const softDeleteController = new SoftDeleteTallaLetraController();
+const getByIdTallaLetraController = new GetByIdTallaLetraController(repository);
+const getAllTallaLetraController = new GetAllTallaLetraController(repository);
+const getPageTallaLetraController = new GetPageTallaLetraController(repository);
+const createTallaLetraController = new CreateTallaLetraController(repository);
+const updateTallaLetraController = new UpdateTallaLetraController(repository);
+const getByIdWithDeletedController = new GetByIdTallaLetraWithDeletedController(repository);
+const getAllWithDeletedController = new GetAllTallaLetraWithDeletedController(repository);
+const getPageWithDeletedController = new GetPageTallaLetraWithDeletedController(repository);
+const hardDeleteController = new HardDeleteTallaLetraController(repository);
+const softDeleteController = new SoftDeleteTallaLetraController(repository);
 
 // Rutas para registros eliminados
 router.get('/deleted', checkToken, getAllWithDeletedController.execute);

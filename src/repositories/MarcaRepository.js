@@ -1,4 +1,6 @@
-import { MarcaModel } from "../models/MarcaModel.js";
+import db from '../models/index.js';
+
+const  MarcaModel = db.MarcaModel;
 
 class MarcaRepository{
     getById = async (id, paranoid = true) => {

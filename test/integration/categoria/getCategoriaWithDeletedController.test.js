@@ -1,7 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { sequelize } from '../../../config/database.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('Integration Test: GetCategoriaWithDeletedController', () => {
@@ -10,11 +8,8 @@ describe('Integration Test: GetCategoriaWithDeletedController', () => {
     let deletedCategoria;
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
-    });
-
-    beforeEach(async () => {
-        // Crear un categoria activo de prueba
+        token = global.testToken
+        await CategoriaModel.destroy({ where: {}, force: true });
         testCategoria = await CategoriaModel.create({
             nombre: 'Test Categoria',
             descripcion: 'Descripción categoría 1'
@@ -25,10 +20,10 @@ describe('Integration Test: GetCategoriaWithDeletedController', () => {
             nombre: 'Deleted Categoria',
             descripcion: 'Descripción categoría 1'
         });
-        await deletedCategoria.destroy();
+        await CategoriaModel.destroy({where: {id: deletedCategoria.id}, force: false});   
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         // Limpiar los categoriaes de prueba después de cada test
         await CategoriaModel.destroy({ where: {}, force: true });
     });

@@ -9,20 +9,22 @@ import CreatePantallaController from '../controllers/pantalla/CreatePantallaCont
 import UpdatePantallaController from '../controllers/pantalla/UpdatePantallaController.js';
 import HardDeletePantallaController from '../controllers/pantalla/HardDeletePantallaController.js';
 import SoftDeletePantallaController from '../controllers/pantalla/SoftDeletePantallaController.js';
+import PantallaRepository from '../repositories/PantallaRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new PantallaRepository();
 
-const getByIdPantallaWithDeletedController = new GetByIdPantallaWithDeletedController();
-const getAllPantallaWithDeletedController = new GetAllPantallaWithDeletedController();
-const getPagePantallaWithDeletedController = new GetPagePantallaWithDeletedController();
-const getByIdPantallaController = new GetByIdPantallaController();
-const getAllPantallaController = new GetAllPantallaController();
-const getPagePantallaController = new GetPagePantallaController();
-const createPantallaController = new CreatePantallaController();
-const updatePantallaController = new UpdatePantallaController();
-const hardDeletePantallaController = new HardDeletePantallaController();
-const softDeletePantallaController = new SoftDeletePantallaController();
+const getByIdPantallaWithDeletedController = new GetByIdPantallaWithDeletedController(repository);
+const getAllPantallaWithDeletedController = new GetAllPantallaWithDeletedController(repository);
+const getPagePantallaWithDeletedController = new GetPagePantallaWithDeletedController(repository);
+const getByIdPantallaController = new GetByIdPantallaController(repository);
+const getAllPantallaController = new GetAllPantallaController(repository);
+const getPagePantallaController = new GetPagePantallaController(repository);
+const createPantallaController = new CreatePantallaController(repository);
+const updatePantallaController = new UpdatePantallaController(repository);
+const hardDeletePantallaController = new HardDeletePantallaController(repository);
+const softDeletePantallaController = new SoftDeletePantallaController(repository);
 
 router.get('/deleted', checkToken, getAllPantallaWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getByIdPantallaWithDeletedController.execute);

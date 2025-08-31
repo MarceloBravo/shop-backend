@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { AccionesPantallaModel } from '../../../src/models/AccionesPantallaModel.js';
 import { PantallaModel } from '../../../src/models/PantallaModel.js';
@@ -10,7 +10,7 @@ describe('Integration Test: GetAllColorController', () => {
     let recordTest;    
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

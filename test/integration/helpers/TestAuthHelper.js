@@ -1,6 +1,8 @@
 import request from 'supertest';
-import app from '../../../src/server.js'; // This import might still be an issue, but let's focus on the data seeding first
-
+//import app from '../../../src/server.js'; // This import might still be an issue, but let's focus on the data seeding first
+//import app from '../../../src/app.js';
+//import express from 'express';
+import app from '../../appTest.js'
 import { UsuarioModel } from '../../../src/models/UsuarioModel.js';
 import { RolModel } from '../../../src/models/RolModel.js';
 import { CategoriaModel } from '../../../src/models/CategoriaModel.js'; // Import CategoriaModel
@@ -28,25 +30,27 @@ export class TestAuthHelper {
    * @param {number} [options.rol_id]
    * @returns {Promise<string>} token JWT
    */
-  static async createUserAndLogin({
-    email = 'test@email.cl',
-    password = '123123',
-    rut = '77777777-7',
-    nombres = 'Test',
-    apellido1 = 'User',
-    apellido2 = 'Test',
-    user_name = 'mabc',
-    direccion = 'dirección test',
-    fono = '3333333333',
-    rol_id = 1
-  } = {}) {
-
+  static async createUserAndLogin() {
+    const email = 'test@email.cl';
+    const password = '123123';
+    const rut = '77777777-7';
+    const nombres = 'Test';
+    const apellido1 = 'User';
+    const apellido2 = 'Test';
+    const user_name = 'mabc';
+    const direccion = 'dirección test';
+    const fono = '3333333333';
+    const rol_id = 1
+    //const app = express();
     const  rolDefaults = {
       1: { id: 1, nombre: 'Admin' },
       2: { id: 2, nombre: 'Cliente' }
     };
     const rolData = rolDefaults[rol_id] || { id: rol_id, nombre: `Rol Test ${rol_id}` };
-  
+    //const app = await import('../../../src/app.js');
+    //app = app.default;
+    
+    try {
     // Asegura que el rol exista antes de crear el usuario
     if (rolData.id) {
       const rol = await RolModel.findByPk( rolData.id, { paranoid: false });
@@ -76,8 +80,7 @@ export class TestAuthHelper {
       categoria.deleted_at = null;
       await categoria.save();
     }
-
-    try {
+      const pwd = password ? await encriptarPassword(password) : password;
       const user = await UsuarioModel.findOrCreate({
         where: { rut }, // Buscar por RUT en lugar de email
         paranoid: false,
@@ -91,7 +94,7 @@ export class TestAuthHelper {
           fono: fono || '',
           email,
           user_name: user_name,
-          password: password ? await encriptarPassword(password) : password, // Si tu login requiere hash, usa el hash aquí
+          password: pwd, // Si tu login requiere hash, usa el hash aquí
           refresh_token: null,
           rol_id
         }
@@ -104,6 +107,7 @@ export class TestAuthHelper {
       console.error('Error in UsuarioModel.findOrCreate:', err);
       throw err;
     }
+    
     const loginResponse = await request(app)
     .post('/api/v1/login')
     .send({
@@ -116,7 +120,7 @@ export class TestAuthHelper {
     }
     return loginResponse.body.access_token;
   }
-
+  
 }
 
 

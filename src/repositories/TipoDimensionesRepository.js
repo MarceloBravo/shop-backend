@@ -1,4 +1,5 @@
-import { TipoDimensionesModel } from "../models/TipoDimensionesModel.js";
+import db from '../models/index.js';
+const TipoDimensionesModel = db.TipoDimensionesModel;
 
 class TipoDimensionesRepository {
     getById = async (id, paranoid = true) => {

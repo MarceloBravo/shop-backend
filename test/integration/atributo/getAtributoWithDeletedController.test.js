@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { sequelize } from '../../../config/database.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { AtributosModel } from '../../../src/models/AtributosModel.js';
@@ -12,7 +12,7 @@ describe('Integration Test: GetAtributoWithDeletedController', () => {
     const dataAtributo = { nombre: 'Peso', valor_string: 'Kilogramos', valor_numerico: 1.3 };
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

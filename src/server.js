@@ -9,7 +9,7 @@ const main = async () => {
     try {
         // 1. Espera a que la promesa de la BD se resuelva. 
         //    Esto asegura que todos los modelos y relaciones están cargados.
-        const db = await dbPromise;
+        const db = dbPromise;
 
         const API_PREFIX = '/api/v1';
 

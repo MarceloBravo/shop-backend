@@ -1,4 +1,5 @@
-import { ValoracionProductoModel } from "../models/ValoracionProductoModel.js";
+import db from '../models/index.js';
+const ValoracionProductoModel = db.ValoracionProductoModel;
 
 class ValoracionProductoRepository{
     getById = async (id, paranoid = true) => {

@@ -1,4 +1,6 @@
-import { MaterialProductoModel } from "../models/MaterialProductoModel.js";
+import db from '../models/index.js';
+const MaterialProductoModel = db.MaterialProductoModel;
+const MaterialModel = db.MaterialModel;
 
 class MaterialProductoRepository{
 

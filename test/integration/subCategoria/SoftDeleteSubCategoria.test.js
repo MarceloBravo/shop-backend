@@ -1,37 +1,37 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('SoftDeleteSubCategoriaController Integration', () => {
     let token;
-    let createdSubCategoriaId;
+    let categoria;
+
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
+        await CategoriaModel.destroy({ where: {}, force: true });
+        await SubCategoriaModel.destroy({ where: {}, force: true });
+        categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
     });
 
     afterEach(async () => {
-        if (createdSubCategoriaId) {
-            await SubCategoriaModel.destroy({ where: { id: createdSubCategoriaId }, force: true });
-            createdSubCategoriaId = null;
-        }
+        await SubCategoriaModel.destroy({ where: {}, force: true });
     });
 
     test('should soft delete a subcategory', async () => {
-        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Soft Delete', categoria_id: 1 });
-        createdSubCategoriaId = subCategoria.id;
+        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Soft Delete', categoria_id: categoria.id });
 
         const response = await request(app)
-            .patch(`/api/v1/sub_categoria/${createdSubCategoriaId}`)
+            .patch(`/api/v1/sub_categoria/${subCategoria.id}`)
             .set('Authorization', `Bearer ${token}`);
 
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('mensaje', 'El registro ha sido borrado exitosamente.');
 
         // Verify it's soft deleted
-        const updatedSubCategoria = await SubCategoriaModel.findByPk(createdSubCategoriaId, { paranoid: false });
+        const updatedSubCategoria = await SubCategoriaModel.findByPk(subCategoria.id, { paranoid: false });
         expect(updatedSubCategoria).not.toBeNull();
         expect(updatedSubCategoria.deletedAt).not.toBeNull();
     });

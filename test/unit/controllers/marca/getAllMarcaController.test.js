@@ -1,8 +1,10 @@
+import GetAllMarcaController from '../../../../src/controllers/marca/GetAllMarcaController.js';
+
 // Mock del modelo para evitar dependencias de Sequelize y variables de entorno
 jest.mock('../../../../src/models/MarcaModel.js', () => ({
     MarcaModel: {
         findAndCountAll: jest.fn()
-    }
+    } 
 }));
 
 // Mock del repositorio antes de importar el controlador
@@ -10,7 +12,6 @@ const mockRepository = {
     getAll: jest.fn()
 };
 
-import GetAllMarcaController from '../../../../src/controllers/marca/GetAllMarcaController.js';
 
 describe('Unit Test: GetAllMarcaController', () => {
     let controller;

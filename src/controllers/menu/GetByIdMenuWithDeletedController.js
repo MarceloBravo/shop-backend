@@ -1,5 +1,4 @@
 import GetByIdMenuService from '../../services/menu/GetByIdMenuService.js';
-import MenuRepository from "../../repositories/MenuRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 
@@ -12,9 +11,11 @@ import { handleError } from "../../shared/functions.js";
  * */
 class GetByIdMenuWithDeletedController{
 
-    constructor(repository) {
-        if(!repository) {
-            repository = new MenuRepository()
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new GetByIdMenuService(repository);
     }

@@ -1,5 +1,6 @@
-import { AccionesPantallaModel } from "../models/AccionesPantallaModel.js";
+import db from '../models'
 
+const AccionesPantallaModel = db.AccionesPantallaModel;
 class AccionesPantallaRepository{
 
     getById = async (id, paranoid = true) => {

@@ -9,21 +9,23 @@ import CreateSubCategoriaController from '../controllers/subCategoria/CreateSubC
 import UpdateSubCategoriaController from '../controllers/subCategoria/UpdateSubCategoriaController.js';
 import HardDeleteSubCategoriaController from '../controllers/subCategoria/HardDeleteSubCategoriaController.js';
 import SoftDeleteSubCategoriaController from '../controllers/subCategoria/SoftDeleteSubCategoriaController.js';
+import SubCategoriaRepository from "../repositories/SubCategoriaRepository.js";
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new SubCategoriaRepository();
 
 // Instanciar los controladores
-const getByIdSubCategoriaController = new GetByIdSubCategoriaController();
-const getAllSubCategoriaController = new GetAllSubCategoriaController();
-const getPageSubCategoriaController = new GetPageSubCategoriaController();
-const getByIdSubCategoriaWithDeletedController = new GetByIdSubCategoriaWithDeletedController();
-const getAllSubCategoriaWithDeletedController = new GetAllSubCategoriaWithDeletedController();
-const getPageSubCategoriaWithDeletedController = new GetPageSubCategoriaWithDeletedController();
-const createSubCategoriaController = new CreateSubCategoriaController();
-const updateSubCategoriaController = new UpdateSubCategoriaController();
-const hardDeleteSubCategoriaController = new HardDeleteSubCategoriaController();
-const softDeleteSubCategoriaController = new SoftDeleteSubCategoriaController();
+const getByIdSubCategoriaController = new GetByIdSubCategoriaController(repository);
+const getAllSubCategoriaController = new GetAllSubCategoriaController(repository);
+const getPageSubCategoriaController = new GetPageSubCategoriaController(repository);
+const getByIdSubCategoriaWithDeletedController = new GetByIdSubCategoriaWithDeletedController(repository);
+const getAllSubCategoriaWithDeletedController = new GetAllSubCategoriaWithDeletedController(repository);
+const getPageSubCategoriaWithDeletedController = new GetPageSubCategoriaWithDeletedController(repository);
+const createSubCategoriaController = new CreateSubCategoriaController(repository);
+const updateSubCategoriaController = new UpdateSubCategoriaController(repository);
+const hardDeleteSubCategoriaController = new HardDeleteSubCategoriaController(repository);
+const softDeleteSubCategoriaController = new SoftDeleteSubCategoriaController(repository);
 
 // Definir las rutas
 router.get('/deleted', checkToken, getAllSubCategoriaWithDeletedController.execute);

@@ -1,5 +1,4 @@
 import GetByIdColorService from '../../services/color/GetByIdColorService.js';
-import ColorRepository from '../../repositories/ColorRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -13,7 +12,9 @@ class GetColorWithDeletedController {
      */
     constructor(repository = null) {
         if(!repository){
-            repository = new ColorRepository();
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new GetByIdColorService(repository);
     }

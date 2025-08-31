@@ -70,9 +70,7 @@ describe('SoftDeleteUsuarioController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 404, status: 404 });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new SoftDeleteUsuarioController();
-    expect(UsuarioRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(SoftDeleteUsuarioService);
+  it('throw a error if none repository is provided', () => {
+    expect(() => new SoftDeleteUsuarioController()).toThrow('No se ha recibido un repositorio');
   });
 });

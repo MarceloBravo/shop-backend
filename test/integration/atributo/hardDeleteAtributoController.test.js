@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { sequelize } from '../../../config/database.js';
 import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { AtributosModel } from '../../../src/models/AtributosModel.js';
@@ -10,7 +10,7 @@ describe('Integration Test: HardDeleteAtributoController', () => {
     const deleteData = { nombre: 'Unidades', valor_string: null, valor_numerico: 3};
     
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

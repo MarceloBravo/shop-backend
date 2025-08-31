@@ -1,16 +1,16 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper, createRelatedTestDataProducto, destroyRelatedTestDataProducto, createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
 import { ProductoModel } from '../../../src/models/ProductoModel.js';
-import '../helpers/TestRelations.js';
+//import '../helpers/TestRelations.js';
 
 describe('Integration Test: UpdateProductoController', () => {
     let token;
     let producto;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {

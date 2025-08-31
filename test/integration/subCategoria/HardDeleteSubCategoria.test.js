@@ -1,31 +1,30 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('HardDeleteSubCategoriaController Integration', () => {
     let token;
     let createdSubCategoriaId;
+    let categoria;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
+        await CategoriaModel.destroy({ where: {}, force: true });
+        await SubCategoriaModel.destroy({ where: {}, force: true });
+        categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
     });
 
     afterEach(async () => {
-        // Ensure cleanup even if test fails before deletion
-        if (createdSubCategoriaId) {
-            await SubCategoriaModel.destroy({ where: { id: createdSubCategoriaId }, force: true });
-            createdSubCategoriaId = null;
-        }
+        await SubCategoriaModel.destroy({ where: {}, force: true });
     });
 
     test('should hard delete a subcategory', async () => {
-        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Hard Delete', categoria_id: 1 });
-        createdSubCategoriaId = subCategoria.id;
+        const subCategoria = await SubCategoriaModel.create({ nombre: 'Test Hard Delete', categoria_id: categoria.id });
 
         const response = await request(app)
-            .delete(`/api/v1/sub_categoria/${createdSubCategoriaId}`)
+            .delete(`/api/v1/sub_categoria/${subCategoria.id}`)
             .set('Authorization', `Bearer ${token}`);
 
         expect(response.statusCode).toBe(200);
@@ -33,10 +32,9 @@ describe('HardDeleteSubCategoriaController Integration', () => {
 
         // Verify it's actually hard deleted
         const getResponse = await request(app)
-            .get(`/api/v1/sub_categoria/deleted/${createdSubCategoriaId}`)
+            .get(`/api/v1/sub_categoria/deleted/${subCategoria.id}`)
             .set('Authorization', `Bearer ${token}`);
         expect(getResponse.statusCode).toBe(404);
-        createdSubCategoriaId = null; // Mark as deleted for afterEach
     });
 
     test('should return 500 if subcategory does not exist for hard delete', async () => {

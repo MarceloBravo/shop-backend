@@ -1,4 +1,5 @@
-import { app } from '../../../src/index.js';
+//import app from '../../../src/app.js';
+import app from '../../appTest.js';
 import request from 'supertest';
 import { sequelize } from '../../../config/database.js';
 import { UsuarioModel } from '../../../src/models/UsuarioModel.js';
@@ -9,11 +10,11 @@ describe('UpdateUsuarioController', () => {
     let token;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
         await UsuarioModel.destroy({ 
             where: {}, 
             force: true 
         }); // Clear existing records
+        token = global.testToken
         
         try {
             // Create test data
@@ -40,7 +41,7 @@ describe('UpdateUsuarioController', () => {
             where: {}, 
             force: true 
         }); // Clear existing records
-        await sequelize.close();
+        //await sequelize.close();
     });
 
     it('should update usuario', async () => {

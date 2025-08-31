@@ -1,6 +1,9 @@
-import { ProductoModel } from "../models/ProductoModel.js";
+import db from '../models'
 import { sequelize } from '../../config/database.js';
 import { Op } from 'sequelize';
+
+const  ProductoModel = db.ProductoModel;
+
 
 const include = [
         {

@@ -1,5 +1,5 @@
-import { MenuTiendaModel } from "../models/MenuTiendaModel.js";
-
+import db from '../models/index.js';
+const  MenuTiendaModel = db.MenuTiendaModel;
 class MenuTiendaRepository{
     getById = async (id, paranoid = true) => {
         const data = await MenuTiendaModel.findByPk(id, {paranoid});

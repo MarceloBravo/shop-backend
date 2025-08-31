@@ -1,5 +1,4 @@
 import GetAllValoracionProductoService from '../../services/ValoracionProducto/GetAllValoracionProductoService.js';
-import ValoracionProductoRepository from "../../repositories/ValoracionProductoRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -12,8 +11,10 @@ class GetAllValoracionProductoWithDeletedController {
      * @param {Object} repository - Repositorio de valoraciones de productos
      */
     constructor(repository = null) {
-        if(!repository) {
-            repository = new ValoracionProductoRepository();
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new GetAllValoracionProductoService(repository);
     }

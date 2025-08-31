@@ -1,12 +1,15 @@
 import bcrypt from 'bcrypt'
 
 export const encriptarPassword = async (pwd) => {
-    const saltRounds = 10;
-    let password = await bcrypt.hash(pwd, saltRounds).then(function(hash) {
-        return hash
-    });    
+        const saltRounds = 10;
+        let password = await bcrypt.hash(pwd, saltRounds).then(function(hash) {
+            return hash
+        }).catch(function(err) {
+            console.log(err);
+            throw err
+        });    
 
-    return password
+        return password
 }
 
 //Convierte un objeto tipo fecha al formato Día/Mes/Año 

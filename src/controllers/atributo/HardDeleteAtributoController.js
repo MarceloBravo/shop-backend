@@ -1,5 +1,4 @@
 import HardDeleteAtributoService from '../../services/atributo/HardDeleteAtributoService.js';
-import AtributosRepository from "../../repositories/AtributosRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,7 +10,13 @@ class HardDeleteAtributoController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de atributos
      */
-    constructor(repository = new AtributosRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
+        
         this.service = new HardDeleteAtributoService(repository);
     }
 

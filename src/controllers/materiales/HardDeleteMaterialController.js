@@ -1,5 +1,4 @@
 import HardDeleteMaterialService from '../../services/materiales/HardDeleteMaterialService.js';
-import MaterialRepository from "../../repositories/MaterialRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -13,7 +12,9 @@ class HardDeleteMaterialController {
      */
     constructor(repository = null) {
         if(!repository){
-            repository = new MaterialRepository();
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new HardDeleteMaterialService(repository);
     }

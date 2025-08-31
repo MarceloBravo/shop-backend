@@ -9,20 +9,23 @@ import GetPageRolWithDeletedController from '../controllers/Rol/GetPageRolWithDe
 import UpdateRolController from '../controllers/Rol/UpdateRolController.js';
 import HardDeleteRolController from '../controllers/Rol/HardDeleteRolController.js';
 import SoftDeleteRolController from '../controllers/Rol/SoftDeleteRolController.js';
+import RolRepository from '../repositories/RolRepository.js';
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new RolRepository();
+
 // Instanciar los controladores
-const createRolController = new CreateRolController();
-const getByIdRolController = new GetByIdRolController();
-const getByIdRolWithDeletedController = new GetByIdRolWithDeletedController();
-const getAllRolController = new GetAllRolController();
-const getAllRolWithDeletedController = new GetAllRolWithDeletedController();
-const getPageRolController = new GetPageRolController();
-const getPageRolWithDeletedController = new GetPageRolWithDeletedController();
-const updateRolController = new UpdateRolController();
-const hardDeleteRolController = new HardDeleteRolController();
-const softDeleteRolController = new SoftDeleteRolController();
+const createRolController = new CreateRolController(repository);
+const getByIdRolController = new GetByIdRolController(repository);
+const getByIdRolWithDeletedController = new GetByIdRolWithDeletedController(repository);
+const getAllRolController = new GetAllRolController(repository);
+const getAllRolWithDeletedController = new GetAllRolWithDeletedController(repository);
+const getPageRolController = new GetPageRolController(repository);
+const getPageRolWithDeletedController = new GetPageRolWithDeletedController(repository);
+const updateRolController = new UpdateRolController(repository);
+const hardDeleteRolController = new HardDeleteRolController(repository);
+const softDeleteRolController = new SoftDeleteRolController(repository);
 
 // Definir las rutas
 router.get('/deleted', checkToken, getAllRolWithDeletedController.execute);

@@ -1,4 +1,4 @@
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import request from 'supertest';
 import { sequelize } from '../../../config/database.js';
 import { TipoDimensionesModel } from '../../../src/models/TipoDimensionesModel.js';
@@ -8,7 +8,7 @@ describe('GetPageTipoDimensionesController', () => {
     let token;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         await TipoDimensionesModel.destroy({ where: {} }); // Clear existing records
     });
 
@@ -40,7 +40,7 @@ describe('GetPageTipoDimensionesController', () => {
 
     afterAll(async () => {
         await TipoDimensionesModel.destroy({ where: {}, force: true });
-        await sequelize.close();
+        //await sequelize.close();
     });
 
     it('should return paginated tipo dimensiones', async () => {

@@ -1,5 +1,4 @@
 import HardDeleteTipoDimensionesService from '../../services/tipoDimensiones/HardDeleteTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../repositories/TipoDimensionesRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -12,8 +11,10 @@ class HardDeleteTipoDimensionesController {
      * @param {Object} repository - Repositorio de tipos de dimensión
      */
     constructor(repository = null) {
-        if (!repository) {
-            repository = new TipoDimensionesRepository()
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new HardDeleteTipoDimensionesService(repository);
     }

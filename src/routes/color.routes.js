@@ -9,20 +9,22 @@ import CreateColorController from '../controllers/color/CreateColorController.js
 import UpdateColorController from '../controllers/color/UpdateColorController.js';
 import HardDeleteColorController from '../controllers/color/HardDeleteColorController.js';
 import SoftDeleteColorController from '../controllers/color/SoftDeleteColorController.js';
+import ColorRepository from "../repositories/ColorRepository.js";
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new ColorRepository();
 
-const getColorController = new GetColorController();
-const getAllColorController = new GetAllColorController();
-const getPageColorController = new GetPageColorController();
-const createColorController = new CreateColorController();
-const updateColorController = new UpdateColorController();
-const hardDeleteColorController = new HardDeleteColorController();
-const softDeleteColorController = new SoftDeleteColorController();
-const getColorWithDeletedController = new GetColorWithDeletedController();
-const getAllColorWithDeletedController = new GetAllColorWithDeletedController();
-const getPageColorWithDeletedController = new GetPageColorWithDeletedController();
+const getColorController = new GetColorController(repository)
+const getAllColorController = new GetAllColorController(repository)
+const getPageColorController = new GetPageColorController(repository)
+const createColorController = new CreateColorController(repository)
+const updateColorController = new UpdateColorController(repository)
+const hardDeleteColorController = new HardDeleteColorController(repository)
+const softDeleteColorController = new SoftDeleteColorController(repository)
+const getColorWithDeletedController = new GetColorWithDeletedController(repository)
+const getAllColorWithDeletedController = new GetAllColorWithDeletedController(repository)
+const getPageColorWithDeletedController = new GetPageColorWithDeletedController(repository)
 
 
 router.get('/deleted', checkToken, getAllColorWithDeletedController.execute);

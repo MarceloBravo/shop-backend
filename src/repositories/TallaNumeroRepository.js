@@ -1,4 +1,5 @@
-import { TallaNumericaModel } from "../models/TallaNumericaModel.js";
+import db from '../models/index.js';
+const TallaNumericaModel = db.TallaNumericaModel;
 
 class TallaNumeroRepository {
     getById = async (id, paranoid = true) => {

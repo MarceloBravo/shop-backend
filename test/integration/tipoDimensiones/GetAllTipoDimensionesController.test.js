@@ -1,4 +1,4 @@
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import request from 'supertest';
 import { sequelize } from '../../../config/database.js';
 import { TipoDimensionesModel } from '../../../src/models/TipoDimensionesModel.js';
@@ -12,7 +12,7 @@ describe('GetAllTipoDimensionesController', () => {
             where: {}, 
             force: true 
         }); // Clear existing records
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         
         try {
             // Create test data
@@ -32,7 +32,7 @@ describe('GetAllTipoDimensionesController', () => {
             where: {}, 
             force: true 
         }); // Clear existing records
-        await sequelize.close();
+        //await sequelize.close();
     });
     
     it('should return all tipo dimensiones', async () => {

@@ -1,15 +1,15 @@
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper, createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
 import { ProductoModel } from '../../../src/models/ProductoModel.js';
-import '../helpers/TestRelations.js';
+//import '../helpers/TestRelations.js';
 
 describe('Integration Test: GetProductoByIdWithDeletedController', () => {
     let token;
     let producto;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         producto = await createProductoTestData(1);
         // Soft delete the product
         await ProductoModel.destroy({ where: { id: producto.id } });

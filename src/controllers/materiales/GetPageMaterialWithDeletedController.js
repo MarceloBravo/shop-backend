@@ -1,4 +1,3 @@
-import MaterialRepository from "../../repositories/MaterialRepository.js";
 import GetPageMaterialService from "../../services/materiales/GetPageMaterialService.js";
 import { handleError } from "../../shared/functions.js";
 
@@ -12,7 +11,9 @@ import { handleError } from "../../shared/functions.js";
 class GetPageMaterialWithDeletedController{
     constructor(repository = null) {
         if(!repository){
-            repository = new MaterialRepository();
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new GetPageMaterialService(repository);
     }

@@ -1,5 +1,4 @@
 import CreateGeneroService from "../../services/genero/CreateGeneroService.js";
-import GeneroRepository from '../../repositories/GeneroRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -13,7 +12,9 @@ class CreateGeneroController {
      */
     constructor(repository = null) {
         if(!repository){
-            repository = new GeneroRepository();
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new CreateGeneroService(repository);
     }

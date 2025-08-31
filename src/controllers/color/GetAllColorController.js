@@ -1,5 +1,4 @@
 import GetAllColorService from '../../services/color/GetAllColorsService.js';
-import ColorRepository from '../../repositories/ColorRepository.js';
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,12 +10,13 @@ class GetAllColorController {
      * Crea una instancia del controlador
      * @param {GetAllColorService} service - Servicio para obtener todos los colores
      */
-    constructor(service = null) {
-        if (!service) {
-            const repository = new ColorRepository();
-            service = new GetAllColorService(repository);
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
-        this.service = service;
+        this.service = new GetAllColorService(repository);
     }
 
     /**

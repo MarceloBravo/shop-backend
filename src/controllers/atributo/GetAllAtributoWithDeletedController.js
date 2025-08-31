@@ -1,9 +1,14 @@
-import AtributosRepository from '../../repositories/AtributosRepository.js';
 import GetAllAtributoService from '../../services/atributo/GetAllAtributoService.js';
 import { handleError } from "../../shared/functions.js";
 
 class GetAllAtributoWithDeletedController{
-    constructor(repository = new AtributosRepository()){
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
+        
         this.service = new GetAllAtributoService(repository);
     }
 

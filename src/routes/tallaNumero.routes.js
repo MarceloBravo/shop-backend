@@ -9,21 +9,23 @@ import SoftDeleteTallaNumeroController from '../controllers/tallaNumero/SoftDele
 import GetByIdTallaNumeroWithDeletedController from '../controllers/tallaNumero/GetByIdTallaNumeroWithDeletedController.js';
 import GetAllTallaNumeroWithDeletedController from '../controllers/tallaNumero/GetAllTallaNumeroWithDeletedController.js';
 import GetPageTallaNumeroWithDeletedController from '../controllers/tallaNumero/GetPageTallaNumeroWithDeletedController.js';
+import TallaNumeroRepository from "../repositories/TallaNumeroRepository.js";
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new TallaNumeroRepository();
 
 // Instanciamos los controladores
-const getByIdTallaNumeroController = new GetByIdTallaNumeroController();
-const getAllTallaNumeroController = new GetAllTallaNumeroController();
-const getPageTallaNumeroController = new GetPageTallaNumeroController();
-const createTallaNumeroController = new CreateTallaNumeroController();
-const updateTallaNumeroController = new UpdateTallaNumeroController();
-const hardDeleteTallaNumeroController = new HardDeleteTallaNumeroController();
-const softDeleteTallaNumeroController = new SoftDeleteTallaNumeroController();
-const getByIdTallaNumeroWithDeletedController = new GetByIdTallaNumeroWithDeletedController();
-const getAllTallaNumeroWithDeletedController = new GetAllTallaNumeroWithDeletedController();
-const getPageTallaNumeroWithDeletedController = new GetPageTallaNumeroWithDeletedController();
+const getByIdTallaNumeroController = new GetByIdTallaNumeroController(repository);
+const getAllTallaNumeroController = new GetAllTallaNumeroController(repository);
+const getPageTallaNumeroController = new GetPageTallaNumeroController(repository);
+const createTallaNumeroController = new CreateTallaNumeroController(repository);
+const updateTallaNumeroController = new UpdateTallaNumeroController(repository);
+const hardDeleteTallaNumeroController = new HardDeleteTallaNumeroController(repository);
+const softDeleteTallaNumeroController = new SoftDeleteTallaNumeroController(repository);
+const getByIdTallaNumeroWithDeletedController = new GetByIdTallaNumeroWithDeletedController(repository);
+const getAllTallaNumeroWithDeletedController = new GetAllTallaNumeroWithDeletedController(repository);
+const getPageTallaNumeroWithDeletedController = new GetPageTallaNumeroWithDeletedController(repository);
 
 // Rutas para registros eliminados
 router.get('/deleted', checkToken, getAllTallaNumeroWithDeletedController.execute);

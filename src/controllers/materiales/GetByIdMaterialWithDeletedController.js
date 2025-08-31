@@ -1,4 +1,3 @@
-import MaterialRepository from '../../repositories/MaterialRepository.js';
 import GetByIdMaterialService from '../../services/materiales/GetByIdMaterialService.js';
 import { handleError } from "../../shared/functions.js";
 
@@ -13,7 +12,9 @@ import { handleError } from "../../shared/functions.js";
 class GetByIdMaterialWithDeletedController{
     constructor(repository = null) {
         if(!repository){
-            repository = new MaterialRepository();
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
         }
         this.service = new GetByIdMaterialService(repository);
     }

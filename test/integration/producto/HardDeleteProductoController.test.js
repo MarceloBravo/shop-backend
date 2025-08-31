@@ -1,6 +1,6 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import { TestAuthHelper, createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
 import { ProductoModel } from '../../../src/models/ProductoModel.js';
 
@@ -9,7 +9,7 @@ describe('Integration Test: HardDeleteProductoController', () => {
     let producto;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
     });
 
     beforeEach(async () => {
@@ -25,7 +25,7 @@ describe('Integration Test: HardDeleteProductoController', () => {
             .delete(`/api/v1/producto/${producto.id}`)
             .set('Authorization', `Bearer ${token}`)
             .expect(200);
-            
+        
         expect(response.body).toHaveProperty('mensaje');
         expect(response.body.mensaje).toBe('El registro ha sido eliminado exitosamente.');
 
@@ -38,7 +38,7 @@ describe('Integration Test: HardDeleteProductoController', () => {
             .delete('/api/v1/producto/99999')
             .set('Authorization', `Bearer ${token}`)
             .expect(404);
-            
+        
         expect(response.body).toHaveProperty('error');
         expect(response.body.error).toBe('Error: Producto no encontrado');
     });

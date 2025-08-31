@@ -9,20 +9,22 @@ import CreateValoracionProductoController from '../controllers/ValoracionProduct
 import UpdateValoracionProductoController from '../controllers/ValoracionProducto/UpdateValoracionProductoController.js';
 import HardDeleteValoracionProductoController from '../controllers/ValoracionProducto/HardDeleteValoracionProductoController.js';
 import SoftDeleteValoracionProductoController from '../controllers/ValoracionProducto/SoftDeleteValoracionProductoController.js';
+import ValoracionProductoRepository from "../repositories/ValoracionProductoRepository.js";
 import { checkToken } from '../shared/mw_token.js';
 
 const router = Router();
+const repository = new ValoracionProductoRepository();
 
-const getByIdValoracionProductoController = new GetByIdValoracionProductoController();
-const getAllValoracionProductoController = new GetAllValoracionProductoController();
-const getPageValoracionProductoController = new GetPageValoracionProductoController();
-const getByIdValoracionProductoWithDeletedController = new GetByIdValoracionProductoWithDeletedController();
-const getAllValoracionProductoWithDeletedController = new GetAllValoracionProductoWithDeletedController();
-const getPageValoracionProductoWithDeletedController = new GetPageValoracionProductoWithDeletedController();
-const createValoracionProductoController = new CreateValoracionProductoController();
-const updateValoracionProductoController = new UpdateValoracionProductoController();
-const hardDeleteValoracionProductoController = new HardDeleteValoracionProductoController();
-const softDeleteValoracionProductoController = new SoftDeleteValoracionProductoController();
+const getByIdValoracionProductoController = new GetByIdValoracionProductoController(repository);
+const getAllValoracionProductoController = new GetAllValoracionProductoController(repository);
+const getPageValoracionProductoController = new GetPageValoracionProductoController(repository);
+const getByIdValoracionProductoWithDeletedController = new GetByIdValoracionProductoWithDeletedController(repository);
+const getAllValoracionProductoWithDeletedController = new GetAllValoracionProductoWithDeletedController(repository);
+const getPageValoracionProductoWithDeletedController = new GetPageValoracionProductoWithDeletedController(repository);
+const createValoracionProductoController = new CreateValoracionProductoController(repository);
+const updateValoracionProductoController = new UpdateValoracionProductoController(repository);
+const hardDeleteValoracionProductoController = new HardDeleteValoracionProductoController(repository);
+const softDeleteValoracionProductoController = new SoftDeleteValoracionProductoController(repository);
 
 router.get('/deleted', checkToken, getAllValoracionProductoWithDeletedController.execute);
 router.get('/deleted/:id', checkToken, getByIdValoracionProductoWithDeletedController.execute);

@@ -1,4 +1,4 @@
-import { app } from '../../../src/index.js';
+import app from '../../appTest.js';
 import request from 'supertest';
 import { sequelize } from '../../../config/database.js';
 import { TipoDimensionesModel } from '../../../src/models/TipoDimensionesModel.js';
@@ -8,7 +8,7 @@ describe('GetPageTipoDimensionesWithDeletedController', () => {
     let token;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken
         await TipoDimensionesModel.destroy({ 
             where: {}, 
             force: true 
@@ -40,7 +40,7 @@ describe('GetPageTipoDimensionesWithDeletedController', () => {
             where: {}, 
             force: true 
         }); // Clear existing records
-        await sequelize.close();
+        //await sequelize.close();
     });
 
     it('should return paginated tipo dimensiones including deleted ones', async () => {

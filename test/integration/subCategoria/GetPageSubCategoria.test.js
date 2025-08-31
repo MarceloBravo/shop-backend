@@ -1,29 +1,30 @@
 
 import request from 'supertest';
-import { app } from '../../../src/index.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import app from '../../appTest.js';
 import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
+import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
 
 describe('GetPageSubCategoriaController Integration', () => {
     let token;
-    let createdSubCategoriaIds = [];
+    let categoria;
 
     beforeAll(async () => {
-        token = await TestAuthHelper.createUserAndLogin();
+        token = global.testToken;
+        await CategoriaModel.destroy({ where: {}, force: true });
+        await SubCategoriaModel.destroy({ where: {}, force: true });
+        categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
     });
 
     beforeEach(async () => {
         // Create some test data
         for (let i = 0; i < 15; i++) {
-            const subCategoria = await SubCategoriaModel.create({ nombre: `Test Page ${i}`, categoria_id: 1 });
-            createdSubCategoriaIds.push(subCategoria.id);
+            const subCategoria = await SubCategoriaModel.create({ nombre: `Test Page ${i}`, categoria_id: categoria.id });
         }
     });
 
     afterEach(async () => {
         // Clean up test data
-        await SubCategoriaModel.destroy({ where: { id: createdSubCategoriaIds }, force: true });
-        createdSubCategoriaIds = [];
+        await SubCategoriaModel.destroy({ where: {}, force: true });
     });
 
     test('should get a page of subcategories with default limit', async () => {

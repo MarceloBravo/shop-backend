@@ -5,7 +5,7 @@ import getModelsInOrder from '../src/shared/getModelsInOrder.js';
 async function runMigrateSeeders() {
     try {
         console.log('Iniciando migraciones y seeders...');
-        const db = await dbPromise;
+        const db = dbPromise;
 
         // Crea el schema si no existe, para mayor robustez
         await db.sequelize.query(`CREATE SCHEMA IF NOT EXISTS "${db.sequelize.options.schema}"`);

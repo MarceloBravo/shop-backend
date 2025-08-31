@@ -1,5 +1,4 @@
 import HardDeleteAccionesPantallaService from '../../services/accionesPantalla/HardDeleteAccionesPantallaService.js';
-import AccionesPantallaRepository from "../../repositories/AccionesPantallaRepository.js";
 import { handleError } from "../../shared/functions.js";
 
 /**
@@ -11,7 +10,12 @@ class HardDeleteAccionesPantallaController {
      * Crea una instancia del controlador
      * @param {Object} repository - Repositorio de acciones de pantalla
      */
-    constructor(repository = new AccionesPantallaRepository()) {
+    constructor(repository = null) {
+        if(!repository){
+            const error = new Error('No se ha recibido un repositorio');
+            error.code = 400;
+            throw error;
+        }
         this.service = new HardDeleteAccionesPantallaService(repository);
     }
     

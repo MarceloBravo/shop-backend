@@ -1,5 +1,5 @@
-import { PesoProductoModel } from "../models/PesoProductoModel.js";
-
+import db from '../models/index.js';
+const PesoProductoModel = db.PesoProductoModel;
 
 class PesoProductoRepository{
     getById = async (id, paranoid = true) => {
