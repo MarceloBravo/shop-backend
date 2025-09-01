@@ -24,6 +24,7 @@ const initializeDatabase = () => {
 
   
   for (const file of modelFiles) {
+    console.log(`Loading model: ${file}`);
     const module = require(path.join(process.cwd(), "src/models", file));
     const modelName = file.replace(".js", "");
     db[modelName] = module[modelName];
