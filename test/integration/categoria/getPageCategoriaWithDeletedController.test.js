@@ -1,12 +1,14 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { CategoriaModel } = db;
 
 describe('Integration Test: GetPageCategoriaWithDeletedController', () => {
     let token;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
         // Asegurarse de que la tabla de categorias esté limpia antes de que comiencen las pruebas en este archivo
         await CategoriaModel.destroy({ where: {}, force: true });
     });

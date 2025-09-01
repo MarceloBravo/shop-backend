@@ -1,25 +1,27 @@
 
 import GetByIdUsuarioWithDeletedController from '../../../../src/controllers/usuario/GetByIdUsuarioWithDeletedController.js';
 import GetByIdUsuarioService from '../../../../src/services/usuario/GetByIdUsuarioService.js';
-import UsuarioRepository from '../../../../src/repositories/UsuarioRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/usuario/GetByIdUsuarioService.js');
-jest.mock('../../../../src/repositories/UsuarioRepository.js');
 
 describe('GetByIdUsuarioWithDeletedController', () => {
   let getByIdUsuarioWithDeletedController;
   let mockRequest;
   let mockResponse;
   let mockGetByIdService;
+  let mockUsuarioRepository;
 
   beforeEach(() => {
     jest.clearAllMocks()
     mockGetByIdService = new GetByIdUsuarioService();
     mockGetByIdService.execute = jest.fn();
+    mockUsuarioRepository = {
+      getById: jest.fn(),
+    }
     GetByIdUsuarioService.mockImplementation(() => mockGetByIdService);
 
-    getByIdUsuarioWithDeletedController = new GetByIdUsuarioWithDeletedController();
+    getByIdUsuarioWithDeletedController = new GetByIdUsuarioWithDeletedController(mockUsuarioRepository);
 
     mockRequest = {
       params: {},

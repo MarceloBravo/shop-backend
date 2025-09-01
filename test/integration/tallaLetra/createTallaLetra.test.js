@@ -1,7 +1,9 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TallaLetraModel } from '../../../src/models/TallaLetraModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { TallaLetraModel } = db;
+
 
 // Datos de prueba exclusivos para los tests
 const TEST_TALLA_LETRA = 'M';
@@ -16,7 +18,7 @@ describe('Integration Test: CreateTallaLetra', () => {
     let token;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

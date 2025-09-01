@@ -4,6 +4,10 @@ const mockService = {
     execute: jest.fn()
 };
 
+const mockRepository = {
+    getPage: jest.fn()
+}
+
 jest.mock('../../../../src/services/pantalla/GetPagePantallaService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
 });
@@ -19,7 +23,7 @@ describe('Unit Test: GetPagePantallaController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new GetPagePantallaController();
+        controller = new GetPagePantallaController(mockRepository);
         controller.service = mockService;
     });
 
@@ -48,5 +52,9 @@ describe('Unit Test: GetPagePantallaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error de base de datos', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetPagePantallaController()).toThrow('No se ha recibido un repositorio');
     });
 });

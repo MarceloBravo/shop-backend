@@ -1,126 +1,104 @@
-import request from 'supertest';
-//import app from '../../../src/server.js'; // This import might still be an issue, but let's focus on the data seeding first
-//import app from '../../../src/app.js';
-//import express from 'express';
-import app from '../../appTest.js'
-import { UsuarioModel } from '../../../src/models/UsuarioModel.js';
-import { RolModel } from '../../../src/models/RolModel.js';
-import { CategoriaModel } from '../../../src/models/CategoriaModel.js'; // Import CategoriaModel
-import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
-import { GeneroModel } from '../../../src/models/GeneroModel.js';
-import { MarcaModel } from '../../../src/models/MarcaModel.js';
-import { ProductoModel } from '../../../src/models/ProductoModel.js';
-import { encriptarPassword } from '../../../src/shared/functions.js'
-import { ValoracionProductoModel } from '../../../src/models/ValoracionProductoModel.js';
-import { AtributosModel } from '../../../src/models/AtributosModel.js';
-import { AtributosProductoModel } from '../../../src/models/AtributosProductoModel.js';
+import db from '../../../src/models/index.js';
+import { encriptarPassword } from '../../../src/shared/functions.js';
+import * as constantes  from '../../../src/shared/constants.js';
+import jwt from "jsonwebtoken";
 
-export class TestAuthHelper {
+const {
+  UsuarioModel,
+  RolModel,
+  CategoriaModel,
+  SubCategoriaModel,
+  GeneroModel,
+  MarcaModel,
+  ProductoModel,
+  ValoracionProductoModel,
+  AtributosModel,
+  AtributosProductoModel
+} = db;
+
   
-  /**
-   * Crea un usuario de prueba si no existe y retorna el token de autenticación.
-   * @param {Object} options
-   * @param {string} options.email
-   * @param {string} options.password
-   * @param {string} [options.rut]
-   * @param {string} [options.nombres]
-   * @param {string} [options.apellido1]
-   * @param {string} [options.apellido2]
-   * @param {string} [options.user_name]
-   * @param {number} [options.rol_id]
-   * @returns {Promise<string>} token JWT
-   */
-  static async createUserAndLogin() {
-    const email = 'test@email.cl';
-    const password = '123123';
-    const rut = '77777777-7';
-    const nombres = 'Test';
-    const apellido1 = 'User';
-    const apellido2 = 'Test';
-    const user_name = 'mabc';
-    const direccion = 'dirección test';
-    const fono = '3333333333';
-    const rol_id = 1
-    //const app = express();
-    const  rolDefaults = {
-      1: { id: 1, nombre: 'Admin' },
-      2: { id: 2, nombre: 'Cliente' }
-    };
-    const rolData = rolDefaults[rol_id] || { id: rol_id, nombre: `Rol Test ${rol_id}` };
-    //const app = await import('../../../src/app.js');
-    //app = app.default;
-    
-    try {
-    // Asegura que el rol exista antes de crear el usuario
-    if (rolData.id) {
-      const rol = await RolModel.findByPk( rolData.id, { paranoid: false });
-      if (!rol) {
-        await RolModel.create({
-          id: rolData.id,
-          nombre: rolData.nombre,
-          deleted_at: null
-        });
-      }else if(rol.deleted_at!= null){
-          rol.deleted_at = null;
-          await rol.save();
-      }
+export const createUserAndLogin = async ()  => {
+  const email = 'test@email.cl';
+  const password = '123123';
+  const rol_id = 1;
+  
+  try {
+    let usuario = await buscarUsuario(email);
+    if(!usuario){
+      const rol = await crearRolDePrueba(rol_id)  
+      usuario = crearUsuarioDePrueba(email, password, rol.id)
     }
 
-    // Ensure a default Categoria exists for subcategory tests
-    const defaultCategoriaId = 1;
-    const categoria = await CategoriaModel.findByPk(defaultCategoriaId, { paranoid: false });
-    if (!categoria) {
-      await CategoriaModel.create({
-        id: defaultCategoriaId,
-        nombre: 'Default Category',
-        descripcion: 'Default description for category', 
-        deleted_at: null
-      });
-    } else if (categoria.deleted_at !== null) {
-      categoria.deleted_at = null;
-      await categoria.save();
-    }
-      const pwd = password ? await encriptarPassword(password) : password;
-      const user = await UsuarioModel.findOrCreate({
-        where: { rut }, // Buscar por RUT en lugar de email
-        paranoid: false,
-        defaults: {
-          rut: rut,
-          nombres,
-          apellido1,
-          apellido2,
-          avatar: '',
-          direccion: direccion || '',
-          fono: fono || '',
-          email,
-          user_name: user_name,
-          password: pwd, // Si tu login requiere hash, usa el hash aquí
-          refresh_token: null,
-          rol_id
-        }
-      });
-      if(user.deleted_at != null){
-        user.deleted_at = null;
-        await user.save();
-      }
-    } catch (err) {
-      console.error('Error in UsuarioModel.findOrCreate:', err);
-      throw err;
-    }
-    
-    const loginResponse = await request(app)
-    .post('/api/v1/login')
-    .send({
-      email,
-      password,
-      host: 'localhost'
-    });
-    if (!loginResponse.body.access_token) {
-      throw new Error('No se pudo obtener el token de autenticación');
-    }
-    return loginResponse.body.access_token;
+    if(!usuario){
+      throw new Error('No se pudo crear el usuario de prueba');
+    } 
+    return jwt.sign({ id: usuario.id }, constantes.secret, { expiresIn: "1h" });
+
+  } catch (err) {
+    console.error('Error al crear el usuario de prueba:', err);
+    throw err;
   }
   
+}
+
+
+const buscarUsuario = async (email) => {
+  const user = await UsuarioModel.findOne({where: { email }, paranoid: false });
+  return user;
+}
+
+
+const crearUsuarioDePrueba = async (email, password, rol_id) => {
+  const pwd = await encriptarPassword(password);
+  const user = await UsuarioModel.findOrCreate({
+      where: { email }, // Buscar por email
+      paranoid: false,
+      defaults: {
+        rut: '77777777-7',
+        nombres: 'Test',
+        apellido1: 'User',
+        apellido2: 'Test',
+        avatar: '',
+        direccion: 'dirección test',
+        fono: '3333333333',
+        email,
+        user_name: 'mabc',
+        password: pwd, // Si tu login requiere hash, usa el hash aquí
+        refresh_token: null,
+        rol_id
+      }
+    });
+    if(user.deleted_at != null){
+      user.deleted_at = null;
+      await user.save();
+    }
+    return user;
+}
+
+
+// Asegura que el rol exista antes de crear el usuario
+const crearRolDePrueba = async (rol_id) => {
+  const  rolDefaults = {
+    1: { id: 1, nombre: 'Admin' },
+    2: { id: 2, nombre: 'Cliente' }
+  };
+  const rolData = rolDefaults[rol_id] || { id: rol_id, nombre: `Rol Test ${rol_id}` };
+
+  if (rolData.id) {
+    const rol = await RolModel.findByPk( rolData.id, { paranoid: false });
+    if (!rol) {
+      await RolModel.create({
+        id: rolData.id,
+        nombre: rolData.nombre,
+        deleted_at: null
+      });
+    }else if(rol.deleted_at!= null){
+        rol.deleted_at = null;
+        await rol.save();
+    }
+    return rol;
+  }
+  return null;
 }
 
 
@@ -163,7 +141,7 @@ export const createProductoTestData = async (cantidad = 1) => {
       }).catch(err => {
         console.error('Error creating ProductoModel:', err) ;
       });
-
+      //console.log('producto.id',producto.id, 'atributo.id',atributo.id);
       await AtributosProductoModel.create({
           producto_id: producto.id,
           atributo_id: atributo.id

@@ -6,12 +6,16 @@ describe('GetAllValoracionProductoController', () => {
     let service;
     let req;
     let res;
+    const mopckRepository = {
+        getAll: jest.fn()
+    };
+
 
     beforeEach(() => {
         service = {
             execute: jest.fn()
         };
-        controller = new GetAllValoracionProductoController();
+        controller = new GetAllValoracionProductoController(mopckRepository);
         controller.service = service;
         req = {};
         res = {
@@ -42,5 +46,9 @@ describe('GetAllValoracionProductoController', () => {
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error: Error al obtener las valoraciones', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetAllValoracionProductoController()).toThrow('No se ha recibido un repositorio');
     });
 });

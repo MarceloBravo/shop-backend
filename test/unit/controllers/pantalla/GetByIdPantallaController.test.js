@@ -4,6 +4,10 @@ const mockService = {
     execute: jest.fn()
 };
 
+const mockRepository = {
+    getById: jest.fn()
+}
+
 jest.mock('../../../../src/services/pantalla/GetByIdPantallaService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
 });
@@ -19,7 +23,7 @@ describe('Unit Test: GetByIdPantallaController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new GetByIdPantallaController();
+        controller = new GetByIdPantallaController(mockRepository);
         controller.service = mockService;
     });
 
@@ -61,5 +65,9 @@ describe('Unit Test: GetByIdPantallaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error de base de datos', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetByIdPantallaController()).toThrow('No se ha recibido un repositorio');
     });
 });

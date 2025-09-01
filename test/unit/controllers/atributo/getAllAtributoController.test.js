@@ -19,10 +19,15 @@ describe('Unit Test: GetAllAtributoController', () => {
             { id: 3, nombre: 'Unidades', valor_string: null, valor_numerico: 3, createdAt: '2023-01-01', updatedAt: '2023-01-02', deletedAt: null }
         ];
 
+    const mockRepository = {
+        getAll: jest.fn()
+    };
+
+
     beforeEach(() => {
         GetAllAtributoService.mockClear();
         mockExecute.mockClear();
-        controller = new GetAllAtributoController();
+        controller = new GetAllAtributoController(mockRepository);
     });
 
     it('Obtiene todos los atributos exitosamente', async () => {
@@ -63,5 +68,9 @@ describe('Unit Test: GetAllAtributoController', () => {
             details: [],
             error: expect.any(String)
         }));
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetAllAtributoController()).toThrow('No se ha recibido un repositorio');
     });
 });

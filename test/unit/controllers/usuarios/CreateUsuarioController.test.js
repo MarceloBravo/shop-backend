@@ -1,25 +1,29 @@
 
 import CreateUsuarioController from '../../../../src/controllers/usuario/CreateUsuarioController.js';
 import CreateUsuarioService from '../../../../src/services/usuario/CreateUsuarioService.js';
-import UsuarioRepository from '../../../../src/repositories/UsuarioRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/usuario/CreateUsuarioService.js');
-jest.mock('../../../../src/repositories/UsuarioRepository.js');
 
 describe('CreateUsuarioController', () => {
   let createUsuarioController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockUsuarioRepository;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockServiceInstance = new CreateUsuarioService();
     mockServiceInstance.execute = jest.fn();
+    mockUsuarioRepository = {
+      create: jest.fn(),
+      getById: jest.fn(),
+      getBy: jest.fn()
+    }
     CreateUsuarioService.mockImplementation(() => mockServiceInstance);
 
-    createUsuarioController = new CreateUsuarioController();
+    createUsuarioController = new CreateUsuarioController(mockUsuarioRepository);
     mockRequest = {
       body: {},
     };

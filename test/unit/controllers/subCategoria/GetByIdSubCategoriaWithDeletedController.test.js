@@ -10,6 +10,10 @@ describe('GetByIdSubCategoriaWithDeletedController', () => {
     let req;
     let res;
 
+    const mockRepository = {
+        getById: jest.fn(),
+    }
+
     const mockServiceInstance = {
         execute: jest.fn(),
     };
@@ -17,7 +21,7 @@ describe('GetByIdSubCategoriaWithDeletedController', () => {
     GetByIdSubCategoriaService.mockImplementation(() => mockServiceInstance);
 
     beforeEach(() => {
-        controller = new GetByIdSubCategoriaWithDeletedController();
+        controller = new GetByIdSubCategoriaWithDeletedController(mockRepository);
         req = {
             params: { id: 1 }
         };
@@ -61,5 +65,9 @@ describe('GetByIdSubCategoriaWithDeletedController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(formattedError.code);
         expect(res.json).toHaveBeenCalledWith(formattedError);
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetByIdSubCategoriaWithDeletedController()).toThrow('No se ha recibido un repositorio');
     });
 });

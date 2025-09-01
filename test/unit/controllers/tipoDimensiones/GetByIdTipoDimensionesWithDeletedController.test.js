@@ -11,14 +11,18 @@ describe('GetByIdTipoDimensionesWithDeletedController', () => {
   let mockRequest;
   let mockResponse;
   let mockGetByIdService;
+  let mockTipoDimensionesRepository;
 
   beforeEach(() => {
     jest.clearAllMocks()
     mockGetByIdService = new GetByIdTipoDimensionesService();
     mockGetByIdService.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      getById: jest.fn(),
+    }
     GetByIdTipoDimensionesService.mockImplementation(() => mockGetByIdService);
 
-    getByIdTipoDimensionesWithDeletedController = new GetByIdTipoDimensionesWithDeletedController();
+    getByIdTipoDimensionesWithDeletedController = new GetByIdTipoDimensionesWithDeletedController(mockTipoDimensionesRepository);
 
     mockRequest = {
       params: {},
@@ -57,9 +61,7 @@ describe('GetByIdTipoDimensionesWithDeletedController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 404, message: 'Not found' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new GetByIdTipoDimensionesWithDeletedController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(GetByIdTipoDimensionesService);
+  it('throw a error if none repository is provided', () => {
+    expect(() => new GetByIdTipoDimensionesWithDeletedController()).toThrow('No se ha recibido un repositorio');
   });
 });

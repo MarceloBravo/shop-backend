@@ -2,7 +2,6 @@
 import request from 'supertest';
 import app from '../../appTest.js';
 import { createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
-//import '../helpers/TestRelations.js';
 
 describe('Integration Test: GetPageProductoController', () => {
     const cantidadProductos = 10;

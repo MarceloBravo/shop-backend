@@ -1,7 +1,8 @@
 
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper, createProductoTestData, destroyProductoTestData, createValoracionProductoTestData } from '../helpers/TestAuthHelper.js';
+import { createProductoTestData, destroyProductoTestData, createValoracionProductoTestData, createUserAndLogin } from '../helpers/TestAuthHelper.js';
+
 
 describe('GetAllValoracionProductoWithDeletedController', () => {
     const cantidad = 3;
@@ -9,7 +10,7 @@ describe('GetAllValoracionProductoWithDeletedController', () => {
     let token;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
         const producto = await createProductoTestData();
         await createValoracionProductoTestData(producto.id, cantidad);
         valoraciones = await createValoracionProductoTestData(producto.id, cantidad, true);

@@ -1,8 +1,8 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { sequelize } from '../../../config/database.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { GeneroModel } from '../../../src/models/GeneroModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { GeneroModel } = db;
 
 describe('Integration Test: GetGeneroWithDeletedController', () => {
     let token;
@@ -10,7 +10,7 @@ describe('Integration Test: GetGeneroWithDeletedController', () => {
     let deletedGenero;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

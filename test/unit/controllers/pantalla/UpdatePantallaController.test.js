@@ -16,10 +16,16 @@ jest.mock('../../../../src/shared/functions.js', () => ({
 
 describe('Unit Test: UpdatePantallaController', () => {
     let controller;
+    let mockPantallaRepository;
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new UpdatePantallaController();
+        mockPantallaRepository = {
+            update: jest.fn(),
+            getById: jest.fn(),
+            getBy: jest.fn()
+        }
+        controller = new UpdatePantallaController(mockPantallaRepository);
         controller.service = mockService;
     });
 
@@ -62,5 +68,9 @@ describe('Unit Test: UpdatePantallaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error de base de datos', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new UpdatePantallaController()).toThrow('No se ha recibido un repositorio');
     });
 });

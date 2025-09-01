@@ -18,7 +18,7 @@ describe('UpdateTipoDimensionesController', () => {
     mockServiceInstance.execute = jest.fn();
     mockDimensionesRepository = {
       update: jest.fn(),
-      findById: jest.fn(),
+      getById: jest.fn(),
     }
     UpdateTipoDimensionesService.mockImplementation(() => mockServiceInstance);
     updateTipoDimensionesController = new UpdateTipoDimensionesController(mockDimensionesRepository);

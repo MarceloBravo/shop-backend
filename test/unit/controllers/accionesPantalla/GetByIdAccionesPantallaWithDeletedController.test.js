@@ -4,6 +4,10 @@ const mockService = {
     execute: jest.fn()
 };
 
+const mockRepository = {
+    getById: jest.fn()
+}
+
 jest.mock('../../../../src/services/accionesPantalla/GetByIdAccionesPantallaService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
 });
@@ -19,7 +23,7 @@ describe('Unit Test: GetByIdAccionesPantallaWithDeletedController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new GetByIdAccionesPantallaWithDeletedController();
+        controller = new GetByIdAccionesPantallaWithDeletedController(mockRepository);
         controller.service = mockService;
     });
 

@@ -1,14 +1,14 @@
 import app from '../../appTest.js';
 import request from 'supertest';
-import { sequelize } from '../../../config/database.js';
-import { TipoDimensionesModel } from '../../../src/models/TipoDimensionesModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { TipoDimensionesModel } = db;
 
 describe('GetAllTipoDimensionesWithDeletedController', () => {
     let token;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
         await TipoDimensionesModel.destroy({ 
             where: {}, 
             force: true 

@@ -1,16 +1,15 @@
 import GetAllTipoDimensionesController from '../../../../src/controllers/tipoDimensiones/GetAllTipoDimensionesController.js';
 import GetAllTipoDimensionesService from '../../../../src/services/tipoDimensiones/GetAllTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../../../src/repositories/TipoDimensionesRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/tipoDimensiones/GetAllTipoDimensionesService.js');
-jest.mock('../../../../src/repositories/TipoDimensionesRepository.js');
 
 describe('GetAllTipoDimensionesController', () => {
   let getAllTipoDimensionesController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockTipoDimensionesRepository;
 
 
   beforeEach(() => {
@@ -18,9 +17,12 @@ describe('GetAllTipoDimensionesController', () => {
     
     mockServiceInstance = new GetAllTipoDimensionesService();
     mockServiceInstance.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      getAll: jest.fn(),
+    };
     GetAllTipoDimensionesService.mockImplementation(() => mockServiceInstance);
 
-    getAllTipoDimensionesController = new GetAllTipoDimensionesController();
+    getAllTipoDimensionesController = new GetAllTipoDimensionesController(mockTipoDimensionesRepository);
     mockRequest = {};
     mockResponse = {
       json: jest.fn(),
@@ -54,9 +56,7 @@ describe('GetAllTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 500, message: 'Database error' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new GetAllTipoDimensionesController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(GetAllTipoDimensionesService);
-  });
+  it('throw a error if none repository is provided', () => {
+        expect(() => new GetAllTipoDimensionesController()).toThrow('No se ha recibido un repositorio');
+    });
 });

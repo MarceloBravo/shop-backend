@@ -4,6 +4,10 @@ const mockService = {
     execute: jest.fn()
 };
 
+const mockRepository = {
+    getAll: jest.fn()
+}
+
 jest.mock('../../../../src/services/menu/GetAllMenuService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
 });
@@ -19,7 +23,7 @@ describe('Unit Test: GetAllMenuWithDeletedController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new GetAllMenuWithDeletedController();
+        controller = new GetAllMenuWithDeletedController(mockRepository);
         controller.service = mockService;
     });
 
@@ -48,5 +52,9 @@ describe('Unit Test: GetAllMenuWithDeletedController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error de base de datos', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetAllMenuWithDeletedController()).toThrow('No se ha recibido un repositorio');
     });
 });

@@ -4,6 +4,12 @@ const mockService = {
     execute: jest.fn()
 };
 
+const mockRepository = {
+    hardDelete: jest.fn(),
+    getById: jest.fn(),
+    getBy: jest.fn(),
+}
+
 jest.mock('../../../../src/services/accionesPantalla/HardDeleteAccionesPantallaService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
 });
@@ -19,7 +25,7 @@ describe('Unit Test: HardDeleteAccionesPantallaController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new HardDeleteAccionesPantallaController();
+        controller = new HardDeleteAccionesPantallaController(mockRepository);
         controller.service = mockService;
     });
 

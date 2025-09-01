@@ -9,6 +9,7 @@ describe('UpdateSubCategoriaController', () => {
     let controller;
     let req;
     let res;
+    let mockSubCategoriaRepository;
 
     const mockServiceInstance = {
         execute: jest.fn(),
@@ -17,7 +18,12 @@ describe('UpdateSubCategoriaController', () => {
     UpdateSubCategoriaService.mockImplementation(() => mockServiceInstance);
 
     beforeEach(() => {
-        controller = new UpdateSubCategoriaController();
+        mockSubCategoriaRepository = {
+            update: jest.fn(),
+            getById: jest.fn(),
+            getBy: jest.fn(),
+        };
+        controller = new UpdateSubCategoriaController(mockSubCategoriaRepository);
         req = {
             params: { id: 1 },
             body: { nombre: 'Updated SubCategoria', categoria_id: 1 }
@@ -68,5 +74,9 @@ describe('UpdateSubCategoriaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(formattedError.code);
         expect(res.json).toHaveBeenCalledWith(formattedError);
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new UpdateSubCategoriaController()).toThrow('No se ha recibido un repositorio');
     });
 });

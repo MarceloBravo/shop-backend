@@ -2,7 +2,11 @@ import SoftDeleteAccionesPantallaController from '../../../../src/controllers/ac
 
 const mockService = {
     execute: jest.fn()
-};
+}
+
+const mockRepository = {
+    softDelete: jest.fn()
+}
 
 jest.mock('../../../../src/services/accionesPantalla/SoftDeleteAccionesPantallaService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
@@ -19,7 +23,7 @@ describe('Unit Test: SoftDeleteAccionesPantallaController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new SoftDeleteAccionesPantallaController();
+        controller = new SoftDeleteAccionesPantallaController(mockRepository);
         controller.service = mockService;
     });
 

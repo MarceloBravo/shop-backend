@@ -1,15 +1,14 @@
 
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
+import { createProductoTestData, destroyProductoTestData, createUserAndLogin } from '../helpers/TestAuthHelper.js';
 //import '../helpers/TestRelations.js';
 
 describe('Integration Test: GetAllProductoWithDeletedController', () => {
     let token;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin()
         await createProductoTestData(3);
     });
 

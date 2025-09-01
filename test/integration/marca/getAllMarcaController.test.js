@@ -1,14 +1,14 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { sequelize } from '../../../config/database.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { MarcaModel } from '../../../src/models/MarcaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { MarcaModel } = db;
 
 describe('Integration Test: GetAllMarcaController', () => {
     let token;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

@@ -1,16 +1,17 @@
 
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
-import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { SubCategoriaModel, CategoriaModel } = db;
+
 
 describe('GetByIdSubCategoriaWithDeletedController Integration', () => {
     let token;
     let categoria;
 
     beforeAll(async () => {
-        token = global.testToken;
+        token = await createUserAndLogin();;
         await CategoriaModel.destroy({ where: {}, force: true });
         await SubCategoriaModel.destroy({ where: {}, force: true });
         categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });

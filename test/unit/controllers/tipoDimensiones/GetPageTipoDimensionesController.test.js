@@ -11,14 +11,18 @@ describe('GetPageTipoDimensionesController', () => {
   let mockRequest;
   let mockResponse;
   let mockGetPageService;
+  let mockTipoDimensionesRepository
 
   beforeEach(() => {
     jest.clearAllMocks()
     mockGetPageService = new GetPageTipoDimensionesService();
     mockGetPageService.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      getPage: jest.fn()      
+    }
     GetPageTipoDimensionesService.mockImplementation(() => mockGetPageService);
 
-    getPageTipoDimensionesController = new GetPageTipoDimensionesController();
+    getPageTipoDimensionesController = new GetPageTipoDimensionesController(mockTipoDimensionesRepository);
     mockRequest = {
       params: {},
     };
@@ -64,9 +68,7 @@ describe('GetPageTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 500, message: 'Database error' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new GetPageTipoDimensionesController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(GetPageTipoDimensionesService);
+  it('throw a error if none repository is provided', () => {
+    expect(() => new GetPageTipoDimensionesController()).toThrow('No se ha recibido un repositorio');
   });
 });

@@ -1,9 +1,9 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { PantallaModel } from '../../../src/models/PantallaModel.js';
-import { AccionesPantallaModel } from '../../../src/models/AccionesPantallaModel.js';
-import { recordData, createTestRecords } from './constantes.js';
+import { createTestRecords } from './constantes.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { PantallaModel, AccionesPantallaModel } = db;
 
 describe('Integration Test: GetAllAccionesPantallaWithDeletedController', () => {
     let token;
@@ -11,7 +11,7 @@ describe('Integration Test: GetAllAccionesPantallaWithDeletedController', () => 
     //const deletedData = recordData;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

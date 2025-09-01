@@ -1,8 +1,8 @@
 import app from '../../appTest.js';
 import request from 'supertest';
-import { sequelize } from '../../../config/database.js';
-import { TipoDimensionesModel } from '../../../src/models/TipoDimensionesModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { TipoDimensionesModel } = db;
 
 describe('GetAllTipoDimensionesController', () => {
     let token;
@@ -12,7 +12,7 @@ describe('GetAllTipoDimensionesController', () => {
             where: {}, 
             force: true 
         }); // Clear existing records
-        token = global.testToken
+        token = await createUserAndLogin();
         
         try {
             // Create test data

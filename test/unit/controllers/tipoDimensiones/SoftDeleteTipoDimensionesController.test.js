@@ -1,24 +1,27 @@
 import SoftDeleteTipoDimensionesController from '../../../../src/controllers/tipoDimensiones/SoftDeleteTipoDimensionesController.js';
 import SoftDeleteTipoDimensionesService from '../../../../src/services/tipoDimensiones/SoftDeleteTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../../../src/repositories/TipoDimensionesRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/tipoDimensiones/SoftDeleteTipoDimensionesService.js');
-jest.mock('../../../../src/repositories/TipoDimensionesRepository.js');
 
 describe('SoftDeleteTipoDimensionesController', () => {
   let softDeleteTipoDimensionesController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockTipoDimensionesRepository;
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.clearAllMocks();
     mockServiceInstance = new SoftDeleteTipoDimensionesService();
     mockServiceInstance.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      softDelete: jest.fn(),
+      getById: jest.fn(),
+    }
     SoftDeleteTipoDimensionesService.mockImplementation(() => mockServiceInstance);
 
-    softDeleteTipoDimensionesController = new SoftDeleteTipoDimensionesController();
+    softDeleteTipoDimensionesController = new SoftDeleteTipoDimensionesController(mockTipoDimensionesRepository);
     mockRequest = {
       params: {},
     };
@@ -27,6 +30,10 @@ describe('SoftDeleteTipoDimensionesController', () => {
       status: jest.fn().mockReturnThis(),
     };
     jest.spyOn(functions, 'handleError').mockImplementation((error) => ({ code: error.code || 500, message: error.message }));
+  });
+
+  afterAll(() => {
+    jest.clearAllMocks();
   });
 
   it('should soft delete a tipo dimensiones and return success message', async () => {
@@ -71,9 +78,7 @@ describe('SoftDeleteTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 404, message: 'Not found' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new SoftDeleteTipoDimensionesController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(SoftDeleteTipoDimensionesService);
+  it('throw a error if none repository is provided', () => {
+      expect(() => new SoftDeleteTipoDimensionesController()).toThrow('No se ha recibido un repositorio');
   });
 });

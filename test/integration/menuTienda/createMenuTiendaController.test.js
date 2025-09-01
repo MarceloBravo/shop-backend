@@ -1,13 +1,15 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { MenuTiendaModel } from '../../../src/models/MenuTiendaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { MenuTiendaModel } = db;
+
 
 describe('Integration Test: CreateMenuTiendaController', () => {
     let token;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     afterEach(async () => {

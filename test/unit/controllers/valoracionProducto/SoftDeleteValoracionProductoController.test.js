@@ -7,11 +7,17 @@ describe('SoftDeleteValoracionProductoController', () => {
     let req;
     let res;
 
+    const mockRepository = {
+        siftDelete: jest.fn(),
+        getById: jest.fn(),
+        getBy: jest.fn()
+    }
+
     beforeEach(() => {
         service = {
             execute: jest.fn()
         };
-        controller = new SoftDeleteValoracionProductoController();
+        controller = new SoftDeleteValoracionProductoController(mockRepository);
         controller.service = service;
         req = {
             params: { id: 1 }
@@ -49,5 +55,9 @@ describe('SoftDeleteValoracionProductoController', () => {
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error: Error al eliminar la valoración', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new SoftDeleteValoracionProductoController()).toThrow('No se ha recibido un repositorio');
     });
 });

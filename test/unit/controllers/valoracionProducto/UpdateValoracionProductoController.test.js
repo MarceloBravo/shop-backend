@@ -7,11 +7,17 @@ describe('UpdateValoracionProductoController', () => {
     let req;
     let res;
 
+    const mockRepository = {
+        update: jest.fn(),
+        getById: jest.fn(),
+        getBy: jest.fn()
+    }
+
     beforeEach(() => {
         service = {
             execute: jest.fn()
         };
-        controller = new UpdateValoracionProductoController();
+        controller = new UpdateValoracionProductoController(mockRepository);
         controller.service = service;
         req = {
             params: { id: 1 },
@@ -52,5 +58,9 @@ describe('UpdateValoracionProductoController', () => {
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error: Error al actualizar la valoración', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new UpdateValoracionProductoController()).toThrow('No se ha recibido un repositorio');
     });
 });

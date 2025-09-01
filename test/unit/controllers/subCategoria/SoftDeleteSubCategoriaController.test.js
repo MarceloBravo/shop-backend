@@ -14,10 +14,16 @@ describe('SoftDeleteSubCategoriaController', () => {
         execute: jest.fn(),
     };
 
+    const mockRepository = {
+        softDelete: jest.fn(),
+        getById: jest.fn(),
+        getBy: jest.fn()
+    }
+
     SoftDeleteSubCategoriaService.mockImplementation(() => mockServiceInstance);
 
     beforeEach(() => {
-        controller = new SoftDeleteSubCategoriaController();
+        controller = new SoftDeleteSubCategoriaController(mockRepository);
         req = {
             params: { id: 1 }
         };
@@ -67,5 +73,9 @@ describe('SoftDeleteSubCategoriaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(formattedError.code);
         expect(res.json).toHaveBeenCalledWith(formattedError);
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new SoftDeleteSubCategoriaController()).toThrow('No se ha recibido un repositorio');
     });
 });

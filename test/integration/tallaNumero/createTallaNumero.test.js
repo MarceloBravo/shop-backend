@@ -1,7 +1,9 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TallaNumericaModel } from '../../../src/models/TallaNumericaModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { TallaNumericaModel } = db;
+
 
 // Datos de prueba exclusivos para los tests
 const TEST_TALLA_LETRA = 42.5;
@@ -16,7 +18,7 @@ describe('Integration Test: CreateTallaNumero', () => {
     let token;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

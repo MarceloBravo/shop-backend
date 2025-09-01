@@ -1,17 +1,18 @@
 
 import GetAllUsuarioWithDeletedController from '../../../../src/controllers/usuario/GetAllUsuarioWithDeletedController.js';
 import GetAllUsuarioService from '../../../../src/services/usuario/GetAllUsuarioService.js';
-import UsuarioRepository from '../../../../src/repositories/UsuarioRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/usuario/GetAllUsuarioService.js');
-jest.mock('../../../../src/repositories/UsuarioRepository.js');
 
 describe('GetAllUsuarioWithDeletedController', () => {
   let getAllUsuarioWithDeletedController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  const mockRepository = {
+    getAll: jest.fn(),
+  }
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -20,7 +21,7 @@ describe('GetAllUsuarioWithDeletedController', () => {
     mockServiceInstance.execute = jest.fn();
     GetAllUsuarioService.mockImplementation(() => mockServiceInstance);
 
-    getAllUsuarioWithDeletedController = new GetAllUsuarioWithDeletedController();
+    getAllUsuarioWithDeletedController = new GetAllUsuarioWithDeletedController(mockRepository);
     mockRequest = {};
     mockResponse = {
       json: jest.fn(),

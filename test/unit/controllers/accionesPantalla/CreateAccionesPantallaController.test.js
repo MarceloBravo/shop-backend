@@ -16,10 +16,15 @@ jest.mock('../../../../src/shared/functions.js', () => ({
 
 describe('Unit Test: CreateAccionesPantallaController', () => {
     let controller;
+    let  mockAccionesPantallaRepository;
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new CreateAccionesPantallaController();
+        mockAccionesPantallaRepository = {
+            create: jest.fn(),
+            getById: jest.fn(),
+        }
+        controller = new CreateAccionesPantallaController(mockAccionesPantallaRepository);
         controller.service = mockService;
     });
 

@@ -4,6 +4,10 @@ const mockService = {
     execute: jest.fn()
 };
 
+const mockRepository = {
+    getPage: jest.fn()
+}
+
 jest.mock('../../../../src/services/accionesPantalla/GetPageAccionesPantallaService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
 });
@@ -19,7 +23,7 @@ describe('Unit Test: GetPageAccionesPantallaController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new GetPageAccionesPantallaController();
+        controller = new GetPageAccionesPantallaController(mockRepository);
         controller.service = mockService;
     });
 

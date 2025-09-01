@@ -12,14 +12,19 @@ describe('HardDeleteUsuarioController', () => {
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockUsuarioRepository;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockServiceInstance = new HardDeleteUsuarioService();
     mockServiceInstance.execute = jest.fn();
+    mockUsuarioRepository = {
+      hardDelete: jest.fn(),
+      getById: jest.fn(),
+    }
     HardDeleteUsuarioService.mockImplementation(() => mockServiceInstance);
 
-    hardDeleteUsuarioController = new HardDeleteUsuarioController();
+    hardDeleteUsuarioController = new HardDeleteUsuarioController(mockUsuarioRepository);
     mockRequest = {
       params: {},
     };

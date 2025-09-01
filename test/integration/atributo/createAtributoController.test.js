@@ -1,14 +1,15 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { sequelize } from '../../../config/database.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { AtributosModel } from '../../../src/models/AtributosModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { AtributosModel } = db;
+
 
 describe('Integration Test: CreateAtributoController', () => {
     let token;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     afterEach(async () => {

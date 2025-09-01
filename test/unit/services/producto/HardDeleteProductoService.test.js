@@ -1,17 +1,17 @@
 import HardDeleteProductoService from '../../../../src/services/producto/HardDeleteProductoService.js';
-import { jest } from '@jest/globals';
 
-describe('HardDeleteProductoService', () => {
-    let mockRepository;
+describe('HardDeleteProductoService', () => {    
     let service;
     let mockProduct;
 
+    const mockRepository = {
+        hardDelete: jest.fn(),
+        getById: jest.fn(),    
+        getBy: jest.fn(),
+
+    }
+
     beforeEach(() => {
-        mockRepository = {
-            findById: jest.fn(),
-            getById: jest.fn(),
-            hardDelete: jest.fn()
-        };
         service = new HardDeleteProductoService(mockRepository);
         mockProduct = {
             id: 1,
@@ -25,30 +25,30 @@ describe('HardDeleteProductoService', () => {
     });
 
     it('should hard delete product successfully', async () => {
-        mockRepository.findById.mockResolvedValue(mockProduct);
+        mockRepository.getById.mockResolvedValue(mockProduct);
         mockRepository.hardDelete.mockResolvedValue(true);
 
         const result = await service.execute(1);
 
-        expect(mockRepository.findById).toHaveBeenCalledWith(1, false);
+        expect(mockRepository.getById).toHaveBeenCalledWith(1, false);
         expect(mockRepository.hardDelete).toHaveBeenCalledWith(1, null);
         expect(result).toBe(true);
     });
 
     it('should hard delete with transaction', async () => {
         const mockTransaction = { id: 'transaction-1' };
-        mockRepository.findById.mockResolvedValue(mockProduct);
+        mockRepository.getById.mockResolvedValue(mockProduct);
         mockRepository.hardDelete.mockResolvedValue(true);
 
         const result = await service.execute(1, mockTransaction);
 
-        expect(mockRepository.findById).toHaveBeenCalledWith(1, false);
+        expect(mockRepository.getById).toHaveBeenCalledWith(1, false);
         expect(mockRepository.hardDelete).toHaveBeenCalledWith(1, mockTransaction);
         expect(result).toBe(true);
     });
 
     it('should throw 404 error when product is not found', async () => {
-        mockRepository.findById.mockResolvedValue(null);
+        mockRepository.getById.mockResolvedValue(null);
 
         await expect(service.execute(999))
             .rejects

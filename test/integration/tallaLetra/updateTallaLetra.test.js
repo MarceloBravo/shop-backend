@@ -1,7 +1,8 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TallaLetraModel } from '../../../src/models/TallaLetraModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { TallaLetraModel } = db;
 
 const TEST_TALLA_LETRA = 'M';
 const TEST_TALLA_LETRA_UPDATED = 'L';
@@ -15,7 +16,7 @@ describe('Integration Test: UpdateTallaLetra', () => {
     let testTallaLetra;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

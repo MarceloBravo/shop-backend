@@ -1,36 +1,34 @@
 
 import request from 'supertest';
 import app from '../../appTest.js';
-import { SubCategoriaModel } from '../../../src/models/SubCategoriaModel.js';
-import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+
+const { SubCategoriaModel, CategoriaModel } = db;
 
 describe('GetPageSubCategoriaWithDeletedController Integration', () => {
     let token;
-    let createdSubCategoriaIds = [];
     let categoria;
 
     beforeAll(async () => {
-        token = global.testToken;
+        token = await createUserAndLogin();;
+        await SubCategoriaModel.destroy({ where: {}, force: true });
         await CategoriaModel.destroy({ where: {}, force: true });
         await SubCategoriaModel.destroy({ where: {}, force: true });
         categoria = await CategoriaModel.create({ nombre: 'Test Categoria', descripcion: 'Test Categoria' });
-    });
-
-    beforeEach(async () => {
+   
         // Create some test data, including soft-deleted ones
         for (let i = 0; i < 15; i++) {
             const subCategoria = await SubCategoriaModel.create({ nombre: `Test Page Deleted ${i}`, categoria_id: categoria.id });
-            createdSubCategoriaIds.push(subCategoria.id);
             if (i % 2 === 0) {
                 await subCategoria.destroy(); // Soft delete even ones
             }
         }
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         // Clean up test data
         await SubCategoriaModel.destroy({ where: {}, force: true });
-        createdSubCategoriaIds = [];
     });
 
     test('should get a page of subcategories including deleted with default limit', async () => {

@@ -1,7 +1,5 @@
-import { CategoriaModel } from '../../../../src/models/CategoriaModel.js';
-import { SubCategoriaModel } from '../../../../src/models/SubCategoriaModel.js';
-import { GeneroModel } from '../../../../src/models/GeneroModel.js';
-import { MarcaModel } from '../../../../src/models/MarcaModel.js';
+import db from '../../../src/models/index.js';
+const { CategoriaModel, SubCategoriaModel, GeneroModel, MarcaModel } = db;
 
 export const createRelatedTestDataProducto = async () => {
     await destroyRelatedTestDataProducto();

@@ -17,7 +17,7 @@
     "seed:test": "node -e \"process.env.NODE_ENV='test'; require('child_process').execSync('node scripts/run-seeders.js', {stdio: 'inherit'})\"",
     "rutas": "node scripts/listarRutas.mjs",
     "test:unit:debug": "node -e \"process.env.NODE_ENV='test'; require('child_process').execSync('node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand', {stdio: 'inherit'})\"",
-    "test:coverage": "node -e \"process.env.NODE_ENV='test'; process.env.RUN_GLOBAL_SETUP='true'; require('child_process').execSync('jest --coverage', {stdio: 'inherit'})\"",
+    "test:coverage": "node -e \"process.env.NODE_ENV='test'; process.env.RUN_GLOBAL_SETUP='true'; require('child_process').execSync('jest --coverage --runInBand', {stdio: 'inherit'})\"",
     "sonar": "npm run test:coverage && sonar-scanner"
   },
   "keywords": [],

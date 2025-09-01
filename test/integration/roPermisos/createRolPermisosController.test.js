@@ -1,10 +1,9 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { RolPermisosModel } from '../../../src/models/RolPermisosModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { RolModel } from '../../../src/models/RolModel.js';
-import { PantallaModel } from '../../../src/models/PantallaModel.js';
-import { AccionesPantallaModel } from '../../../src/models/AccionesPantallaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const  { RolPermisosModel, RolModel, PantallaModel, AccionesPantallaModel } = db;
+
 
 describe('Integration Test: CreateRolPermisosController', () => {
     let token;
@@ -14,7 +13,7 @@ describe('Integration Test: CreateRolPermisosController', () => {
     let rolPermisosData;
 
     beforeEach(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
         rol = await RolModel.create({ nombre: 'AdministradorTest' });
         pantalla = await PantallaModel.create({ nombre: 'DashboardTest', uri: '/dashboard-test' });
         

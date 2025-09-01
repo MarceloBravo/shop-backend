@@ -1,7 +1,8 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { RolModel } from '../../../src/models/RolModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { RolModel } = db;
 
 // Datos de prueba exclusivos para los tests
 const TEST_ROL_NAME = 'RolTestIntegracion';
@@ -16,7 +17,7 @@ describe('Integration Test: CreateRolController', () => {
     let token;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

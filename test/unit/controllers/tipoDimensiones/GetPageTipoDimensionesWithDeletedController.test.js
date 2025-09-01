@@ -1,24 +1,27 @@
 import GetPageTipoDimensionesWithDeletedController from '../../../../src/controllers/tipoDimensiones/GetPageTipoDimensionesWithDeletedController.js';
 import GetPageTipoDimensionesService from '../../../../src/services/tipoDimensiones/GetPageTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../../../src/repositories/TipoDimensionesRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/tipoDimensiones/GetPageTipoDimensionesService.js');
-jest.mock('../../../../src/repositories/TipoDimensionesRepository.js');
 
 describe('GetPageTipoDimensionesWithDeletedController', () => {
   let getPageTipoDimensionesWithDeletedController;
   let mockRequest;
   let mockResponse;
   let mockGetPageService;
+  let mockTipoDimensionesRepository;
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.clearAllMocks()
     mockGetPageService = new GetPageTipoDimensionesService();
     mockGetPageService.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      softDelete: jest.fn(),
+      getById: jest.fn(),
+    }
     GetPageTipoDimensionesService.mockImplementation(() => mockGetPageService);
 
-    getPageTipoDimensionesWithDeletedController = new GetPageTipoDimensionesWithDeletedController();
+    getPageTipoDimensionesWithDeletedController = new GetPageTipoDimensionesWithDeletedController(mockTipoDimensionesRepository);
 
     mockRequest = {
       params: {},
@@ -28,6 +31,10 @@ describe('GetPageTipoDimensionesWithDeletedController', () => {
       status: jest.fn().mockReturnThis(),
     };
     jest.spyOn(functions, 'handleError').mockImplementation((error) => ({ code: error.code || 500, message: error.message }));
+  });
+
+  afterAll(() => {
+    jest.clearAllMocks();
   });
 
   it('should return a page of tipo dimensiones including deleted ones', async () => {
@@ -65,9 +72,7 @@ describe('GetPageTipoDimensionesWithDeletedController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 500, message: 'Database error' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new GetPageTipoDimensionesWithDeletedController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(GetPageTipoDimensionesService);
+  it('throw a error if none repository is provided', () => {
+      expect(() => new GetPageTipoDimensionesWithDeletedController()).toThrow('No se ha recibido un repositorio');
   });
 });

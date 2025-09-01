@@ -3,7 +3,6 @@ import getModelsInOrder from '../src/shared/getModelsInOrder.js';
 import rolSeeder from '../seeders/20250327121711-rol-seeder.js';
 import usuarioSeeder from '../seeders/20250327124254-usuario-seeder.js';
 import app from './appTest.js';
-import { TestAuthHelper } from './integration/helpers/TestAuthHelper.js';
 
 export default async function globalSetup() {
   if(process.env.RUN_GLOBAL_SETUP === undefined) return;
@@ -16,8 +15,6 @@ export default async function globalSetup() {
 
     await levantarServidor();
 
-    await obtenerToken();
-    
   } catch (e) {
     console.error('globalSetup ERROR:', e);
     throw e; // importante para que Jest falle si hay error
@@ -75,9 +72,3 @@ const levantarServidor = async () => {
     console.log(`Test server listening on port ${port}`);
   });
 } 
-
-const obtenerToken = async () => {
-  const token = await TestAuthHelper.createUserAndLogin();
-  if(!token) throw new Error('No se pudo obtener el token');
-  global.testToken = token;
-}

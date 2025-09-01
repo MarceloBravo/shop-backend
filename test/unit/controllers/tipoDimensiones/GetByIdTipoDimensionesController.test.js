@@ -1,25 +1,27 @@
 import GetByIdTipoDimensionesController from '../../../../src/controllers/tipoDimensiones/GetByIdTipoDimensionesController.js';
 import GetByIdTipoDimensionesService from '../../../../src/services/tipoDimensiones/GetByIdTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../../../src/repositories/TipoDimensionesRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/tipoDimensiones/GetByIdTipoDimensionesService.js');
-jest.mock('../../../../src/repositories/TipoDimensionesRepository.js');
 
 describe('GetByIdTipoDimensionesController', () => {
   let getByIdTipoDimensionesController;
   let mockRequest;
   let mockResponse;
   let mockGetByIdService;
+  let mockTipoDimensionesRepository;
 
   beforeEach(() => {
     jest.clearAllMocks()
     
     mockGetByIdService = new GetByIdTipoDimensionesService();
     mockGetByIdService.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      getById: jest.fn(),
+    }
     GetByIdTipoDimensionesService.mockImplementation(() => mockGetByIdService);
 
-    getByIdTipoDimensionesController = new GetByIdTipoDimensionesController();
+    getByIdTipoDimensionesController = new GetByIdTipoDimensionesController(mockTipoDimensionesRepository);
     mockRequest = {
       params: {},
     };
@@ -57,9 +59,7 @@ describe('GetByIdTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 404, message: 'Not found' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new GetByIdTipoDimensionesController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(GetByIdTipoDimensionesService);
+  it('throw a error if none repository is provided', () => {
+      expect(() => new GetByIdTipoDimensionesController()).toThrow('No se ha recibido un repositorio');
   });
 });

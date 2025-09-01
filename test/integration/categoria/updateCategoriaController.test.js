@@ -1,16 +1,16 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { CategoriaModel } = db;
 
 describe('Integration Test: UpdateCategoriaController', () => {
     let token;
     let testCategoria;
     
     beforeAll(async () => {
-        token = global.testToken
-    });
-
-    beforeEach(async () => {
+        token = await createUserAndLogin();;
+        await CategoriaModel.destroy({ where: {}, force: true });
         // Crear un categoria de prueba antes de cada test
         testCategoria = await CategoriaModel.create({
             nombre: 'Test Categoria',
@@ -18,7 +18,7 @@ describe('Integration Test: UpdateCategoriaController', () => {
         });
     });
 
-    afterEach(async () => {
+    afterAll(async () => {
         // Limpiar el categoria de prueba después de cada test
         await CategoriaModel.destroy({ where: {}, force: true });
     });

@@ -4,6 +4,12 @@ const mockService = {
     execute: jest.fn()
 };
 
+const mockRepository = {
+    hardDelete: jest.fn(),
+    getById: jest.fn(),
+    getBy: jest.fn()
+}
+
 jest.mock('../../../../src/services/menuTienda/HardDeleteMenuTiendaService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
 });
@@ -19,7 +25,7 @@ describe('Unit Test: HardDeleteMenuTiendaController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new HardDeleteMenuTiendaController();
+        controller = new HardDeleteMenuTiendaController(mockRepository);
         controller.service = mockService;
     });
 
@@ -60,5 +66,9 @@ describe('Unit Test: HardDeleteMenuTiendaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error de base de datos', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new HardDeleteMenuTiendaController()).toThrow('No se ha recibido un repositorio');
     });
 });

@@ -14,10 +14,14 @@ describe('GetByIdSubCategoriaController', () => {
         execute: jest.fn(),
     };
 
+    const mockRepository = {
+        getById: jest.fn(),
+    }
+
     GetByIdSubCategoriaService.mockImplementation(() => mockServiceInstance);
 
     beforeEach(() => {
-        controller = new GetByIdSubCategoriaController();
+        controller = new GetByIdSubCategoriaController(mockRepository);
         req = {
             params: { id: 1 }
         };
@@ -61,5 +65,9 @@ describe('GetByIdSubCategoriaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(formattedError.code);
         expect(res.json).toHaveBeenCalledWith(formattedError);
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetByIdSubCategoriaController()).toThrow('No se ha recibido un repositorio');
     });
 });

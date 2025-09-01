@@ -16,10 +16,15 @@ jest.mock('../../../../src/shared/functions.js', () => ({
 
 describe('Unit Test: CreateMenuTiendaController', () => {
     let controller;
+    let mockCreateMenuTiendaRepository
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new CreateMenuTiendaController();
+        mockCreateMenuTiendaRepository = {
+            create: jest.fn(),
+            getById: jest.fn(),
+        }
+        controller = new CreateMenuTiendaController(mockCreateMenuTiendaRepository);
         controller.service = mockService;
     });
 
@@ -62,5 +67,9 @@ describe('Unit Test: CreateMenuTiendaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error de base de datos', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+      expect(() => new CreateMenuTiendaController()).toThrow('No se ha recibido un repositorio');
     });
 });

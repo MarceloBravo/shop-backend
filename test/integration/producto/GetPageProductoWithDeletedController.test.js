@@ -1,8 +1,9 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper, createProductoTestData, destroyProductoTestData } from '../helpers/TestAuthHelper.js';
-import { ProductoModel } from '../../../src/models/ProductoModel.js';
-//import '../helpers/TestRelations.js';
+import { createProductoTestData, destroyProductoTestData, createUserAndLogin } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+const { ProductoModel } = db;
+
 
 describe('Integration Test: GetPageProductoWithDeletedController', () => {
     const cantidadProductos = 10;
@@ -11,7 +12,7 @@ describe('Integration Test: GetPageProductoWithDeletedController', () => {
     let productos = [];
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin()
         productos = await createProductoTestData(10);
         // Soft delete one product
         await ProductoModel.destroy({ where: { id: productos[0].id } });

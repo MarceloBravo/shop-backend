@@ -17,7 +17,8 @@ describe('GetPageSubCategoriaController', () => {
     GetPageSubCategoriaService.mockImplementation(() => mockServiceInstance);
 
     beforeEach(() => {
-        controller = new GetPageSubCategoriaController();
+
+        controller = new GetPageSubCategoriaController(mockServiceInstance);
         req = {
             params: { pag: 1, limit: 10 }
         };
@@ -85,4 +86,8 @@ describe('GetPageSubCategoriaController', () => {
         expect(res.status).toHaveBeenCalledWith(formattedError.code);
         expect(res.json).toHaveBeenCalledWith(formattedError);
     });
+
+    it('throw a error if none repository is provided', () => {
+      expect(() => new GetPageSubCategoriaController()).toThrow('No se ha recibido un repositorio');
+  });
 });

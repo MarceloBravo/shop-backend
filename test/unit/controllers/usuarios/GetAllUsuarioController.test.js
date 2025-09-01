@@ -1,17 +1,16 @@
 
 import GetAllUsuarioController from '../../../../src/controllers/usuario/GetAllUsuarioController.js';
 import GetAllUsuarioService from '../../../../src/services/usuario/GetAllUsuarioService.js';
-import UsuarioRepository from '../../../../src/repositories/UsuarioRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/usuario/GetAllUsuarioService.js');
-jest.mock('../../../../src/repositories/UsuarioRepository.js');
 
 describe('GetAllUsuarioController', () => {
   let getAllUsuarioController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockUsuarioRepository;
 
 
   beforeEach(() => {
@@ -19,9 +18,12 @@ describe('GetAllUsuarioController', () => {
     
     mockServiceInstance = new GetAllUsuarioService();
     mockServiceInstance.execute = jest.fn();
+    mockUsuarioRepository = {
+      getAll: jest.fn(),
+    }
     GetAllUsuarioService.mockImplementation(() => mockServiceInstance);
 
-    getAllUsuarioController = new GetAllUsuarioController();
+    getAllUsuarioController = new GetAllUsuarioController(mockUsuarioRepository);
     mockRequest = {};
     mockResponse = {
       json: jest.fn(),

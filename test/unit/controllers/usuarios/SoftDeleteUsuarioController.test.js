@@ -1,25 +1,28 @@
 
 import SoftDeleteUsuarioController from '../../../../src/controllers/usuario/SoftDeleteUsuarioController.js';
 import SoftDeleteUsuarioService from '../../../../src/services/usuario/SoftDeleteUsuarioService.js';
-import UsuarioRepository from '../../../../src/repositories/UsuarioRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/usuario/SoftDeleteUsuarioService.js');
-jest.mock('../../../../src/repositories/UsuarioRepository.js');
 
 describe('SoftDeleteUsuarioController', () => {
   let softDeleteUsuarioController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let UsuarioRepository;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockServiceInstance = new SoftDeleteUsuarioService();
     mockServiceInstance.execute = jest.fn();
+    UsuarioRepository = {
+      softDelete: jest.fn(),
+      getById: jest.fn(),
+    }
     SoftDeleteUsuarioService.mockImplementation(() => mockServiceInstance);
 
-    softDeleteUsuarioController = new SoftDeleteUsuarioController();
+    softDeleteUsuarioController = new SoftDeleteUsuarioController(UsuarioRepository);
     mockRequest = {
       params: {},
     };

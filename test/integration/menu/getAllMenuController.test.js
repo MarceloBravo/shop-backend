@@ -1,13 +1,14 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { MenuModel } from '../../../src/models/MenuModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const {MenuModel } = db;
 
 describe('Integration Test: GetAllMenuController', () => {
     let token;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
         await MenuModel.bulkCreate([
             { nombre: 'Inicio', ruta: '/inicio', icono: 'home' },
             { nombre: 'Productos', ruta: '/productos', icono: 'store' },

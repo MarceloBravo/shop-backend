@@ -7,11 +7,16 @@ describe('GetByIdValoracionProductoController', () => {
     let req;
     let res;
 
+    const mockRepository = {
+        getById: jest.fn()
+    };
+
+
     beforeEach(() => {
         service = {
             execute: jest.fn()
         };
-        controller = new GetByIdValoracionProductoController();
+        controller = new GetByIdValoracionProductoController(mockRepository);
         controller.service = service;
         req = {
             params: { id: 1 }
@@ -41,5 +46,9 @@ describe('GetByIdValoracionProductoController', () => {
 
         expect(res.status).toHaveBeenCalledWith(404);
         expect(res.json).toHaveBeenCalledWith({ code: 404, error: 'Error: Valoración no encontrada', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetByIdValoracionProductoController()).toThrow('No se ha recibido un repositorio');
     });
 });

@@ -1,8 +1,9 @@
 
 import request from 'supertest';
 import app from '../../appTest.js';
-import { ValoracionProductoModel } from '../../../src/models/ValoracionProductoModel.js';
-import { TestAuthHelper, createProductoTestData, destroyProductoTestData, createValoracionProductoTestData } from '../helpers/TestAuthHelper.js';
+import { createProductoTestData, destroyProductoTestData, createValoracionProductoTestData, createUserAndLogin } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+const { ValoracionProductoModel } = db;
 
 describe('GetAllValoracionProductoController', () => {
     const cantidad = 3;
@@ -10,7 +11,7 @@ describe('GetAllValoracionProductoController', () => {
     let token;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
         const producto = await createProductoTestData();
         valoraciones = await createValoracionProductoTestData(producto.id, cantidad);
     });

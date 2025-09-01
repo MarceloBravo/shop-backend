@@ -1,24 +1,27 @@
 import CreateTipoDimensionesController from '../../../../src/controllers/tipoDimensiones/CreateTipoDimensionesController.js';
 import CreateTipoDimensionesService from '../../../../src/services/tipoDimensiones/CreateTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../../../src/repositories/TipoDimensionesRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/tipoDimensiones/CreateTipoDimensionesService.js');
-jest.mock('../../../../src/repositories/TipoDimensionesRepository.js');
 
 describe('CreateTipoDimensionesController', () => {
   let createTipoDimensionesController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockTipoDimensionesRepository;
 
   beforeEach(() => {
     jest.clearAllMocks();
     mockServiceInstance = new CreateTipoDimensionesService();
     mockServiceInstance.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      create: jest.fn(),
+      getById: jest.fn(),
+    }
     CreateTipoDimensionesService.mockImplementation(() => mockServiceInstance);
 
-    createTipoDimensionesController = new CreateTipoDimensionesController();
+    createTipoDimensionesController = new CreateTipoDimensionesController(mockTipoDimensionesRepository);
     mockRequest = {
       body: {},
     };
@@ -60,9 +63,7 @@ describe('CreateTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 400, message: 'Validation failed' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new CreateTipoDimensionesController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(CreateTipoDimensionesService);
-  });
+  it('throw a error if none repository is provided', () => {
+      expect(() => new CreateTipoDimensionesController()).toThrow('No se ha recibido un repositorio');
+    });
 });

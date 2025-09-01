@@ -19,7 +19,7 @@ describe('UpdateUsuarioController', () => {
     mockServiceInstance.execute = jest.fn();
     mockUsuarioRepository = {
       update: jest.fn(),
-      findById: jest.fn(),      
+      getById: jest.fn(),      
     }
     UpdateUsuarioService.mockImplementation(() => mockServiceInstance);
     updateUsuarioController = new UpdateUsuarioController(mockUsuarioRepository);

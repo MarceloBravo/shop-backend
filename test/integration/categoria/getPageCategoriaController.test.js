@@ -1,12 +1,14 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { CategoriaModel } from '../../../src/models/CategoriaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { CategoriaModel } = db;
 
 describe('Integration Test: GetPageCategoriaController', () => {
     let token;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

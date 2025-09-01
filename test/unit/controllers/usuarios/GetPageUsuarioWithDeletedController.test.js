@@ -12,14 +12,18 @@ describe('GetPageUsuarioWithDeletedController', () => {
   let mockRequest;
   let mockResponse;
   let mockGetPageService;
+  let mockUsuarioRepository;
 
   beforeEach(() => {
     jest.clearAllMocks()
     mockGetPageService = new GetPageUsuarioService();
     mockGetPageService.execute = jest.fn();
+    mockUsuarioRepository = {
+      getPage: jest.fn(),
+    } 
     GetPageUsuarioService.mockImplementation(() => mockGetPageService);
 
-    getPageUsuarioWithDeletedController = new GetPageUsuarioWithDeletedController();
+    getPageUsuarioWithDeletedController = new GetPageUsuarioWithDeletedController(mockUsuarioRepository);
 
     mockRequest = {
       params: {},

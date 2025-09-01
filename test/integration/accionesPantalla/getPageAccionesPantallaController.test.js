@@ -1,15 +1,16 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
 import { createTestRecords } from './constantes.js'
-import { PantallaModel } from '../../../src/models/PantallaModel.js';
-import { AccionesPantallaModel } from '../../../src/models/AccionesPantallaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { PantallaModel, AccionesPantallaModel } = db;
+
 
 describe('Integration Test: GetPageAccionesPantallaController', () => {
     let token;
     
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

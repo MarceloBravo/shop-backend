@@ -1,8 +1,8 @@
 import app from '../../appTest.js';
 import request from 'supertest';
-import { sequelize } from '../../../config/database.js';
-import { UsuarioModel } from '../../../src/models/UsuarioModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { UsuarioModel } = db;
 
 describe('GetByIdUsuarioWithDeletedController', () => {
     let testUsuario;
@@ -10,7 +10,7 @@ describe('GetByIdUsuarioWithDeletedController', () => {
     let token;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
         await UsuarioModel.destroy({ 
             where: {}, 
             force: true 

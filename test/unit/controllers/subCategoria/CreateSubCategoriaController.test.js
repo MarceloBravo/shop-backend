@@ -9,6 +9,11 @@ describe('CreateSubCategoriaController', () => {
     let controller;
     let req;
     let res;
+    const mockSubCategoriaRepository = {
+        create: jest.fn(),
+        getById: jest.fn(),
+        getBy: jest.fn()
+    }
 
     // Mock the instance of the service that the controller will create
     const mockServiceInstance = {
@@ -19,7 +24,7 @@ describe('CreateSubCategoriaController', () => {
     CreateSubCategoriaService.mockImplementation(() => mockServiceInstance);
 
     beforeEach(() => {
-        controller = new CreateSubCategoriaController();
+        controller = new CreateSubCategoriaController(mockSubCategoriaRepository);
         req = {
             body: {
                 nombre: 'Test SubCategoria',
@@ -60,5 +65,9 @@ describe('CreateSubCategoriaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(formattedError.code);
         expect(res.json).toHaveBeenCalledWith(formattedError);
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new CreateSubCategoriaController()).toThrow('No se ha recibido un repositorio');
     });
 });

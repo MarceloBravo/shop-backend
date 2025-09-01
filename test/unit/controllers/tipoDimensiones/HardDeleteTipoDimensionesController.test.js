@@ -1,24 +1,27 @@
 import HardDeleteTipoDimensionesController from '../../../../src/controllers/tipoDimensiones/HardDeleteTipoDimensionesController.js';
 import HardDeleteTipoDimensionesService from '../../../../src/services/tipoDimensiones/HardDeleteTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../../../src/repositories/TipoDimensionesRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/tipoDimensiones/HardDeleteTipoDimensionesService.js');
-jest.mock('../../../../src/repositories/TipoDimensionesRepository.js');
 
 describe('HardDeleteTipoDimensionesController', () => {
   let hardDeleteTipoDimensionesController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockTipoDimensionesRepository;
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.clearAllMocks();
     mockServiceInstance = new HardDeleteTipoDimensionesService();
     mockServiceInstance.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      softDelete: jest.fn(),
+      getById: jest.fn(),
+    }
     HardDeleteTipoDimensionesService.mockImplementation(() => mockServiceInstance);
 
-    hardDeleteTipoDimensionesController = new HardDeleteTipoDimensionesController();
+    hardDeleteTipoDimensionesController = new HardDeleteTipoDimensionesController(mockTipoDimensionesRepository);
     mockRequest = {
       params: {},
     };
@@ -27,6 +30,10 @@ describe('HardDeleteTipoDimensionesController', () => {
       status: jest.fn().mockReturnThis(),
     };
     jest.spyOn(functions, 'handleError').mockImplementation((error) => ({ code: error.code || 500, message: error.message }));
+  });
+
+  afterAll(() => {
+    jest.clearAllMocks();
   });
 
   it('should hard delete a tipo dimensiones and return success message', async () => {
@@ -71,9 +78,7 @@ describe('HardDeleteTipoDimensionesController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 404, message: 'Not found' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new HardDeleteTipoDimensionesController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(HardDeleteTipoDimensionesService);
+  it('throw a error if none repository is provided', () => {
+      expect(() => new HardDeleteTipoDimensionesController()).toThrow('No se ha recibido un repositorio');
   });
 });

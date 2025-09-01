@@ -1,13 +1,14 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { PantallaModel } from '../../../src/models/PantallaModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { PantallaModel } = db;
 
 describe('Integration Test: GetByIdPantallaWithDeletedController', () => {
     let token, pantalla;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
         pantalla = await PantallaModel.create({ nombre: 'Inicio', uri: '/inicio' });
         await pantalla.destroy();
     });

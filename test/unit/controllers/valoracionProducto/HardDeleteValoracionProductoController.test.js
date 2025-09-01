@@ -6,12 +6,15 @@ describe('HardDeleteValoracionProductoController', () => {
     let service;
     let req;
     let res;
+    const mockRepository = {
+        hardDelete: jest.fn()
+    }
 
     beforeEach(() => {
         service = {
             execute: jest.fn()
         };
-        controller = new HardDeleteValoracionProductoController();
+        controller = new HardDeleteValoracionProductoController(mockRepository);
         controller.service = service;
         req = {
             params: { id: 1 }
@@ -49,5 +52,9 @@ describe('HardDeleteValoracionProductoController', () => {
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error: Error al eliminar la valoración', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new HardDeleteValoracionProductoController()).toThrow('No se ha recibido un repositorio');
     });
 });

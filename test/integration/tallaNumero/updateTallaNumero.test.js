@@ -1,7 +1,8 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { TallaNumericaModel } from '../../../src/models/TallaNumericaModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { TallaNumericaModel } = db;
 
 const TEST_TALLA_LETRA = 42.5;
 const TEST_TALLA_LETRA_UPDATED = 40;
@@ -15,7 +16,7 @@ describe('Integration Test: UpdateTallaNumero', () => {
     let testTallaNumero;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {

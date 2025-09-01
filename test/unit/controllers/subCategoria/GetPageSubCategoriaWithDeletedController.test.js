@@ -9,6 +9,7 @@ describe('GetPageSubCategoriaWithDeletedController', () => {
     let controller;
     let req;
     let res;
+    let mockSubCategoriaRepository;
 
     const mockServiceInstance = {
         execute: jest.fn(),
@@ -17,7 +18,10 @@ describe('GetPageSubCategoriaWithDeletedController', () => {
     GetPageSubCategoriaService.mockImplementation(() => mockServiceInstance);
 
     beforeEach(() => {
-        controller = new GetPageSubCategoriaWithDeletedController();
+        mockSubCategoriaRepository = {
+            getPage: jest.fn(),
+        };
+        controller = new GetPageSubCategoriaWithDeletedController(mockSubCategoriaRepository);
         req = {
             params: { pag: 1, limit: 10 }
         };
@@ -70,4 +74,8 @@ describe('GetPageSubCategoriaWithDeletedController', () => {
         expect(res.status).toHaveBeenCalledWith(formattedError.code);
         expect(res.json).toHaveBeenCalledWith(formattedError);
     });
+
+    it('throw a error if none repository is provided', () => {
+      expect(() => new GetPageSubCategoriaWithDeletedController()).toThrow('No se ha recibido un repositorio');
+  });
 });

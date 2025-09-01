@@ -1,15 +1,16 @@
 import app from '../../appTest.js';
 import request from 'supertest';
-import { sequelize } from '../../../config/database.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
-import { TipoDimensionesModel } from '../../../src/models/TipoDimensionesModel.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { TipoDimensionesModel } = db;
+
 
 describe('CreateTipoDimensionesController', () => {
     let token;
 
     beforeAll(async () => {
         await TipoDimensionesModel.destroy({ where: {} }); // Clear existing records
-        token = global.testToken
+        token = await createUserAndLogin();
     });
     
     afterAll(async () => {

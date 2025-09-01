@@ -7,11 +7,15 @@ describe('GetPageValoracionProductoController', () => {
     let req;
     let res;
 
+    const mockRepository = {
+        getPage: jest.fn()
+    }
+
     beforeEach(() => {
         service = {
             execute: jest.fn()
         };
-        controller = new GetPageValoracionProductoController();
+        controller = new GetPageValoracionProductoController(mockRepository);
         controller.service = service;
         req = {
             params: { pag: 1, limit: 10 }
@@ -48,5 +52,9 @@ describe('GetPageValoracionProductoController', () => {
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error: Error al obtener la página de valoraciones', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetPageValoracionProductoController()).toThrow('No se ha recibido un repositorio');
     });
 });

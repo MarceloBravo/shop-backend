@@ -1,9 +1,9 @@
 //import app from '../../../src/app.js';
 import app from '../../appTest.js';
 import request from 'supertest';
-import { sequelize } from '../../../config/database.js';
-import { UsuarioModel } from '../../../src/models/UsuarioModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { UsuarioModel } = db;
 
 describe('UpdateUsuarioController', () => {
     let testUsuario;
@@ -14,7 +14,7 @@ describe('UpdateUsuarioController', () => {
             where: {}, 
             force: true 
         }); // Clear existing records
-        token = global.testToken
+        token = await createUserAndLogin();
         
         try {
             // Create test data

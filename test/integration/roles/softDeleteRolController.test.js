@@ -1,7 +1,8 @@
 import request from 'supertest';
 import app from '../../appTest.js';
-import { RolModel } from '../../../src/models/RolModel.js';
-import { TestAuthHelper } from '../helpers/TestAuthHelper.js';
+import db from '../../../src/models/index.js';
+import { createUserAndLogin } from '../helpers/TestAuthHelper.js';
+const { RolModel } = db;
 
 const TEST_ROL_NAME = 'RolTestIntegracion';
 
@@ -14,7 +15,7 @@ describe('Integration Test: SoftDeleteRolController', () => {
     let testRol;
 
     beforeAll(async () => {
-        token = global.testToken
+        token = await createUserAndLogin();
     });
 
     beforeEach(async () => {
@@ -31,6 +32,7 @@ describe('Integration Test: SoftDeleteRolController', () => {
             .patch(`/api/v1/rol/${testRol.id}`)
             .set('Authorization', `Bearer ${token}`)
             .expect(200);
+        //console.log(response.body);
         expect(response.body).toHaveProperty('code', true);
         expect(response.body).toHaveProperty('mensaje');
         // Verifica que el registro sigue existiendo pero con deleted_at no nulo

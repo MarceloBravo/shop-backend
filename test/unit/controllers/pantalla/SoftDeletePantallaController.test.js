@@ -4,6 +4,12 @@ const mockService = {
     execute: jest.fn()
 };
 
+const mockRepository = {
+    softDelete: jest.fn(),
+    getById: jest.fn(),
+    getBy: jest.fn()
+}
+
 jest.mock('../../../../src/services/pantalla/SoftDeletePantallaService.js', () => {
     return jest.fn().mockImplementation(() => mockService);
 });
@@ -19,7 +25,7 @@ describe('Unit Test: SoftDeletePantallaController', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new SoftDeletePantallaController();
+        controller = new SoftDeletePantallaController(mockRepository);
         controller.service = mockService;
     });
 
@@ -60,5 +66,9 @@ describe('Unit Test: SoftDeletePantallaController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error de base de datos', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new SoftDeletePantallaController()).toThrow('No se ha recibido un repositorio');
     });
 });

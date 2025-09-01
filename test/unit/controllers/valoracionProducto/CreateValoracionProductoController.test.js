@@ -6,12 +6,15 @@ describe('CreateValoracionProductoController', () => {
     let service;
     let req;
     let res;
+    const mockRepository = {
+        create: jest.fn()
+    }
 
     beforeEach(() => {
         service = {
             execute: jest.fn()
         };
-        controller = new CreateValoracionProductoController();
+        controller = new CreateValoracionProductoController(mockRepository);
         controller.service = service;
         req = {
             body: {}
@@ -41,5 +44,9 @@ describe('CreateValoracionProductoController', () => {
 
         expect(res.status).toHaveBeenCalledWith(500);
         expect(res.json).toHaveBeenCalledWith({ code: 500, error: 'Error: Error al crear la valoración', details: [] });
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new CreateValoracionProductoController()).toThrow('No se ha recibido un repositorio');
     });
 });

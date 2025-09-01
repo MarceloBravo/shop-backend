@@ -14,10 +14,14 @@ describe('GetAllSubCategoriaWithDeletedController', () => {
         execute: jest.fn(),
     };
 
+    const mockRepository = {
+        getAll: jest.fn(),
+    }
+
     GetAllSubCategoriaService.mockImplementation(() => mockServiceInstance);
 
     beforeEach(() => {
-        controller = new GetAllSubCategoriaWithDeletedController();
+        controller = new GetAllSubCategoriaWithDeletedController(mockRepository);
         req = {};
         res = {
             json: jest.fn(),
@@ -52,5 +56,9 @@ describe('GetAllSubCategoriaWithDeletedController', () => {
         expect(handleError).toHaveBeenCalledWith(error);
         expect(res.status).toHaveBeenCalledWith(formattedError.code);
         expect(res.json).toHaveBeenCalledWith(formattedError);
+    });
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetAllSubCategoriaWithDeletedController()).toThrow('No se ha recibido un repositorio');
     });
 });

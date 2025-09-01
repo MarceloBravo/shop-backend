@@ -12,14 +12,18 @@ describe('GetPageUsuarioController', () => {
   let mockRequest;
   let mockResponse;
   let mockGetPageService;
+  let mockUsuarioRepository;
 
   beforeEach(() => {
     jest.clearAllMocks()
     mockGetPageService = new GetPageUsuarioService();
     mockGetPageService.execute = jest.fn();
+    mockUsuarioRepository = {
+      getPage: jest.fn(),
+    }
     GetPageUsuarioService.mockImplementation(() => mockGetPageService);
 
-    getPageUsuarioController = new GetPageUsuarioController();
+    getPageUsuarioController = new GetPageUsuarioController(mockUsuarioRepository);
     mockRequest = {
       params: {},
     };

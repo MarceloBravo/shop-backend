@@ -5,22 +5,23 @@ jest.mock('../../../../src/models/ColorModel.js', () => ({
     }
 }));
 
-// Mock del servicio antes de importar el controlador
-const mockService = {
-    execute: jest.fn()
-};
+
 
 import GetAllColorController from '../../../../src/controllers/color/GetAllColorController.js';
 
 describe('Unit Test: GetAllColorController', () => {
     let controller;
+    let mockColorRepository;
 
     beforeEach(() => {
         jest.clearAllMocks();
-        controller = new GetAllColorController(mockService);
+        mockColorRepository = {
+            getAll: jest.fn()
+        }
+        controller = new GetAllColorController(mockColorRepository);
     });
 
-    it('Crea un color exitosamente', async () => {
+    it('Obtiene todos los colores exitosamente', async () => {
         // Arrange
         const mockResponse = [{
                 "id": 38,
@@ -47,7 +48,7 @@ describe('Unit Test: GetAllColorController', () => {
                 "deletedAt": null
             }
         ];
-        mockService.execute.mockResolvedValue(mockResponse);
+        mockColorRepository.getAll.mockResolvedValue(mockResponse);
 
         const res = {
             json: jest.fn(),
@@ -58,7 +59,7 @@ describe('Unit Test: GetAllColorController', () => {
         await controller.execute({}, res);
 
         // Assert
-        expect(mockService.execute).toHaveBeenCalledWith();
+        expect(mockColorRepository.getAll).toHaveBeenCalled();
         expect(res.json).toHaveBeenCalledWith(mockResponse);
         expect(res.status).not.toHaveBeenCalled(); // No se llama a status porque fue exitoso
     });
@@ -71,7 +72,7 @@ describe('Unit Test: GetAllColorController', () => {
             status: jest.fn().mockReturnThis()
         };
         const error = new Error('Error de base de datos');
-        mockService.execute.mockRejectedValue(error);
+        mockColorRepository.getAll.mockRejectedValue(error);
 
         // Act
         await controller.execute(req, res);
@@ -83,5 +84,10 @@ describe('Unit Test: GetAllColorController', () => {
             details: [],
             error: expect.any(String)
         }));
+    });
+
+
+    it('throw a error if none repository is provided', () => {
+        expect(() => new GetAllColorController()).toThrow('No se ha recibido un repositorio');
     });
 });

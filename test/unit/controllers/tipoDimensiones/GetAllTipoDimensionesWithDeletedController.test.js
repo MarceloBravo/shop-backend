@@ -1,25 +1,27 @@
 import GetAllTipoDimensionesWithDeletedController from '../../../../src/controllers/tipoDimensiones/GetAllTipoDimensionesWithDeletedController.js';
 import GetAllTipoDimensionesService from '../../../../src/services/tipoDimensiones/GetAllTipoDimensionesService.js';
-import TipoDimensionesRepository from '../../../../src/repositories/TipoDimensionesRepository.js';
 import * as functions from "../../../../src/shared/functions.js";
 
 jest.mock('../../../../src/services/tipoDimensiones/GetAllTipoDimensionesService.js');
-jest.mock('../../../../src/repositories/TipoDimensionesRepository.js');
 
 describe('GetAllTipoDimensionesWithDeletedController', () => {
   let getAllTipoDimensionesWithDeletedController;
   let mockRequest;
   let mockResponse;
   let mockServiceInstance;
+  let mockTipoDimensionesRepository;
 
   beforeEach(() => {
     jest.clearAllMocks()
 
     mockServiceInstance = new GetAllTipoDimensionesService();
     mockServiceInstance.execute = jest.fn();
+    mockTipoDimensionesRepository = {
+      getAll: jest.fn(),
+    }
     GetAllTipoDimensionesService.mockImplementation(() => mockServiceInstance);
 
-    getAllTipoDimensionesWithDeletedController = new GetAllTipoDimensionesWithDeletedController();
+    getAllTipoDimensionesWithDeletedController = new GetAllTipoDimensionesWithDeletedController(mockTipoDimensionesRepository);
     mockRequest = {};
     mockResponse = {
       json: jest.fn(),
@@ -53,9 +55,7 @@ describe('GetAllTipoDimensionesWithDeletedController', () => {
     expect(mockResponse.json).toHaveBeenCalledWith({ code: 500, message: 'Database error' });
   });
 
-  it('should use default repository if none is provided', () => {
-    const controller = new GetAllTipoDimensionesWithDeletedController();
-    expect(TipoDimensionesRepository).toHaveBeenCalledTimes(2); // Once in beforeEach, once here
-    expect(controller.service).toBeInstanceOf(GetAllTipoDimensionesService);
+  it('throw a error if none repository is provided', () => {
+      expect(() => new GetAllTipoDimensionesWithDeletedController()).toThrow('No se ha recibido un repositorio');
   });
 });
