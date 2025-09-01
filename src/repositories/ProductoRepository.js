@@ -1,4 +1,4 @@
-import db from '../models'
+import db from '../models/index.js'
 import { sequelize } from '../../config/database.js';
 import { Op } from 'sequelize';
 
