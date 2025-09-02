@@ -18,7 +18,8 @@
     "rutas": "node scripts/listarRutas.mjs",
     "test:unit:debug": "node -e \"process.env.NODE_ENV='test'; require('child_process').execSync('node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand', {stdio: 'inherit'})\"",
     "test:coverage": "node -e \"process.env.NODE_ENV='test'; process.env.RUN_GLOBAL_SETUP='true'; require('child_process').execSync('jest --coverage --runInBand', {stdio: 'inherit'})\"",
-    "sonar": "npm run test:coverage && sonar-scanner"
+    "sonar": "npm run test:coverage && sonar-scanner",
+    "update-models": "node scripts/update-models.js"
   },
   "keywords": [],
   "author": "",
